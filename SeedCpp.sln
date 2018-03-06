@@ -1,0 +1,67 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2027
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{5FDF158A-91F7-48D5-BD1E-404C0499C001}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTestProjects", "UnitTestProjects", "{A48CF478-555D-4516-A81D-D843F57825AD}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DbSQLiteAdapter", "src\DbSQLiteAdapter\DbSQLiteAdapter.vcxproj", "{8B89F870-1554-4945-905F-AFAAD17CBA63}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WebServer", "src\WebServer\WebServer.vcxproj", "{5F398645-C25A-4D45-87E6-0F95B4D2CCED}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SeedCppCore", "src\SeedCppCore\SeedCppCore.vcxproj", "{FE8FF9C8-766F-4E48-BA11-4E69EC94C8CF}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SeedCpp", "src\SeedCpp\SeedCpp.vcxproj", "{18AC6037-46A3-441B-AF45-6348C983D0D0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8B89F870-1554-4945-905F-AFAAD17CBA63}.Debug|x64.ActiveCfg = Debug|x64
+		{8B89F870-1554-4945-905F-AFAAD17CBA63}.Debug|x64.Build.0 = Debug|x64
+		{8B89F870-1554-4945-905F-AFAAD17CBA63}.Debug|x86.ActiveCfg = Debug|Win32
+		{8B89F870-1554-4945-905F-AFAAD17CBA63}.Debug|x86.Build.0 = Debug|Win32
+		{8B89F870-1554-4945-905F-AFAAD17CBA63}.Release|x64.ActiveCfg = Release|Win32
+		{8B89F870-1554-4945-905F-AFAAD17CBA63}.Release|x86.ActiveCfg = Release|Win32
+		{8B89F870-1554-4945-905F-AFAAD17CBA63}.Release|x86.Build.0 = Release|Win32
+		{5F398645-C25A-4D45-87E6-0F95B4D2CCED}.Debug|x64.ActiveCfg = Debug|x64
+		{5F398645-C25A-4D45-87E6-0F95B4D2CCED}.Debug|x64.Build.0 = Debug|x64
+		{5F398645-C25A-4D45-87E6-0F95B4D2CCED}.Debug|x86.ActiveCfg = Debug|Win32
+		{5F398645-C25A-4D45-87E6-0F95B4D2CCED}.Debug|x86.Build.0 = Debug|Win32
+		{5F398645-C25A-4D45-87E6-0F95B4D2CCED}.Release|x64.ActiveCfg = Release|Win32
+		{5F398645-C25A-4D45-87E6-0F95B4D2CCED}.Release|x86.ActiveCfg = Release|Win32
+		{5F398645-C25A-4D45-87E6-0F95B4D2CCED}.Release|x86.Build.0 = Release|Win32
+		{FE8FF9C8-766F-4E48-BA11-4E69EC94C8CF}.Debug|x64.ActiveCfg = Debug|x64
+		{FE8FF9C8-766F-4E48-BA11-4E69EC94C8CF}.Debug|x64.Build.0 = Debug|x64
+		{FE8FF9C8-766F-4E48-BA11-4E69EC94C8CF}.Debug|x86.ActiveCfg = Debug|Win32
+		{FE8FF9C8-766F-4E48-BA11-4E69EC94C8CF}.Debug|x86.Build.0 = Debug|Win32
+		{FE8FF9C8-766F-4E48-BA11-4E69EC94C8CF}.Release|x64.ActiveCfg = Release|Win32
+		{FE8FF9C8-766F-4E48-BA11-4E69EC94C8CF}.Release|x86.ActiveCfg = Release|Win32
+		{FE8FF9C8-766F-4E48-BA11-4E69EC94C8CF}.Release|x86.Build.0 = Release|Win32
+		{18AC6037-46A3-441B-AF45-6348C983D0D0}.Debug|x64.ActiveCfg = Debug|x64
+		{18AC6037-46A3-441B-AF45-6348C983D0D0}.Debug|x64.Build.0 = Debug|x64
+		{18AC6037-46A3-441B-AF45-6348C983D0D0}.Debug|x86.ActiveCfg = Debug|Win32
+		{18AC6037-46A3-441B-AF45-6348C983D0D0}.Debug|x86.Build.0 = Debug|Win32
+		{18AC6037-46A3-441B-AF45-6348C983D0D0}.Release|x64.ActiveCfg = Release|x64
+		{18AC6037-46A3-441B-AF45-6348C983D0D0}.Release|x64.Build.0 = Release|x64
+		{18AC6037-46A3-441B-AF45-6348C983D0D0}.Release|x86.ActiveCfg = Release|Win32
+		{18AC6037-46A3-441B-AF45-6348C983D0D0}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{8B89F870-1554-4945-905F-AFAAD17CBA63} = {5FDF158A-91F7-48D5-BD1E-404C0499C001}
+		{5F398645-C25A-4D45-87E6-0F95B4D2CCED} = {5FDF158A-91F7-48D5-BD1E-404C0499C001}
+		{FE8FF9C8-766F-4E48-BA11-4E69EC94C8CF} = {5FDF158A-91F7-48D5-BD1E-404C0499C001}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5499FE41-9847-414F-B20F-A1D7FA467AAC}
+	EndGlobalSection
+EndGlobal
