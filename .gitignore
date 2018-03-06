@@ -10,10 +10,8 @@
 # Visual Studio 2017 cache/options directory
 .vs/
 
-# Intermediate directory
+# Intermediate and binaries directories
 int
-
-# Includes of 3rd parties
-include/boost/
-include/openssl/
-include/sqlite/
+lib
+bin
+x64
