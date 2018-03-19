@@ -17,7 +17,7 @@ namespace systelab { namespace web_server {
 
 	unsigned int WebServicesMgr::getWebServiceCount() const
 	{
-		return m_webServices.size();
+		return (unsigned int) m_webServices.size();
 	}
 
 	const IWebService* WebServicesMgr::getWebService(unsigned int index) const
