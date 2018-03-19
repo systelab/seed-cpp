@@ -1,6 +1,6 @@
 #pragma once
 
-#include <boost/asio.hpp>
+#include <string>
 #include <vector>
 
 
@@ -13,7 +13,7 @@ namespace systelab { namespace web_server {
 	public:
 		virtual ~IReplyBuffersBuilderService() {};
 
-		virtual std::vector<boost::asio::const_buffer> buildBuffers(const Reply& reply) const = 0;
+		virtual std::vector<std::string> buildBuffers(const Reply&) const = 0;
 	};
 
 }}

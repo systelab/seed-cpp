@@ -14,29 +14,29 @@ namespace systelab { namespace web_server {
 	{
 	}
 
-	std::vector<boost::asio::const_buffer> ReplyBuffersBuilderService::buildBuffers(const Reply& reply) const
+	std::vector<std::string> ReplyBuffersBuilderService::buildBuffers(const Reply& reply) const
 	{
-		std::vector<boost::asio::const_buffer> buffers;
+		std::vector<std::string> buffers;
 
 		const char name_value_separator[] = { ':', ' ' };
 		const char crlf[] = { '\r', '\n' };
 
 		std::string status = translateStatusToString(reply.getStatus());
-		buffers.push_back(boost::asio::buffer(status));
-		buffers.push_back(boost::asio::buffer(crlf));
+		buffers.push_back(status);
+		buffers.push_back(crlf);
 
 		std::map<std::string, std::string> headers = reply.getHeaders();
 		for (auto it = headers.begin(); it != headers.end(); it++)
 		{
-			buffers.push_back(boost::asio::buffer(it->first));
-			buffers.push_back(boost::asio::buffer(name_value_separator));
-			buffers.push_back(boost::asio::buffer(it->second));
-			buffers.push_back(boost::asio::buffer(crlf));
+			buffers.push_back(it->first);
+			buffers.push_back(name_value_separator);
+			buffers.push_back(it->second);
+			buffers.push_back(crlf);
 		}
 
 		std::string content = reply.getContent();
-		buffers.push_back(boost::asio::buffer(crlf));
-		buffers.push_back(boost::asio::buffer(content));
+		buffers.push_back(crlf);
+		buffers.push_back(content);
 
 		return buffers;
 	}

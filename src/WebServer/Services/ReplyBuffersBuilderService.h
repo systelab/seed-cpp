@@ -12,9 +12,10 @@ namespace systelab { namespace web_server {
 		ReplyBuffersBuilderService();
 		virtual ~ReplyBuffersBuilderService();
 
-		std::vector<boost::asio::const_buffer> buildBuffers(const Reply& reply) const;
+		std::vector<std::string> buildBuffers(const Reply&) const;
 
 	private:
 		std::string translateStatusToString(Reply::StatusType) const;
 	};
+
 }}
