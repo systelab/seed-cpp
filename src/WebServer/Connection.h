@@ -38,7 +38,8 @@ namespace systelab { namespace web_server {
 	private:
 		boost::asio::io_service::strand m_strand;
 		boost::asio::ip::tcp::socket m_socket;
-		boost::array<char, 8192> m_buffer;
+		boost::array<char, 8192> m_requestBuffer;
+		std::vector<std::string> m_replyBuffers;
 
 		std::unique_ptr<IRequestParserAgent> m_requestParserAgent;
 		std::unique_ptr<IRequestURIParserService> m_requestURIParserService;

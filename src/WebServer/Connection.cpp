@@ -23,7 +23,8 @@ namespace systelab { namespace web_server {
 						   std::unique_ptr<IReplyBuffersBuilderService> replyBuffersBuilderService)
 		:m_strand(io_service)
 		,m_socket(io_service)
-		,m_buffer()
+		,m_requestBuffer()
+		,m_replyBuffers()
 		,m_requestParserAgent(std::move(requestParserAgent))
 		,m_requestURIParserService(std::move(requestURIParserService))
 		,m_requestHandlingService(std::move(requestHandlingService))
@@ -42,7 +43,7 @@ namespace systelab { namespace web_server {
 		m_request.reset(new Request());
 		m_reply.reset();
 
-		m_socket.async_read_some(boost::asio::buffer(m_buffer),
+		m_socket.async_read_some(boost::asio::buffer(m_requestBuffer),
 								 m_strand.wrap(boost::bind(&Connection::handleRead, shared_from_this(),
 											   boost::asio::placeholders::error,
 											   boost::asio::placeholders::bytes_transferred)));
@@ -57,11 +58,11 @@ namespace systelab { namespace web_server {
 	{
 		if (!e)
 		{
-			boost::optional<bool> result = m_requestParserAgent->parseBuffer(m_buffer.data(), bytes_transferred, *m_request);
+			boost::optional<bool> result = m_requestParserAgent->parseBuffer(m_requestBuffer.data(), bytes_transferred, *m_request);
 
 			if (!result.is_initialized())
 			{
-				m_socket.async_read_some(boost::asio::buffer(m_buffer),
+				m_socket.async_read_some(boost::asio::buffer(m_requestBuffer),
 					m_strand.wrap(
 					boost::bind(&Connection::handleRead, shared_from_this(),
 								boost::asio::placeholders::error,
@@ -84,7 +85,15 @@ namespace systelab { namespace web_server {
 					m_reply->setStatus(Reply::BAD_REQUEST);
 				}
 
-				boost::asio::async_write(m_socket, m_replyBuffersBuilderService->buildBuffers(*m_reply),
+				m_replyBuffers = m_replyBuffersBuilderService->buildBuffers(*m_reply);
+
+				std::vector<boost::asio::const_buffer> replyAsioBuffers;
+				for (unsigned int i = 0; i < m_replyBuffers.size(); i++)
+				{
+					replyAsioBuffers.push_back(boost::asio::buffer(m_replyBuffers[i]));
+				}
+
+				boost::asio::async_write(m_socket, replyAsioBuffers,
 										 m_strand.wrap(boost::bind(&Connection::handleWrite, shared_from_this(),
 													   boost::asio::placeholders::error)));
 			}
