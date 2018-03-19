@@ -21,15 +21,11 @@ namespace seed_cpp {
 	class Core
 	{
 	public:
-		Core();
+		Core(std::unique_ptr<systelab::db::IDatabase>,
+			 std::unique_ptr<systelab::web_server::IWebServer>);
 		virtual ~Core();
 
-		void initialize();
 		void execute();
-
-	protected:
-		std::unique_ptr<systelab::db::IDatabase> buildDatabase();
-		std::unique_ptr<systelab::web_server::IWebServer> buildWebServer();
 
 	private:
 		std::unique_ptr<model::Model> m_model;
