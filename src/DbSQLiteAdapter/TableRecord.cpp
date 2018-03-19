@@ -89,7 +89,7 @@ namespace systelab { namespace db { namespace sqlite {
 	TableRecord::TableRecord(ITable& table, std::vector< std::unique_ptr<IFieldValue> >& fieldValues)
 		: m_table(table)
 	{
-		unsigned int nFieldValues = fieldValues.size();
+		unsigned int nFieldValues = (unsigned int) fieldValues.size();
 		for( unsigned int i = 0; i < nFieldValues; i++ )
 		{
 			m_fieldValues.push_back( std::move(fieldValues[i]) );
@@ -107,7 +107,7 @@ namespace systelab { namespace db { namespace sqlite {
 
 	unsigned int TableRecord::getFieldValuesCount() const
 	{
-		return m_fieldValues.size();
+		return (unsigned int) m_fieldValues.size();
 	}
 
 	IFieldValue& TableRecord::getFieldValue(unsigned int index) const
@@ -124,7 +124,7 @@ namespace systelab { namespace db { namespace sqlite {
 
 	IFieldValue& TableRecord::getFieldValue(const std::string& fieldName) const
 	{
-		unsigned int nFields = m_fieldValues.size();
+		unsigned int nFields = (unsigned int) m_fieldValues.size();
 		for (unsigned int i = 0; i < nFields; i++)
 		{
 			std::string value = m_fieldValues[i]->getField().getName();
@@ -139,7 +139,7 @@ namespace systelab { namespace db { namespace sqlite {
 
 	bool TableRecord::hasFieldValue(const std::string& fieldName) const
 	{
-		unsigned int nFields = m_fieldValues.size();
+		unsigned int nFields = (unsigned int) m_fieldValues.size();
 		for (unsigned int i = 0; i < nFields; i++)
 		{
 			std::string value = m_fieldValues[i]->getField().getName();
