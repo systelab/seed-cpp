@@ -1,7 +1,7 @@
 #pragma once
 
-#define WIN32_LEAN_AND_MEAN             // Exclude rarely-used stuff from Windows headers
-
-#define _WIN32_WINNT 0x0601
+#ifndef _WIN32_WINNT		// Allow use of features specific to Windows 10 or later.
+#define _WIN32_WINNT 0x0A00	// Change this to the appropriate value to target other versions of Windows.
+#endif
 
 #define BOOST_CONFIG_SUPPRESS_OUTDATED_MESSAGE
