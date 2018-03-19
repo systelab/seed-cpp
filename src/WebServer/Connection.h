@@ -11,7 +11,7 @@
 
 namespace systelab { namespace web_server {
 
-	class IReplyBuffersBuilderService;
+	class IReplyBufferBuilderService;
 	class IRequestHandlingService;
 	class IRequestParserAgent;
 	class IRequestURIParserService;
@@ -25,7 +25,7 @@ namespace systelab { namespace web_server {
 				   std::unique_ptr<IRequestParserAgent>,
 				   std::unique_ptr<IRequestURIParserService>,
 				   std::unique_ptr<IRequestHandlingService>,
-				   std::unique_ptr<IReplyBuffersBuilderService>);
+				   std::unique_ptr<IReplyBufferBuilderService>);
 		virtual ~Connection();
 
 		void start();
@@ -39,12 +39,12 @@ namespace systelab { namespace web_server {
 		boost::asio::io_service::strand m_strand;
 		boost::asio::ip::tcp::socket m_socket;
 		boost::array<char, 8192> m_requestBuffer;
-		std::vector<std::string> m_replyBuffers;
+		std::string m_replyBuffer;
 
 		std::unique_ptr<IRequestParserAgent> m_requestParserAgent;
 		std::unique_ptr<IRequestURIParserService> m_requestURIParserService;
 		std::unique_ptr<IRequestHandlingService> m_requestHandlingService;
-		std::unique_ptr<IReplyBuffersBuilderService> m_replyBuffersBuilderService;
+		std::unique_ptr<IReplyBufferBuilderService> m_replyBufferBuilderService;
 
 		std::unique_ptr<Request> m_request;
 		std::unique_ptr<Reply> m_reply;

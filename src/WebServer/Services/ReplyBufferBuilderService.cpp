@@ -1,47 +1,47 @@
 #include "stdafx.h"
-#include "ReplyBuffersBuilderService.h"
+#include "ReplyBufferBuilderService.h"
 
 #include <string>
 
 
 namespace systelab { namespace web_server {
 
-	ReplyBuffersBuilderService::ReplyBuffersBuilderService()
+	ReplyBufferBuilderService::ReplyBufferBuilderService()
 	{
 	}
 
-	ReplyBuffersBuilderService::~ReplyBuffersBuilderService()
+	ReplyBufferBuilderService::~ReplyBufferBuilderService()
 	{
 	}
 
-	std::vector<std::string> ReplyBuffersBuilderService::buildBuffers(const Reply& reply) const
+	std::string ReplyBufferBuilderService::buildBuffer(const Reply& reply) const
 	{
-		std::vector<std::string> buffers;
+		std::string buffer;
 
 		const char name_value_separator[] = { ':', ' ' };
 		const char crlf[] = { '\r', '\n' };
 
 		std::string status = translateStatusToString(reply.getStatus());
-		buffers.push_back(status);
-		buffers.push_back(crlf);
+		buffer += status;
+		buffer += crlf;
 
 		std::map<std::string, std::string> headers = reply.getHeaders();
 		for (auto it = headers.begin(); it != headers.end(); it++)
 		{
-			buffers.push_back(it->first);
-			buffers.push_back(name_value_separator);
-			buffers.push_back(it->second);
-			buffers.push_back(crlf);
+			buffer += it->first;
+			buffer += name_value_separator;
+			buffer += it->second;
+			buffer += crlf;
 		}
 
 		std::string content = reply.getContent();
-		buffers.push_back(crlf);
-		buffers.push_back(content);
+		buffer += crlf;
+		buffer += content;
 
-		return buffers;
+		return buffer;
 	}
 
-	std::string ReplyBuffersBuilderService::translateStatusToString(Reply::StatusType status) const
+	std::string ReplyBufferBuilderService::translateStatusToString(Reply::StatusType status) const
 	{
 		switch (status)
 		{

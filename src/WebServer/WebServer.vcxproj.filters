@@ -41,12 +41,6 @@
     <ClInclude Include="..\WebServerInterface\Model\Request.h">
       <Filter>Header Files\Model</Filter>
     </ClInclude>
-    <ClInclude Include="Services\IReplyBuffersBuilderService.h">
-      <Filter>Header Files\Services</Filter>
-    </ClInclude>
-    <ClInclude Include="Services\ReplyBuffersBuilderService.h">
-      <Filter>Header Files\Services</Filter>
-    </ClInclude>
     <ClInclude Include="..\WebServerInterface\Model\Configuration.h">
       <Filter>Header Files\Model</Filter>
     </ClInclude>
@@ -77,13 +71,16 @@
     <ClInclude Include="Services\RequestURIParserService.h">
       <Filter>Header Files\Services</Filter>
     </ClInclude>
+    <ClInclude Include="Services\IReplyBufferBuilderService.h">
+      <Filter>Header Files\Services</Filter>
+    </ClInclude>
+    <ClInclude Include="Services\ReplyBufferBuilderService.h">
+      <Filter>Header Files\Services</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Services\ReplyBuffersBuilderService.cpp">
-      <Filter>Source Files\Services</Filter>
     </ClCompile>
     <ClCompile Include="..\WebServerInterface\Model\CORSConfiguration.cpp">
       <Filter>Source Files\Model</Filter>
@@ -113,6 +110,9 @@
       <Filter>Source Files\Services</Filter>
     </ClCompile>
     <ClCompile Include="Services\RequestURIParserService.cpp">
+      <Filter>Source Files\Services</Filter>
+    </ClCompile>
+    <ClCompile Include="Services\ReplyBufferBuilderService.cpp">
       <Filter>Source Files\Services</Filter>
     </ClCompile>
   </ItemGroup>

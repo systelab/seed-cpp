@@ -2,7 +2,7 @@
 #include "Connection.h"
 
 #include "Agents/IRequestParserAgent.h"
-#include "Services/IReplyBuffersBuilderService.h"
+#include "Services/IReplyBufferBuilderService.h"
 #include "Services/IRequestURIParserService.h"
 #include "Services/IRequestHandlingService.h"
 
@@ -20,15 +20,15 @@ namespace systelab { namespace web_server {
 						   std::unique_ptr<IRequestParserAgent> requestParserAgent,
 						   std::unique_ptr<IRequestURIParserService> requestURIParserService,
 						   std::unique_ptr<IRequestHandlingService> requestHandlingService,
-						   std::unique_ptr<IReplyBuffersBuilderService> replyBuffersBuilderService)
+						   std::unique_ptr<IReplyBufferBuilderService> replyBuffersBuilderService)
 		:m_strand(io_service)
 		,m_socket(io_service)
 		,m_requestBuffer()
-		,m_replyBuffers()
+		,m_replyBuffer()
 		,m_requestParserAgent(std::move(requestParserAgent))
 		,m_requestURIParserService(std::move(requestURIParserService))
 		,m_requestHandlingService(std::move(requestHandlingService))
-		,m_replyBuffersBuilderService(std::move(replyBuffersBuilderService))
+		,m_replyBufferBuilderService(std::move(replyBuffersBuilderService))
 		,m_request()
 		,m_reply()
 	{
@@ -85,15 +85,9 @@ namespace systelab { namespace web_server {
 					m_reply->setStatus(Reply::BAD_REQUEST);
 				}
 
-				m_replyBuffers = m_replyBuffersBuilderService->buildBuffers(*m_reply);
+				m_replyBuffer = m_replyBufferBuilderService->buildBuffer(*m_reply);
 
-				std::vector<boost::asio::const_buffer> replyAsioBuffers;
-				for (unsigned int i = 0; i < m_replyBuffers.size(); i++)
-				{
-					replyAsioBuffers.push_back(boost::asio::buffer(m_replyBuffers[i]));
-				}
-
-				boost::asio::async_write(m_socket, replyAsioBuffers,
+				boost::asio::async_write(m_socket, boost::asio::buffer(m_replyBuffer),
 										 m_strand.wrap(boost::bind(&Connection::handleWrite, shared_from_this(),
 													   boost::asio::placeholders::error)));
 			}

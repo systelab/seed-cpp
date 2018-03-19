@@ -4,7 +4,7 @@
 #include "Connection.h"
 #include "Agents/RequestParserAgent.h"
 #include "Model/WebServicesMgr.h"
-#include "Services/ReplyBuffersBuilderService.h"
+#include "Services/ReplyBufferBuilderService.h"
 #include "Services/RequestHandlingService.h"
 #include "Services/RequestURIParserService.h"
 
@@ -106,10 +106,10 @@ namespace systelab { namespace web_server {
 		std::unique_ptr<IRequestParserAgent> requestParserAgent(new RequestParserAgent());
 		std::unique_ptr<IRequestURIParserService> requestURIParserService(new RequestURIParserService());
 		std::unique_ptr<IRequestHandlingService> requestHandlingService(new RequestHandlingService(*m_webServicesMgr, m_configuration->getCORSConfiguration()));
-		std::unique_ptr<IReplyBuffersBuilderService> replyBuffersBuilderService(new ReplyBuffersBuilderService());
+		std::unique_ptr<IReplyBufferBuilderService> replyBufferBuilderService(new ReplyBufferBuilderService());
 
 		m_newConnection = boost::shared_ptr<Connection>(new Connection(m_io_service, std::move(requestParserAgent), std::move(requestURIParserService),
-																	   std::move(requestHandlingService), std::move(replyBuffersBuilderService)));
+																	   std::move(requestHandlingService), std::move(replyBufferBuilderService)));
 
 		m_acceptor.async_accept(m_newConnection->socket(),
 								boost::bind(&WebServer::handleAccept, this, 

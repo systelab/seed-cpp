@@ -109,10 +109,10 @@
     <ClInclude Include="Agents\RequestParserAgent.h" />
     <ClInclude Include="Connection.h" />
     <ClInclude Include="Model\WebServicesMgr.h" />
-    <ClInclude Include="Services\IReplyBuffersBuilderService.h" />
+    <ClInclude Include="Services\IReplyBufferBuilderService.h" />
     <ClInclude Include="Services\IRequestHandlingService.h" />
     <ClInclude Include="Services\IRequestURIParserService.h" />
-    <ClInclude Include="Services\ReplyBuffersBuilderService.h" />
+    <ClInclude Include="Services\ReplyBufferBuilderService.h" />
     <ClInclude Include="Services\RequestHandlingService.h" />
     <ClInclude Include="Services\RequestURIParserService.h" />
     <ClInclude Include="stdafx.h" />
@@ -126,7 +126,7 @@
     <ClCompile Include="Agents\RequestParserAgent.cpp" />
     <ClCompile Include="Connection.cpp" />
     <ClCompile Include="Model\WebServicesMgr.cpp" />
-    <ClCompile Include="Services\ReplyBuffersBuilderService.cpp" />
+    <ClCompile Include="Services\ReplyBufferBuilderService.cpp" />
     <ClCompile Include="Services\RequestHandlingService.cpp" />
     <ClCompile Include="Services\RequestURIParserService.cpp" />
     <ClCompile Include="stdafx.cpp">
