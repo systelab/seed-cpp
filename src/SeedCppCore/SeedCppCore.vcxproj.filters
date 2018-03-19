@@ -55,8 +55,5 @@
     <ClCompile Include="Model\Address.cpp">
       <Filter>Source Files\Model</Filter>
     </ClCompile>
-    <ClCompile Include="Model\EntityMgr.cpp">
-      <Filter>Source Files\Model</Filter>
-    </ClCompile>
   </ItemGroup>
 </Project>

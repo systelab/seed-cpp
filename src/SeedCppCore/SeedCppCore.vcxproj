@@ -122,7 +122,6 @@
   <ItemGroup>
     <ClCompile Include="Core.cpp" />
     <ClCompile Include="Model\Address.cpp" />
-    <ClCompile Include="Model\EntityMgr.cpp" />
     <ClCompile Include="Model\Model.cpp" />
     <ClCompile Include="Model\Patient.cpp" />
     <ClCompile Include="Stdafx.cpp">
