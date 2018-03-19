@@ -33,6 +33,10 @@ namespace systelab { namespace web_server {
 	{
 	}
 
+	Connection::~Connection()
+	{
+	}
+
 	void Connection::start()
 	{
 		m_request.reset(new Request());
