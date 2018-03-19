@@ -15,6 +15,9 @@
     <Filter Include="Source Files\Model">
       <UniqueIdentifier>{8bc173ba-f81e-45db-aa5f-f7ca4b79101d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\DAL">
+      <UniqueIdentifier>{5e2b0055-5bca-4af4-b931-56ca3134d625}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Stdafx.h">
