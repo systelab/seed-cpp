@@ -113,6 +113,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core.h" />
+    <ClInclude Include="DAL\Translators\Db\AddressDbTranslator.h" />
+    <ClInclude Include="DAL\Translators\Db\DbTranslatorsFactory.h" />
+    <ClInclude Include="DAL\Translators\Db\IDatabaseEntityTranslator.h" />
+    <ClInclude Include="DAL\Translators\Db\IDbTranslatorsFactory.h" />
+    <ClInclude Include="DAL\Translators\Db\PatientDbTranslator.h" />
     <ClInclude Include="Model\Address.h" />
     <ClInclude Include="Model\EntityMgr.h" />
     <ClInclude Include="Model\Model.h" />
@@ -121,6 +126,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core.cpp" />
+    <ClCompile Include="DAL\Translators\Db\AddressDbTranslator.cpp" />
+    <ClCompile Include="DAL\Translators\Db\DbTranslatorsFactory.cpp" />
+    <ClCompile Include="DAL\Translators\Db\PatientDbTranslator.cpp" />
     <ClCompile Include="Model\Address.cpp" />
     <ClCompile Include="Model\Model.cpp" />
     <ClCompile Include="Model\Patient.cpp" />

@@ -18,6 +18,30 @@
     <Filter Include="Source Files\DAL">
       <UniqueIdentifier>{5e2b0055-5bca-4af4-b931-56ca3134d625}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\DAL\Translators">
+      <UniqueIdentifier>{6de84a79-fa37-4514-ba06-b4f7a4a9085d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\DAL\Translators\Db">
+      <UniqueIdentifier>{2e453f45-231a-441c-819e-2f50d97b9e80}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\DAL\Translators\JSON">
+      <UniqueIdentifier>{02aa6838-257b-4279-8fe1-c513a21de8ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\DAL">
+      <UniqueIdentifier>{267c3c21-cfb7-4791-b19f-ed7723f111fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\DAL\Translators">
+      <UniqueIdentifier>{2ef5d54a-541a-4ab2-a73b-1bd432382bbc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\DAL\Translators\Db">
+      <UniqueIdentifier>{ccb3a0b7-392d-4522-9fbd-005a8d52fbd2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\DAL\Translators\JSON">
+      <UniqueIdentifier>{fde75365-21aa-435e-8d83-087b62d7b270}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Services">
+      <UniqueIdentifier>{c4db2814-56a8-4a8c-939a-5e81f8141549}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Stdafx.h">
@@ -38,6 +62,21 @@
     <ClInclude Include="Model\EntityMgr.h">
       <Filter>Header Files\Model</Filter>
     </ClInclude>
+    <ClInclude Include="DAL\Translators\Db\PatientDbTranslator.h">
+      <Filter>Header Files\DAL\Translators\Db</Filter>
+    </ClInclude>
+    <ClInclude Include="DAL\Translators\Db\IDatabaseEntityTranslator.h">
+      <Filter>Header Files\DAL\Translators\Db</Filter>
+    </ClInclude>
+    <ClInclude Include="DAL\Translators\Db\AddressDbTranslator.h">
+      <Filter>Header Files\DAL\Translators\Db</Filter>
+    </ClInclude>
+    <ClInclude Include="DAL\Translators\Db\DbTranslatorsFactory.h">
+      <Filter>Header Files\DAL\Translators\Db</Filter>
+    </ClInclude>
+    <ClInclude Include="DAL\Translators\Db\IDbTranslatorsFactory.h">
+      <Filter>Header Files\DAL\Translators\Db</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Stdafx.cpp">
@@ -54,6 +93,15 @@
     </ClCompile>
     <ClCompile Include="Model\Address.cpp">
       <Filter>Source Files\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="DAL\Translators\Db\PatientDbTranslator.cpp">
+      <Filter>Source Files\DAL\Translators\Db</Filter>
+    </ClCompile>
+    <ClCompile Include="DAL\Translators\Db\AddressDbTranslator.cpp">
+      <Filter>Source Files\DAL\Translators\Db</Filter>
+    </ClCompile>
+    <ClCompile Include="DAL\Translators\Db\DbTranslatorsFactory.cpp">
+      <Filter>Source Files\DAL\Translators\Db</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
