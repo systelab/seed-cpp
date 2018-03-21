@@ -113,6 +113,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core.h" />
+    <ClInclude Include="DAL\DAO\Db\DbDAOFactory.h" />
+    <ClInclude Include="DAL\DAO\Db\DbTransactionDAO.h" />
+    <ClInclude Include="DAL\DAO\Db\IDbDAOFactory.h" />
+    <ClInclude Include="DAL\DAO\Db\PatientDbLoadDAO.h" />
+    <ClInclude Include="DAL\DAO\Db\PatientDbSaveDAO.h" />
+    <ClInclude Include="DAL\DAO\ILoadDAO.h" />
+    <ClInclude Include="DAL\DAO\ISaveDAO.h" />
+    <ClInclude Include="DAL\DAO\ITransactionDAO.h" />
+    <ClInclude Include="DAL\DAO\ITransactionDAOMgr.h" />
     <ClInclude Include="DAL\Translators\Db\AddressDbTranslator.h" />
     <ClInclude Include="DAL\Translators\Db\DbTranslatorsFactory.h" />
     <ClInclude Include="DAL\Translators\Db\IDatabaseEntityTranslator.h" />
@@ -126,6 +135,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core.cpp" />
+    <ClCompile Include="DAL\DAO\Db\DbDAOFactory.cpp" />
+    <ClCompile Include="DAL\DAO\Db\DbTransactionDAO.cpp" />
+    <ClCompile Include="DAL\DAO\Db\PatientDbLoadDAO.cpp" />
+    <ClCompile Include="DAL\DAO\Db\PatientDbSaveDAO.cpp" />
     <ClCompile Include="DAL\Translators\Db\AddressDbTranslator.cpp" />
     <ClCompile Include="DAL\Translators\Db\DbTranslatorsFactory.cpp" />
     <ClCompile Include="DAL\Translators\Db\PatientDbTranslator.cpp" />

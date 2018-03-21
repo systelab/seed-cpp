@@ -1,7 +1,8 @@
 #include "StdAfx.h"
 #include "Core.h"
 
-#include "DAL/Translators/Db/IDbTranslatorsFactory.h"
+#include "DAL/DAO/Db/DbDAOFactory.h"
+#include "DAL/Translators/Db/DbTranslatorsFactory.h"
 #include "Model/Model.h"
 
 #include "DbAdapterInterface/IDatabase.h"
@@ -13,10 +14,12 @@ namespace seed_cpp {
 
 	Core::Core(std::unique_ptr<systelab::db::IDatabase> database,
 			   std::unique_ptr<systelab::web_server::IWebServer> webServer)
-		:m_model(new model::Model())
-		,m_database(std::move(database))
+		:m_database(std::move(database))
 		,m_webServer(std::move(webServer))
 	{
+		m_model.reset(new model::Model());
+		m_dbTranslatorsFactory.reset(new dal::DbTranslatorsFactory());
+		m_dbDAOFactory.reset(new dal::DbDAOFactory(*this));
 	}
 
 	Core::~Core()
@@ -46,6 +49,11 @@ namespace seed_cpp {
 	dal::IDbTranslatorsFactory& Core::getDbTranslatorsFactory() const
 	{
 		return *m_dbTranslatorsFactory;
+	}
+
+	dal::IDbDAOFactory& Core::getDbDAOFactory() const
+	{
+		return *m_dbDAOFactory;
 	}
 
 }

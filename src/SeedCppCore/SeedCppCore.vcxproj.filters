@@ -42,6 +42,18 @@
     <Filter Include="Source Files\Services">
       <UniqueIdentifier>{c4db2814-56a8-4a8c-939a-5e81f8141549}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\DAL\DAO">
+      <UniqueIdentifier>{fa77c2f5-a76d-41ed-b7b3-377cf5900ee5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\DAL\DAO\Db">
+      <UniqueIdentifier>{fcc7bf8a-53ad-41fd-bd0e-e63a4da02d62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\DAL\DAO">
+      <UniqueIdentifier>{9acd9eaf-3112-4a56-a3fb-42ce0e0aa46b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\DAL\DAO\Db">
+      <UniqueIdentifier>{3f17d170-643e-47eb-ba78-e1ce6e17566e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Stdafx.h">
@@ -77,6 +89,33 @@
     <ClInclude Include="DAL\Translators\Db\IDbTranslatorsFactory.h">
       <Filter>Header Files\DAL\Translators\Db</Filter>
     </ClInclude>
+    <ClInclude Include="DAL\DAO\Db\PatientDbLoadDAO.h">
+      <Filter>Header Files\DAL\DAO\Db</Filter>
+    </ClInclude>
+    <ClInclude Include="DAL\DAO\Db\PatientDbSaveDAO.h">
+      <Filter>Header Files\DAL\DAO\Db</Filter>
+    </ClInclude>
+    <ClInclude Include="DAL\DAO\ISaveDAO.h">
+      <Filter>Header Files\DAL\DAO</Filter>
+    </ClInclude>
+    <ClInclude Include="DAL\DAO\ILoadDAO.h">
+      <Filter>Header Files\DAL\DAO</Filter>
+    </ClInclude>
+    <ClInclude Include="DAL\DAO\Db\DbTransactionDAO.h">
+      <Filter>Header Files\DAL\DAO\Db</Filter>
+    </ClInclude>
+    <ClInclude Include="DAL\DAO\ITransactionDAOMgr.h">
+      <Filter>Header Files\DAL\DAO</Filter>
+    </ClInclude>
+    <ClInclude Include="DAL\DAO\ITransactionDAO.h">
+      <Filter>Header Files\DAL\DAO</Filter>
+    </ClInclude>
+    <ClInclude Include="DAL\DAO\Db\DbDAOFactory.h">
+      <Filter>Header Files\DAL\DAO\Db</Filter>
+    </ClInclude>
+    <ClInclude Include="DAL\DAO\Db\IDbDAOFactory.h">
+      <Filter>Header Files\DAL\DAO\Db</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Stdafx.cpp">
@@ -102,6 +141,18 @@
     </ClCompile>
     <ClCompile Include="DAL\Translators\Db\DbTranslatorsFactory.cpp">
       <Filter>Source Files\DAL\Translators\Db</Filter>
+    </ClCompile>
+    <ClCompile Include="DAL\DAO\Db\PatientDbSaveDAO.cpp">
+      <Filter>Source Files\DAL\DAO\Db</Filter>
+    </ClCompile>
+    <ClCompile Include="DAL\DAO\Db\PatientDbLoadDAO.cpp">
+      <Filter>Source Files\DAL\DAO\Db</Filter>
+    </ClCompile>
+    <ClCompile Include="DAL\DAO\Db\DbTransactionDAO.cpp">
+      <Filter>Source Files\DAL\DAO\Db</Filter>
+    </ClCompile>
+    <ClCompile Include="DAL\DAO\Db\DbDAOFactory.cpp">
+      <Filter>Source Files\DAL\DAO\Db</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

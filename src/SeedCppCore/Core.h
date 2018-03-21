@@ -15,7 +15,7 @@ namespace systelab {
 namespace seed_cpp {
 	namespace dal {
 		class IDbTranslatorsFactory;
-		class IDAOFactory;
+		class IDbDAOFactory;
 	}
 	namespace model {
 		class Model;
@@ -38,7 +38,7 @@ namespace seed_cpp {
 
 		model::Model& getModel() const;
 		dal::IDbTranslatorsFactory& getDbTranslatorsFactory() const;
-		//dal::IDAOFactory& getDAOFactory() const;
+		dal::IDbDAOFactory& getDbDAOFactory() const;
 
 	private:
 		std::unique_ptr<systelab::db::IDatabase> m_database;
@@ -46,6 +46,7 @@ namespace seed_cpp {
 
 		std::unique_ptr<model::Model> m_model;
 		std::unique_ptr<dal::IDbTranslatorsFactory> m_dbTranslatorsFactory;
+		std::unique_ptr<dal::IDbDAOFactory> m_dbDAOFactory;
 	};
 
 }
