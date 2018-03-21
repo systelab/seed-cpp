@@ -90,7 +90,7 @@ namespace seed_cpp { namespace model {
 			}
 		}
 
-		void setEntities(std::vector<std::unique_ptr<Entity> >)
+		void setEntities(std::vector<std::unique_ptr<Entity> > entities)
 		{
 			m_entities = std::move(entities);
 		}
