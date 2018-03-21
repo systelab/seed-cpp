@@ -20,9 +20,9 @@ namespace seed_cpp { namespace dal {
 		return std::unique_ptr<IDatabaseEntityTranslator>(new dal::PatientDbTranslator(patient));
 	}
 
-	std::unique_ptr<IDatabaseEntityTranslator> DbTranslatorsFactory::buildAddressTranslator(model::Address& address) const
+	std::unique_ptr<IDatabaseEntityTranslator> DbTranslatorsFactory::buildAddressTranslator(unsigned int patientId, model::Address& address) const
 	{
-		return std::unique_ptr<IDatabaseEntityTranslator>(new dal::AddressDbTranslator(address));
+		return std::unique_ptr<IDatabaseEntityTranslator>(new dal::AddressDbTranslator(patientId, address));
 	}
 
 }}

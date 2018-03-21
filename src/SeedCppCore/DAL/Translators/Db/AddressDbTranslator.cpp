@@ -9,8 +9,10 @@
 
 namespace seed_cpp { namespace dal {
 
-	AddressDbTranslator::AddressDbTranslator(model::Address& address)
-		:m_address(address)
+	AddressDbTranslator::AddressDbTranslator(unsigned int patientId,
+											 model::Address& address)
+		:m_patientId(patientId)
+		,m_address(address)
 	{
 	}
 
@@ -21,14 +23,12 @@ namespace seed_cpp { namespace dal {
 	void AddressDbTranslator::fillEntityFromRecord(const systelab::db::ITableRecord& record)
 	{
 		unsigned int id = record.getFieldValue("id").getIntValue();
-		unsigned int patientId = record.getFieldValue("patientId").getIntValue();
 		std::string coordinates = record.getFieldValue("coordinates").getStringValue();
 		std::string street = record.getFieldValue("street").getStringValue();
 		std::string city = record.getFieldValue("city").getStringValue();
 		std::string zip = record.getFieldValue("zip").getStringValue();
 
 		m_address.setId(id);
-		m_address.setPatientId(patientId);
 		m_address.setCoordinates(coordinates);
 		m_address.setStreet(street);
 		m_address.setCity(city);
@@ -47,13 +47,12 @@ namespace seed_cpp { namespace dal {
 			record.getFieldValue("id").setDefault();
 		}
 
-		unsigned int patientId = *m_address.getPatientId();
 		std::string coordinates = m_address.getCoordinates();
 		std::string street = m_address.getStreet();
 		std::string city = m_address.getCity();
 		std::string zip = m_address.getZip();
 
-		record.getFieldValue("patientId").setIntValue(patientId);
+		record.getFieldValue("patientId").setIntValue(m_patientId);
 		record.getFieldValue("coordinates").setStringValue(coordinates);
 		record.getFieldValue("street").setStringValue(street);
 		record.getFieldValue("city").setStringValue(city);
