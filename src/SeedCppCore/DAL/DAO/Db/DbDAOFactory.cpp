@@ -5,6 +5,7 @@
 #include "DAL/DAO/Db/PatientDbLoadDAO.h"
 #include "DAL/DAO/Db/PatientDbSaveDAO.h"
 #include "DAL/DAO/Db/DbTransactionDAO.h"
+#include "Model/Model.h"
 
 
 namespace seed_cpp { namespace dal {
@@ -19,11 +20,12 @@ namespace seed_cpp { namespace dal {
 	{
 	}
 
-	std::unique_ptr<ILoadDAO> DbDAOFactory::buildPatientLoadDAO(model::EntityMgr<model::Patient>& mgr)
+	std::unique_ptr<ILoadDAO> DbDAOFactory::buildPatientLoadDAO()
 	{
 		systelab::db::IDatabase& database = m_core.getDatabase();
+		model::EntityMgr<model::Patient>& model = m_core.getModel().getPatientMgr();
 		dal::IDbTranslatorsFactory& dbTranslatorsFactory = m_core.getDbTranslatorsFactory();
-		return std::unique_ptr<ILoadDAO>(new PatientDbLoadDAO(database, mgr, dbTranslatorsFactory));
+		return std::unique_ptr<ILoadDAO>(new PatientDbLoadDAO(database, model, dbTranslatorsFactory));
 	}
 
 	std::unique_ptr<ISaveDAO> DbDAOFactory::buildPatientSaveDAO(model::Patient& patient)

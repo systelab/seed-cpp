@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Model/EntityMgr.h"
+#include <memory>
 
 
 namespace seed_cpp { namespace model {
@@ -18,7 +18,7 @@ namespace seed_cpp { namespace dal {
 	public:
 		virtual ~IDbDAOFactory() {};
 
-		virtual std::unique_ptr<ILoadDAO> buildPatientLoadDAO(model::EntityMgr<model::Patient>&) = 0;
+		virtual std::unique_ptr<ILoadDAO> buildPatientLoadDAO() = 0;
 		virtual std::unique_ptr<ISaveDAO> buildPatientSaveDAO(model::Patient&) = 0;
 
 		virtual std::unique_ptr<ITransactionDAO> startTransaction() = 0;
