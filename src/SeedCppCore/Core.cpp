@@ -5,6 +5,7 @@
 #include "DAL/DAO/Db/DbDAOFactory.h"
 #include "DAL/Translators/Db/DbTranslatorsFactory.h"
 #include "Model/Model.h"
+#include "REST/RESTAPIWebService.h"
 
 #include "DbAdapterInterface/IDatabase.h"
 
@@ -66,6 +67,9 @@ namespace seed_cpp {
 
 	void Core::initializeWebServer()
 	{
+		std::unique_ptr<systelab::web_server::IWebService> restWebService(new rest::RESTAPIWebService());
+		m_webServer->registerWebService(std::move(restWebService));
+
 		m_webServer->start();
 	}
 

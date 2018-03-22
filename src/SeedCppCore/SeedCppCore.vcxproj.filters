@@ -57,6 +57,9 @@
     <Filter Include="Source Files\REST">
       <UniqueIdentifier>{72c56a9f-8723-4049-adbf-163bb04caeb4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\REST">
+      <UniqueIdentifier>{8df3a61a-ab88-4781-9b13-55015b989388}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Stdafx.h">
@@ -119,6 +122,9 @@
     <ClInclude Include="DAL\DAO\Db\IDbDAOFactory.h">
       <Filter>Header Files\DAL\DAO\Db</Filter>
     </ClInclude>
+    <ClInclude Include="REST\RESTAPIWebService.h">
+      <Filter>Header Files\REST</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Stdafx.cpp">
@@ -156,6 +162,9 @@
     </ClCompile>
     <ClCompile Include="DAL\DAO\Db\DbDAOFactory.cpp">
       <Filter>Source Files\DAL\DAO\Db</Filter>
+    </ClCompile>
+    <ClCompile Include="REST\RESTAPIWebService.cpp">
+      <Filter>Source Files\REST</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
