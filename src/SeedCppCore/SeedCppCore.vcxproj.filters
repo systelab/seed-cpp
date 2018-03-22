@@ -54,6 +54,9 @@
     <Filter Include="Header Files\DAL\DAO\Db">
       <UniqueIdentifier>{3f17d170-643e-47eb-ba78-e1ce6e17566e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\REST">
+      <UniqueIdentifier>{72c56a9f-8723-4049-adbf-163bb04caeb4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Stdafx.h">

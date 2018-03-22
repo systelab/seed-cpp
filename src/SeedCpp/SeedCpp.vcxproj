@@ -115,6 +115,19 @@
       <Project>{fe8ff9c8-766f-4e48-ba11-4e69ec94c8cf}</Project>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="..\SeedCppCore\Resources\schema.sql">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">del $(TargetDir)seed_cpp.db
+$(SolutionDir)tools\sqlite\sqlite3.exe $(TargetDir)seed_cpp.db &lt; %(FullPath)</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Generating empty database</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(TargetDir)seed_cpp.db;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">del $(TargetDir)seed_cpp.db
+$(SolutionDir)tools\sqlite\sqlite3.exe $(TargetDir)seed_cpp.db &lt; %(FullPath)</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Generating empty database</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(TargetDir)seed_cpp.db;%(Outputs)</Outputs>
+    </CustomBuild>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
