@@ -41,6 +41,10 @@ namespace seed_cpp {
 		dal::IDbDAOFactory& getDbDAOFactory() const;
 
 	private:
+		void initializeModel();
+		void initializeWebServer();
+
+	private:
 		std::unique_ptr<systelab::db::IDatabase> m_database;
 		std::unique_ptr<systelab::web_server::IWebServer> m_webServer;
 

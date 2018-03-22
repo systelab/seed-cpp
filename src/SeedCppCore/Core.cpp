@@ -1,6 +1,7 @@
 #include "StdAfx.h"
 #include "Core.h"
 
+#include "DAL/DAO/ILoadDAO.h"
 #include "DAL/DAO/Db/DbDAOFactory.h"
 #include "DAL/Translators/Db/DbTranslatorsFactory.h"
 #include "Model/Model.h"
@@ -28,7 +29,8 @@ namespace seed_cpp {
 
 	void Core::execute()
 	{
-		m_webServer->start();
+		initializeModel();
+		initializeWebServer();
 	}
 
 	systelab::db::IDatabase& Core::getDatabase() const
@@ -54,6 +56,17 @@ namespace seed_cpp {
 	dal::IDbDAOFactory& Core::getDbDAOFactory() const
 	{
 		return *m_dbDAOFactory;
+	}
+
+	void Core::initializeModel()
+	{
+		std::unique_ptr<dal::ILoadDAO> patientLoadDAO = m_dbDAOFactory->buildPatientLoadDAO();
+		patientLoadDAO->loadAll();
+	}
+
+	void Core::initializeWebServer()
+	{
+		m_webServer->start();
 	}
 
 }
