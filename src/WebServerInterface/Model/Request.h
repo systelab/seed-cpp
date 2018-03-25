@@ -1,5 +1,7 @@
 #pragma once
 
+#include "RequestQueryStrings.h"
+
 #include <string>
 #include <vector>
 #include <map>
@@ -36,17 +38,16 @@ namespace systelab { namespace web_server {
 		std::string getHeader(const std::string& name) const;
 		void addHeader(const std::string& name, const std::string& value);
 
-		bool hasQueryString(const std::string& name) const;
-		std::string getQueryString(const std::string& name) const;
-		void addQueryString(const std::string& name, const std::string& value);
+		RequestQueryStrings& getQueryStrings();
+		const RequestQueryStrings& getQueryStrings() const;
 
 	private:
 		std::string m_method;
 		std::string m_uri;
-		std::map<std::string, std::string> m_queryStrings;
 		unsigned int m_httpVersionMajor;
 		unsigned int m_httpVersionMinor;
 		std::map<std::string, std::string> m_headers;
+		RequestQueryStrings m_queryStrings;
 		std::string m_content;
 	};
 

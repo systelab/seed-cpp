@@ -10,7 +10,7 @@ namespace systelab { namespace web_server {
 	Request::Request()
 		:m_method("")
 		,m_uri("")
-		,m_queryStrings()
+		,m_queryStrings(RequestQueryStrings())
 		,m_httpVersionMajor(1)
 		,m_httpVersionMinor(1)
 		,m_headers()
@@ -27,7 +27,7 @@ namespace systelab { namespace web_server {
 					 const std::string& content)
 		:m_method(method)
 		,m_uri(uri)
-		,m_queryStrings(queryStrings)
+		,m_queryStrings(RequestQueryStrings(queryStrings))
 		,m_httpVersionMajor(httpVersionMajor)
 		,m_httpVersionMinor(httpVersionMinor)
 		,m_headers(headers)
@@ -109,28 +109,14 @@ namespace systelab { namespace web_server {
 		m_headers.insert(std::make_pair(name, value));
 	}
 
-	bool Request::hasQueryString(const std::string& name) const
+	RequestQueryStrings& Request::getQueryStrings()
 	{
-		return (m_queryStrings.find(name) != m_queryStrings.end());
+		return m_queryStrings;
 	}
 
-	std::string Request::getQueryString(const std::string& name) const
+	const RequestQueryStrings& Request::getQueryStrings() const
 	{
-		auto it = m_queryStrings.find(name);
-		if (m_queryStrings.find(name) != m_queryStrings.end())
-		{
-			return it->second;
-		}
-		else
-		{
-			std::string exc = std::string("Query string '") + name + std::string("' not found.");
-			throw std::exception(exc.c_str());
-		}
-	}
-
-	void Request::addQueryString(const std::string& name, const std::string& value)
-	{
-		m_queryStrings.insert(std::make_pair(name, value));
+		return m_queryStrings;
 	}
 
 }}

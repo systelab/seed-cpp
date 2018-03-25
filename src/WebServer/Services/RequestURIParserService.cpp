@@ -94,7 +94,7 @@ namespace systelab { namespace web_server {
 			{
 				std::string name = (*i)[1].str();
 				std::string value = (*i)[2].str();
-				request.addQueryString(name, value);
+				request.getQueryStrings().addItem(name, value);
 			}
 		}
 	}

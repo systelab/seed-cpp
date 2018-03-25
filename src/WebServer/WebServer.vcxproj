@@ -105,6 +105,7 @@
     <ClInclude Include="..\WebServerInterface\Model\CORSConfiguration.h" />
     <ClInclude Include="..\WebServerInterface\Model\Reply.h" />
     <ClInclude Include="..\WebServerInterface\Model\Request.h" />
+    <ClInclude Include="..\WebServerInterface\Model\RequestQueryStrings.h" />
     <ClInclude Include="Agents\IRequestParserAgent.h" />
     <ClInclude Include="Agents\RequestParserAgent.h" />
     <ClInclude Include="Connection.h" />
@@ -123,6 +124,7 @@
     <ClCompile Include="..\WebServerInterface\Model\CORSConfiguration.cpp" />
     <ClCompile Include="..\WebServerInterface\Model\Reply.cpp" />
     <ClCompile Include="..\WebServerInterface\Model\Request.cpp" />
+    <ClCompile Include="..\WebServerInterface\Model\RequestQueryStrings.cpp" />
     <ClCompile Include="Agents\RequestParserAgent.cpp" />
     <ClCompile Include="Connection.cpp" />
     <ClCompile Include="Model\WebServicesMgr.cpp" />
