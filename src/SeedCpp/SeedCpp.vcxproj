@@ -111,8 +111,17 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DbSQLiteAdapter\DbSQLiteAdapter.vcxproj">
+      <Project>{8b89f870-1554-4945-905f-afaad17cba63}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\RapidJSONAdapter\RapidJSONAdapter.vcxproj">
+      <Project>{20b54465-7343-4172-a2cb-1050001c970b}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\SeedCppCore\SeedCppCore.vcxproj">
       <Project>{fe8ff9c8-766f-4e48-ba11-4e69ec94c8cf}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\WebServer\WebServer.vcxproj">
+      <Project>{5f398645-c25a-4d45-87e6-0f95b4d2cced}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

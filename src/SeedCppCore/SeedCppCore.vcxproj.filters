@@ -167,6 +167,9 @@
     <ClInclude Include="REST\Endpoints\Patients\PatientsGETAllEndpoint.h">
       <Filter>Header Files\REST\Endpoints\Patient</Filter>
     </ClInclude>
+    <ClInclude Include="REST\Endpoints\Patients\PatientsGETEndpoint.h">
+      <Filter>Header Files\REST\Endpoints\Patient</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Stdafx.cpp">
@@ -221,6 +224,9 @@
       <Filter>Source Files\REST\Endpoints</Filter>
     </ClCompile>
     <ClCompile Include="REST\Endpoints\Patients\PatientsGETAllEndpoint.cpp">
+      <Filter>Source Files\REST\Endpoints\Patient</Filter>
+    </ClCompile>
+    <ClCompile Include="REST\Endpoints\Patients\PatientsGETEndpoint.cpp">
       <Filter>Source Files\REST\Endpoints\Patient</Filter>
     </ClCompile>
   </ItemGroup>

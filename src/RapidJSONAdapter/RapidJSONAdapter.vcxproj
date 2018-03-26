@@ -11,19 +11,19 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{FE8FF9C8-766F-4E48-BA11-4E69EC94C8CF}</ProjectGuid>
+    <ProjectGuid>{20B54465-7343-4172-A2CB-1050001C970B}</ProjectGuid>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <Keyword>ManagedCProj</Keyword>
-    <RootNamespace>DbSQLiteAdapter</RootNamespace>
+    <RootNamespace>RapidJSONAdapter</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v141</PlatformToolset>
     <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
@@ -35,28 +35,25 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)lib\$(Configuration)\$(ProjectName)\</OutDir>
     <IntDir>$(SolutionDir)int\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)lib\$(Configuration)\$(ProjectName)\</OutDir>
     <IntDir>$(SolutionDir)int\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;BOOST_ALL_DYN_LINK;BOOST_SYSTEM_NO_DEPRECATED;RAPIDJSON_HAS_STDSTRING=1;_SCL_SECURE_NO_WARNINGS;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;BOOST_ALL_DYN_LINK;RAPIDJSON_HAS_STDSTRING=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <AdditionalIncludeDirectories>.;$(SolutionDir)src;$(SolutionDir)vcpkg\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
@@ -67,6 +64,7 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <AdditionalOptions>/Bv %(AdditionalOptions)</AdditionalOptions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <WarningLevel>Level3</WarningLevel>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -81,7 +79,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>BOOST_ALL_DYN_LINK;BOOST_SYSTEM_NO_DEPRECATED;RAPIDJSON_HAS_STDSTRING=1;_SCL_SECURE_NO_WARNINGS;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;BOOST_ALL_DYN_LINK;RAPIDJSON_HAS_STDSTRING=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <AdditionalIncludeDirectories>.;$(SolutionDir)src;$(SolutionDir)vcpkg\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>MaxSpeed</Optimization>
@@ -112,56 +110,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Core.h" />
-    <ClInclude Include="DAL\DAO\Db\DbDAOFactory.h" />
-    <ClInclude Include="DAL\DAO\Db\DbTransactionDAO.h" />
-    <ClInclude Include="DAL\DAO\Db\IDbDAOFactory.h" />
-    <ClInclude Include="DAL\DAO\Db\PatientDbLoadDAO.h" />
-    <ClInclude Include="DAL\DAO\Db\PatientDbSaveDAO.h" />
-    <ClInclude Include="DAL\DAO\ILoadDAO.h" />
-    <ClInclude Include="DAL\DAO\ISaveDAO.h" />
-    <ClInclude Include="DAL\DAO\ITransactionDAO.h" />
-    <ClInclude Include="DAL\DAO\ITransactionDAOMgr.h" />
-    <ClInclude Include="DAL\Translators\Db\AddressDbTranslator.h" />
-    <ClInclude Include="DAL\Translators\Db\DbTranslatorsFactory.h" />
-    <ClInclude Include="DAL\Translators\Db\IDatabaseEntityTranslator.h" />
-    <ClInclude Include="DAL\Translators\Db\IDbTranslatorsFactory.h" />
-    <ClInclude Include="DAL\Translators\Db\PatientDbTranslator.h" />
-    <ClInclude Include="Model\Address.h" />
-    <ClInclude Include="Model\EntityMgr.h" />
-    <ClInclude Include="Model\Model.h" />
-    <ClInclude Include="Model\Patient.h" />
-    <ClInclude Include="REST\Endpoints\EndpointsFactory.h" />
-    <ClInclude Include="REST\Endpoints\IEndpoint.h" />
-    <ClInclude Include="REST\Endpoints\IEndpointsFactory.h" />
-    <ClInclude Include="REST\Endpoints\Patients\PatientsGETAllEndpoint.h" />
-    <ClInclude Include="REST\Endpoints\Patients\PatientsGETEndpoint.h" />
-    <ClInclude Include="REST\RESTAPIWebService.h" />
-    <ClInclude Include="REST\Router\Route.h" />
-    <ClInclude Include="REST\Router\RouteFragment.h" />
-    <ClInclude Include="REST\Router\RouteParam.h" />
-    <ClInclude Include="REST\Router\Router.h" />
+    <ClInclude Include="JSONAdapter.h" />
+    <ClInclude Include="JSONDocument.h" />
+    <ClInclude Include="JSONMember.h" />
+    <ClInclude Include="JSONValue.h" />
     <ClInclude Include="Stdafx.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Core.cpp" />
-    <ClCompile Include="DAL\DAO\Db\DbDAOFactory.cpp" />
-    <ClCompile Include="DAL\DAO\Db\DbTransactionDAO.cpp" />
-    <ClCompile Include="DAL\DAO\Db\PatientDbLoadDAO.cpp" />
-    <ClCompile Include="DAL\DAO\Db\PatientDbSaveDAO.cpp" />
-    <ClCompile Include="DAL\Translators\Db\AddressDbTranslator.cpp" />
-    <ClCompile Include="DAL\Translators\Db\DbTranslatorsFactory.cpp" />
-    <ClCompile Include="DAL\Translators\Db\PatientDbTranslator.cpp" />
-    <ClCompile Include="Model\Address.cpp" />
-    <ClCompile Include="Model\Model.cpp" />
-    <ClCompile Include="Model\Patient.cpp" />
-    <ClCompile Include="REST\Endpoints\EndpointsFactory.cpp" />
-    <ClCompile Include="REST\Endpoints\Patients\PatientsGETAllEndpoint.cpp" />
-    <ClCompile Include="REST\Endpoints\Patients\PatientsGETEndpoint.cpp" />
-    <ClCompile Include="REST\RESTAPIWebService.cpp" />
-    <ClCompile Include="REST\Router\Route.cpp" />
-    <ClCompile Include="REST\Router\RouteFragment.cpp" />
-    <ClCompile Include="REST\Router\Router.cpp" />
+    <ClCompile Include="JSONAdapter.cpp" />
+    <ClCompile Include="JSONDocument.cpp" />
+    <ClCompile Include="JSONMember.cpp" />
+    <ClCompile Include="JSONValue.cpp" />
     <ClCompile Include="Stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
