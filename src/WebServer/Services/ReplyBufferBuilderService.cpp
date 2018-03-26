@@ -18,8 +18,8 @@ namespace systelab { namespace web_server {
 	{
 		std::string buffer;
 
-		const char name_value_separator[] = { ':', ' ' };
-		const char crlf[] = { '\r', '\n' };
+		std::string name_value_separator = ": ";
+		std::string crlf = "\r\n";
 
 		std::string status = translateStatusToString(reply.getStatus());
 		buffer += status;
