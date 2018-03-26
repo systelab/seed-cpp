@@ -6,6 +6,7 @@
 #include "DAL/Translators/Db/DbTranslatorsFactory.h"
 #include "Model/Model.h"
 #include "REST/RESTAPIWebService.h"
+#include "REST/Endpoints/EndpointsFactory.h"
 
 #include "DbAdapterInterface/IDatabase.h"
 
@@ -22,6 +23,7 @@ namespace seed_cpp {
 		m_model.reset(new model::Model());
 		m_dbTranslatorsFactory.reset(new dal::DbTranslatorsFactory());
 		m_dbDAOFactory.reset(new dal::DbDAOFactory(*this));
+		m_endpointsFactory.reset(new rest::EndpointsFactory(*this));
 	}
 
 	Core::~Core()
@@ -67,7 +69,7 @@ namespace seed_cpp {
 
 	void Core::initializeWebServer()
 	{
-		std::unique_ptr<systelab::web_server::IWebService> restWebService(new rest::RESTAPIWebService());
+		std::unique_ptr<systelab::web_server::IWebService> restWebService(new rest::RESTAPIWebService(*m_endpointsFactory));
 		m_webServer->registerWebService(std::move(restWebService));
 
 		m_webServer->start();

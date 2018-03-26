@@ -20,6 +20,9 @@ namespace seed_cpp {
 	namespace model {
 		class Model;
 	}
+	namespace rest {
+		class IEndpointsFactory;
+	}
 }
 
 namespace seed_cpp {
@@ -39,6 +42,7 @@ namespace seed_cpp {
 		model::Model& getModel() const;
 		dal::IDbTranslatorsFactory& getDbTranslatorsFactory() const;
 		dal::IDbDAOFactory& getDbDAOFactory() const;
+		rest::IEndpointsFactory& getEndpointsFactory() const;
 
 	private:
 		void initializeModel();
@@ -51,6 +55,7 @@ namespace seed_cpp {
 		std::unique_ptr<model::Model> m_model;
 		std::unique_ptr<dal::IDbTranslatorsFactory> m_dbTranslatorsFactory;
 		std::unique_ptr<dal::IDbDAOFactory> m_dbDAOFactory;
+		std::unique_ptr<rest::IEndpointsFactory> m_endpointsFactory;
 	};
 
 }
