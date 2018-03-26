@@ -25,7 +25,7 @@ namespace seed_cpp { namespace rest {
 
 	std::unique_ptr<systelab::web_server::Reply> RESTAPIWebService::process(const systelab::web_server::Request& request) const
 	{
-		return std::unique_ptr<systelab::web_server::Reply>();
+		return m_router->process(request);
 	}
 
 }}
