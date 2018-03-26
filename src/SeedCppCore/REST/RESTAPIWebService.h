@@ -6,16 +6,20 @@
 
 namespace seed_cpp { namespace rest {
 
+	class IEndpointsFactory;
+	class Router;
+
 	class RESTAPIWebService : public systelab::web_server::IWebService
 	{
 	public:
-		RESTAPIWebService();
+		RESTAPIWebService(IEndpointsFactory&);
 		virtual ~RESTAPIWebService();
 
 		std::unique_ptr<systelab::web_server::Reply> process(const systelab::web_server::Request& request) const;
 
 	private:
-		//Router m_router;
+		IEndpointsFactory& m_endpointsFactory;
+		std::unique_ptr<Router> m_router;
 	};
 
 }}
