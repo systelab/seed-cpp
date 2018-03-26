@@ -131,7 +131,15 @@
     <ClInclude Include="Model\EntityMgr.h" />
     <ClInclude Include="Model\Model.h" />
     <ClInclude Include="Model\Patient.h" />
+    <ClInclude Include="REST\Endpoints\EndpointsFactory.h" />
+    <ClInclude Include="REST\Endpoints\IEndpoint.h" />
+    <ClInclude Include="REST\Endpoints\IEndpointsFactory.h" />
+    <ClInclude Include="REST\Endpoints\Patients\PatientsGETAllEndpoint.h" />
     <ClInclude Include="REST\RESTAPIWebService.h" />
+    <ClInclude Include="REST\Router\Route.h" />
+    <ClInclude Include="REST\Router\RouteFragment.h" />
+    <ClInclude Include="REST\Router\RouteParam.h" />
+    <ClInclude Include="REST\Router\Router.h" />
     <ClInclude Include="Stdafx.h" />
   </ItemGroup>
   <ItemGroup>
@@ -146,7 +154,12 @@
     <ClCompile Include="Model\Address.cpp" />
     <ClCompile Include="Model\Model.cpp" />
     <ClCompile Include="Model\Patient.cpp" />
+    <ClCompile Include="REST\Endpoints\EndpointsFactory.cpp" />
+    <ClCompile Include="REST\Endpoints\Patients\PatientsGETAllEndpoint.cpp" />
     <ClCompile Include="REST\RESTAPIWebService.cpp" />
+    <ClCompile Include="REST\Router\Route.cpp" />
+    <ClCompile Include="REST\Router\RouteFragment.cpp" />
+    <ClCompile Include="REST\Router\Router.cpp" />
     <ClCompile Include="Stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>

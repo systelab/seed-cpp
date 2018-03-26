@@ -60,6 +60,24 @@
     <Filter Include="Header Files\REST">
       <UniqueIdentifier>{8df3a61a-ab88-4781-9b13-55015b989388}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\REST\Router">
+      <UniqueIdentifier>{1b0e3e1d-ca9b-4f86-86fe-097620c92b93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\REST\Router">
+      <UniqueIdentifier>{27398ad9-041c-417b-a92d-b57e7990e843}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\REST\Endpoints">
+      <UniqueIdentifier>{1df0e980-bdfb-4288-94da-9773490e7f10}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\REST\Endpoints">
+      <UniqueIdentifier>{e77bc26a-50c9-4a7e-a4d1-bdfcc8f8d11d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\REST\Endpoints\Patient">
+      <UniqueIdentifier>{0f644a6a-4bf2-42d6-a7ed-5d776e775f07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\REST\Endpoints\Patient">
+      <UniqueIdentifier>{d90f643c-74e1-4177-b83b-b39d8d52830f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Stdafx.h">
@@ -125,6 +143,30 @@
     <ClInclude Include="REST\RESTAPIWebService.h">
       <Filter>Header Files\REST</Filter>
     </ClInclude>
+    <ClInclude Include="REST\Router\RouteParam.h">
+      <Filter>Header Files\REST\Router</Filter>
+    </ClInclude>
+    <ClInclude Include="REST\Router\Router.h">
+      <Filter>Header Files\REST\Router</Filter>
+    </ClInclude>
+    <ClInclude Include="REST\Router\Route.h">
+      <Filter>Header Files\REST\Router</Filter>
+    </ClInclude>
+    <ClInclude Include="REST\Router\RouteFragment.h">
+      <Filter>Header Files\REST\Router</Filter>
+    </ClInclude>
+    <ClInclude Include="REST\Endpoints\IEndpoint.h">
+      <Filter>Header Files\REST\Endpoints</Filter>
+    </ClInclude>
+    <ClInclude Include="REST\Endpoints\IEndpointsFactory.h">
+      <Filter>Header Files\REST\Endpoints</Filter>
+    </ClInclude>
+    <ClInclude Include="REST\Endpoints\EndpointsFactory.h">
+      <Filter>Header Files\REST\Endpoints</Filter>
+    </ClInclude>
+    <ClInclude Include="REST\Endpoints\Patients\PatientsGETAllEndpoint.h">
+      <Filter>Header Files\REST\Endpoints\Patient</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Stdafx.cpp">
@@ -165,6 +207,21 @@
     </ClCompile>
     <ClCompile Include="REST\RESTAPIWebService.cpp">
       <Filter>Source Files\REST</Filter>
+    </ClCompile>
+    <ClCompile Include="REST\Router\Router.cpp">
+      <Filter>Source Files\REST\Router</Filter>
+    </ClCompile>
+    <ClCompile Include="REST\Router\Route.cpp">
+      <Filter>Source Files\REST\Router</Filter>
+    </ClCompile>
+    <ClCompile Include="REST\Router\RouteFragment.cpp">
+      <Filter>Source Files\REST\Router</Filter>
+    </ClCompile>
+    <ClCompile Include="REST\Endpoints\EndpointsFactory.cpp">
+      <Filter>Source Files\REST\Endpoints</Filter>
+    </ClCompile>
+    <ClCompile Include="REST\Endpoints\Patients\PatientsGETAllEndpoint.cpp">
+      <Filter>Source Files\REST\Endpoints\Patient</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
