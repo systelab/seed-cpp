@@ -14,6 +14,10 @@ namespace systelab { namespace web_server {
 	{
 	}
 
+	RequestQueryStrings::~RequestQueryStrings()
+	{
+	}
+
 	bool RequestQueryStrings::hasItem(const std::string& name) const
 	{
 		return (m_items.find(name) != m_items.end());
