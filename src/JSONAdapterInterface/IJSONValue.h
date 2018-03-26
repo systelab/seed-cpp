@@ -46,6 +46,10 @@ namespace systelab { namespace json_adapter {
 		virtual bool hasObjectMember(const std::string&) const = 0;
 		virtual IJSONValue& getObjectMemberValue(const std::string&) const = 0;
 
+		virtual void addMember(const std::string& name, bool value) = 0;
+		virtual void addMember(const std::string& name, int value) = 0;
+		virtual void addMember(const std::string& name, double value) = 0;
+		virtual void addMember(const std::string& name, const std::string& value) = 0;
 		virtual void addMember(const std::string& name, std::unique_ptr<IJSONValue>) = 0;
 		virtual void removeMember(const std::string& name) = 0;
 
@@ -55,6 +59,9 @@ namespace systelab { namespace json_adapter {
 
 		virtual void addArrayValue(std::unique_ptr<IJSONValue>) = 0;
 		virtual void clearArray() = 0;
+
+		// Factory of values
+		virtual std::unique_ptr<IJSONValue> buildValue(Type) const = 0;
 	};
 
 }}

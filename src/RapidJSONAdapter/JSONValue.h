@@ -42,6 +42,10 @@ namespace systelab { namespace json_adapter { namespace rapidjson_adapter {
 		bool hasObjectMember(const std::string&) const;
 		IJSONValue& getObjectMemberValue(const std::string&) const;
 
+		void addMember(const std::string& name, bool value);
+		void addMember(const std::string& name, int value);
+		void addMember(const std::string& name, double value);
+		void addMember(const std::string& name, const std::string& value);
 		void addMember(const std::string& name, std::unique_ptr<IJSONValue>);
 		void removeMember(const std::string& name);
 
@@ -51,6 +55,9 @@ namespace systelab { namespace json_adapter { namespace rapidjson_adapter {
 
 		void addArrayValue(std::unique_ptr<IJSONValue>);
 		void clearArray();
+
+		// Factory of values
+		std::unique_ptr<IJSONValue> buildValue(Type) const;
 
 	private:
 		void loadObjectMembers() const;

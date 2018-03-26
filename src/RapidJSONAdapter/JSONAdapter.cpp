@@ -16,16 +16,17 @@ namespace systelab { namespace json_adapter { namespace rapidjson_adapter {
 
 	std::unique_ptr<IJSONDocument> JSONAdapter::buildDocument()
 	{
-		return std::make_unique<JSONDocument>(rapidjson::Document());
+		std::unique_ptr<rapidjson::Document> rapidjsonDocument = std::make_unique<rapidjson::Document>();
+		return std::make_unique<JSONDocument>(std::move(rapidjsonDocument));
 	}
 
 	std::unique_ptr<IJSONDocument> JSONAdapter::parseDocument(const std::string& content)
 	{
-		rapidjson::Document document;
-		document.Parse(content);
-		if (!document.HasParseError())
+		std::unique_ptr<rapidjson::Document> rapidjsonDocument = std::make_unique<rapidjson::Document>();
+		rapidjsonDocument->Parse(content);
+		if (!rapidjsonDocument->HasParseError())
 		{
-			return std::make_unique<JSONDocument>(document);
+			return std::make_unique<JSONDocument>(std::move(rapidjsonDocument));
 		}
 		else
 		{

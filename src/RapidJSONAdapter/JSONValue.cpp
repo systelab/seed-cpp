@@ -150,6 +150,34 @@ namespace systelab { namespace json_adapter { namespace rapidjson_adapter {
 		}
 	}
 
+	void JSONValue::addMember(const std::string& name, bool value)
+	{
+		std::unique_ptr<IJSONValue> newBooleanValue = buildValue(BOOLEAN_TYPE);
+		newBooleanValue->setBoolean(value);
+		addMember(name, std::move(newBooleanValue));
+	}
+
+	void JSONValue::addMember(const std::string& name, int value)
+	{
+		std::unique_ptr<IJSONValue> newNumberValue = buildValue(NUMBER_TYPE);
+		newNumberValue->setInteger(value);
+		addMember(name, std::move(newNumberValue));
+	}
+
+	void JSONValue::addMember(const std::string& name, double value)
+	{
+		std::unique_ptr<IJSONValue> newNumberValue = buildValue(NUMBER_TYPE);
+		newNumberValue->setDouble(value);
+		addMember(name, std::move(newNumberValue));
+	}
+
+	void JSONValue::addMember(const std::string& name, const std::string& value)
+	{
+		std::unique_ptr<IJSONValue> newStringValue = buildValue(STRING_TYPE);
+		newStringValue->setString(value);
+		addMember(name, std::move(newStringValue));
+	}
+
 	void JSONValue::addMember(const std::string& name, std::unique_ptr<IJSONValue> value)
 	{
 		loadObjectMembers();
@@ -207,6 +235,13 @@ namespace systelab { namespace json_adapter { namespace rapidjson_adapter {
 		m_value.GetArray().Clear();
 		m_arrayValuesLoaded = true;
 		m_arrayValues.clear();
+	}
+
+	std::unique_ptr<IJSONValue> JSONValue::buildValue(Type type) const
+	{
+		std::unique_ptr<IJSONValue> newValue = std::make_unique<JSONValue>(rapidjson::Value(), m_allocator);
+		newValue->setType(type);
+		return newValue;
 	}
 
 	void JSONValue::loadObjectMembers() const

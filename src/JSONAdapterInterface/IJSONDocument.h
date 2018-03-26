@@ -13,8 +13,6 @@ namespace systelab { namespace json_adapter {
 
 		virtual IJSONValue& getRootValue() = 0;
 		virtual const IJSONValue& getRootValue() const = 0;
-
-		virtual std::unique_ptr<IJSONValue> buildValue() = 0;
 	};
 
 }}
