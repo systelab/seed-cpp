@@ -10,6 +10,10 @@ namespace systelab { namespace json_adapter { namespace rapidjson_adapter {
 						 rapidjson::Document::AllocatorType& allocator)
 		:m_value(value)
 		,m_allocator(allocator)
+		,m_objectMembersLoaded(false)
+		,m_objectMembers()
+		,m_arrayValuesLoaded(false)
+		,m_arrayValues()
 	{
 	}
 
