@@ -17,9 +17,11 @@ namespace seed_cpp { namespace rest {
 		using namespace std::placeholders;
 
 		m_router = std::make_unique<Router>();
-		m_router->addRoute("GET",  "seed/v1/patients",     std::bind(&IEndpointsFactory::buildPatientGetAllEndpoint, std::ref(m_endpointsFactory), _1));
-		m_router->addRoute("GET",  "seed/v1/patients/:id", std::bind(&IEndpointsFactory::buildPatientGetEndpoint, std::ref(m_endpointsFactory), _1));
-		m_router->addRoute("POST", "seed/v1/patients",     std::bind(&IEndpointsFactory::buildPatientPostEndpoint, std::ref(m_endpointsFactory), _1));
+		m_router->addRoute("GET",    "seed/v1/patients",     std::bind(&IEndpointsFactory::buildPatientGetAllEndpoint, std::ref(m_endpointsFactory), _1));
+		m_router->addRoute("GET",    "seed/v1/patients/:id", std::bind(&IEndpointsFactory::buildPatientGetEndpoint,    std::ref(m_endpointsFactory), _1));
+		m_router->addRoute("POST",   "seed/v1/patients",     std::bind(&IEndpointsFactory::buildPatientPostEndpoint,   std::ref(m_endpointsFactory), _1));
+		m_router->addRoute("PUT",    "seed/v1/patients/:id", std::bind(&IEndpointsFactory::buildPatientPutEndpoint,    std::ref(m_endpointsFactory), _1));
+		m_router->addRoute("DELETE", "seed/v1/patients/:id", std::bind(&IEndpointsFactory::buildPatientDeleteEndpoint, std::ref(m_endpointsFactory), _1));
 	}
 
 	RESTAPIWebService::~RESTAPIWebService()
