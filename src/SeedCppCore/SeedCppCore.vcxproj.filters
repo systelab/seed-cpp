@@ -78,6 +78,12 @@
     <Filter Include="Header Files\REST\Endpoints\Patient">
       <UniqueIdentifier>{d90f643c-74e1-4177-b83b-b39d8d52830f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\REST\Helpers">
+      <UniqueIdentifier>{cb010298-e12f-4292-a99b-b36361f91aa8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\REST\Helpers">
+      <UniqueIdentifier>{18e8b717-a75b-4a44-a014-ab132e23eb9d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Stdafx.h">
@@ -164,12 +170,6 @@
     <ClInclude Include="REST\Endpoints\EndpointsFactory.h">
       <Filter>Header Files\REST\Endpoints</Filter>
     </ClInclude>
-    <ClInclude Include="REST\Endpoints\Patients\PatientsGETAllEndpoint.h">
-      <Filter>Header Files\REST\Endpoints\Patient</Filter>
-    </ClInclude>
-    <ClInclude Include="REST\Endpoints\Patients\PatientsGETEndpoint.h">
-      <Filter>Header Files\REST\Endpoints\Patient</Filter>
-    </ClInclude>
     <ClInclude Include="DAL\Translators\JSON\IJSONLoadTranslator.h">
       <Filter>Header Files\DAL\Translators\JSON</Filter>
     </ClInclude>
@@ -184,6 +184,18 @@
     </ClInclude>
     <ClInclude Include="DAL\Translators\JSON\IJSONTranslatorsFactory.h">
       <Filter>Header Files\DAL\Translators\JSON</Filter>
+    </ClInclude>
+    <ClInclude Include="REST\Endpoints\Patients\PatientsGetEndpoint.h">
+      <Filter>Header Files\REST\Endpoints\Patient</Filter>
+    </ClInclude>
+    <ClInclude Include="REST\Endpoints\Patients\PatientsPostEndpoint.h">
+      <Filter>Header Files\REST\Endpoints\Patient</Filter>
+    </ClInclude>
+    <ClInclude Include="REST\Endpoints\Patients\PatientsGetAllEndpoint.h">
+      <Filter>Header Files\REST\Endpoints\Patient</Filter>
+    </ClInclude>
+    <ClInclude Include="REST\Helpers\ReplyBuilderHelper.h">
+      <Filter>Header Files\REST\Helpers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -238,17 +250,23 @@
     <ClCompile Include="REST\Endpoints\EndpointsFactory.cpp">
       <Filter>Source Files\REST\Endpoints</Filter>
     </ClCompile>
-    <ClCompile Include="REST\Endpoints\Patients\PatientsGETAllEndpoint.cpp">
-      <Filter>Source Files\REST\Endpoints\Patient</Filter>
-    </ClCompile>
-    <ClCompile Include="REST\Endpoints\Patients\PatientsGETEndpoint.cpp">
-      <Filter>Source Files\REST\Endpoints\Patient</Filter>
-    </ClCompile>
     <ClCompile Include="DAL\Translators\JSON\PatientJSONTranslator.cpp">
       <Filter>Source Files\DAL\Translators\JSON</Filter>
     </ClCompile>
     <ClCompile Include="DAL\Translators\JSON\JSONTranslatorsFactory.cpp">
       <Filter>Source Files\DAL\Translators\JSON</Filter>
+    </ClCompile>
+    <ClCompile Include="REST\Endpoints\Patients\PatientsPostEndpoint.cpp">
+      <Filter>Source Files\REST\Endpoints\Patient</Filter>
+    </ClCompile>
+    <ClCompile Include="REST\Endpoints\Patients\PatientsGetAllEndpoint.cpp">
+      <Filter>Source Files\REST\Endpoints\Patient</Filter>
+    </ClCompile>
+    <ClCompile Include="REST\Endpoints\Patients\PatientsGetEndpoint.cpp">
+      <Filter>Source Files\REST\Endpoints\Patient</Filter>
+    </ClCompile>
+    <ClCompile Include="REST\Helpers\ReplyBuilderHelper.cpp">
+      <Filter>Source Files\REST\Helpers</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

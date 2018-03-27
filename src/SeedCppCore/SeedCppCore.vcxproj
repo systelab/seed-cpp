@@ -139,8 +139,10 @@
     <ClInclude Include="REST\Endpoints\EndpointsFactory.h" />
     <ClInclude Include="REST\Endpoints\IEndpoint.h" />
     <ClInclude Include="REST\Endpoints\IEndpointsFactory.h" />
-    <ClInclude Include="REST\Endpoints\Patients\PatientsGETAllEndpoint.h" />
-    <ClInclude Include="REST\Endpoints\Patients\PatientsGETEndpoint.h" />
+    <ClInclude Include="REST\Endpoints\Patients\PatientsGetAllEndpoint.h" />
+    <ClInclude Include="REST\Endpoints\Patients\PatientsGetEndpoint.h" />
+    <ClInclude Include="REST\Endpoints\Patients\PatientsPostEndpoint.h" />
+    <ClInclude Include="REST\Helpers\ReplyBuilderHelper.h" />
     <ClInclude Include="REST\RESTAPIWebService.h" />
     <ClInclude Include="REST\Router\Route.h" />
     <ClInclude Include="REST\Router\RouteFragment.h" />
@@ -163,8 +165,10 @@
     <ClCompile Include="Model\Model.cpp" />
     <ClCompile Include="Model\Patient.cpp" />
     <ClCompile Include="REST\Endpoints\EndpointsFactory.cpp" />
-    <ClCompile Include="REST\Endpoints\Patients\PatientsGETAllEndpoint.cpp" />
-    <ClCompile Include="REST\Endpoints\Patients\PatientsGETEndpoint.cpp" />
+    <ClCompile Include="REST\Endpoints\Patients\PatientsGetAllEndpoint.cpp" />
+    <ClCompile Include="REST\Endpoints\Patients\PatientsGetEndpoint.cpp" />
+    <ClCompile Include="REST\Endpoints\Patients\PatientsPostEndpoint.cpp" />
+    <ClCompile Include="REST\Helpers\ReplyBuilderHelper.cpp" />
     <ClCompile Include="REST\RESTAPIWebService.cpp" />
     <ClCompile Include="REST\Router\Route.cpp" />
     <ClCompile Include="REST\Router\RouteFragment.cpp" />
