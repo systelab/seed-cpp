@@ -136,6 +136,7 @@
     <ClInclude Include="Model\EntityMgr.h" />
     <ClInclude Include="Model\Model.h" />
     <ClInclude Include="Model\Patient.h" />
+    <ClInclude Include="REST\Endpoints\EndpointRequestData.h" />
     <ClInclude Include="REST\Endpoints\EndpointsFactory.h" />
     <ClInclude Include="REST\Endpoints\IEndpoint.h" />
     <ClInclude Include="REST\Endpoints\IEndpointsFactory.h" />
@@ -164,6 +165,7 @@
     <ClCompile Include="Model\Address.cpp" />
     <ClCompile Include="Model\Model.cpp" />
     <ClCompile Include="Model\Patient.cpp" />
+    <ClCompile Include="REST\Endpoints\EndpointRequestData.cpp" />
     <ClCompile Include="REST\Endpoints\EndpointsFactory.cpp" />
     <ClCompile Include="REST\Endpoints\Patients\PatientsGetAllEndpoint.cpp" />
     <ClCompile Include="REST\Endpoints\Patients\PatientsGetEndpoint.cpp" />
