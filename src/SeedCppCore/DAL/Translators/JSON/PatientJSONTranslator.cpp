@@ -16,10 +16,21 @@ namespace seed_cpp { namespace dal {
 	{
 	}
 
-	void PatientJSONSaveTranslator::saveEntityToJSON(systelab::json_adapter::IJSONValue& jsonPatient,
-													 systelab::json_adapter::IJSONDocument& jsonDocument) const
+	void PatientJSONSaveTranslator::saveEntityToJSON(systelab::json_adapter::IJSONValue& jsonPatient) const
 	{
-		//jsonPatient.addMember("id", *m_patient.getId());
+		jsonPatient.addMember("id", (int) *m_patient.getId());
+		jsonPatient.addMember("surname", m_patient.getSurname());
+		jsonPatient.addMember("name", m_patient.getName());
+		jsonPatient.addMember("email", m_patient.getEmail());
+		jsonPatient.addMember("dob", boost::posix_time::to_iso_string(m_patient.getDob()));
+
+		model::Address& address = m_patient.getAddress();
+		std::unique_ptr<systelab::json_adapter::IJSONValue> jsonAddress = jsonPatient.buildValue(systelab::json_adapter::OBJECT_TYPE);
+		jsonAddress->addMember("coordinates", address.getCoordinates());
+		jsonAddress->addMember("street", address.getStreet());
+		jsonAddress->addMember("city", address.getCity());
+		jsonAddress->addMember("zip", address.getZip());
+		jsonPatient.addMember("address", std::move(jsonAddress));
 	}
 
 
@@ -34,17 +45,27 @@ namespace seed_cpp { namespace dal {
 
 	void PatientJSONLoadTranslator::loadEntityFromJSON(const systelab::json_adapter::IJSONValue& jsonPatient)
 	{
-		if (jsonPatient.hasObjectMember("name"))
-		{
-			std::string name = jsonPatient.getObjectMemberValue("name").getString();
-			m_patient.setName(name);
-		}
+		std::string surname = jsonPatient.getObjectMemberValue("surname").getString();
+		std::string name = jsonPatient.getObjectMemberValue("name").getString();
+		std::string email = jsonPatient.getObjectMemberValue("email").getString();
+		boost::posix_time::ptime dob = boost::posix_time::from_iso_string(jsonPatient.getObjectMemberValue("dob").getString());
 
-		if (jsonPatient.hasObjectMember("surname"))
-		{
-			std::string surname = jsonPatient.getObjectMemberValue("surname").getString();
-			m_patient.setSurname(surname);
-		}
+		m_patient.setSurname(surname);
+		m_patient.setName(name);
+		m_patient.setEmail(email);
+		m_patient.setDob(dob);
+
+		const systelab::json_adapter::IJSONValue& jsonAddress = jsonPatient.getObjectMemberValue("address");
+		std::string coordinates = jsonAddress.getObjectMemberValue("coordinates").getString();
+		std::string street = jsonAddress.getObjectMemberValue("street").getString();
+		std::string city = jsonAddress.getObjectMemberValue("city").getString();
+		std::string zip = jsonAddress.getObjectMemberValue("zip").getString();
+
+		model::Address& address = m_patient.getAddress();
+		address.setCoordinates(coordinates);
+		address.setStreet(street);
+		address.setCity(city);
+		address.setZip(zip);
 	}
 
 }}
