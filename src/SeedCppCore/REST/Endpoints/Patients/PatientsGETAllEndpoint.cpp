@@ -29,8 +29,8 @@ namespace seed_cpp { namespace rest {
 
 	std::unique_ptr<systelab::web_server::Reply> PatientsGetAllEndpoint::execute()
 	{
-		auto jsonDocument = m_jsonAdapter.buildEmptyDocument();
-		systelab::json_adapter::IJSONValue& jsonRoot = jsonDocument->getRootValue();
+		auto jsonResponse = m_jsonAdapter.buildEmptyDocument();
+		systelab::json_adapter::IJSONValue& jsonRoot = jsonResponse->getRootValue();
 		jsonRoot.setType(systelab::json_adapter::ARRAY_TYPE);
 
 		unsigned int nPatients = m_patientMgr.count();
@@ -45,7 +45,7 @@ namespace seed_cpp { namespace rest {
 			jsonRoot.addArrayValue(std::move(jsonPatient));
 		}
 
-		return ReplyBuilderHelper::build(systelab::web_server::Reply::OK, jsonDocument->serialize());
+		return ReplyBuilderHelper::build(systelab::web_server::Reply::OK, jsonResponse->serialize());
 	}
 
 }}
