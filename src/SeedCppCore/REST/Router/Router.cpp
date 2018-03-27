@@ -19,7 +19,7 @@ namespace seed_cpp { namespace rest {
 
 	void Router::addRoute(const std::string& method,
 						  const std::string& uri,
-						  std::function< std::unique_ptr<IEndpoint>(const std::vector<RouteParam>&) > factoryMethod)
+						  std::function< std::unique_ptr<IEndpoint>(const EndpointRequestData&) > factoryMethod)
 	{
 		std::unique_ptr<Route> route = std::make_unique<Route>(method, uri, factoryMethod);
 		m_routes.push_back(std::move(route));

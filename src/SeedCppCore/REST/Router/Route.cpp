@@ -1,6 +1,10 @@
 #include "StdAfx.h"
 #include "Route.h"
 
+#include "REST/Endpoints/IEndpoint.h"
+#include "REST/Endpoints/EndpointRequestData.h"
+#include "REST/Router/RouteParam.h"
+
 #include "WebServerInterface/Model/Request.h"
 #include "WebServerInterface/Model/Reply.h"
 
@@ -9,7 +13,7 @@ namespace seed_cpp { namespace rest {
 
 	Route::Route(const std::string& method,
 				 const std::string& uri,
-				 std::function< std::unique_ptr<IEndpoint>(const std::vector<RouteParam>&) > factoryMethod)
+				 std::function< std::unique_ptr<IEndpoint>(const EndpointRequestData&) > factoryMethod)
 		:m_method(method)
 		,m_fragments(buildFragmentsFromURI(uri))
 		,m_factoryMethod(factoryMethod)
@@ -57,7 +61,8 @@ namespace seed_cpp { namespace rest {
 		std::unique_ptr<IEndpoint> endpoint;
 		try
 		{
-			endpoint = m_factoryMethod(params);
+			EndpointRequestData requestData(params, request.getContent(), request.getQueryStrings());
+			endpoint = m_factoryMethod(requestData);
 		}
 		catch (std::exception&)
 		{

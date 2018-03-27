@@ -1,11 +1,11 @@
 #pragma once
 
-#include "REST/Endpoints/IEndpoint.h"
 #include "REST/Router/RouteFragment.h"
-#include "REST/Router/RouteParam.h"
 
+#include <functional>
 #include <memory>
 #include <string>
+#include <vector>
 
 
 namespace systelab { namespace web_server {
@@ -15,12 +15,15 @@ namespace systelab { namespace web_server {
 
 namespace seed_cpp { namespace rest {
 
+	class IEndpoint;
+	class EndpointRequestData;
+
 	class Route
 	{
 	public:
 		Route(const std::string& method,
 			  const std::string& uri,
-			  std::function< std::unique_ptr<IEndpoint>(const std::vector<RouteParam>&) > factoryMethod);
+			  std::function< std::unique_ptr<IEndpoint>(const EndpointRequestData&) > factoryMethod);
 		virtual ~Route();
 
 		std::unique_ptr<systelab::web_server::Reply> execute(const systelab::web_server::Request&) const;
@@ -31,7 +34,7 @@ namespace seed_cpp { namespace rest {
 	private:
 		std::string m_method;
 		std::vector<RouteFragment> m_fragments;
-		std::function< std::unique_ptr<IEndpoint>(const std::vector<RouteParam>&) > m_factoryMethod;
+		std::function< std::unique_ptr<IEndpoint>(const EndpointRequestData&) > m_factoryMethod;
 	};
 
 }}
