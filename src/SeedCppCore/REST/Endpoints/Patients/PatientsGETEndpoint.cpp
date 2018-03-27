@@ -37,14 +37,11 @@ namespace seed_cpp { namespace rest {
 			return ReplyBuilderHelper::build(systelab::web_server::Reply::NOT_FOUND);
 		}
 
-		auto jsonDocument = m_jsonAdapter.buildEmptyDocument();
-		systelab::json_adapter::IJSONValue& jsonRoot = jsonDocument->getRootValue();
-		jsonRoot.setType(systelab::json_adapter::OBJECT_TYPE);
-
+		auto jsonResponse = m_jsonAdapter.buildEmptyDocument();
 		auto patientTranslator = m_jsonTranslatorsFactory.buildPatientSaveTranslator(*patient);
-		patientTranslator->saveEntityToJSON(jsonRoot);
+		patientTranslator->saveEntityToJSON(jsonResponse->getRootValue());
 
-		return ReplyBuilderHelper::build(systelab::web_server::Reply::OK, jsonDocument->serialize());
+		return ReplyBuilderHelper::build(systelab::web_server::Reply::OK, jsonResponse->serialize());
 	}
 
 }}
