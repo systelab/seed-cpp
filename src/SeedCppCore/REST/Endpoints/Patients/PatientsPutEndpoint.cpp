@@ -57,7 +57,7 @@ namespace seed_cpp { namespace rest {
 
 				auto patientSaveDAO = m_dbDAOFactory.buildPatientSaveDAO(*patientToUpdate);
 				patientSaveDAO->updateEntity();
-				const model::Patient& updatedPatient = m_patientMgr.addEntity(std::move(patientToUpdate));
+				const model::Patient& updatedPatient = m_patientMgr.editEntity(std::move(patientToUpdate));
 
 				auto jsonResponse = m_jsonAdapter.buildEmptyDocument();
 				auto patientJSONSaveTranslator = m_jsonTranslatorsFactory.buildPatientSaveTranslator(updatedPatient);
