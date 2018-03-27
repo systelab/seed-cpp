@@ -4,6 +4,7 @@
 #include "DAL/DAO/ILoadDAO.h"
 #include "DAL/DAO/Db/DbDAOFactory.h"
 #include "DAL/Translators/Db/DbTranslatorsFactory.h"
+#include "DAL/Translators/JSON/JSONTranslatorsFactory.h"
 #include "Model/Model.h"
 #include "REST/RESTAPIWebService.h"
 #include "REST/Endpoints/EndpointsFactory.h"
@@ -22,10 +23,11 @@ namespace seed_cpp {
 		,m_webServer(std::move(webServer))
 		,m_jsonAdapter(std::move(jsonAdapter))
 	{
-		m_model.reset(new model::Model());
-		m_dbTranslatorsFactory.reset(new dal::DbTranslatorsFactory());
-		m_dbDAOFactory.reset(new dal::DbDAOFactory(*this));
-		m_endpointsFactory.reset(new rest::EndpointsFactory(*this));
+		m_model = std::make_unique<model::Model>();
+		m_dbTranslatorsFactory = std::make_unique<dal::DbTranslatorsFactory>();
+		m_dbDAOFactory = std::make_unique<dal::DbDAOFactory>(*this);
+		m_jsonTranslatorsFactory = std::make_unique<dal::JSONTranslatorsFactory>();
+		m_endpointsFactory = std::make_unique<rest::EndpointsFactory>(*this);
 	}
 
 	Core::~Core()
@@ -68,6 +70,11 @@ namespace seed_cpp {
 		return *m_dbDAOFactory;
 	}
 
+	dal::IJSONTranslatorsFactory& Core::getJSONTranslatorsFactory() const
+	{
+		return *m_jsonTranslatorsFactory;
+	}
+
 	rest::IEndpointsFactory& Core::getEndpointsFactory() const
 	{
 		return *m_endpointsFactory;
@@ -81,7 +88,8 @@ namespace seed_cpp {
 
 	void Core::initializeWebServer()
 	{
-		std::unique_ptr<systelab::web_server::IWebService> restWebService(new rest::RESTAPIWebService(getEndpointsFactory()));
+		std::unique_ptr<systelab::web_server::IWebService> restWebService;
+		restWebService = std::make_unique<rest::RESTAPIWebService>(getEndpointsFactory());
 		m_webServer->registerWebService(std::move(restWebService));
 
 		m_webServer->start();
