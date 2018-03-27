@@ -18,6 +18,7 @@ namespace seed_cpp { namespace dal {
 
 	void PatientJSONSaveTranslator::saveEntityToJSON(systelab::json_adapter::IJSONValue& jsonPatient) const
 	{
+		jsonPatient.setType(systelab::json_adapter::OBJECT_TYPE);
 		jsonPatient.addMember("id", (int) *m_patient.getId());
 		jsonPatient.addMember("surname", m_patient.getSurname());
 		jsonPatient.addMember("name", m_patient.getName());
