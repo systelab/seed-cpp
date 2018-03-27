@@ -9,6 +9,7 @@
 #include "REST/Endpoints/Patients/PatientsGetAllEndpoint.h"
 #include "REST/Endpoints/Patients/PatientsGetEndpoint.h"
 #include "REST/Endpoints/Patients/PatientsPostEndpoint.h"
+#include "REST/Endpoints/Patients/PatientsPutEndpoint.h"
 
 
 namespace seed_cpp { namespace rest {
@@ -52,9 +53,16 @@ namespace seed_cpp { namespace rest {
 		return std::make_unique<PatientsPostEndpoint>(requestContent, patientMgr, dbDAOFactory, jsonTranslatorsFactory, jsonAdapter);
 	}
 
-	std::unique_ptr<IEndpoint> EndpointsFactory::buildPatientPutEndpoint(const EndpointRequestData&)
+	std::unique_ptr<IEndpoint> EndpointsFactory::buildPatientPutEndpoint(const EndpointRequestData& requestData)
 	{
-		return std::unique_ptr<IEndpoint>();
+		unsigned int patientId = requestData.getRouteParameters()[0].getValue<unsigned int>();
+		const std::string& requestContent = requestData.getContent();
+		model::EntityMgr<model::Patient>& patientMgr = m_core.getModel().getPatientMgr();
+		dal::IDbDAOFactory& dbDAOFactory = m_core.getDbDAOFactory();
+		dal::IJSONTranslatorsFactory& jsonTranslatorsFactory = m_core.getJSONTranslatorsFactory();
+		systelab::json_adapter::IJSONAdapter& jsonAdapter = m_core.getJSONAdapter();
+
+		return std::make_unique<PatientsPutEndpoint>(patientId, requestContent, patientMgr, dbDAOFactory, jsonTranslatorsFactory, jsonAdapter);
 	}
 
 	std::unique_ptr<IEndpoint> EndpointsFactory::buildPatientDeleteEndpoint(const EndpointRequestData&)
