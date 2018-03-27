@@ -6,6 +6,7 @@
 #include "Model/Patient.h"
 #include "REST/Endpoints/IEndpoint.h"
 #include "REST/Endpoints/EndpointRequestData.h"
+#include "REST/Endpoints/Patients/PatientsDeleteEndpoint.h"
 #include "REST/Endpoints/Patients/PatientsGetAllEndpoint.h"
 #include "REST/Endpoints/Patients/PatientsGetEndpoint.h"
 #include "REST/Endpoints/Patients/PatientsPostEndpoint.h"
@@ -65,9 +66,13 @@ namespace seed_cpp { namespace rest {
 		return std::make_unique<PatientsPutEndpoint>(patientId, requestContent, patientMgr, dbDAOFactory, jsonTranslatorsFactory, jsonAdapter);
 	}
 
-	std::unique_ptr<IEndpoint> EndpointsFactory::buildPatientDeleteEndpoint(const EndpointRequestData&)
+	std::unique_ptr<IEndpoint> EndpointsFactory::buildPatientDeleteEndpoint(const EndpointRequestData& requestData)
 	{
-		return std::unique_ptr<IEndpoint>();
+		unsigned int patientId = requestData.getRouteParameters()[0].getValue<unsigned int>();
+		model::EntityMgr<model::Patient>& patientMgr = m_core.getModel().getPatientMgr();
+		dal::IDbDAOFactory& dbDAOFactory = m_core.getDbDAOFactory();
+
+		return std::make_unique<PatientsDeleteEndpoint>(patientId, patientMgr, dbDAOFactory);
 	}
 
 }}
