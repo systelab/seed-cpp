@@ -1,6 +1,7 @@
 #pragma once
 
-#include <memory>
+#include <string>
+
 
 namespace systelab { namespace json_adapter {
 
@@ -13,6 +14,8 @@ namespace systelab { namespace json_adapter {
 
 		virtual IJSONValue& getRootValue() = 0;
 		virtual const IJSONValue& getRootValue() const = 0;
+
+		virtual std::string serialize() const = 0;
 	};
 
 }}

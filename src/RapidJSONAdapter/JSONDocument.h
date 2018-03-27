@@ -17,6 +17,8 @@ namespace systelab { namespace json_adapter { namespace rapidjson_adapter {
 		IJSONValue& getRootValue();
 		const IJSONValue& getRootValue() const;
 
+		std::string serialize() const;
+
 	private:
 		std::unique_ptr<rapidjson::Document> m_document;
 		std::unique_ptr<IJSONValue> m_rootValue;

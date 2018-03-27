@@ -3,6 +3,9 @@
 
 #include "JSONValue.h"
 
+#include <rapidjson/writer.h>
+#include <rapidjson/stringbuffer.h>
+
 
 namespace systelab { namespace json_adapter { namespace rapidjson_adapter {
 
@@ -24,6 +27,18 @@ namespace systelab { namespace json_adapter { namespace rapidjson_adapter {
 	const IJSONValue& JSONDocument::getRootValue() const
 	{
 		return *m_rootValue;
+	}
+
+	std::string JSONDocument::serialize() const
+	{
+		rapidjson::StringBuffer jsonBuffer;
+		jsonBuffer.Clear();
+		rapidjson::Writer<rapidjson::StringBuffer> jsonWriter(jsonBuffer);
+		jsonWriter.SetMaxDecimalPlaces(6);
+		m_document->Accept(jsonWriter);
+		std::string serializedDocument = jsonBuffer.GetString();
+
+		return serializedDocument;
 	}
 
 }}}

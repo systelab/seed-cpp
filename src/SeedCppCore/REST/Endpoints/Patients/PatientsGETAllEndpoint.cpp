@@ -46,7 +46,7 @@ namespace seed_cpp { namespace rest {
 
 		auto reply = std::make_unique<systelab::web_server::Reply>();
 		reply->setStatus(systelab::web_server::Reply::OK);
-		reply->setContent("PATATA!");
+		reply->setContent(jsonDocument->serialize());
 
 		return reply;
 	}
