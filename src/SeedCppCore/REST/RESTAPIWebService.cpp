@@ -16,7 +16,8 @@ namespace seed_cpp { namespace rest {
 		using namespace std::placeholders;
 
 		m_router = std::make_unique<Router>();
-		m_router->addRoute("GET", "rest/api/patients", std::bind(&IEndpointsFactory::buildPatientGETAllEndpoint, std::ref(m_endpointsFactory), _1) );
+		m_router->addRoute("GET", "seed/v1/patients", std::bind(&IEndpointsFactory::buildPatientGETAllEndpoint, std::ref(m_endpointsFactory), _1) );
+		m_router->addRoute("GET", "seed/v1/patients/:id", std::bind(&IEndpointsFactory::buildPatientGETEndpoint, std::ref(m_endpointsFactory), _1));
 	}
 
 	RESTAPIWebService::~RESTAPIWebService()

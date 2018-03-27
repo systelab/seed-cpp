@@ -6,6 +6,7 @@
 #include "Model/Patient.h"
 #include "REST/Endpoints/IEndpoint.h"
 #include "REST/Endpoints/Patients/PatientsGETAllEndpoint.h"
+#include "REST/Endpoints/Patients/PatientsGETEndpoint.h"
 
 
 namespace seed_cpp { namespace rest {
@@ -28,9 +29,14 @@ namespace seed_cpp { namespace rest {
 		return std::make_unique<PatientsGETAllEndpoint>(patientMgr, jsonTranslatorsFactory, jsonAdapter);
 	}
 
-	std::unique_ptr<IEndpoint> EndpointsFactory::buildPatientGETEndpoint(const std::vector<RouteParam>&)
+	std::unique_ptr<IEndpoint> EndpointsFactory::buildPatientGETEndpoint(const std::vector<RouteParam>& params)
 	{
-		return std::unique_ptr<IEndpoint>();
+		unsigned int patientId = params[0].getValue<unsigned int>();
+		model::EntityMgr<model::Patient>& patientMgr = m_core.getModel().getPatientMgr();
+		dal::IJSONTranslatorsFactory& jsonTranslatorsFactory = m_core.getJSONTranslatorsFactory();
+		systelab::json_adapter::IJSONAdapter& jsonAdapter = m_core.getJSONAdapter();
+
+		return std::make_unique<PatientsGETEndpoint>(patientId, patientMgr, jsonTranslatorsFactory, jsonAdapter);
 	}
 
 	std::unique_ptr<IEndpoint> EndpointsFactory::buildPatientPOSTEndpoint(const std::vector<RouteParam>&)
