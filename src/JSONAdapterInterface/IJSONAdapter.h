@@ -13,8 +13,8 @@ namespace systelab { namespace json_adapter {
 	public:
 		virtual ~IJSONAdapter() {};
 
-		virtual std::unique_ptr<IJSONDocument> buildDocument() = 0;
-		virtual std::unique_ptr<IJSONDocument> parseDocument(const std::string&) = 0;
+		virtual std::unique_ptr<IJSONDocument> buildEmptyDocument() = 0;
+		virtual std::unique_ptr<IJSONDocument> buildDocumentFromString(const std::string&) = 0;
 	};
 
 }}
