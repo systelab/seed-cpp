@@ -22,7 +22,10 @@ namespace seed_cpp { namespace rest {
 	std::unique_ptr<IEndpoint> EndpointsFactory::buildPatientGETAllEndpoint(const std::vector<RouteParam>&)
 	{
 		model::EntityMgr<model::Patient>& patientMgr = m_core.getModel().getPatientMgr();
-		return std::make_unique<PatientsGETAllEndpoint>(patientMgr);
+		dal::IJSONTranslatorsFactory& jsonTranslatorsFactory = m_core.getJSONTranslatorsFactory();
+		systelab::json_adapter::IJSONAdapter& jsonAdapter = m_core.getJSONAdapter();
+
+		return std::make_unique<PatientsGETAllEndpoint>(patientMgr, jsonTranslatorsFactory, jsonAdapter);
 	}
 
 	std::unique_ptr<IEndpoint> EndpointsFactory::buildPatientGETEndpoint(const std::vector<RouteParam>&)
