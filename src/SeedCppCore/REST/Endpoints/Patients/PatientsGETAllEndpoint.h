@@ -21,13 +21,13 @@ namespace seed_cpp { namespace rest {
 
 	class IEndpoint;
 
-	class PatientsGETAllEndpoint : public IEndpoint
+	class PatientsGetAllEndpoint : public IEndpoint
 	{
 	public:
-		PatientsGETAllEndpoint(model::EntityMgr<model::Patient>&,
+		PatientsGetAllEndpoint(model::EntityMgr<model::Patient>&,
 							   dal::IJSONTranslatorsFactory&,
 							   systelab::json_adapter::IJSONAdapter&);
-		virtual ~PatientsGETAllEndpoint();
+		virtual ~PatientsGetAllEndpoint();
 
 		std::unique_ptr<systelab::web_server::Reply> execute();
 

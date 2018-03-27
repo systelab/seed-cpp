@@ -1,9 +1,10 @@
 #include "StdAfx.h"
-#include "PatientsGETEndpoint.h"
+#include "PatientsGetEndpoint.h"
 
 #include "DAL/Translators/JSON/IJSONSaveTranslator.h"
 #include "DAL/Translators/JSON/IJSONTranslatorsFactory.h"
 #include "Model/Patient.h"
+#include "REST/Helpers/ReplyBuilderHelper.h"
 
 #include "JSONAdapterInterface/IJSONAdapter.h"
 #include "JSONAdapterInterface/IJSONDocument.h"
@@ -13,7 +14,7 @@
 
 namespace seed_cpp { namespace rest {
 
-	PatientsGETEndpoint::PatientsGETEndpoint(unsigned int id,
+	PatientsGetEndpoint::PatientsGetEndpoint(unsigned int id,
 											 model::EntityMgr<model::Patient>& patientMgr,
 											 dal::IJSONTranslatorsFactory& jsonTranslatorsFactory,
 											 systelab::json_adapter::IJSONAdapter& jsonAdapter)
@@ -24,18 +25,16 @@ namespace seed_cpp { namespace rest {
 	{
 	}
 	
-	PatientsGETEndpoint::~PatientsGETEndpoint()
+	PatientsGetEndpoint::~PatientsGetEndpoint()
 	{
 	}
 
-	std::unique_ptr<systelab::web_server::Reply> PatientsGETEndpoint::execute()
+	std::unique_ptr<systelab::web_server::Reply> PatientsGetEndpoint::execute()
 	{
 		const model::Patient* patient = m_patientMgr.getEntityById(m_id);
 		if (!patient)
 		{
-			auto reply = std::make_unique<systelab::web_server::Reply>();
-			reply->setStatus(systelab::web_server::Reply::NOT_FOUND);
-			return reply;
+			return ReplyBuilderHelper::build(systelab::web_server::Reply::NOT_FOUND);
 		}
 
 		auto jsonDocument = m_jsonAdapter.buildEmptyDocument();
@@ -45,11 +44,7 @@ namespace seed_cpp { namespace rest {
 		auto patientTranslator = m_jsonTranslatorsFactory.buildPatientSaveTranslator(*patient);
 		patientTranslator->saveEntityToJSON(jsonRoot);
 
-		auto reply = std::make_unique<systelab::web_server::Reply>();
-		reply->setStatus(systelab::web_server::Reply::OK);
-		reply->setContent(jsonDocument->serialize());
-
-		return reply;
+		return ReplyBuilderHelper::build(systelab::web_server::Reply::OK, jsonDocument->serialize());
 	}
 
 }}

@@ -1,9 +1,10 @@
 #include "StdAfx.h"
-#include "PatientsGETAllEndpoint.h"
+#include "PatientsGetAllEndpoint.h"
 
 #include "DAL/Translators/JSON/IJSONSaveTranslator.h"
 #include "DAL/Translators/JSON/IJSONTranslatorsFactory.h"
 #include "Model/Patient.h"
+#include "REST/Helpers/ReplyBuilderHelper.h"
 
 #include "JSONAdapterInterface/IJSONAdapter.h"
 #include "JSONAdapterInterface/IJSONDocument.h"
@@ -13,7 +14,7 @@
 
 namespace seed_cpp { namespace rest {
 
-	PatientsGETAllEndpoint::PatientsGETAllEndpoint(model::EntityMgr<model::Patient>& patientMgr,
+	PatientsGetAllEndpoint::PatientsGetAllEndpoint(model::EntityMgr<model::Patient>& patientMgr,
 												   dal::IJSONTranslatorsFactory& jsonTranslatorsFactory,
 												   systelab::json_adapter::IJSONAdapter& jsonAdapter)
 		:m_patientMgr(patientMgr)
@@ -22,11 +23,11 @@ namespace seed_cpp { namespace rest {
 	{
 	}
 	
-	PatientsGETAllEndpoint::~PatientsGETAllEndpoint()
+	PatientsGetAllEndpoint::~PatientsGetAllEndpoint()
 	{
 	}
 
-	std::unique_ptr<systelab::web_server::Reply> PatientsGETAllEndpoint::execute()
+	std::unique_ptr<systelab::web_server::Reply> PatientsGetAllEndpoint::execute()
 	{
 		auto jsonDocument = m_jsonAdapter.buildEmptyDocument();
 		systelab::json_adapter::IJSONValue& jsonRoot = jsonDocument->getRootValue();
@@ -44,11 +45,7 @@ namespace seed_cpp { namespace rest {
 			jsonRoot.addArrayValue(std::move(jsonPatient));
 		}
 
-		auto reply = std::make_unique<systelab::web_server::Reply>();
-		reply->setStatus(systelab::web_server::Reply::OK);
-		reply->setContent(jsonDocument->serialize());
-
-		return reply;
+		return ReplyBuilderHelper::build(systelab::web_server::Reply::OK, jsonDocument->serialize());
 	}
 
 }}

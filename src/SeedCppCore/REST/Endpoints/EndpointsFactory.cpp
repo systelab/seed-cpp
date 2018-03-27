@@ -5,8 +5,8 @@
 #include "Model/Model.h"
 #include "Model/Patient.h"
 #include "REST/Endpoints/IEndpoint.h"
-#include "REST/Endpoints/Patients/PatientsGETAllEndpoint.h"
-#include "REST/Endpoints/Patients/PatientsGETEndpoint.h"
+#include "REST/Endpoints/Patients/PatientsGetAllEndpoint.h"
+#include "REST/Endpoints/Patients/PatientsGetEndpoint.h"
 
 
 namespace seed_cpp { namespace rest {
@@ -26,7 +26,7 @@ namespace seed_cpp { namespace rest {
 		dal::IJSONTranslatorsFactory& jsonTranslatorsFactory = m_core.getJSONTranslatorsFactory();
 		systelab::json_adapter::IJSONAdapter& jsonAdapter = m_core.getJSONAdapter();
 
-		return std::make_unique<PatientsGETAllEndpoint>(patientMgr, jsonTranslatorsFactory, jsonAdapter);
+		return std::make_unique<PatientsGetAllEndpoint>(patientMgr, jsonTranslatorsFactory, jsonAdapter);
 	}
 
 	std::unique_ptr<IEndpoint> EndpointsFactory::buildPatientGETEndpoint(const std::vector<RouteParam>& params)
@@ -36,7 +36,7 @@ namespace seed_cpp { namespace rest {
 		dal::IJSONTranslatorsFactory& jsonTranslatorsFactory = m_core.getJSONTranslatorsFactory();
 		systelab::json_adapter::IJSONAdapter& jsonAdapter = m_core.getJSONAdapter();
 
-		return std::make_unique<PatientsGETEndpoint>(patientId, patientMgr, jsonTranslatorsFactory, jsonAdapter);
+		return std::make_unique<PatientsGetEndpoint>(patientId, patientMgr, jsonTranslatorsFactory, jsonAdapter);
 	}
 
 	std::unique_ptr<IEndpoint> EndpointsFactory::buildPatientPOSTEndpoint(const std::vector<RouteParam>&)
