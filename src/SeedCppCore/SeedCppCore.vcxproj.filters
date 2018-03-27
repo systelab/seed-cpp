@@ -179,6 +179,12 @@
     <ClInclude Include="DAL\Translators\JSON\PatientJSONTranslator.h">
       <Filter>Header Files\DAL\Translators\JSON</Filter>
     </ClInclude>
+    <ClInclude Include="DAL\Translators\JSON\JSONTranslatorsFactory.h">
+      <Filter>Header Files\DAL\Translators\JSON</Filter>
+    </ClInclude>
+    <ClInclude Include="DAL\Translators\JSON\IJSONTranslatorsFactory.h">
+      <Filter>Header Files\DAL\Translators\JSON</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Stdafx.cpp">
@@ -239,6 +245,9 @@
       <Filter>Source Files\REST\Endpoints\Patient</Filter>
     </ClCompile>
     <ClCompile Include="DAL\Translators\JSON\PatientJSONTranslator.cpp">
+      <Filter>Source Files\DAL\Translators\JSON</Filter>
+    </ClCompile>
+    <ClCompile Include="DAL\Translators\JSON\JSONTranslatorsFactory.cpp">
       <Filter>Source Files\DAL\Translators\JSON</Filter>
     </ClCompile>
   </ItemGroup>
