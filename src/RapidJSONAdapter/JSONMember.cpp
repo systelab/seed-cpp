@@ -6,11 +6,12 @@
 
 namespace systelab { namespace json_adapter { namespace rapidjson_adapter {
 
-	JSONMember::JSONMember(const std::string& name,
+	JSONMember::JSONMember(JSONDocument& document,
+						   const std::string& name,
 						   rapidjson::Value& value,
 						   rapidjson::Document::AllocatorType& allocator)
 		:m_name(name)
-		,m_value(std::make_unique<JSONValue>(value, allocator))
+		,m_value(std::make_unique<JSONValue>(document, value, allocator))
 	{
 	}
 

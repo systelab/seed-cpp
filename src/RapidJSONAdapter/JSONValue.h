@@ -12,10 +12,12 @@
 
 namespace systelab { namespace json_adapter { namespace rapidjson_adapter {
 
+	class JSONDocument;
+
 	class JSONValue : public IJSONValue
 	{
 	public:
-		JSONValue(rapidjson::Value&, rapidjson::Document::AllocatorType&);
+		JSONValue(JSONDocument&, rapidjson::Value&, rapidjson::Document::AllocatorType&);
 		virtual ~JSONValue();
 
 		Type getType();
@@ -67,6 +69,7 @@ namespace systelab { namespace json_adapter { namespace rapidjson_adapter {
 		void clearArrayValues();
 
 	private:
+		JSONDocument& m_document;
 		rapidjson::Value& m_value;
 		rapidjson::Value::AllocatorType& m_allocator;
 

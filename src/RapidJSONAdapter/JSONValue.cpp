@@ -1,14 +1,17 @@
 #include "StdAfx.h"
 #include "JSONValue.h"
 
+#include "JSONDocument.h"
 #include "JSONMember.h"
 
 
 namespace systelab { namespace json_adapter { namespace rapidjson_adapter {
 
-	JSONValue::JSONValue(rapidjson::Value& value,
+	JSONValue::JSONValue(JSONDocument& document,
+						 rapidjson::Value& value,
 						 rapidjson::Document::AllocatorType& allocator)
-		:m_value(value)
+		:m_document(document)
+		,m_value(value)
 		,m_allocator(allocator)
 		,m_objectMembersLoaded(false)
 		,m_objectMembers()
@@ -182,21 +185,27 @@ namespace systelab { namespace json_adapter { namespace rapidjson_adapter {
 		addMember(name, std::move(newStringValue));
 	}
 
-	void JSONValue::addMember(const std::string& name, std::unique_ptr<IJSONValue> value)
+	void JSONValue::addMember(const std::string& name, std::unique_ptr<IJSONValue> valueToAdd)
 	{
 		loadObjectMembers();
 
-		JSONValue* adapterValue = dynamic_cast<JSONValue*>(value.get());
-		if (!adapterValue)
+		JSONValue* adapterValueToAdd = dynamic_cast<JSONValue*>(valueToAdd.get());
+		if (!adapterValueToAdd)
 		{
 			throw std::exception("JSONValue::addMember() Provided value is not valid");
 		}
 
-		rapidjson::Value memberName(name, m_allocator);
-		rapidjson::Value& memberValue = adapterValue->m_value;
-		m_value.AddMember(memberName.Move(), memberValue.Move(), m_allocator);
+		if (&adapterValueToAdd->m_document != &m_document)
+		{
+			throw std::exception("JSONValue::addMember() Provided value does not belong to this document");
+		}
 
-		std::unique_ptr<IJSONMember> member = std::make_unique<JSONMember>(name, memberValue, m_allocator);
+		std::unique_ptr<rapidjson::Value> freeValue = m_document.removeFreeValue(adapterValueToAdd->m_value);
+
+		rapidjson::Value memberName(name, m_allocator);
+		m_value.AddMember(memberName, *freeValue, m_allocator);
+
+		std::unique_ptr<IJSONMember> member = std::make_unique<JSONMember>(m_document, name, m_value[name], m_allocator);
 		m_objectMembers.insert(std::make_pair(name, std::move(member)));
 	}
 
@@ -220,20 +229,28 @@ namespace systelab { namespace json_adapter { namespace rapidjson_adapter {
 		return *m_arrayValues[index];
 	}
 
-	void JSONValue::addArrayValue(std::unique_ptr<IJSONValue> value)
+	void JSONValue::addArrayValue(std::unique_ptr<IJSONValue> valueToAdd)
 	{
-		loadArrayValues();
-
-		JSONValue* adapterValue = dynamic_cast<JSONValue*>(value.get());
-		if (!adapterValue)
+		JSONValue* adapterValueToAdd = dynamic_cast<JSONValue*>(valueToAdd.get());
+		if (!adapterValueToAdd)
 		{
 			throw std::exception("JSONValue::addArrayValue() Provided value is not valid");
 		}
 
-		m_value.PushBack(adapterValue->m_value, m_allocator);
-		m_arrayValues.push_back(std::move(value));
+		if (&adapterValueToAdd->m_document != &m_document)
+		{
+			throw std::exception("JSONValue::addArrayValue() Provided value does not belong to this document");
+		}
+
+		std::unique_ptr<rapidjson::Value> freeValue = m_document.removeFreeValue(adapterValueToAdd->m_value);
+		m_value.PushBack(freeValue->Move(), m_allocator);
+
+		unsigned int addedValueIndex = m_value.Size() - 1;
+		rapidjson::Value& addedValue = m_value[addedValueIndex];
+		auto adapterValueAdded = std::make_unique<JSONValue>(m_document, addedValue, m_allocator);
+		m_arrayValues.push_back(std::move(adapterValueAdded));
 	}
-	
+
 	void JSONValue::clearArray()
 	{
 		m_value.GetArray().Clear();
@@ -243,8 +260,11 @@ namespace systelab { namespace json_adapter { namespace rapidjson_adapter {
 
 	std::unique_ptr<IJSONValue> JSONValue::buildValue(Type type) const
 	{
-		std::unique_ptr<IJSONValue> newValue = std::make_unique<JSONValue>(rapidjson::Value(), m_allocator);
+		auto freeValue = std::make_unique<rapidjson::Value>();
+		auto newValue = std::make_unique<JSONValue>(m_document, *freeValue, m_allocator);
 		newValue->setType(type);
+		m_document.addFreeValue(std::move(freeValue));
+
 		return newValue;
 	}
 
@@ -258,7 +278,7 @@ namespace systelab { namespace json_adapter { namespace rapidjson_adapter {
 		for (auto itr = m_value.MemberBegin(); itr != m_value.MemberEnd(); ++itr)
 		{
 			std::string memberName = itr->name.GetString();
-			std::unique_ptr<IJSONMember> member = std::make_unique<JSONMember>(memberName, itr->value, m_allocator);
+			std::unique_ptr<IJSONMember> member = std::make_unique<JSONMember>(m_document, memberName, itr->value, m_allocator);
 			m_objectMembers.insert(std::make_pair(memberName, std::move(member)));
 		}
 
@@ -280,7 +300,7 @@ namespace systelab { namespace json_adapter { namespace rapidjson_adapter {
 
 		for (auto itr = m_value.Begin(); itr != m_value.End(); ++itr)
 		{
-			std::unique_ptr<IJSONValue> value = std::make_unique<JSONValue>(*itr, m_allocator);
+			std::unique_ptr<IJSONValue> value = std::make_unique<JSONValue>(m_document, *itr, m_allocator);
 			m_arrayValues.push_back(std::move(value));
 		}
 

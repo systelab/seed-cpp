@@ -11,7 +11,8 @@ namespace systelab { namespace json_adapter { namespace rapidjson_adapter {
 
 	JSONDocument::JSONDocument(std::unique_ptr<rapidjson::Document> document)
 		:m_document(std::move(document))
-		,m_rootValue(std::make_unique<JSONValue>(*m_document, m_document->GetAllocator()))
+		,m_rootValue(std::make_unique<JSONValue>(*this, *m_document, m_document->GetAllocator()))
+		,m_freeValues()
 	{
 	}
 
@@ -39,6 +40,27 @@ namespace systelab { namespace json_adapter { namespace rapidjson_adapter {
 		std::string serializedDocument = jsonBuffer.GetString();
 
 		return serializedDocument;
+	}
+
+	void JSONDocument::addFreeValue(std::unique_ptr<rapidjson::Value> value)
+	{
+		m_freeValues.push_back(std::move(value));
+	}
+
+	std::unique_ptr<rapidjson::Value> JSONDocument::removeFreeValue(const rapidjson::Value& value)
+	{
+		for (auto it = m_freeValues.begin(); it != m_freeValues.end(); it++)
+		{
+			if (it->get() == &value)
+			{
+				std::unique_ptr<rapidjson::Value> foundValue;
+				foundValue.swap(*it);
+				m_freeValues.erase(it);
+				return std::move(foundValue);
+			}
+		}
+
+		return std::unique_ptr<rapidjson::Value>();
 	}
 
 }}}
