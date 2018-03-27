@@ -143,6 +143,7 @@
     <ClInclude Include="REST\Endpoints\Patients\PatientsGetAllEndpoint.h" />
     <ClInclude Include="REST\Endpoints\Patients\PatientsGetEndpoint.h" />
     <ClInclude Include="REST\Endpoints\Patients\PatientsPostEndpoint.h" />
+    <ClInclude Include="REST\Endpoints\Patients\PatientsPutEndpoint.h" />
     <ClInclude Include="REST\Helpers\ReplyBuilderHelper.h" />
     <ClInclude Include="REST\RESTAPIWebService.h" />
     <ClInclude Include="REST\Router\Route.h" />
@@ -170,6 +171,7 @@
     <ClCompile Include="REST\Endpoints\Patients\PatientsGetAllEndpoint.cpp" />
     <ClCompile Include="REST\Endpoints\Patients\PatientsGetEndpoint.cpp" />
     <ClCompile Include="REST\Endpoints\Patients\PatientsPostEndpoint.cpp" />
+    <ClCompile Include="REST\Endpoints\Patients\PatientsPutEndpoint.cpp" />
     <ClCompile Include="REST\Helpers\ReplyBuilderHelper.cpp" />
     <ClCompile Include="REST\RESTAPIWebService.cpp" />
     <ClCompile Include="REST\Router\Route.cpp" />
