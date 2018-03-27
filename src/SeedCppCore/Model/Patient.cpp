@@ -16,6 +16,16 @@ namespace seed_cpp { namespace model {
 	{
 	}
 
+	Patient::Patient(const Patient& other)
+		:m_id(other.m_id)
+		,m_surname(other.m_surname)
+		,m_name(other.m_name)
+		,m_email(other.m_email)
+		,m_dob(other.m_dob)
+		,m_address(std::make_unique<Address>(*other.m_address))
+	{
+	}
+
 	Patient::~Patient()
 	{
 	}

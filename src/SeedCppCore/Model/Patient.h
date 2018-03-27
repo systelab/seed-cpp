@@ -13,6 +13,7 @@ namespace seed_cpp { namespace model {
 	{
 	public:
 		Patient();
+		Patient(const Patient&);
 		virtual ~Patient();
 
 		boost::optional<unsigned int> getId() const;
