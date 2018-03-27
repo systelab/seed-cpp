@@ -1,12 +1,11 @@
 #pragma once
 
-#include "REST/Router/RouteParam.h"
-
 #include <memory>
-#include <vector>
+
 
 namespace seed_cpp { namespace rest {
 
+	class EndpointRequestData;
 	class IEndpoint;
 
 	class IEndpointsFactory
@@ -14,11 +13,11 @@ namespace seed_cpp { namespace rest {
 	public:
 		virtual ~IEndpointsFactory() {};
 
-		virtual std::unique_ptr<IEndpoint> buildPatientGETAllEndpoint(const std::vector<RouteParam>&) = 0;
-		virtual std::unique_ptr<IEndpoint> buildPatientGETEndpoint(const std::vector<RouteParam>&) = 0;
-		virtual std::unique_ptr<IEndpoint> buildPatientPOSTEndpoint(const std::vector<RouteParam>&) = 0;
-		virtual std::unique_ptr<IEndpoint> buildPatientPUTEndpoint(const std::vector<RouteParam>&) = 0;
-		virtual std::unique_ptr<IEndpoint> buildPatientDELETEEndpoint(const std::vector<RouteParam>&) = 0;
+		virtual std::unique_ptr<IEndpoint> buildPatientGetAllEndpoint(const EndpointRequestData&) = 0;
+		virtual std::unique_ptr<IEndpoint> buildPatientGetEndpoint(const EndpointRequestData&) = 0;
+		virtual std::unique_ptr<IEndpoint> buildPatientPostEndpoint(const EndpointRequestData&) = 0;
+		virtual std::unique_ptr<IEndpoint> buildPatientPutEndpoint(const EndpointRequestData&) = 0;
+		virtual std::unique_ptr<IEndpoint> buildPatientDeleteEndpoint(const EndpointRequestData&) = 0;
 	};
 
 }}

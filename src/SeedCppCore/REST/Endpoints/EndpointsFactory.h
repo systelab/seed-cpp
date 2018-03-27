@@ -9,19 +9,17 @@ namespace seed_cpp {
 
 namespace seed_cpp { namespace rest {
 
-	class IEndpoint;
-
 	class EndpointsFactory : public IEndpointsFactory
 	{
 	public:
 		EndpointsFactory(Core&);
 		virtual ~EndpointsFactory();
 
-		std::unique_ptr<IEndpoint> buildPatientGETAllEndpoint(const std::vector<RouteParam>&);
-		std::unique_ptr<IEndpoint> buildPatientGETEndpoint(const std::vector<RouteParam>&);
-		std::unique_ptr<IEndpoint> buildPatientPOSTEndpoint(const std::vector<RouteParam>&);
-		std::unique_ptr<IEndpoint> buildPatientPUTEndpoint(const std::vector<RouteParam>&);
-		std::unique_ptr<IEndpoint> buildPatientDELETEEndpoint(const std::vector<RouteParam>&);
+		std::unique_ptr<IEndpoint> buildPatientGetAllEndpoint(const EndpointRequestData&);
+		std::unique_ptr<IEndpoint> buildPatientGetEndpoint(const EndpointRequestData&);
+		std::unique_ptr<IEndpoint> buildPatientPostEndpoint(const EndpointRequestData&);
+		std::unique_ptr<IEndpoint> buildPatientPutEndpoint(const EndpointRequestData&);
+		std::unique_ptr<IEndpoint> buildPatientDeleteEndpoint(const EndpointRequestData&);
 
 	private:
 		Core& m_core;
