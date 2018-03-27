@@ -11,7 +11,7 @@ namespace seed_cpp { namespace dal {
 	public:
 		virtual ~IJSONSaveTranslator() {}
 
-		virtual void saveEntityToJSON(systelab::json_adapter::IJSONValue&, systelab::json_adapter::IJSONDocument&) const = 0;
+		virtual void saveEntityToJSON(systelab::json_adapter::IJSONValue&) const = 0;
 	};
 
 }}
