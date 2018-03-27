@@ -26,7 +26,7 @@ namespace seed_cpp { namespace model {
 
 		unsigned int count() const
 		{
-			return m_entities.size();
+			return (unsigned int) m_entities.size();
 		}
 
 		const Entity* getEntity(unsigned int index) const
