@@ -44,13 +44,13 @@ namespace seed_cpp { namespace model {
 			return ((it != m_entities.end()) ? it->get() : NULL);
 		}
 
-		const Entity& addEntity(std::unique_ptr<Entity>)
+		const Entity& addEntity(std::unique_ptr<Entity> entity)
 		{
 			m_entities.push_back(std::move(entity));
 			return *m_entities.back();
 		}
 
-		const Entity& editEntity(std::unique_ptr<Entity>)
+		const Entity& editEntity(std::unique_ptr<Entity> entity)
 		{
 			if (!entity->getId())
 			{
