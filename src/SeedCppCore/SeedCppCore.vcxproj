@@ -140,6 +140,7 @@
     <ClInclude Include="REST\Endpoints\EndpointsFactory.h" />
     <ClInclude Include="REST\Endpoints\IEndpoint.h" />
     <ClInclude Include="REST\Endpoints\IEndpointsFactory.h" />
+    <ClInclude Include="REST\Endpoints\Patients\PatientsDeleteEndpoint.h" />
     <ClInclude Include="REST\Endpoints\Patients\PatientsGetAllEndpoint.h" />
     <ClInclude Include="REST\Endpoints\Patients\PatientsGetEndpoint.h" />
     <ClInclude Include="REST\Endpoints\Patients\PatientsPostEndpoint.h" />
@@ -168,6 +169,7 @@
     <ClCompile Include="Model\Patient.cpp" />
     <ClCompile Include="REST\Endpoints\EndpointRequestData.cpp" />
     <ClCompile Include="REST\Endpoints\EndpointsFactory.cpp" />
+    <ClCompile Include="REST\Endpoints\Patients\PatientsDeleteEndpoint.cpp" />
     <ClCompile Include="REST\Endpoints\Patients\PatientsGetAllEndpoint.cpp" />
     <ClCompile Include="REST\Endpoints\Patients\PatientsGetEndpoint.cpp" />
     <ClCompile Include="REST\Endpoints\Patients\PatientsPostEndpoint.cpp" />
