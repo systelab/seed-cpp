@@ -20,7 +20,7 @@ namespace seed_cpp { namespace service {
 		unsigned int nUsers = m_userMgr.count();
 		for (unsigned int i = 0; i < nUsers; i++)
 		{
-			const model::User* user = m_userMgr.getEntityById(i);
+			const model::User* user = m_userMgr.getEntity(i);
 			if (user->getLogin() == login)
 			{
 				return user;
