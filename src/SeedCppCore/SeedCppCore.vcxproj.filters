@@ -233,6 +233,12 @@
     <ClInclude Include="REST\Helpers\RequestURLEncodedParserHelper.h">
       <Filter>Header Files\REST\Helpers</Filter>
     </ClInclude>
+    <ClInclude Include="Services\UserModelService.h">
+      <Filter>Header Files\Services</Filter>
+    </ClInclude>
+    <ClInclude Include="Services\IUserModelService.h">
+      <Filter>Header Files\Services</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Stdafx.cpp">
@@ -330,6 +336,9 @@
     </ClCompile>
     <ClCompile Include="REST\Helpers\RequestURLEncodedParserHelper.cpp">
       <Filter>Source Files\REST\Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="Services\UserModelService.cpp">
+      <Filter>Source Files\Services</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
