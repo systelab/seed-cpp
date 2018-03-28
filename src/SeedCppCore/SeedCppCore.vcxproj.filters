@@ -206,6 +206,9 @@
     <ClInclude Include="REST\Endpoints\Patients\PatientsDeleteEndpoint.h">
       <Filter>Header Files\REST\Endpoints\Patient</Filter>
     </ClInclude>
+    <ClInclude Include="Model\User.h">
+      <Filter>Header Files\Model</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Stdafx.cpp">
@@ -285,6 +288,9 @@
     </ClCompile>
     <ClCompile Include="REST\Endpoints\Patients\PatientsDeleteEndpoint.cpp">
       <Filter>Source Files\REST\Endpoints\Patient</Filter>
+    </ClCompile>
+    <ClCompile Include="Model\User.cpp">
+      <Filter>Source Files\Model</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
