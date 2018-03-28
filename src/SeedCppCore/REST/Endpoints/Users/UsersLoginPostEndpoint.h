@@ -1,12 +1,18 @@
 #pragma once
 
-#include "Model/EntityMgr.h"
 #include "REST/Endpoints/IEndpoint.h"
 
+#include <string>
 
-namespace seed_cpp { namespace model {
-	class User;
-}}
+
+namespace seed_cpp {
+	namespace model {
+		class User;
+	}
+	namespace service {
+		class IUserModelService;
+	}
+}
 
 namespace seed_cpp { namespace rest {
 
@@ -14,7 +20,7 @@ namespace seed_cpp { namespace rest {
 	{
 	public:
 		UsersLoginPostEndpoint(const std::string& requestContent,
-							   model::EntityMgr<model::User>&);
+							   const service::IUserModelService&);
 		virtual ~UsersLoginPostEndpoint();
 
 		std::unique_ptr<systelab::web_server::Reply> execute();
@@ -27,10 +33,11 @@ namespace seed_cpp { namespace rest {
 		};
 
 		std::unique_ptr<LoginData> getLoginDataFromRequestContent() const;
+		const model::User* authenticate(const LoginData&) const;
 
 	private:
 		std::string m_requestContent;
-		model::EntityMgr<model::User>& m_userMgr;
+		const service::IUserModelService& m_userModelService;
 	};
 
 }}

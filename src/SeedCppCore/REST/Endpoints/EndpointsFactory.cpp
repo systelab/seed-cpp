@@ -12,6 +12,7 @@
 #include "REST/Endpoints/Patients/PatientsPostEndpoint.h"
 #include "REST/Endpoints/Patients/PatientsPutEndpoint.h"
 #include "REST/Endpoints/Users/UsersLoginPostEndpoint.h"
+#include "Services/ServicesMgr.h"
 
 
 namespace seed_cpp { namespace rest {
@@ -83,9 +84,9 @@ namespace seed_cpp { namespace rest {
 	std::unique_ptr<IEndpoint> EndpointsFactory::buildUsersLoginPostEndpoint(const EndpointRequestData& requestData)
 	{
 		const std::string& requestContent = requestData.getContent();
-		model::EntityMgr<model::User>& userMgr = m_core.getModel().getUserMgr();
+		service::IUserModelService& userModelService = m_core.getServicesMgr().getUserModelService();
 
-		return std::make_unique<UsersLoginPostEndpoint>(requestContent, userMgr);
+		return std::make_unique<UsersLoginPostEndpoint>(requestContent, userModelService);
 	}
 
 }}

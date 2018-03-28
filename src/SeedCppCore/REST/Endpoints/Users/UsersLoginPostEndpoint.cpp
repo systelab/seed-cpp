@@ -4,6 +4,7 @@
 #include "Model/User.h"
 #include "REST/Helpers/ReplyBuilderHelper.h"
 #include "REST/Helpers/RequestURLEncodedParserHelper.h"
+#include "Services/IUserModelService.h"
 
 #include "WebServerInterface/Model/Reply.h"
 
@@ -11,9 +12,9 @@
 namespace seed_cpp { namespace rest {
 
 	UsersLoginPostEndpoint::UsersLoginPostEndpoint(const std::string& requestContent,
-												   model::EntityMgr<model::User>& userMgr)
+												   const service::IUserModelService& userModelService)
 		:m_requestContent(requestContent)
-		,m_userMgr(userMgr)
+		,m_userModelService(userModelService)
 	{
 	}
 	
@@ -29,10 +30,12 @@ namespace seed_cpp { namespace rest {
 			return ReplyBuilderHelper::build(systelab::web_server::Reply::BAD_REQUEST);
 		}
 
+		if (!authenticate(*loginData))
+		{
+			return ReplyBuilderHelper::build(systelab::web_server::Reply::UNAUTHORIZED);
+		}
 
-
-
-		return ReplyBuilderHelper::build(systelab::web_server::Reply::BAD_REQUEST);
+		return ReplyBuilderHelper::build(systelab::web_server::Reply::OK);
 	}
 
 	std::unique_ptr<UsersLoginPostEndpoint::LoginData> UsersLoginPostEndpoint::getLoginDataFromRequestContent() const
@@ -56,6 +59,22 @@ namespace seed_cpp { namespace rest {
 		loginData->m_password = passwordIt->second;
 
 		return loginData;
+	}
+
+	const model::User* UsersLoginPostEndpoint::authenticate(const LoginData& loginData) const
+	{
+		const model::User* user = m_userModelService.getUserByLogin(loginData.m_login);
+		if (!user)
+		{
+			return NULL;
+		}
+
+		if (user->getPassword() != loginData.m_password)
+		{
+			return NULL;
+		}
+
+		return user;
 	}
 
 }}
