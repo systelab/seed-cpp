@@ -239,6 +239,15 @@
     <ClInclude Include="Services\IUserModelService.h">
       <Filter>Header Files\Services</Filter>
     </ClInclude>
+    <ClInclude Include="Services\IServicesFactory.h">
+      <Filter>Header Files\Services</Filter>
+    </ClInclude>
+    <ClInclude Include="Services\ServicesFactory.h">
+      <Filter>Header Files\Services</Filter>
+    </ClInclude>
+    <ClInclude Include="Services\ServicesMgr.h">
+      <Filter>Header Files\Services</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Stdafx.cpp">
@@ -338,6 +347,12 @@
       <Filter>Source Files\REST\Helpers</Filter>
     </ClCompile>
     <ClCompile Include="Services\UserModelService.cpp">
+      <Filter>Source Files\Services</Filter>
+    </ClCompile>
+    <ClCompile Include="Services\ServicesFactory.cpp">
+      <Filter>Source Files\Services</Filter>
+    </ClCompile>
+    <ClCompile Include="Services\ServicesMgr.cpp">
       <Filter>Source Files\Services</Filter>
     </ClCompile>
   </ItemGroup>

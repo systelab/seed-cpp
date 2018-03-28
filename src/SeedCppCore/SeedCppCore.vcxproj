@@ -157,7 +157,10 @@
     <ClInclude Include="REST\Router\RouteFragment.h" />
     <ClInclude Include="REST\Router\RouteParam.h" />
     <ClInclude Include="REST\Router\Router.h" />
+    <ClInclude Include="Services\IServicesFactory.h" />
     <ClInclude Include="Services\IUserModelService.h" />
+    <ClInclude Include="Services\ServicesFactory.h" />
+    <ClInclude Include="Services\ServicesMgr.h" />
     <ClInclude Include="Services\UserModelService.h" />
     <ClInclude Include="Stdafx.h" />
   </ItemGroup>
@@ -193,6 +196,8 @@
     <ClCompile Include="REST\Router\Route.cpp" />
     <ClCompile Include="REST\Router\RouteFragment.cpp" />
     <ClCompile Include="REST\Router\Router.cpp" />
+    <ClCompile Include="Services\ServicesFactory.cpp" />
+    <ClCompile Include="Services\ServicesMgr.cpp" />
     <ClCompile Include="Services\UserModelService.cpp" />
     <ClCompile Include="Stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
