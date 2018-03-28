@@ -27,6 +27,10 @@ namespace seed_cpp {
 	namespace rest {
 		class IEndpointsFactory;
 	}
+	namespace service {
+		class IServicesFactory;
+		class ServicesMgr;
+	}
 }
 
 namespace seed_cpp {
@@ -49,6 +53,8 @@ namespace seed_cpp {
 		dal::IDbTranslatorsFactory& getDbTranslatorsFactory() const;
 		dal::IDbDAOFactory& getDbDAOFactory() const;
 		dal::IJSONTranslatorsFactory& getJSONTranslatorsFactory() const;
+		service::IServicesFactory& getServicesFactory() const;
+		service::ServicesMgr& getServicesMgr() const;
 		rest::IEndpointsFactory& getEndpointsFactory() const;
 
 	private:
@@ -64,6 +70,8 @@ namespace seed_cpp {
 		std::unique_ptr<dal::IDbTranslatorsFactory> m_dbTranslatorsFactory;
 		std::unique_ptr<dal::IDbDAOFactory> m_dbDAOFactory;
 		std::unique_ptr<dal::IJSONTranslatorsFactory> m_jsonTranslatorsFactory;
+		std::unique_ptr<service::IServicesFactory> m_servicesFactory;
+		std::unique_ptr<service::ServicesMgr> m_servicesMgr;
 		std::unique_ptr<rest::IEndpointsFactory> m_endpointsFactory;
 	};
 

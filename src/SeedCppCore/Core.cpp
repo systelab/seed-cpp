@@ -10,6 +10,8 @@
 #include "Model/User.h"
 #include "REST/RESTAPIWebService.h"
 #include "REST/Endpoints/EndpointsFactory.h"
+#include "Services/ServicesFactory.h"
+#include "Services/ServicesMgr.h"
 
 #include "DbAdapterInterface/IDatabase.h"
 #include "JSONAdapterInterface/IJSONAdapter.h"
@@ -29,6 +31,8 @@ namespace seed_cpp {
 		m_dbTranslatorsFactory = std::make_unique<dal::DbTranslatorsFactory>();
 		m_dbDAOFactory = std::make_unique<dal::DbDAOFactory>(*this);
 		m_jsonTranslatorsFactory = std::make_unique<dal::JSONTranslatorsFactory>();
+		m_servicesFactory = std::make_unique<service::ServicesFactory>(*this);
+		m_servicesMgr = std::make_unique<service::ServicesMgr>(*m_servicesFactory);
 		m_endpointsFactory = std::make_unique<rest::EndpointsFactory>(*this);
 	}
 
@@ -75,6 +79,16 @@ namespace seed_cpp {
 	dal::IJSONTranslatorsFactory& Core::getJSONTranslatorsFactory() const
 	{
 		return *m_jsonTranslatorsFactory;
+	}
+
+	service::IServicesFactory& Core::getServicesFactory() const
+	{
+		return *m_servicesFactory;
+	}
+
+	service::ServicesMgr& Core::getServicesMgr() const
+	{
+		return *m_servicesMgr;
 	}
 
 	rest::IEndpointsFactory& Core::getEndpointsFactory() const
