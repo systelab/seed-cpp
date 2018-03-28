@@ -1,6 +1,21 @@
 PRAGMA encoding = "UTF-8";
 
 --
+-- Users table
+--
+
+CREATE TABLE IF NOT EXISTS 'User' (
+  'id' INTEGER NOT NULL,
+  'name' TEXT NOT NULL,
+  'surname' TEXT NOT NULL,
+  'login' TEXT NOT NULL,
+  'password' TEXT NOT NULL,
+  'role' INTEGER NOT NULL, 
+  PRIMARY KEY (id)
+);
+
+
+--
 -- Patients table
 --
 
