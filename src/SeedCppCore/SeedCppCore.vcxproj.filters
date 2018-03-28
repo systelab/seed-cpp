@@ -90,6 +90,9 @@
     <Filter Include="Source Files\REST\Endpoints\Patients">
       <UniqueIdentifier>{0f644a6a-4bf2-42d6-a7ed-5d776e775f07}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Services">
+      <UniqueIdentifier>{d0bf94bc-d4d1-4bb2-ba8a-a83eb71a0e55}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Stdafx.h">
@@ -227,6 +230,9 @@
     <ClInclude Include="REST\Endpoints\Users\UsersLoginPostEndpoint.h">
       <Filter>Header Files\REST\Endpoints\Users</Filter>
     </ClInclude>
+    <ClInclude Include="REST\Helpers\RequestURLEncodedParserHelper.h">
+      <Filter>Header Files\REST\Helpers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Stdafx.cpp">
@@ -321,6 +327,9 @@
     </ClCompile>
     <ClCompile Include="REST\Endpoints\Users\UsersLoginPostEndpoint.cpp">
       <Filter>Source Files\REST\Endpoints\Users</Filter>
+    </ClCompile>
+    <ClCompile Include="REST\Helpers\RequestURLEncodedParserHelper.cpp">
+      <Filter>Source Files\REST\Helpers</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -151,6 +151,7 @@
     <ClInclude Include="REST\Endpoints\Patients\PatientsPutEndpoint.h" />
     <ClInclude Include="REST\Endpoints\Users\UsersLoginPostEndpoint.h" />
     <ClInclude Include="REST\Helpers\ReplyBuilderHelper.h" />
+    <ClInclude Include="REST\Helpers\RequestURLEncodedParserHelper.h" />
     <ClInclude Include="REST\RESTAPIWebService.h" />
     <ClInclude Include="REST\Router\Route.h" />
     <ClInclude Include="REST\Router\RouteFragment.h" />
@@ -185,6 +186,7 @@
     <ClCompile Include="REST\Endpoints\Patients\PatientsPutEndpoint.cpp" />
     <ClCompile Include="REST\Endpoints\Users\UsersLoginPostEndpoint.cpp" />
     <ClCompile Include="REST\Helpers\ReplyBuilderHelper.cpp" />
+    <ClCompile Include="REST\Helpers\RequestURLEncodedParserHelper.cpp" />
     <ClCompile Include="REST\RESTAPIWebService.cpp" />
     <ClCompile Include="REST\Router\Route.cpp" />
     <ClCompile Include="REST\Router\RouteFragment.cpp" />
