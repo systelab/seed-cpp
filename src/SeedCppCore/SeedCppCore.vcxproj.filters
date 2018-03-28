@@ -72,17 +72,23 @@
     <Filter Include="Header Files\REST\Endpoints">
       <UniqueIdentifier>{e77bc26a-50c9-4a7e-a4d1-bdfcc8f8d11d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\REST\Endpoints\Patient">
-      <UniqueIdentifier>{0f644a6a-4bf2-42d6-a7ed-5d776e775f07}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\REST\Endpoints\Patient">
-      <UniqueIdentifier>{d90f643c-74e1-4177-b83b-b39d8d52830f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\REST\Helpers">
       <UniqueIdentifier>{cb010298-e12f-4292-a99b-b36361f91aa8}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\REST\Helpers">
       <UniqueIdentifier>{18e8b717-a75b-4a44-a014-ab132e23eb9d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\REST\Endpoints\Users">
+      <UniqueIdentifier>{870ae9e9-cffc-4987-956f-21c026948b6c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\REST\Endpoints\Patients">
+      <UniqueIdentifier>{d90f643c-74e1-4177-b83b-b39d8d52830f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\REST\Endpoints\Users">
+      <UniqueIdentifier>{ac43098b-8f09-4f02-a60d-74a5e2bbe9ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\REST\Endpoints\Patients">
+      <UniqueIdentifier>{0f644a6a-4bf2-42d6-a7ed-5d776e775f07}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -186,13 +192,13 @@
       <Filter>Header Files\DAL\Translators\JSON</Filter>
     </ClInclude>
     <ClInclude Include="REST\Endpoints\Patients\PatientsGetEndpoint.h">
-      <Filter>Header Files\REST\Endpoints\Patient</Filter>
+      <Filter>Header Files\REST\Endpoints\Patients</Filter>
     </ClInclude>
     <ClInclude Include="REST\Endpoints\Patients\PatientsPostEndpoint.h">
-      <Filter>Header Files\REST\Endpoints\Patient</Filter>
+      <Filter>Header Files\REST\Endpoints\Patients</Filter>
     </ClInclude>
     <ClInclude Include="REST\Endpoints\Patients\PatientsGetAllEndpoint.h">
-      <Filter>Header Files\REST\Endpoints\Patient</Filter>
+      <Filter>Header Files\REST\Endpoints\Patients</Filter>
     </ClInclude>
     <ClInclude Include="REST\Helpers\ReplyBuilderHelper.h">
       <Filter>Header Files\REST\Helpers</Filter>
@@ -201,10 +207,10 @@
       <Filter>Header Files\REST\Endpoints</Filter>
     </ClInclude>
     <ClInclude Include="REST\Endpoints\Patients\PatientsPutEndpoint.h">
-      <Filter>Header Files\REST\Endpoints\Patient</Filter>
+      <Filter>Header Files\REST\Endpoints\Patients</Filter>
     </ClInclude>
     <ClInclude Include="REST\Endpoints\Patients\PatientsDeleteEndpoint.h">
-      <Filter>Header Files\REST\Endpoints\Patient</Filter>
+      <Filter>Header Files\REST\Endpoints\Patients</Filter>
     </ClInclude>
     <ClInclude Include="Model\User.h">
       <Filter>Header Files\Model</Filter>
@@ -217,6 +223,9 @@
     </ClInclude>
     <ClInclude Include="DAL\DAO\Db\UserDbSaveDAO.h">
       <Filter>Header Files\DAL\DAO\Db</Filter>
+    </ClInclude>
+    <ClInclude Include="REST\Endpoints\Users\UsersLoginPostEndpoint.h">
+      <Filter>Header Files\REST\Endpoints\Users</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -278,13 +287,13 @@
       <Filter>Source Files\DAL\Translators\JSON</Filter>
     </ClCompile>
     <ClCompile Include="REST\Endpoints\Patients\PatientsPostEndpoint.cpp">
-      <Filter>Source Files\REST\Endpoints\Patient</Filter>
+      <Filter>Source Files\REST\Endpoints\Patients</Filter>
     </ClCompile>
     <ClCompile Include="REST\Endpoints\Patients\PatientsGetAllEndpoint.cpp">
-      <Filter>Source Files\REST\Endpoints\Patient</Filter>
+      <Filter>Source Files\REST\Endpoints\Patients</Filter>
     </ClCompile>
     <ClCompile Include="REST\Endpoints\Patients\PatientsGetEndpoint.cpp">
-      <Filter>Source Files\REST\Endpoints\Patient</Filter>
+      <Filter>Source Files\REST\Endpoints\Patients</Filter>
     </ClCompile>
     <ClCompile Include="REST\Helpers\ReplyBuilderHelper.cpp">
       <Filter>Source Files\REST\Helpers</Filter>
@@ -293,10 +302,10 @@
       <Filter>Source Files\REST\Endpoints</Filter>
     </ClCompile>
     <ClCompile Include="REST\Endpoints\Patients\PatientsPutEndpoint.cpp">
-      <Filter>Source Files\REST\Endpoints\Patient</Filter>
+      <Filter>Source Files\REST\Endpoints\Patients</Filter>
     </ClCompile>
     <ClCompile Include="REST\Endpoints\Patients\PatientsDeleteEndpoint.cpp">
-      <Filter>Source Files\REST\Endpoints\Patient</Filter>
+      <Filter>Source Files\REST\Endpoints\Patients</Filter>
     </ClCompile>
     <ClCompile Include="Model\User.cpp">
       <Filter>Source Files\Model</Filter>
@@ -309,6 +318,9 @@
     </ClCompile>
     <ClCompile Include="DAL\DAO\Db\UserDbSaveDAO.cpp">
       <Filter>Source Files\DAL\DAO\Db</Filter>
+    </ClCompile>
+    <ClCompile Include="REST\Endpoints\Users\UsersLoginPostEndpoint.cpp">
+      <Filter>Source Files\REST\Endpoints\Users</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
