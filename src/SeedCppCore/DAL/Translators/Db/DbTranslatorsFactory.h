@@ -13,6 +13,7 @@ namespace seed_cpp { namespace dal {
 
 		std::unique_ptr<IDatabaseEntityTranslator> buildPatientTranslator(model::Patient&) const;
 		std::unique_ptr<IDatabaseEntityTranslator> buildAddressTranslator(unsigned int patientId, model::Address&) const;
+		std::unique_ptr<IDatabaseEntityTranslator> buildUserTranslator(model::User&) const;
 	};
 
 }}

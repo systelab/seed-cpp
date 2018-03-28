@@ -118,6 +118,8 @@
     <ClInclude Include="DAL\DAO\Db\IDbDAOFactory.h" />
     <ClInclude Include="DAL\DAO\Db\PatientDbLoadDAO.h" />
     <ClInclude Include="DAL\DAO\Db\PatientDbSaveDAO.h" />
+    <ClInclude Include="DAL\DAO\Db\UserDbLoadDAO.h" />
+    <ClInclude Include="DAL\DAO\Db\UserDbSaveDAO.h" />
     <ClInclude Include="DAL\DAO\ILoadDAO.h" />
     <ClInclude Include="DAL\DAO\ISaveDAO.h" />
     <ClInclude Include="DAL\DAO\ITransactionDAO.h" />
@@ -127,6 +129,7 @@
     <ClInclude Include="DAL\Translators\Db\IDatabaseEntityTranslator.h" />
     <ClInclude Include="DAL\Translators\Db\IDbTranslatorsFactory.h" />
     <ClInclude Include="DAL\Translators\Db\PatientDbTranslator.h" />
+    <ClInclude Include="DAL\Translators\Db\UserDbTranslator.h" />
     <ClInclude Include="DAL\Translators\JSON\IJSONLoadTranslator.h" />
     <ClInclude Include="DAL\Translators\JSON\IJSONSaveTranslator.h" />
     <ClInclude Include="DAL\Translators\JSON\IJSONTranslatorsFactory.h" />
@@ -160,9 +163,12 @@
     <ClCompile Include="DAL\DAO\Db\DbTransactionDAO.cpp" />
     <ClCompile Include="DAL\DAO\Db\PatientDbLoadDAO.cpp" />
     <ClCompile Include="DAL\DAO\Db\PatientDbSaveDAO.cpp" />
+    <ClCompile Include="DAL\DAO\Db\UserDbLoadDAO.cpp" />
+    <ClCompile Include="DAL\DAO\Db\UserDbSaveDAO.cpp" />
     <ClCompile Include="DAL\Translators\Db\AddressDbTranslator.cpp" />
     <ClCompile Include="DAL\Translators\Db\DbTranslatorsFactory.cpp" />
     <ClCompile Include="DAL\Translators\Db\PatientDbTranslator.cpp" />
+    <ClCompile Include="DAL\Translators\Db\UserDbTranslator.cpp" />
     <ClCompile Include="DAL\Translators\JSON\JSONTranslatorsFactory.cpp" />
     <ClCompile Include="DAL\Translators\JSON\PatientJSONTranslator.cpp" />
     <ClCompile Include="Model\Address.cpp" />

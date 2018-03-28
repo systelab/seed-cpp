@@ -5,6 +5,7 @@
 
 namespace seed_cpp { namespace model {
 	class Patient;
+	class User;
 }}
 
 namespace seed_cpp { namespace dal {
@@ -18,9 +19,15 @@ namespace seed_cpp { namespace dal {
 	public:
 		virtual ~IDbDAOFactory() {};
 
+		// Patients
 		virtual std::unique_ptr<ILoadDAO> buildPatientLoadDAO() = 0;
 		virtual std::unique_ptr<ISaveDAO> buildPatientSaveDAO(model::Patient&) = 0;
 
+		// Users
+		virtual std::unique_ptr<ILoadDAO> buildUserLoadDAO() = 0;
+		virtual std::unique_ptr<ISaveDAO> buildUserSaveDAO(model::User&) = 0;
+
+		// Transactions
 		virtual std::unique_ptr<ITransactionDAO> startTransaction() = 0;
 	};
 

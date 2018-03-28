@@ -2,9 +2,11 @@
 #include "DbDAOFactory.h"
 
 #include "Core.h"
+#include "DAL/DAO/Db/DbTransactionDAO.h"
 #include "DAL/DAO/Db/PatientDbLoadDAO.h"
 #include "DAL/DAO/Db/PatientDbSaveDAO.h"
-#include "DAL/DAO/Db/DbTransactionDAO.h"
+#include "DAL/DAO/Db/UserDbLoadDAO.h"
+#include "DAL/DAO/Db/UserDbSaveDAO.h"
 #include "Model/Model.h"
 
 
@@ -33,6 +35,21 @@ namespace seed_cpp { namespace dal {
 		systelab::db::IDatabase& database = m_core.getDatabase();
 		dal::IDbTranslatorsFactory& dbTranslatorsFactory = m_core.getDbTranslatorsFactory();
 		return std::unique_ptr<ISaveDAO>(new PatientDbSaveDAO(database, patient, *this, dbTranslatorsFactory));
+	}
+
+	std::unique_ptr<ILoadDAO> DbDAOFactory::buildUserLoadDAO()
+	{
+		systelab::db::IDatabase& database = m_core.getDatabase();
+		model::EntityMgr<model::User>& model = m_core.getModel().getUserMgr();
+		dal::IDbTranslatorsFactory& dbTranslatorsFactory = m_core.getDbTranslatorsFactory();
+		return std::unique_ptr<ILoadDAO>(new UserDbLoadDAO(database, model, dbTranslatorsFactory));
+	}
+
+	std::unique_ptr<ISaveDAO> DbDAOFactory::buildUserSaveDAO(model::User& user)
+	{
+		systelab::db::IDatabase& database = m_core.getDatabase();
+		dal::IDbTranslatorsFactory& dbTranslatorsFactory = m_core.getDbTranslatorsFactory();
+		return std::unique_ptr<ISaveDAO>(new UserDbSaveDAO(database, user, *this, dbTranslatorsFactory));
 	}
 
 	std::unique_ptr<ITransactionDAO> DbDAOFactory::startTransaction()

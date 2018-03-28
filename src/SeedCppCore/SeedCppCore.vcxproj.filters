@@ -209,6 +209,15 @@
     <ClInclude Include="Model\User.h">
       <Filter>Header Files\Model</Filter>
     </ClInclude>
+    <ClInclude Include="DAL\Translators\Db\UserDbTranslator.h">
+      <Filter>Header Files\DAL\Translators\Db</Filter>
+    </ClInclude>
+    <ClInclude Include="DAL\DAO\Db\UserDbLoadDAO.h">
+      <Filter>Header Files\DAL\DAO\Db</Filter>
+    </ClInclude>
+    <ClInclude Include="DAL\DAO\Db\UserDbSaveDAO.h">
+      <Filter>Header Files\DAL\DAO\Db</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Stdafx.cpp">
@@ -291,6 +300,15 @@
     </ClCompile>
     <ClCompile Include="Model\User.cpp">
       <Filter>Source Files\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="DAL\Translators\Db\UserDbTranslator.cpp">
+      <Filter>Source Files\DAL\Translators\Db</Filter>
+    </ClCompile>
+    <ClCompile Include="DAL\DAO\Db\UserDbLoadDAO.cpp">
+      <Filter>Source Files\DAL\DAO\Db</Filter>
+    </ClCompile>
+    <ClCompile Include="DAL\DAO\Db\UserDbSaveDAO.cpp">
+      <Filter>Source Files\DAL\DAO\Db</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
