@@ -11,6 +11,7 @@
 #include "REST/Endpoints/Patients/PatientsGetEndpoint.h"
 #include "REST/Endpoints/Patients/PatientsPostEndpoint.h"
 #include "REST/Endpoints/Patients/PatientsPutEndpoint.h"
+#include "REST/Endpoints/Users/UsersLoginPostEndpoint.h"
 
 
 namespace seed_cpp { namespace rest {
@@ -24,7 +25,9 @@ namespace seed_cpp { namespace rest {
 	{
 	}
 
-	std::unique_ptr<IEndpoint> EndpointsFactory::buildPatientGetAllEndpoint(const EndpointRequestData&)
+
+	// Patients
+	std::unique_ptr<IEndpoint> EndpointsFactory::buildPatientsGetAllEndpoint(const EndpointRequestData&)
 	{
 		model::EntityMgr<model::Patient>& patientMgr = m_core.getModel().getPatientMgr();
 		dal::IJSONTranslatorsFactory& jsonTranslatorsFactory = m_core.getJSONTranslatorsFactory();
@@ -33,7 +36,7 @@ namespace seed_cpp { namespace rest {
 		return std::make_unique<PatientsGetAllEndpoint>(patientMgr, jsonTranslatorsFactory, jsonAdapter);
 	}
 
-	std::unique_ptr<IEndpoint> EndpointsFactory::buildPatientGetEndpoint(const EndpointRequestData& requestData)
+	std::unique_ptr<IEndpoint> EndpointsFactory::buildPatientsGetEndpoint(const EndpointRequestData& requestData)
 	{
 		unsigned int patientId = requestData.getRouteParameters()[0].getValue<unsigned int>();
 		model::EntityMgr<model::Patient>& patientMgr = m_core.getModel().getPatientMgr();
@@ -43,7 +46,7 @@ namespace seed_cpp { namespace rest {
 		return std::make_unique<PatientsGetEndpoint>(patientId, patientMgr, jsonTranslatorsFactory, jsonAdapter);
 	}
 
-	std::unique_ptr<IEndpoint> EndpointsFactory::buildPatientPostEndpoint(const EndpointRequestData& requestData)
+	std::unique_ptr<IEndpoint> EndpointsFactory::buildPatientsPostEndpoint(const EndpointRequestData& requestData)
 	{
 		const std::string& requestContent = requestData.getContent();
 		model::EntityMgr<model::Patient>& patientMgr = m_core.getModel().getPatientMgr();
@@ -54,7 +57,7 @@ namespace seed_cpp { namespace rest {
 		return std::make_unique<PatientsPostEndpoint>(requestContent, patientMgr, dbDAOFactory, jsonTranslatorsFactory, jsonAdapter);
 	}
 
-	std::unique_ptr<IEndpoint> EndpointsFactory::buildPatientPutEndpoint(const EndpointRequestData& requestData)
+	std::unique_ptr<IEndpoint> EndpointsFactory::buildPatientsPutEndpoint(const EndpointRequestData& requestData)
 	{
 		unsigned int patientId = requestData.getRouteParameters()[0].getValue<unsigned int>();
 		const std::string& requestContent = requestData.getContent();
@@ -66,13 +69,23 @@ namespace seed_cpp { namespace rest {
 		return std::make_unique<PatientsPutEndpoint>(patientId, requestContent, patientMgr, dbDAOFactory, jsonTranslatorsFactory, jsonAdapter);
 	}
 
-	std::unique_ptr<IEndpoint> EndpointsFactory::buildPatientDeleteEndpoint(const EndpointRequestData& requestData)
+	std::unique_ptr<IEndpoint> EndpointsFactory::buildPatientsDeleteEndpoint(const EndpointRequestData& requestData)
 	{
 		unsigned int patientId = requestData.getRouteParameters()[0].getValue<unsigned int>();
 		model::EntityMgr<model::Patient>& patientMgr = m_core.getModel().getPatientMgr();
 		dal::IDbDAOFactory& dbDAOFactory = m_core.getDbDAOFactory();
 
 		return std::make_unique<PatientsDeleteEndpoint>(patientId, patientMgr, dbDAOFactory);
+	}
+
+
+	// Users
+	std::unique_ptr<IEndpoint> EndpointsFactory::buildUsersLoginPostEndpoint(const EndpointRequestData& requestData)
+	{
+		const std::string& requestContent = requestData.getContent();
+		model::EntityMgr<model::User>& userMgr = m_core.getModel().getUserMgr();
+
+		return std::make_unique<UsersLoginPostEndpoint>(requestContent, userMgr);
 	}
 
 }}

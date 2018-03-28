@@ -15,11 +15,15 @@ namespace seed_cpp { namespace rest {
 		EndpointsFactory(Core&);
 		virtual ~EndpointsFactory();
 
-		std::unique_ptr<IEndpoint> buildPatientGetAllEndpoint(const EndpointRequestData&);
-		std::unique_ptr<IEndpoint> buildPatientGetEndpoint(const EndpointRequestData&);
-		std::unique_ptr<IEndpoint> buildPatientPostEndpoint(const EndpointRequestData&);
-		std::unique_ptr<IEndpoint> buildPatientPutEndpoint(const EndpointRequestData&);
-		std::unique_ptr<IEndpoint> buildPatientDeleteEndpoint(const EndpointRequestData&);
+		// Patients
+		std::unique_ptr<IEndpoint> buildPatientsGetAllEndpoint(const EndpointRequestData&);
+		std::unique_ptr<IEndpoint> buildPatientsGetEndpoint(const EndpointRequestData&);
+		std::unique_ptr<IEndpoint> buildPatientsPostEndpoint(const EndpointRequestData&);
+		std::unique_ptr<IEndpoint> buildPatientsPutEndpoint(const EndpointRequestData&);
+		std::unique_ptr<IEndpoint> buildPatientsDeleteEndpoint(const EndpointRequestData&);
+
+		// Users
+		std::unique_ptr<IEndpoint> buildUsersLoginPostEndpoint(const EndpointRequestData&);
 
 	private:
 		Core& m_core;
