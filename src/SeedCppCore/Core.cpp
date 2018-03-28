@@ -2,10 +2,12 @@
 #include "Core.h"
 
 #include "DAL/DAO/ILoadDAO.h"
+#include "DAL/DAO/ISaveDAO.h"
 #include "DAL/DAO/Db/DbDAOFactory.h"
 #include "DAL/Translators/Db/DbTranslatorsFactory.h"
 #include "DAL/Translators/JSON/JSONTranslatorsFactory.h"
 #include "Model/Model.h"
+#include "Model/User.h"
 #include "REST/RESTAPIWebService.h"
 #include "REST/Endpoints/EndpointsFactory.h"
 
@@ -82,6 +84,24 @@ namespace seed_cpp {
 
 	void Core::initializeModel()
 	{
+		std::unique_ptr<dal::ILoadDAO> userLoadDAO = m_dbDAOFactory->buildUserLoadDAO();
+		userLoadDAO->loadAll();
+
+		model::EntityMgr<model::User>& userMgr = getModel().getUserMgr();
+		if (userMgr.count() == 0)
+		{
+			auto defaultUser = std::make_unique<model::User>();
+			defaultUser->setSurname("Systelab");
+			defaultUser->setName("Systelab");
+			defaultUser->setLogin("Systelab");
+			defaultUser->setPassword("Systelab");
+			defaultUser->setRole(model::User::ADMIN_ROLE);
+
+			auto userSaveDAO = getDbDAOFactory().buildUserSaveDAO(*defaultUser);
+			userSaveDAO->addEntity();
+			userMgr.addEntity(std::move(defaultUser));
+		}
+
 		std::unique_ptr<dal::ILoadDAO> patientLoadDAO = m_dbDAOFactory->buildPatientLoadDAO();
 		patientLoadDAO->loadAll();
 	}
