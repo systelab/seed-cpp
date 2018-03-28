@@ -7,7 +7,7 @@ namespace seed_cpp { namespace model {
 	class User;
 }}
 
-namespace seed_cpp { namespace rest {
+namespace seed_cpp { namespace service {
 
 	class IUserModelService
 	{

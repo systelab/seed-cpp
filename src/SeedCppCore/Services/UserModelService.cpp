@@ -4,7 +4,7 @@
 #include "Model/User.h"
 
 
-namespace seed_cpp { namespace rest {
+namespace seed_cpp { namespace service {
 
 	UserModelService::UserModelService(model::EntityMgr<model::User>& userMgr)
 		:m_userMgr(userMgr)
