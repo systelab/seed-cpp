@@ -13,9 +13,14 @@ namespace seed_cpp { namespace service {
 	{
 	public:
 		ServicesFactory(Core&);
-		~ServicesFactory();
+		virtual ~ServicesFactory();
 
-		virtual std::unique_ptr<IUserModelService> buildUserModelService() const;
+		// Model services
+		std::unique_ptr<IUserModelService> buildUserModelService() const;
+
+		// Security services
+		std::unique_ptr<ISignatureService> buildSignatureService() const;
+		std::unique_ptr<IBase64EncodeService> buildBase64EncodeService() const;
 
 	private:
 		Core& m_core;

@@ -93,6 +93,24 @@
     <Filter Include="Header Files\Services">
       <UniqueIdentifier>{d0bf94bc-d4d1-4bb2-ba8a-a83eb71a0e55}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Services\Model">
+      <UniqueIdentifier>{f4972e3d-95ba-4adc-9645-a35cf0f53375}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Services\Security">
+      <UniqueIdentifier>{727f6f70-8965-4acb-822b-027756d7045d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Services\Model">
+      <UniqueIdentifier>{33471cbb-8057-4cbe-a970-d1d29d446902}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Services\Security">
+      <UniqueIdentifier>{db525bbf-7b46-4506-9b86-1956ff14c41a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Services\System">
+      <UniqueIdentifier>{fe341989-42fb-4e41-8753-17b9e9b27f42}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Services\System">
+      <UniqueIdentifier>{9e1f5966-c982-4c5c-b19f-3b3575296283}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Stdafx.h">
@@ -233,12 +251,6 @@
     <ClInclude Include="REST\Helpers\RequestURLEncodedParserHelper.h">
       <Filter>Header Files\REST\Helpers</Filter>
     </ClInclude>
-    <ClInclude Include="Services\UserModelService.h">
-      <Filter>Header Files\Services</Filter>
-    </ClInclude>
-    <ClInclude Include="Services\IUserModelService.h">
-      <Filter>Header Files\Services</Filter>
-    </ClInclude>
     <ClInclude Include="Services\IServicesFactory.h">
       <Filter>Header Files\Services</Filter>
     </ClInclude>
@@ -247,6 +259,36 @@
     </ClInclude>
     <ClInclude Include="Services\ServicesMgr.h">
       <Filter>Header Files\Services</Filter>
+    </ClInclude>
+    <ClInclude Include="Services\Model\IUserModelService.h">
+      <Filter>Header Files\Services\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Services\Model\UserModelService.h">
+      <Filter>Header Files\Services\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Services\Security\Base64EncodeService.h">
+      <Filter>Header Files\Services\Security</Filter>
+    </ClInclude>
+    <ClInclude Include="Services\Security\IBase64EncodeService.h">
+      <Filter>Header Files\Services\Security</Filter>
+    </ClInclude>
+    <ClInclude Include="Services\Security\ISignatureService.h">
+      <Filter>Header Files\Services\Security</Filter>
+    </ClInclude>
+    <ClInclude Include="Services\Security\SignatureService.h">
+      <Filter>Header Files\Services\Security</Filter>
+    </ClInclude>
+    <ClInclude Include="Services\System\ITimeService.h">
+      <Filter>Header Files\Services\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Services\System\TimeService.h">
+      <Filter>Header Files\Services\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Services\Security\JWTBuilderService.h">
+      <Filter>Header Files\Services\Security</Filter>
+    </ClInclude>
+    <ClInclude Include="Services\Security\IJWTBuilderService.h">
+      <Filter>Header Files\Services\Security</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -346,14 +388,26 @@
     <ClCompile Include="REST\Helpers\RequestURLEncodedParserHelper.cpp">
       <Filter>Source Files\REST\Helpers</Filter>
     </ClCompile>
-    <ClCompile Include="Services\UserModelService.cpp">
-      <Filter>Source Files\Services</Filter>
-    </ClCompile>
     <ClCompile Include="Services\ServicesFactory.cpp">
       <Filter>Source Files\Services</Filter>
     </ClCompile>
     <ClCompile Include="Services\ServicesMgr.cpp">
       <Filter>Source Files\Services</Filter>
+    </ClCompile>
+    <ClCompile Include="Services\Security\Base64EncodeService.cpp">
+      <Filter>Source Files\Services\Security</Filter>
+    </ClCompile>
+    <ClCompile Include="Services\Model\UserModelService.cpp">
+      <Filter>Source Files\Services\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="Services\Security\SignatureService.cpp">
+      <Filter>Source Files\Services\Security</Filter>
+    </ClCompile>
+    <ClCompile Include="Services\System\TimeService.cpp">
+      <Filter>Source Files\Services\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Services\Security\JWTBuilderService.cpp">
+      <Filter>Source Files\Services\Security</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
