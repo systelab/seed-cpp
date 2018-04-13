@@ -4,7 +4,7 @@
 #include "Model/User.h"
 #include "REST/Helpers/ReplyBuilderHelper.h"
 #include "REST/Helpers/RequestURLEncodedParserHelper.h"
-#include "Services/IUserModelService.h"
+#include "Services/Model/IUserModelService.h"
 
 #include "WebServerInterface/Model/Reply.h"
 
