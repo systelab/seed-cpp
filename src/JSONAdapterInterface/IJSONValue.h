@@ -39,6 +39,8 @@ namespace systelab { namespace json_adapter {
 		virtual double getDouble(double) const = 0;
 
 		virtual void setInteger(int) = 0;
+		virtual void setLong(long) = 0;
+		virtual void setLongLong(long long) = 0;
 		virtual void setDouble(double) = 0;
 
 		// Only for object values
@@ -48,6 +50,8 @@ namespace systelab { namespace json_adapter {
 
 		virtual void addMember(const std::string& name, bool value) = 0;
 		virtual void addMember(const std::string& name, int value) = 0;
+		virtual void addMember(const std::string& name, long value) = 0;
+		virtual void addMember(const std::string& name, long long value) = 0;
 		virtual void addMember(const std::string& name, double value) = 0;
 		virtual void addMember(const std::string& name, const std::string& value) = 0;
 		virtual void addMember(const std::string& name, std::unique_ptr<IJSONValue>) = 0;

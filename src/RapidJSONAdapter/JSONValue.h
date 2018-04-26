@@ -37,6 +37,8 @@ namespace systelab { namespace json_adapter { namespace rapidjson_adapter {
 		double getDouble(double) const;
 
 		void setInteger(int);
+		void setLong(long);
+		void setLongLong(long long);
 		void setDouble(double);
 
 		// Only for object values
@@ -46,6 +48,8 @@ namespace systelab { namespace json_adapter { namespace rapidjson_adapter {
 
 		void addMember(const std::string& name, bool value);
 		void addMember(const std::string& name, int value);
+		void addMember(const std::string& name, long value);
+		void addMember(const std::string& name, long long value);
 		void addMember(const std::string& name, double value);
 		void addMember(const std::string& name, const std::string& value);
 		void addMember(const std::string& name, std::unique_ptr<IJSONValue>);

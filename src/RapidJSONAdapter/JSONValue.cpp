@@ -126,7 +126,17 @@ namespace systelab { namespace json_adapter { namespace rapidjson_adapter {
 	{
 		m_value.SetInt(value);
 	}
-	
+
+	void JSONValue::setLong(long value)
+	{
+		m_value.SetInt64(value);
+	}
+
+	void JSONValue::setLongLong(long long value)
+	{
+		m_value.SetInt64(value);
+	}
+
 	void JSONValue::setDouble(double value)
 	{
 		m_value.SetDouble(value);
@@ -168,6 +178,20 @@ namespace systelab { namespace json_adapter { namespace rapidjson_adapter {
 	{
 		std::unique_ptr<IJSONValue> newNumberValue = buildValue(NUMBER_TYPE);
 		newNumberValue->setInteger(value);
+		addMember(name, std::move(newNumberValue));
+	}
+
+	void JSONValue::addMember(const std::string& name, long value)
+	{
+		std::unique_ptr<IJSONValue> newNumberValue = buildValue(NUMBER_TYPE);
+		newNumberValue->setInteger(value);
+		addMember(name, std::move(newNumberValue));
+	}
+
+	void JSONValue::addMember(const std::string& name, long long value)
+	{
+		std::unique_ptr<IJSONValue> newNumberValue = buildValue(NUMBER_TYPE);
+		newNumberValue->setLongLong(value);
 		addMember(name, std::move(newNumberValue));
 	}
 
