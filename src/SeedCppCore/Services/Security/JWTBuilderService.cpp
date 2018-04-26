@@ -3,27 +3,23 @@
 
 #include "Services/Security/IBase64EncodeService.h"
 #include "Services/Security/ISignatureService.h"
-#include "Services/System/ITimeService.h"
 
-#include <rapidjson/document.h>
-#include <rapidjson/writer.h>
-#include <rapidjson/stringbuffer.h>
+#include "JSONAdapterInterface/IJSONAdapter.h"
+#include "JSONAdapterInterface/IJSONDocument.h"
+#include "JSONAdapterInterface/IJSONValue.h"
 
-#include <boost/throw_exception.hpp>
-#include <boost/exception/info.hpp>
-#include <boost/algorithm/string.hpp>
-
+#include <boost/date_time/posix_time/conversion.hpp>
 #include <vector>
 
 
 namespace seed_cpp { namespace service {
 
-	JWTBuilderService::JWTBuilderService(const ITimeService& timeService,
-										 const IBase64EncodeService& base64EncodeService,
-										 const ISignatureService& signatureService)
-		:m_timeService(timeService)
-		,m_base64EncodeService(base64EncodeService)
+	JWTBuilderService::JWTBuilderService(const IBase64EncodeService& base64EncodeService,
+										 const ISignatureService& signatureService,
+										 const systelab::json_adapter::IJSONAdapter& jsonAdapter)
+		:m_base64EncodeService(base64EncodeService)
 		,m_signatureService(signatureService)
+		,m_jsonAdapter(jsonAdapter)
 	{
 	}
 
@@ -31,11 +27,12 @@ namespace seed_cpp { namespace service {
 	{
 	}
 
-	std::string JWTBuilderService::buildJWT(const std::string& key) const
+	std::string JWTBuilderService::buildJWT(const std::string& key,
+											const boost::posix_time::ptime& currentTimeStamp) const
 	{
 		std::string jwtHeader = buildJWTHeader();
-		std::string jwtPayload = buildJWTPayload();
-		std::string jwtSignature = buildJWTSignature(jwtHeader, jwtPayload);
+		std::string jwtPayload = buildJWTPayload(currentTimeStamp);
+		std::string jwtSignature = buildJWTSignature(jwtHeader, jwtPayload, key);
 		std::string jwt = jwtHeader + "." + jwtPayload + "." + jwtSignature;
 
 		return jwt;
@@ -43,65 +40,38 @@ namespace seed_cpp { namespace service {
 
 	std::string JWTBuilderService::buildJWTHeader() const
 	{
-		rapidjson::Document document;
-		document.SetObject();
+		auto jsonDocument = m_jsonAdapter.buildEmptyDocument();
+		systelab::json_adapter::IJSONValue& jsonRoot = jsonDocument->getRootValue();
+		jsonRoot.setType(systelab::json_adapter::OBJECT_TYPE);
+		jsonRoot.addMember("alg", "HS256");
+		jsonRoot.addMember("typ", "JWT");
+		std::string jwtHeader = jsonDocument->serialize();
 
-		rapidjson::Document::AllocatorType& allocator = document.GetAllocator();
-
-		document.AddMember("alg", "HS256", allocator);
-		document.AddMember("typ", "JWT", allocator);
-
-		rapidjson::StringBuffer buffer;
-		buffer.Clear();
-
-		rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
-		document.Accept(writer);
-
-		return m_base64EncodeService.encodeString(buffer.GetString());
+		return m_base64EncodeService.encodeString(jwtHeader);
 	}
 
-	std::string JWTBuilderService::buildJWTPayload() const
+	std::string JWTBuilderService::buildJWTPayload(const boost::posix_time::ptime& currentTimeStamp) const
 	{
-		rapidjson::Document document;
-		document.SetObject();
+		time_t iat = boost::posix_time::to_time_t(currentTimeStamp);
 
-		rapidjson::Document::AllocatorType& allocator = document.GetAllocator();
+		auto jsonDocument = m_jsonAdapter.buildEmptyDocument();
+		systelab::json_adapter::IJSONValue& jsonRoot = jsonDocument->getRootValue();
+		jsonRoot.setType(systelab::json_adapter::OBJECT_TYPE);
+		jsonRoot.addMember("iat", (long long) iat);
+		std::string jwtPayload = jsonDocument->serialize();
 
-		document.AddMember("iat", getCurrentTimestamp(), allocator);
-
-		rapidjson::StringBuffer buffer;
-
-		buffer.Clear();
-
-		rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
-		document.Accept(writer);
-
-		return m_base64EncodeService.encodeString(buffer.GetString());
+		return m_base64EncodeService.encodeString(jwtPayload);
 	}
 
-	std::string JWTBuilderService::buildJWTSignature(const std::string& jwtHeader, const std::string& jwtPayload) const
+	std::string JWTBuilderService::buildJWTSignature(const std::string& jwtHeader,
+													 const std::string& jwtPayload,
+													 const std::string& key) const
 	{
-		rapidjson::Document document;
-		document.SetObject();
+		std::stringstream stream;
+		stream << jwtHeader << "." << jwtPayload;
+		std::string messageToSign = stream.str();
 
-		rapidjson::Document::AllocatorType& allocator = document.GetAllocator();
-		document.AddMember("iat", getCurrentTimestamp(), allocator);
-
-		rapidjson::StringBuffer buffer;
-		buffer.Clear();
-
-		rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
-		document.Accept(writer);
-
-		return m_base64EncodeService.encodeString(buffer.GetString());
-	}
-
-	time_t JWTBuilderService::getCurrentTimestamp() const
-	{
-		time_t now;
-		time(&now);
-
-		return now;
+		return m_signatureService.HMACSHA256(key, messageToSign);
 	}
 
 }}

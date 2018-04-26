@@ -163,8 +163,10 @@
     <ClInclude Include="Services\Security\Base64EncodeService.h" />
     <ClInclude Include="Services\Security\IBase64EncodeService.h" />
     <ClInclude Include="Services\Security\IJWTBuilderService.h" />
+    <ClInclude Include="Services\Security\IJWTValidatorService.h" />
     <ClInclude Include="Services\Security\ISignatureService.h" />
     <ClInclude Include="Services\Security\JWTBuilderService.h" />
+    <ClInclude Include="Services\Security\JWTValidatorService.h" />
     <ClInclude Include="Services\Security\SignatureService.h" />
     <ClInclude Include="Services\ServicesFactory.h" />
     <ClInclude Include="Services\ServicesMgr.h" />
@@ -207,6 +209,7 @@
     <ClCompile Include="Services\Model\UserModelService.cpp" />
     <ClCompile Include="Services\Security\Base64EncodeService.cpp" />
     <ClCompile Include="Services\Security\JWTBuilderService.cpp" />
+    <ClCompile Include="Services\Security\JWTValidatorService.cpp" />
     <ClCompile Include="Services\Security\SignatureService.cpp" />
     <ClCompile Include="Services\ServicesFactory.cpp" />
     <ClCompile Include="Services\ServicesMgr.cpp" />
