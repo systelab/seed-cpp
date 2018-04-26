@@ -4,6 +4,8 @@
 #include "Services/IServicesFactory.h"
 #include "Services/Model/IUserModelService.h"
 #include "Services/Security/IBase64EncodeService.h"
+#include "Services/Security/IJWTBuilderService.h"
+#include "Services/Security/IJWTValidatorService.h"
 #include "Services/Security/ISignatureService.h"
 
 
@@ -12,6 +14,8 @@ namespace seed_cpp { namespace service {
 	ServicesMgr::ServicesMgr(service::IServicesFactory& factory)
 		:m_servicesFactory(factory)
 		,m_userModelService()
+		,m_jwtBuilderService()
+		,m_jwtValidatorService()
 		,m_signatureService()
 		,m_base64EncodeService()
 	{
@@ -29,6 +33,26 @@ namespace seed_cpp { namespace service {
 		}
 
 		return *m_userModelService;
+	}
+
+	IJWTBuilderService& ServicesMgr::getJWTBuilderService() const
+	{
+		if (!m_jwtBuilderService.get())
+		{
+			m_jwtBuilderService = m_servicesFactory.buildJWTBuilderService();
+		}
+
+		return *m_jwtBuilderService;
+	}
+
+	IJWTValidatorService& ServicesMgr::getJWTValidatorService() const
+	{
+		if (!m_jwtValidatorService.get())
+		{
+			m_jwtValidatorService = m_servicesFactory.buildJWTValidatorService();
+		}
+
+		return *m_jwtValidatorService;
 	}
 
 	ISignatureService& ServicesMgr::getSignatureService() const

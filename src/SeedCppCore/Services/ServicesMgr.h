@@ -8,6 +8,8 @@ namespace seed_cpp { namespace service {
 	class IServicesFactory;
 
 	class IBase64EncodeService;
+	class IJWTBuilderService;
+	class IJWTValidatorService;
 	class ISignatureService;
 	class IUserModelService;
 
@@ -21,6 +23,8 @@ namespace seed_cpp { namespace service {
 		IUserModelService& getUserModelService() const;
 
 		// Security services
+		IJWTBuilderService& getJWTBuilderService() const;
+		IJWTValidatorService& getJWTValidatorService() const;
 		ISignatureService& getSignatureService() const;
 		IBase64EncodeService& getBase64EncodeService() const;
 
@@ -29,6 +33,8 @@ namespace seed_cpp { namespace service {
 
 		mutable std::unique_ptr<IUserModelService> m_userModelService;
 
+		mutable std::unique_ptr<IJWTBuilderService> m_jwtBuilderService;
+		mutable std::unique_ptr<IJWTValidatorService> m_jwtValidatorService;
 		mutable std::unique_ptr<ISignatureService> m_signatureService;
 		mutable std::unique_ptr<IBase64EncodeService> m_base64EncodeService;
 	};
