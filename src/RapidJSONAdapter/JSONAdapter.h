@@ -13,8 +13,8 @@ namespace systelab { namespace json_adapter { namespace rapidjson_adapter {
 		JSONAdapter();
 		virtual ~JSONAdapter();
 
-		std::unique_ptr<IJSONDocument> buildEmptyDocument();
-		std::unique_ptr<IJSONDocument> buildDocumentFromString(const std::string&);
+		std::unique_ptr<IJSONDocument> buildEmptyDocument() const;
+		std::unique_ptr<IJSONDocument> buildDocumentFromString(const std::string&) const;
 	};
 
 }}}
