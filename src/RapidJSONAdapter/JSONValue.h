@@ -44,6 +44,7 @@ namespace systelab { namespace json_adapter { namespace rapidjson_adapter {
 		// Only for object values
 		unsigned int getObjectMemberCount() const;
 		bool hasObjectMember(const std::string&) const;
+		std::vector<std::string> getObjectMemberNames() const;
 		IJSONValue& getObjectMemberValue(const std::string&) const;
 
 		void addMember(const std::string& name, bool value);

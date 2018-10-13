@@ -152,6 +152,18 @@ namespace systelab { namespace json_adapter { namespace rapidjson_adapter {
 		return m_value.HasMember(name);
 	}
 
+	std::vector<std::string> JSONValue::getObjectMemberNames() const
+	{
+		std::vector<std::string> memberNames;
+		for (auto itr = m_value.MemberBegin(); itr != m_value.MemberEnd(); ++itr)
+		{
+			memberNames.push_back(itr->name.GetString());
+
+		}
+
+		return memberNames;
+	}
+
 	IJSONValue& JSONValue::getObjectMemberValue(const std::string& name) const
 	{
 		loadObjectMembers();

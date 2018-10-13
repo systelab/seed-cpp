@@ -46,6 +46,7 @@ namespace systelab { namespace json_adapter {
 		// Only for object values
 		virtual unsigned int getObjectMemberCount() const = 0;
 		virtual bool hasObjectMember(const std::string&) const = 0;
+		virtual std::vector<std::string> getObjectMemberNames() const = 0;
 		virtual IJSONValue& getObjectMemberValue(const std::string&) const = 0;
 
 		virtual void addMember(const std::string& name, bool value) = 0;
