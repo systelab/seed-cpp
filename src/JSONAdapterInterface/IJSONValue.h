@@ -2,6 +2,8 @@
 
 #include <string>
 #include <memory>
+#include <vector>
+
 
 namespace systelab { namespace json_adapter {
 
