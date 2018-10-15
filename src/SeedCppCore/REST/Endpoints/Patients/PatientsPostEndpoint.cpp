@@ -8,6 +8,7 @@
 #include "DAL/Translators/JSON/IJSONTranslatorsFactory.h"
 #include "Model/Patient.h"
 #include "REST/Helpers/ReplyBuilderHelper.h"
+#include "Services/Security/IAuthorizationValidatorService.h"
 
 #include "JSONAdapterInterface/IJSONAdapter.h"
 #include "JSONAdapterInterface/IJSONDocument.h"
@@ -21,17 +22,24 @@ namespace seed_cpp { namespace rest {
 											   model::EntityMgr<model::Patient>& patientMgr,
 											   dal::IDbDAOFactory& dbDAOFactory,
 											   dal::IJSONTranslatorsFactory& jsonTranslatorsFactory,
-											   systelab::json_adapter::IJSONAdapter& jsonAdapter)
+											   systelab::json_adapter::IJSONAdapter& jsonAdapter,
+											   service::IAuthorizationValidatorService& authorizationValidatorService)
 		:m_requestContent(requestContent)
 		,m_patientMgr(patientMgr)
 		,m_dbDAOFactory(dbDAOFactory)
 		,m_jsonTranslatorsFactory(jsonTranslatorsFactory)
 		,m_jsonAdapter(jsonAdapter)
+		,m_authorizationValidatorService(authorizationValidatorService)
 	{
 	}
 	
 	PatientsPostEndpoint::~PatientsPostEndpoint()
 	{
+	}
+
+	bool PatientsPostEndpoint::hasAccess(const std::string& token)
+	{
+		return m_authorizationValidatorService.validate(token);
 	}
 
 	std::unique_ptr<systelab::web_server::Reply> PatientsPostEndpoint::execute()

@@ -5,6 +5,8 @@
 #include "REST/Helpers/ReplyBuilderHelper.h"
 #include "REST/Helpers/RequestURLEncodedParserHelper.h"
 #include "Services/Model/IUserModelService.h"
+#include "Services/Security/IJWTBuilderService.h"
+#include "Services/System/ITimeService.h"
 
 #include "WebServerInterface/Model/Reply.h"
 
@@ -12,14 +14,23 @@
 namespace seed_cpp { namespace rest {
 
 	UsersLoginPostEndpoint::UsersLoginPostEndpoint(const std::string& requestContent,
-												   const service::IUserModelService& userModelService)
+												   const service::IUserModelService& userModelService,
+												   const service::IJWTBuilderService& jwtBuilderService,
+												   const service::ITimeService& timeService)
 		:m_requestContent(requestContent)
 		,m_userModelService(userModelService)
+		,m_jwtBuilderService(jwtBuilderService)
+		,m_timeService(timeService)
 	{
 	}
 	
 	UsersLoginPostEndpoint::~UsersLoginPostEndpoint()
 	{
+	}
+
+	bool UsersLoginPostEndpoint::hasAccess(const std::string& /*token*/)
+	{
+		return true;
 	}
 
 	std::unique_ptr<systelab::web_server::Reply> UsersLoginPostEndpoint::execute()
@@ -35,7 +46,11 @@ namespace seed_cpp { namespace rest {
 			return ReplyBuilderHelper::build(systelab::web_server::Reply::UNAUTHORIZED);
 		}
 
-		return ReplyBuilderHelper::build(systelab::web_server::Reply::OK);
+		std::string jwt = buildJWT(loginData->m_login);
+		auto reply = ReplyBuilderHelper::build(systelab::web_server::Reply::OK);
+		reply->addHeader("Authorization", "Bearer " + jwt);
+
+		return reply;
 	}
 
 	std::unique_ptr<UsersLoginPostEndpoint::LoginData> UsersLoginPostEndpoint::getLoginDataFromRequestContent() const
@@ -75,6 +90,16 @@ namespace seed_cpp { namespace rest {
 		}
 
 		return user;
+	}
+
+	std::string UsersLoginPostEndpoint::buildJWT(const std::string& login) const
+	{
+		std::map<std::string, std::string> claims;
+		claims.insert({"iat", std::to_string((long long) boost::posix_time::to_time_t(m_timeService.getCurrentLocalTime()))});
+		claims.insert({"sub", login});
+
+		std::string jwtSecurityKey = "SeedCppRocks!";
+		return m_jwtBuilderService.buildJWT(jwtSecurityKey, claims);
 	}
 
 }}

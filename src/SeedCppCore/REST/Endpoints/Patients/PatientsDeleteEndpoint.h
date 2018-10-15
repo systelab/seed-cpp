@@ -11,6 +11,9 @@ namespace seed_cpp {
 	namespace model {
 		class Patient;
 	}
+	namespace service {
+		class IAuthorizationValidatorService;
+	}
 }
 
 namespace seed_cpp { namespace rest {
@@ -20,15 +23,18 @@ namespace seed_cpp { namespace rest {
 	public:
 		PatientsDeleteEndpoint(unsigned int id,
 							   model::EntityMgr<model::Patient>&,
-							   dal::IDbDAOFactory&);
+							   dal::IDbDAOFactory&,
+							   service::IAuthorizationValidatorService&);
 		virtual ~PatientsDeleteEndpoint();
 
+		bool hasAccess(const std::string& token);
 		std::unique_ptr<systelab::web_server::Reply> execute();
 
 	private:
 		unsigned int m_id;
 		model::EntityMgr<model::Patient>& m_patientMgr;
 		dal::IDbDAOFactory& m_dbDAOFactory;
+		service::IAuthorizationValidatorService& m_authorizationValidatorService;
 	};
 
 }}

@@ -5,6 +5,7 @@
 #include "DAL/Translators/JSON/IJSONTranslatorsFactory.h"
 #include "Model/Patient.h"
 #include "REST/Helpers/ReplyBuilderHelper.h"
+#include "Services/Security/IAuthorizationValidatorService.h"
 
 #include "JSONAdapterInterface/IJSONAdapter.h"
 #include "JSONAdapterInterface/IJSONDocument.h"
@@ -16,15 +17,22 @@ namespace seed_cpp { namespace rest {
 
 	PatientsGetAllEndpoint::PatientsGetAllEndpoint(model::EntityMgr<model::Patient>& patientMgr,
 												   dal::IJSONTranslatorsFactory& jsonTranslatorsFactory,
-												   systelab::json_adapter::IJSONAdapter& jsonAdapter)
+												   systelab::json_adapter::IJSONAdapter& jsonAdapter,
+												   service::IAuthorizationValidatorService& authorizationValidatorService)
 		:m_patientMgr(patientMgr)
 		,m_jsonTranslatorsFactory(jsonTranslatorsFactory)
 		,m_jsonAdapter(jsonAdapter)
+		,m_authorizationValidatorService(authorizationValidatorService)
 	{
 	}
 	
 	PatientsGetAllEndpoint::~PatientsGetAllEndpoint()
 	{
+	}
+
+	bool PatientsGetAllEndpoint::hasAccess(const std::string& token)
+	{
+		return m_authorizationValidatorService.validate(token);
 	}
 
 	std::unique_ptr<systelab::web_server::Reply> PatientsGetAllEndpoint::execute()

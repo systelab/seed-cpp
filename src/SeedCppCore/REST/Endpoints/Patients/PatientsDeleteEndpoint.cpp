@@ -5,6 +5,7 @@
 #include "DAL/DAO/ISaveDAO.h"
 #include "Model/Patient.h"
 #include "REST/Helpers/ReplyBuilderHelper.h"
+#include "Services/Security/IAuthorizationValidatorService.h"
 
 #include "WebServerInterface/Model/Reply.h"
 
@@ -13,15 +14,22 @@ namespace seed_cpp { namespace rest {
 
 	PatientsDeleteEndpoint::PatientsDeleteEndpoint(unsigned int id,
 												   model::EntityMgr<model::Patient>& patientMgr,
-												   dal::IDbDAOFactory& dbDAOFactory)
+												   dal::IDbDAOFactory& dbDAOFactory,
+												   service::IAuthorizationValidatorService& authorizationValidatorService)
 		:m_id(id)
 		,m_patientMgr(patientMgr)
 		,m_dbDAOFactory(dbDAOFactory)
+		,m_authorizationValidatorService(authorizationValidatorService)
 	{
 	}
 	
 	PatientsDeleteEndpoint::~PatientsDeleteEndpoint()
 	{
+	}
+
+	bool PatientsDeleteEndpoint::hasAccess(const std::string& token)
+	{
+		return m_authorizationValidatorService.validate(token);
 	}
 
 	std::unique_ptr<systelab::web_server::Reply> PatientsDeleteEndpoint::execute()

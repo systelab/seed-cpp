@@ -11,6 +11,9 @@ namespace seed_cpp {
 	namespace model {
 		class Patient;
 	}
+	namespace service {
+		class IAuthorizationValidatorService;
+	}
 }
 
 namespace systelab { namespace json_adapter {
@@ -26,15 +29,18 @@ namespace seed_cpp { namespace rest {
 	public:
 		PatientsGetAllEndpoint(model::EntityMgr<model::Patient>&,
 							   dal::IJSONTranslatorsFactory&,
-							   systelab::json_adapter::IJSONAdapter&);
+							   systelab::json_adapter::IJSONAdapter&,
+							   service::IAuthorizationValidatorService&);
 		virtual ~PatientsGetAllEndpoint();
 
+		bool hasAccess(const std::string& token);
 		std::unique_ptr<systelab::web_server::Reply> execute();
 
 	private:
 		model::EntityMgr<model::Patient>& m_patientMgr;
 		dal::IJSONTranslatorsFactory& m_jsonTranslatorsFactory;
 		systelab::json_adapter::IJSONAdapter& m_jsonAdapter;
+		service::IAuthorizationValidatorService& m_authorizationValidatorService;
 	};
 
 }}
