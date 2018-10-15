@@ -160,7 +160,9 @@
     <ClInclude Include="Services\IServicesFactory.h" />
     <ClInclude Include="Services\Model\IUserModelService.h" />
     <ClInclude Include="Services\Model\UserModelService.h" />
+    <ClInclude Include="Services\Security\AuthorizationValidatorService.h" />
     <ClInclude Include="Services\Security\Base64EncodeService.h" />
+    <ClInclude Include="Services\Security\IAuthorizationValidatorService.h" />
     <ClInclude Include="Services\Security\IBase64EncodeService.h" />
     <ClInclude Include="Services\Security\IJWTBuilderService.h" />
     <ClInclude Include="Services\Security\IJWTValidatorService.h" />
@@ -207,6 +209,7 @@
     <ClCompile Include="REST\Router\RouteFragment.cpp" />
     <ClCompile Include="REST\Router\Router.cpp" />
     <ClCompile Include="Services\Model\UserModelService.cpp" />
+    <ClCompile Include="Services\Security\AuthorizationValidatorService.cpp" />
     <ClCompile Include="Services\Security\Base64EncodeService.cpp" />
     <ClCompile Include="Services\Security\JWTBuilderService.cpp" />
     <ClCompile Include="Services\Security\JWTValidatorService.cpp" />

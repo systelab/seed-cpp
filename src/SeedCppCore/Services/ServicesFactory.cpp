@@ -6,10 +6,12 @@
 #include "Model/User.h"
 #include "Services/ServicesMgr.h"
 #include "Services/Model/UserModelService.h"
+#include "Services/Security/AuthorizationValidatorService.h"
 #include "Services/Security/Base64EncodeService.h"
 #include "Services/Security/JWTBuilderService.h"
 #include "Services/Security/JWTValidatorService.h"
 #include "Services/Security/SignatureService.h"
+#include "Services/System/TimeService.h"
 
 
 namespace seed_cpp { namespace service {
@@ -31,7 +33,17 @@ namespace seed_cpp { namespace service {
 	}
 
 
-	// Signature services
+	// Security services
+	std::unique_ptr<IAuthorizationValidatorService> ServicesFactory::buildAuthorizationValidatorService() const
+	{
+		service::ServicesMgr& servicesMgr = m_core.getServicesMgr();
+		IJWTValidatorService& jwtValidatorService = servicesMgr.getJWTValidatorService();
+		IUserModelService& userModelService = servicesMgr.getUserModelService();
+		ITimeService& timeService = servicesMgr.getTimeService();
+
+		return std::make_unique<AuthorizationValidatorService>(jwtValidatorService, userModelService, timeService);
+	}
+
 	std::unique_ptr<IJWTBuilderService> ServicesFactory::buildJWTBuilderService() const
 	{
 		service::ServicesMgr& servicesMgr = m_core.getServicesMgr();
@@ -63,6 +75,13 @@ namespace seed_cpp { namespace service {
 	std::unique_ptr<IBase64EncodeService> ServicesFactory::buildBase64EncodeService() const
 	{
 		return std::make_unique<Base64EncodeService>();
+	}
+
+
+	// System services
+	std::unique_ptr<ITimeService> ServicesFactory::buildTimeService() const
+	{
+		return std::make_unique<TimeService>();
 	}
 
 }}

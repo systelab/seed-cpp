@@ -296,6 +296,12 @@
     <ClInclude Include="Services\Security\JWTValidatorService.h">
       <Filter>Header Files\Services\Security</Filter>
     </ClInclude>
+    <ClInclude Include="Services\Security\AuthorizationValidatorService.h">
+      <Filter>Header Files\Services\Security</Filter>
+    </ClInclude>
+    <ClInclude Include="Services\Security\IAuthorizationValidatorService.h">
+      <Filter>Header Files\Services\Security</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Stdafx.cpp">
@@ -416,6 +422,9 @@
       <Filter>Source Files\Services\Security</Filter>
     </ClCompile>
     <ClCompile Include="Services\Security\JWTValidatorService.cpp">
+      <Filter>Source Files\Services\Security</Filter>
+    </ClCompile>
+    <ClCompile Include="Services\Security\AuthorizationValidatorService.cpp">
       <Filter>Source Files\Services\Security</Filter>
     </ClCompile>
   </ItemGroup>
