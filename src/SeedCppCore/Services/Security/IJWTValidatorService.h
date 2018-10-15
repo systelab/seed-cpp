@@ -12,8 +12,7 @@ namespace seed_cpp { namespace service {
 		virtual ~IJWTValidatorService() {};
 
 		virtual bool validateJWT(const std::string& token, const std::string& key,
-								 const boost::posix_time::ptime& currentTimeStamp,
-								 unsigned int maxAge) const = 0;
+								 std::map<std::string, std::string>& claims) const = 0;
 	};
 
 }}

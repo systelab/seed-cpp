@@ -28,10 +28,10 @@ namespace seed_cpp { namespace service {
 	}
 
 	std::string JWTBuilderService::buildJWT(const std::string& key,
-											const boost::posix_time::ptime& currentTimeStamp) const
+											const std::map<std::string, std::string>& claims) const
 	{
 		std::string jwtHeader = buildJWTHeader();
-		std::string jwtPayload = buildJWTPayload(currentTimeStamp);
+		std::string jwtPayload = buildJWTPayload(claims);
 		std::string jwtSignature = buildJWTSignature(jwtHeader, jwtPayload, key);
 		std::string jwt = jwtHeader + "." + jwtPayload + "." + jwtSignature;
 
@@ -50,14 +50,17 @@ namespace seed_cpp { namespace service {
 		return m_base64EncodeService.encodeString(jwtHeader);
 	}
 
-	std::string JWTBuilderService::buildJWTPayload(const boost::posix_time::ptime& currentTimeStamp) const
+	std::string JWTBuilderService::buildJWTPayload(const std::map<std::string, std::string>& claims) const
 	{
-		time_t iat = boost::posix_time::to_time_t(currentTimeStamp);
-
 		auto jsonDocument = m_jsonAdapter.buildEmptyDocument();
+
 		systelab::json_adapter::IJSONValue& jsonRoot = jsonDocument->getRootValue();
 		jsonRoot.setType(systelab::json_adapter::OBJECT_TYPE);
-		jsonRoot.addMember("iat", (long long) iat);
+		for (auto claim : claims)
+		{
+			jsonRoot.addMember(claim.first, claim.second);
+		}
+
 		std::string jwtPayload = jsonDocument->serialize();
 
 		return m_base64EncodeService.encodeString(jwtPayload);

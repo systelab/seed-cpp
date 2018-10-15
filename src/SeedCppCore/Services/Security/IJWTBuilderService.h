@@ -11,7 +11,8 @@ namespace seed_cpp { namespace service {
 	public:
 		virtual ~IJWTBuilderService() {};
 
-		virtual std::string buildJWT(const std::string& key, const boost::posix_time::ptime& currentTimeStamp) const = 0;
+		virtual std::string buildJWT(const std::string& key,
+									 const std::map<std::string, std::string>& claims) const = 0;
 	};
 
 }}

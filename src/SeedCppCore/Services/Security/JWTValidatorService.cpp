@@ -29,8 +29,7 @@ namespace seed_cpp { namespace service {
 
 	bool JWTValidatorService::validateJWT(const std::string& token,
 										  const std::string& key,
-										  const boost::posix_time::ptime& currentTimeStamp,
-										  unsigned int maxAge) const
+										  std::map<std::string, std::string>& claims) const
 	{
 		std::vector<std::string> tokenElements = getTokenElements(token);
 		if (tokenElements.size() != 3)
@@ -42,15 +41,12 @@ namespace seed_cpp { namespace service {
 		std::string jwtPayload = m_base64EncodeService.decodeString(tokenElements[1]);
 		std::string jwtSignature = tokenElements[2];
 
-		if (!validateIAT(jwtPayload, currentTimeStamp, maxAge))
-		{
-			return false;
-		}
-
 		if (!validateSignature(jwtHeader, jwtPayload, jwtSignature, key))
 		{
 			return false;
 		}
+
+		claims = extractClaims(jwtPayload);
 
 		return true;
 	}
@@ -70,38 +66,6 @@ namespace seed_cpp { namespace service {
 		return tokenElements;
 	}
 
-	bool JWTValidatorService::validateIAT(const std::string& jwtPayload,
-										  const boost::posix_time::ptime& currentTimeStamp,
-										  unsigned int maxAge) const
-	{
-		auto jsonPayloadDocument = m_jsonAdapter.buildDocumentFromString(jwtPayload);
-		if (!jsonPayloadDocument)
-		{
-			return false;
-		}
-
-		systelab::json_adapter::IJSONValue& jsonPayloadRoot = jsonPayloadDocument->getRootValue();
-		if (!jsonPayloadRoot.hasObjectMember("iat"))
-		{
-			return false;
-		}
-
-		systelab::json_adapter::IJSONValue& jsonIATValue = jsonPayloadRoot.getObjectMemberValue("iat");
-		if (!jsonIATValue.isInteger())
-		{
-			return false;
-		}
-
-		long long iat = jsonIATValue.getInteger();
-		time_t currentTimeStampSeconds = boost::posix_time::to_time_t(currentTimeStamp);
-		if (std::abs(currentTimeStampSeconds - iat) > maxAge)
-		{
-			return false;
-		}
-
-		return true;
-	}
-
 	bool JWTValidatorService::validateSignature(const std::string& jwtHeader,
 												const std::string& jwtPayload,
 												const std::string& jwtSignature,
@@ -114,5 +78,61 @@ namespace seed_cpp { namespace service {
 
 		return (jwtSignatureClean == computedJWTSignatureClean);
 	}
+
+	std::map<std::string, std::string> JWTValidatorService::extractClaims(const std::string& jwtPayload) const
+	{
+		std::map<std::string, std::string> claims;
+
+		auto jsonPayloadDocument = m_jsonAdapter.buildDocumentFromString(jwtPayload);
+		if (!jsonPayloadDocument)
+		{
+			return claims;
+		}
+
+		systelab::json_adapter::IJSONValue& jsonPayloadRoot = jsonPayloadDocument->getRootValue();
+		auto memberNames = jsonPayloadRoot.getObjectMemberNames();
+		size_t nMembers = memberNames.size();
+		for (size_t i = 0; i < nMembers; i++)
+		{
+			std::string claimName = memberNames[i];
+			systelab::json_adapter::IJSONValue& jsonClaimValue = jsonPayloadRoot.getObjectMemberValue(claimName);
+			std::string claimValue = jsonClaimValue.getString();
+			claims.insert( {claimName, claimValue} );
+		}
+
+		return claims;
+	}
+
+	//bool JWTValidatorService::validateIAT(const std::string& jwtPayload,
+	//									  const boost::posix_time::ptime& currentTimeStamp,
+	//									  unsigned int maxAge) const
+	//{
+	//	auto jsonPayloadDocument = m_jsonAdapter.buildDocumentFromString(jwtPayload);
+	//	if (!jsonPayloadDocument)
+	//	{
+	//		return false;
+	//	}
+
+	//	systelab::json_adapter::IJSONValue& jsonPayloadRoot = jsonPayloadDocument->getRootValue();
+	//	if (!jsonPayloadRoot.hasObjectMember("iat"))
+	//	{
+	//		return false;
+	//	}
+
+	//	systelab::json_adapter::IJSONValue& jsonIATValue = jsonPayloadRoot.getObjectMemberValue("iat");
+	//	if (!jsonIATValue.isInteger())
+	//	{
+	//		return false;
+	//	}
+
+	//	long long iat = jsonIATValue.getInteger();
+	//	time_t currentTimeStampSeconds = boost::posix_time::to_time_t(currentTimeStamp);
+	//	if (std::abs(currentTimeStampSeconds - iat) > maxAge)
+	//	{
+	//		return false;
+	//	}
+
+	//	return true;
+	//}
 
 }}

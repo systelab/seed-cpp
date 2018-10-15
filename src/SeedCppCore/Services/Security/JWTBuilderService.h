@@ -20,11 +20,12 @@ namespace seed_cpp { namespace service {
 						  const systelab::json_adapter::IJSONAdapter&);
 		virtual ~JWTBuilderService();
 
-		std::string buildJWT(const std::string& key, const boost::posix_time::ptime& currentTimeStamp) const;
+		std::string buildJWT(const std::string& key,
+							 const std::map<std::string, std::string>& claims) const;
 
 	private:
 		std::string buildJWTHeader() const;
-		std::string buildJWTPayload(const boost::posix_time::ptime& currentTimeStamp) const;
+		std::string buildJWTPayload(const std::map<std::string, std::string>& claims) const;
 		std::string buildJWTSignature(const std::string& jwtHeader,
 									  const std::string& jwtPayload,
 									  const std::string& key) const;
