@@ -80,6 +80,9 @@
     <ClInclude Include="..\WebServerInterface\Model\RequestQueryStrings.h">
       <Filter>Header Files\Model</Filter>
     </ClInclude>
+    <ClInclude Include="..\WebServerInterface\Model\RequestHeaders.h">
+      <Filter>Header Files\Model</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -119,6 +122,9 @@
       <Filter>Source Files\Services</Filter>
     </ClCompile>
     <ClCompile Include="..\WebServerInterface\Model\RequestQueryStrings.cpp">
+      <Filter>Source Files\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\WebServerInterface\Model\RequestHeaders.cpp">
       <Filter>Source Files\Model</Filter>
     </ClCompile>
   </ItemGroup>
