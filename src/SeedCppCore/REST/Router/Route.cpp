@@ -3,6 +3,7 @@
 
 #include "REST/Endpoints/IEndpoint.h"
 #include "REST/Endpoints/EndpointRequestData.h"
+#include "REST/Helpers/ReplyBuilderHelper.h"
 #include "REST/Router/RouteParam.h"
 
 #include "WebServerInterface/Model/Request.h"
@@ -61,7 +62,7 @@ namespace seed_cpp { namespace rest {
 		std::unique_ptr<IEndpoint> endpoint;
 		try
 		{
-			EndpointRequestData requestData(params, request.getContent(), request.getQueryStrings());
+			EndpointRequestData requestData(params, request.getContent(), request.getHeaders(), request.getQueryStrings());
 			endpoint = m_factoryMethod(requestData);
 		}
 		catch (std::exception&)
@@ -73,7 +74,14 @@ namespace seed_cpp { namespace rest {
 			return std::unique_ptr<systelab::web_server::Reply>();
 		}
 
-		return endpoint->execute();
+		if (endpoint->hasAccess())
+		{
+			return endpoint->execute();
+		}
+		else
+		{
+			return ReplyBuilderHelper::build(systelab::web_server::Reply::UNAUTHORIZED);
+		}
 	}
 
 	std::vector<RouteFragment> Route::buildFragmentsFromURI(const std::string& uri) const
