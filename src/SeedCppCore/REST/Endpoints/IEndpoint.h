@@ -15,7 +15,7 @@ namespace seed_cpp { namespace rest {
 	public:
 		virtual ~IEndpoint() {};
 
-		virtual bool hasAccess(const std::string& token) = 0;
+		virtual bool hasAccess() const = 0;
 		virtual std::unique_ptr<systelab::web_server::Reply> execute() = 0;
 	};
 
