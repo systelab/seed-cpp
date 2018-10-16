@@ -1,5 +1,6 @@
 #pragma once
 
+#include "RequestHeaders.h"
 #include "RequestQueryStrings.h"
 
 #include <string>
@@ -34,9 +35,8 @@ namespace systelab { namespace web_server {
 		void setHttpVersionMinor(unsigned int);
 		void setContent(const std::string&);
 
-		bool hasHeader(const std::string& name) const;
-		std::string getHeader(const std::string& name) const;
-		void addHeader(const std::string& name, const std::string& value);
+		RequestHeaders& getHeaders();
+		const RequestHeaders& getHeaders() const;
 
 		RequestQueryStrings& getQueryStrings();
 		const RequestQueryStrings& getQueryStrings() const;
@@ -46,7 +46,7 @@ namespace systelab { namespace web_server {
 		std::string m_uri;
 		unsigned int m_httpVersionMajor;
 		unsigned int m_httpVersionMinor;
-		std::map<std::string, std::string> m_headers;
+		RequestHeaders m_headers;
 		RequestQueryStrings m_queryStrings;
 		std::string m_content;
 	};

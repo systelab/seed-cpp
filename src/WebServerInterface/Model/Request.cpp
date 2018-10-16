@@ -85,28 +85,14 @@ namespace systelab { namespace web_server {
 		m_content = content;
 	}
 
-	bool Request::hasHeader(const std::string& name) const
+	RequestHeaders& Request::getHeaders()
 	{
-		return (m_headers.find(name) != m_headers.end());
+		return m_headers;
 	}
 
-	std::string Request::getHeader(const std::string& name) const
+	const RequestHeaders& Request::getHeaders() const
 	{
-		auto it = m_headers.find(name);
-		if (m_headers.find(name) != m_headers.end())
-		{
-			return it->second;
-		}
-		else
-		{
-			std::string exc = std::string("Header '") + name + std::string("' not found.");
-			throw std::exception(exc.c_str());
-		}
-	}
-
-	void Request::addHeader(const std::string& name, const std::string& value)
-	{
-		m_headers.insert(std::make_pair(name, value));
+		return m_headers;
 	}
 
 	RequestQueryStrings& Request::getQueryStrings()
