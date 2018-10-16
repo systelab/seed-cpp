@@ -37,10 +37,9 @@ namespace seed_cpp { namespace service {
 			return false;
 		}
 
-		std::string jwtHeader = m_base64EncodeService.decodeString(tokenElements[0]);
-		std::string jwtPayload = m_base64EncodeService.decodeString(tokenElements[1]);
+		std::string jwtHeader = tokenElements[0];
+		std::string jwtPayload = tokenElements[1];
 		std::string jwtSignature = tokenElements[2];
-
 		if (!validateSignature(jwtHeader, jwtPayload, jwtSignature, key))
 		{
 			return false;
@@ -59,7 +58,7 @@ namespace seed_cpp { namespace service {
 		while (stream.good())
 		{
 			std::string item;
-			getline(stream, item, ',');
+			getline(stream, item, '.');
 			tokenElements.push_back(item);
 		}
 
@@ -83,7 +82,10 @@ namespace seed_cpp { namespace service {
 	{
 		std::map<std::string, std::string> claims;
 
-		auto jsonPayloadDocument = m_jsonAdapter.buildDocumentFromString(jwtPayload);
+		std::string jwtPayloadClean = jwtPayload.substr(0, jwtPayload.find_first_of("="));
+		std::string jwtPayloadDecoded = m_base64EncodeService.decodeString(jwtPayloadClean);
+
+		auto jsonPayloadDocument = m_jsonAdapter.buildDocumentFromString(jwtPayloadDecoded);
 		if (!jsonPayloadDocument)
 		{
 			return claims;
@@ -102,37 +104,5 @@ namespace seed_cpp { namespace service {
 
 		return claims;
 	}
-
-	//bool JWTValidatorService::validateIAT(const std::string& jwtPayload,
-	//									  const boost::posix_time::ptime& currentTimeStamp,
-	//									  unsigned int maxAge) const
-	//{
-	//	auto jsonPayloadDocument = m_jsonAdapter.buildDocumentFromString(jwtPayload);
-	//	if (!jsonPayloadDocument)
-	//	{
-	//		return false;
-	//	}
-
-	//	systelab::json_adapter::IJSONValue& jsonPayloadRoot = jsonPayloadDocument->getRootValue();
-	//	if (!jsonPayloadRoot.hasObjectMember("iat"))
-	//	{
-	//		return false;
-	//	}
-
-	//	systelab::json_adapter::IJSONValue& jsonIATValue = jsonPayloadRoot.getObjectMemberValue("iat");
-	//	if (!jsonIATValue.isInteger())
-	//	{
-	//		return false;
-	//	}
-
-	//	long long iat = jsonIATValue.getInteger();
-	//	time_t currentTimeStampSeconds = boost::posix_time::to_time_t(currentTimeStamp);
-	//	if (std::abs(currentTimeStampSeconds - iat) > maxAge)
-	//	{
-	//		return false;
-	//	}
-
-	//	return true;
-	//}
 
 }}
