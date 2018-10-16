@@ -124,7 +124,7 @@ namespace seed_cpp { namespace service {
 			char_array_3[1] = ((char_array_4[1] & 0xf) << 4) + ((char_array_4[2] & 0x3c) >> 2);
 			char_array_3[2] = ((char_array_4[2] & 0x3) << 6) + (char_array_4[3] & 0x3f);
 
-			for (j = 0; (j < 3); j++)
+			for (j = 0; (j < i - 1); j++)
 			{
 				ret += char_array_3[j];
 			}
