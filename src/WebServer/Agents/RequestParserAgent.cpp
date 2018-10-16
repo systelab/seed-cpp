@@ -269,7 +269,7 @@ namespace systelab { namespace web_server {
 						}
 					}
 
-					req.addHeader(m_header.first, m_header.second);
+					req.getHeaders().addHeader(m_header.first, m_header.second);
 
 					m_header.first.clear();
 					m_header.second.clear();

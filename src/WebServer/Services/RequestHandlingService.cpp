@@ -43,9 +43,9 @@ namespace systelab { namespace web_server {
 
 	void RequestHandlingService::addCORSHeaders(const Request& request, Reply& reply) const
 	{
-		if (m_corsConfiguration.isEnabled() && request.hasHeader("Origin"))
+		if (m_corsConfiguration.isEnabled() && request.getHeaders().hasHeader("Origin"))
 		{
-			std::string origin = request.getHeader("Origin");
+			std::string origin = request.getHeaders().getHeader("Origin");
 			if (m_corsConfiguration.isAllowedOrigin(origin))
 			{
 				reply.addHeader("Access-Control-Allow-Origin", origin);
