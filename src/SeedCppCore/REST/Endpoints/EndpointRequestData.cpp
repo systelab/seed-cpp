@@ -6,9 +6,11 @@ namespace seed_cpp { namespace rest {
 
 	EndpointRequestData::EndpointRequestData(const std::vector<RouteParam>& routeParameters,
 											 const std::string& content,
+											 const systelab::web_server::RequestHeaders& headers,
 											 const systelab::web_server::RequestQueryStrings& queryStrings)
 		:m_routeParameters(routeParameters)
 		,m_content(content)
+		,m_headers(headers)
 		,m_queryStrings(queryStrings)
 	{
 	}
@@ -25,6 +27,11 @@ namespace seed_cpp { namespace rest {
 	const std::string& EndpointRequestData::getContent() const
 	{
 		return m_content;
+	}
+
+	const systelab::web_server::RequestHeaders& EndpointRequestData::getHeaders() const
+	{
+		return m_headers;
 	}
 
 	const systelab::web_server::RequestQueryStrings& EndpointRequestData::getQueryStrings() const
