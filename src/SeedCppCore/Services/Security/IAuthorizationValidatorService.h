@@ -1,8 +1,8 @@
 #pragma once
 
-#include <boost/date_time/posix_time/ptime.hpp>
-#include <string>
-
+namespace systelab { namespace web_server {
+	class RequestHeaders;
+}}
 
 namespace seed_cpp { namespace service {
 
@@ -11,7 +11,7 @@ namespace seed_cpp { namespace service {
 	public:
 		virtual ~IAuthorizationValidatorService() {};
 
-		virtual bool validate(const std::string& token) const = 0;
+		virtual bool validate(const systelab::web_server::RequestHeaders&) const = 0;
 	};
 
 }}

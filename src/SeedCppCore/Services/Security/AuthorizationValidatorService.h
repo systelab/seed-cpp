@@ -2,6 +2,7 @@
 
 #include "IAuthorizationValidatorService.h"
 
+#include <map>
 #include <vector>
 
 
@@ -23,9 +24,10 @@ namespace seed_cpp { namespace service {
 									  const ITimeService&);
 		virtual ~AuthorizationValidatorService();
 
-		bool validate(const std::string& token) const;
+		bool validate(const systelab::web_server::RequestHeaders&) const;
 
 	private:
+		std::string getAuthorizationToken(const systelab::web_server::RequestHeaders&) const;
 		bool validateIAT(const std::map<std::string, std::string>& claims) const;
 		bool validateSUB(const std::map<std::string, std::string>& claims) const;
 

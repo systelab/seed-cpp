@@ -5,6 +5,8 @@
 #include "Services/Security/IJWTValidatorService.h"
 #include "Services/System/ITimeService.h"
 
+#include "WebServerInterface/Model/RequestHeaders.h"
+
 #include <boost/date_time/posix_time/conversion.hpp>
 #include <vector>
 
@@ -24,11 +26,17 @@ namespace seed_cpp { namespace service {
 	{
 	}
 
-	bool AuthorizationValidatorService::validate(const std::string& token) const
+	bool AuthorizationValidatorService::validate(const systelab::web_server::RequestHeaders& headers) const
 	{
-		std::map<std::string, std::string> claims;
+		std::string authorizationToken = getAuthorizationToken(headers);
+		if (authorizationToken.size() == 0)
+		{
+			return false;
+		}
+
 		std::string jwtSecurityKey = "SeedCppRocks!";
-		if (!m_jwtValidatorService.validateJWT(token, jwtSecurityKey, claims))
+		std::map<std::string, std::string> claims;
+		if (!m_jwtValidatorService.validateJWT(authorizationToken, jwtSecurityKey, claims))
 		{
 			return false;
 		}
@@ -46,10 +54,27 @@ namespace seed_cpp { namespace service {
 		return true;
 	}
 
+	std::string AuthorizationValidatorService::getAuthorizationToken(const systelab::web_server::RequestHeaders& headers) const
+	{
+		if (!headers.hasHeader("Authorization"))
+		{
+			return "";
+		}
+
+		std::string authorizationHeader = headers.getHeader("Authorization");
+		if (authorizationHeader.substr(0,7) != "Bearer ")
+		{
+			return "";
+		}
+
+		std::string authorizationToken = authorizationHeader.substr(7);
+		return authorizationToken;
+	}
+
 	bool AuthorizationValidatorService::validateIAT(const std::map<std::string, std::string>& claims) const
 	{
 		auto it = claims.find("iat");
-		if (it != claims.end())
+		if (it == claims.end())
 		{
 			return false;
 		}
@@ -78,7 +103,7 @@ namespace seed_cpp { namespace service {
 	bool AuthorizationValidatorService::validateSUB(const std::map<std::string, std::string>& claims) const
 	{
 		auto it = claims.find("sub");
-		if (it != claims.end())
+		if (it == claims.end())
 		{
 			return false;
 		}
