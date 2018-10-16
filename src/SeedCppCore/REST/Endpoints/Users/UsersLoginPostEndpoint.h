@@ -27,7 +27,7 @@ namespace seed_cpp { namespace rest {
 							   const service::ITimeService&);
 		virtual ~UsersLoginPostEndpoint();
 
-		bool hasAccess(const std::string&);
+		bool hasAccess() const;
 		std::unique_ptr<systelab::web_server::Reply> execute();
 
 	private:

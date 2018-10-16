@@ -28,7 +28,7 @@ namespace seed_cpp { namespace rest {
 	{
 	}
 
-	bool UsersLoginPostEndpoint::hasAccess(const std::string& /*token*/)
+	bool UsersLoginPostEndpoint::hasAccess() const
 	{
 		return true;
 	}

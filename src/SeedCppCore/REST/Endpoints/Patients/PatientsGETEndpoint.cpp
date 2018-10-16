@@ -15,12 +15,14 @@
 
 namespace seed_cpp { namespace rest {
 
-	PatientsGetEndpoint::PatientsGetEndpoint(unsigned int id,
+	PatientsGetEndpoint::PatientsGetEndpoint(const systelab::web_server::RequestHeaders& headers,
+											 unsigned int id,
 											 model::EntityMgr<model::Patient>& patientMgr,
 											 dal::IJSONTranslatorsFactory& jsonTranslatorsFactory,
 											 systelab::json_adapter::IJSONAdapter& jsonAdapter,
 											 service::IAuthorizationValidatorService& authorizationValidatorService)
-		:m_id(id)
+		:m_headers(headers)
+		,m_id(id)
 		,m_patientMgr(patientMgr)
 		,m_jsonTranslatorsFactory(jsonTranslatorsFactory)
 		,m_jsonAdapter(jsonAdapter)
@@ -32,9 +34,9 @@ namespace seed_cpp { namespace rest {
 	{
 	}
 
-	bool PatientsGetEndpoint::hasAccess(const std::string& token)
+	bool PatientsGetEndpoint::hasAccess() const
 	{
-		return m_authorizationValidatorService.validate(token);
+		return m_authorizationValidatorService.validate(m_headers);
 	}
 
 	std::unique_ptr<systelab::web_server::Reply> PatientsGetEndpoint::execute()

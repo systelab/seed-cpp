@@ -8,15 +8,18 @@
 #include "Services/Security/IAuthorizationValidatorService.h"
 
 #include "WebServerInterface/Model/Reply.h"
+#include "WebServerInterface/Model/RequestHeaders.h"
 
 
 namespace seed_cpp { namespace rest {
 
-	PatientsDeleteEndpoint::PatientsDeleteEndpoint(unsigned int id,
+	PatientsDeleteEndpoint::PatientsDeleteEndpoint(const systelab::web_server::RequestHeaders& headers,
+												   unsigned int id,
 												   model::EntityMgr<model::Patient>& patientMgr,
 												   dal::IDbDAOFactory& dbDAOFactory,
 												   service::IAuthorizationValidatorService& authorizationValidatorService)
-		:m_id(id)
+		:m_headers(headers)
+		,m_id(id)
 		,m_patientMgr(patientMgr)
 		,m_dbDAOFactory(dbDAOFactory)
 		,m_authorizationValidatorService(authorizationValidatorService)
@@ -27,9 +30,9 @@ namespace seed_cpp { namespace rest {
 	{
 	}
 
-	bool PatientsDeleteEndpoint::hasAccess(const std::string& token)
+	bool PatientsDeleteEndpoint::hasAccess() const
 	{
-		return m_authorizationValidatorService.validate(token);
+		return m_authorizationValidatorService.validate(m_headers);
 	}
 
 	std::unique_ptr<systelab::web_server::Reply> PatientsDeleteEndpoint::execute()

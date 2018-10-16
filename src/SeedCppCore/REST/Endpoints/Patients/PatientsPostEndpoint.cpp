@@ -18,13 +18,15 @@
 
 namespace seed_cpp { namespace rest {
 
-	PatientsPostEndpoint::PatientsPostEndpoint(const std::string& requestContent,
+	PatientsPostEndpoint::PatientsPostEndpoint(const systelab::web_server::RequestHeaders& headers,
+											   const std::string& requestContent,
 											   model::EntityMgr<model::Patient>& patientMgr,
 											   dal::IDbDAOFactory& dbDAOFactory,
 											   dal::IJSONTranslatorsFactory& jsonTranslatorsFactory,
 											   systelab::json_adapter::IJSONAdapter& jsonAdapter,
 											   service::IAuthorizationValidatorService& authorizationValidatorService)
-		:m_requestContent(requestContent)
+		:m_headers(headers)
+		,m_requestContent(requestContent)
 		,m_patientMgr(patientMgr)
 		,m_dbDAOFactory(dbDAOFactory)
 		,m_jsonTranslatorsFactory(jsonTranslatorsFactory)
@@ -32,14 +34,14 @@ namespace seed_cpp { namespace rest {
 		,m_authorizationValidatorService(authorizationValidatorService)
 	{
 	}
-	
+
 	PatientsPostEndpoint::~PatientsPostEndpoint()
 	{
 	}
 
-	bool PatientsPostEndpoint::hasAccess(const std::string& token)
+	bool PatientsPostEndpoint::hasAccess() const
 	{
-		return m_authorizationValidatorService.validate(token);
+		return m_authorizationValidatorService.validate(m_headers);
 	}
 
 	std::unique_ptr<systelab::web_server::Reply> PatientsPostEndpoint::execute()

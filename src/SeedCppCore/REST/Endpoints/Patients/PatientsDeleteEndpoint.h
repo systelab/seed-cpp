@@ -3,6 +3,8 @@
 #include "Model/EntityMgr.h"
 #include "REST/Endpoints/IEndpoint.h"
 
+#include "WebServerInterface/Model/RequestHeaders.h"
+
 
 namespace seed_cpp {
 	namespace dal {
@@ -21,16 +23,18 @@ namespace seed_cpp { namespace rest {
 	class PatientsDeleteEndpoint : public IEndpoint
 	{
 	public:
-		PatientsDeleteEndpoint(unsigned int id,
+		PatientsDeleteEndpoint(const systelab::web_server::RequestHeaders&,
+							   unsigned int id,
 							   model::EntityMgr<model::Patient>&,
 							   dal::IDbDAOFactory&,
 							   service::IAuthorizationValidatorService&);
 		virtual ~PatientsDeleteEndpoint();
 
-		bool hasAccess(const std::string& token);
+		bool hasAccess() const;
 		std::unique_ptr<systelab::web_server::Reply> execute();
 
 	private:
+		const systelab::web_server::RequestHeaders m_headers;
 		unsigned int m_id;
 		model::EntityMgr<model::Patient>& m_patientMgr;
 		dal::IDbDAOFactory& m_dbDAOFactory;
