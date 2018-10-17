@@ -113,6 +113,7 @@
     <ClInclude Include="JSONAdapter.h" />
     <ClInclude Include="JSONDocument.h" />
     <ClInclude Include="JSONMember.h" />
+    <ClInclude Include="JSONSchemaValidator.h" />
     <ClInclude Include="JSONValue.h" />
     <ClInclude Include="Stdafx.h" />
   </ItemGroup>
@@ -120,6 +121,7 @@
     <ClCompile Include="JSONAdapter.cpp" />
     <ClCompile Include="JSONDocument.cpp" />
     <ClCompile Include="JSONMember.cpp" />
+    <ClCompile Include="JSONSchemaValidator.cpp" />
     <ClCompile Include="JSONValue.cpp" />
     <ClCompile Include="Stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

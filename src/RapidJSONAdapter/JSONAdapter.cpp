@@ -2,6 +2,7 @@
 #include "JSONAdapter.h"
 
 #include "JSONDocument.h"
+#include "JSONSchemaValidator.h"
 
 
 namespace systelab { namespace json_adapter { namespace rapidjson_adapter {
@@ -32,6 +33,17 @@ namespace systelab { namespace json_adapter { namespace rapidjson_adapter {
 		{
 			return std::unique_ptr<IJSONDocument>();
 		}
+	}
+
+	std::unique_ptr<IJSONSchemaValidator> JSONAdapter::buildSchemaValidator(const IJSONDocument& jsonDocument) const
+	{
+		return std::make_unique<JSONSchemaValidator>(jsonDocument);
+	}
+
+	std::unique_ptr<IJSONSchemaValidator> JSONAdapter::buildSchemaValidator(const IJSONDocument& jsonDocument,
+																			const IJSONRemoteSchemaProvider& remoteSchemaProvider) const
+	{
+		return std::make_unique<JSONSchemaValidator>(jsonDocument, remoteSchemaProvider);
 	}
 
 }}}

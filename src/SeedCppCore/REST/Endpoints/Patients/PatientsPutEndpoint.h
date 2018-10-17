@@ -44,7 +44,7 @@ namespace seed_cpp { namespace rest {
 		std::unique_ptr<systelab::web_server::Reply> execute();
 
 	private:
-		const systelab::web_server::RequestHeaders& m_headers;
+		const systelab::web_server::RequestHeaders m_headers;
 		unsigned int m_patientId;
 		std::string m_requestContent;
 		model::EntityMgr<model::Patient>& m_patientMgr;
