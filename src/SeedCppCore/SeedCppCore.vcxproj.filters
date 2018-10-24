@@ -302,6 +302,12 @@
     <ClInclude Include="Services\Security\IAuthorizationValidatorService.h">
       <Filter>Header Files\Services\Security</Filter>
     </ClInclude>
+    <ClInclude Include="Services\System\UUIDGeneratorService.h">
+      <Filter>Header Files\Services\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Services\System\IUUIDGeneratorService.h">
+      <Filter>Header Files\Services\System</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Stdafx.cpp">
@@ -426,6 +432,9 @@
     </ClCompile>
     <ClCompile Include="Services\Security\AuthorizationValidatorService.cpp">
       <Filter>Source Files\Services\Security</Filter>
+    </ClCompile>
+    <ClCompile Include="Services\System\UUIDGeneratorService.cpp">
+      <Filter>Source Files\Services\System</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

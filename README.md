@@ -50,13 +50,13 @@ Then run vcpkg bootstrap batch file:
 Download and build the following packages (notice that this process may take some minutes):
 
 ```bash
-.\vcpkg install sqlite3:x64-windows boost-asio:x64-windows boost-date-time:x64-windows rapidjson:x64-windows gtest:x64-windows
+.\vcpkg install sqlite3:x64-windows boost-asio:x64-windows boost-date-time:x64-windows boost-uuid:x64-windows rapidjson:x64-windows gtest:x64-windows
 ```
 
 Pack the generated binaries and includes in a folder:
 
 ```bash
-.\vcpkg export sqlite3:x64-windows boost-asio:x64-windows boost-date-time:x64-windows rapidjson:x64-windows gtest:x64-windows --raw
+.\vcpkg export sqlite3:x64-windows boost-asio:x64-windows boost-date-time:x64-windows boost-uuid:x64-windows rapidjson:x64-windows gtest:x64-windows --raw
 ```
 
 Move the packed folder generated on the previous step into the `seed-cpp` cloned repository.

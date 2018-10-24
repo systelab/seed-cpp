@@ -14,6 +14,7 @@ namespace seed_cpp { namespace service {
 	class ISignatureService;
 	class ITimeService;
 	class IUserModelService;
+	class IUUIDGeneratorService;
 
 	class ServicesMgr
 	{
@@ -33,6 +34,7 @@ namespace seed_cpp { namespace service {
 
 		// System services
 		ITimeService& getTimeService() const;
+		IUUIDGeneratorService& getUUIDGeneratorService() const;
 
 	private:
 		IServicesFactory& m_servicesFactory;
@@ -46,6 +48,7 @@ namespace seed_cpp { namespace service {
 		mutable std::unique_ptr<IBase64EncodeService> m_base64EncodeService;
 
 		mutable std::unique_ptr<ITimeService> m_timeService;
+		mutable std::unique_ptr<IUUIDGeneratorService> m_uuidGeneratorService;
 	};
 
 }}

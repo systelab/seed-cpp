@@ -173,7 +173,9 @@
     <ClInclude Include="Services\ServicesFactory.h" />
     <ClInclude Include="Services\ServicesMgr.h" />
     <ClInclude Include="Services\System\ITimeService.h" />
+    <ClInclude Include="Services\System\IUUIDGeneratorService.h" />
     <ClInclude Include="Services\System\TimeService.h" />
+    <ClInclude Include="Services\System\UUIDGeneratorService.h" />
     <ClInclude Include="Stdafx.h" />
   </ItemGroup>
   <ItemGroup>
@@ -217,6 +219,7 @@
     <ClCompile Include="Services\ServicesFactory.cpp" />
     <ClCompile Include="Services\ServicesMgr.cpp" />
     <ClCompile Include="Services\System\TimeService.cpp" />
+    <ClCompile Include="Services\System\UUIDGeneratorService.cpp" />
     <ClCompile Include="Stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>

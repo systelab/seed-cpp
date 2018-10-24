@@ -12,6 +12,7 @@
 #include "Services/Security/JWTValidatorService.h"
 #include "Services/Security/SignatureService.h"
 #include "Services/System/TimeService.h"
+#include "Services/System/UUIDGeneratorService.h"
 
 
 namespace seed_cpp { namespace service {
@@ -82,6 +83,11 @@ namespace seed_cpp { namespace service {
 	std::unique_ptr<ITimeService> ServicesFactory::buildTimeService() const
 	{
 		return std::make_unique<TimeService>();
+	}
+
+	std::unique_ptr<IUUIDGeneratorService> ServicesFactory::buildUUIDGeneratorService() const
+	{
+		return std::make_unique<UUIDGeneratorService>();
 	}
 
 }}

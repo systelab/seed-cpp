@@ -12,6 +12,7 @@ namespace seed_cpp { namespace service {
 	class ISignatureService;
 	class ITimeService;
 	class IUserModelService;
+	class IUUIDGeneratorService;
 
 	class IServicesFactory
 	{
@@ -30,6 +31,7 @@ namespace seed_cpp { namespace service {
 
 		// System services
 		virtual std::unique_ptr<ITimeService> buildTimeService() const = 0;
+		virtual std::unique_ptr<IUUIDGeneratorService> buildUUIDGeneratorService() const = 0;
 	};
 
 }}

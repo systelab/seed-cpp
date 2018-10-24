@@ -27,6 +27,8 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="..\SeedCppCore\Resources\schema.sql" />
+    <CustomBuild Include="..\SeedCppCore\Resources\schema.sql">
+      <Filter>Resources</Filter>
+    </CustomBuild>
   </ItemGroup>
 </Project>

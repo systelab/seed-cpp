@@ -27,6 +27,7 @@ namespace seed_cpp { namespace service {
 
 		// Time services
 		std::unique_ptr<ITimeService> buildTimeService() const;
+		std::unique_ptr<IUUIDGeneratorService> buildUUIDGeneratorService() const;
 
 	private:
 		Core& m_core;

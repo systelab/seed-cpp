@@ -9,6 +9,7 @@
 #include "Services/Security/IJWTValidatorService.h"
 #include "Services/Security/ISignatureService.h"
 #include "Services/System/ITimeService.h"
+#include "Services/System/IUUIDGeneratorService.h"
 
 
 namespace seed_cpp { namespace service {
@@ -97,6 +98,16 @@ namespace seed_cpp { namespace service {
 		}
 
 		return *m_timeService;
+	}
+
+	IUUIDGeneratorService& ServicesMgr::getUUIDGeneratorService() const
+	{
+		if (!m_uuidGeneratorService.get())
+		{
+			m_uuidGeneratorService = m_servicesFactory.buildUUIDGeneratorService();
+		}
+
+		return *m_uuidGeneratorService;
 	}
 
 }}
