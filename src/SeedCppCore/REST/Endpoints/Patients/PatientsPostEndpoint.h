@@ -20,6 +20,7 @@ namespace seed_cpp {
 	}
 	namespace service {
 		class IAuthorizationValidatorService;
+		class IUUIDGeneratorService;
 	}
 }
 
@@ -36,7 +37,8 @@ namespace seed_cpp { namespace rest {
 							 dal::IDbDAOFactory&,
 							 dal::IJSONTranslatorsFactory&,
 							 systelab::json_adapter::IJSONAdapter&,
-							 service::IAuthorizationValidatorService&);
+							 service::IAuthorizationValidatorService&,
+							 service::IUUIDGeneratorService&);
 		virtual ~PatientsPostEndpoint();
 
 		bool hasAccess() const;
@@ -50,6 +52,7 @@ namespace seed_cpp { namespace rest {
 		dal::IJSONTranslatorsFactory& m_jsonTranslatorsFactory;
 		systelab::json_adapter::IJSONAdapter& m_jsonAdapter;
 		service::IAuthorizationValidatorService& m_authorizationValidatorService;
+		service::IUUIDGeneratorService& m_uuidGeneratorService;
 	};
 
 }}

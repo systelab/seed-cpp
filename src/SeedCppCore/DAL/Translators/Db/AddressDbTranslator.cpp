@@ -9,7 +9,7 @@
 
 namespace seed_cpp { namespace dal {
 
-	AddressDbTranslator::AddressDbTranslator(unsigned int patientId,
+	AddressDbTranslator::AddressDbTranslator(const std::string& patientId,
 											 model::Address& address)
 		:m_patientId(patientId)
 		,m_address(address)
@@ -40,7 +40,7 @@ namespace seed_cpp { namespace dal {
 		boost::optional<unsigned int> id = m_address.getId();
 		if (id)
 		{
-			record.getFieldValue("id").setIntValue((int) *id);
+			record.getFieldValue("id").setIntValue(*id);
 		}
 		else
 		{
@@ -52,7 +52,7 @@ namespace seed_cpp { namespace dal {
 		std::string city = m_address.getCity();
 		std::string zip = m_address.getZip();
 
-		record.getFieldValue("patientId").setIntValue(m_patientId);
+		record.getFieldValue("patientId").setStringValue(m_patientId);
 		record.getFieldValue("coordinates").setStringValue(coordinates);
 		record.getFieldValue("street").setStringValue(street);
 		record.getFieldValue("city").setStringValue(city);

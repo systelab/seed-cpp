@@ -30,7 +30,7 @@ namespace seed_cpp { namespace rest {
 	{
 	public:
 		PatientsGetEndpoint(const systelab::web_server::RequestHeaders&,
-							unsigned int id,
+							const std::string& id,
 							model::EntityMgr<model::Patient>&,
 							dal::IJSONTranslatorsFactory&,
 							systelab::json_adapter::IJSONAdapter&,
@@ -42,7 +42,7 @@ namespace seed_cpp { namespace rest {
 
 	private:
 		const systelab::web_server::RequestHeaders m_headers;
-		unsigned int m_id;
+		std::string m_id;
 		model::EntityMgr<model::Patient>& m_patientMgr;
 		dal::IJSONTranslatorsFactory& m_jsonTranslatorsFactory;
 		systelab::json_adapter::IJSONAdapter& m_jsonAdapter;

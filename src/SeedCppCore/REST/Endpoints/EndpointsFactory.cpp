@@ -43,7 +43,7 @@ namespace seed_cpp { namespace rest {
 	std::unique_ptr<IEndpoint> EndpointsFactory::buildPatientsGetEndpoint(const EndpointRequestData& requestData)
 	{
 		systelab::web_server::RequestHeaders headers = requestData.getHeaders();
-		unsigned int patientId = requestData.getRouteParameters()[0].getValue<unsigned int>();
+		std::string patientId = requestData.getRouteParameters()[0].getValue<std::string>();
 		model::EntityMgr<model::Patient>& patientMgr = m_core.getModel().getPatientMgr();
 		dal::IJSONTranslatorsFactory& jsonTranslatorsFactory = m_core.getJSONTranslatorsFactory();
 		systelab::json_adapter::IJSONAdapter& jsonAdapter = m_core.getJSONAdapter();
@@ -63,16 +63,18 @@ namespace seed_cpp { namespace rest {
 		dal::IJSONTranslatorsFactory& jsonTranslatorsFactory = m_core.getJSONTranslatorsFactory();
 		systelab::json_adapter::IJSONAdapter& jsonAdapter = m_core.getJSONAdapter();
 		service::IAuthorizationValidatorService& authorizationValidatorService = m_core.getServicesMgr().getAuthorizationValidatorService();
+		service::IUUIDGeneratorService& uuidGeneratorService = m_core.getServicesMgr().getUUIDGeneratorService();
 
 		return std::make_unique<PatientsPostEndpoint>(headers, requestContent, patientMgr,
 													  dbDAOFactory, jsonTranslatorsFactory,
-													  jsonAdapter, authorizationValidatorService);
+													  jsonAdapter, authorizationValidatorService,
+													  uuidGeneratorService);
 	}
 
 	std::unique_ptr<IEndpoint> EndpointsFactory::buildPatientsPutEndpoint(const EndpointRequestData& requestData)
 	{
 		systelab::web_server::RequestHeaders headers = requestData.getHeaders();
-		unsigned int patientId = requestData.getRouteParameters()[0].getValue<unsigned int>();
+		std::string patientId = requestData.getRouteParameters()[0].getValue<std::string>();
 		const std::string& requestContent = requestData.getContent();
 		model::EntityMgr<model::Patient>& patientMgr = m_core.getModel().getPatientMgr();
 		dal::IDbDAOFactory& dbDAOFactory = m_core.getDbDAOFactory();
@@ -88,7 +90,7 @@ namespace seed_cpp { namespace rest {
 	std::unique_ptr<IEndpoint> EndpointsFactory::buildPatientsDeleteEndpoint(const EndpointRequestData& requestData)
 	{
 		systelab::web_server::RequestHeaders headers = requestData.getHeaders();
-		unsigned int patientId = requestData.getRouteParameters()[0].getValue<unsigned int>();
+		std::string patientId = requestData.getRouteParameters()[0].getValue<std::string>();
 		model::EntityMgr<model::Patient>& patientMgr = m_core.getModel().getPatientMgr();
 		dal::IDbDAOFactory& dbDAOFactory = m_core.getDbDAOFactory();
 		service::IAuthorizationValidatorService& authorizationValidatorService = m_core.getServicesMgr().getAuthorizationValidatorService();

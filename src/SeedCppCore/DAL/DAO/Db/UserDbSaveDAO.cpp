@@ -27,9 +27,9 @@ namespace seed_cpp { namespace dal {
 
 	void UserDbSaveDAO::addEntity()
 	{
-		if (m_item.getId().is_initialized())
+		if (!m_item.getId().is_initialized())
 		{
-			throw std::exception( "Attempting to add a user with an ID to database." );
+			throw std::exception( "Attempting to add a user without an ID to database." );
 		}
 
 		std::unique_ptr<dal::ITransactionDAO> transaction;
@@ -43,7 +43,6 @@ namespace seed_cpp { namespace dal {
 			std::unique_ptr<dal::IDatabaseEntityTranslator> itemTranslator = m_translatorsFactory.buildUserTranslator(m_item);
 			itemTranslator->fillRecordFromEntity(*itemRecord);
 			itemsTable.insertRecord(*itemRecord);
-			m_item.setId(itemRecord->getFieldValue("id").getIntValue());
 
 			transaction->commit();
 		}

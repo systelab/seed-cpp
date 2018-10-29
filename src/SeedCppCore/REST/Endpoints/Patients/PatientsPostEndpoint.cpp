@@ -9,6 +9,7 @@
 #include "Model/Patient.h"
 #include "REST/Helpers/ReplyBuilderHelper.h"
 #include "Services/Security/IAuthorizationValidatorService.h"
+#include "Services/System/IUUIDGeneratorService.h"
 
 #include "JSONAdapterInterface/IJSONAdapter.h"
 #include "JSONAdapterInterface/IJSONDocument.h"
@@ -24,7 +25,8 @@ namespace seed_cpp { namespace rest {
 											   dal::IDbDAOFactory& dbDAOFactory,
 											   dal::IJSONTranslatorsFactory& jsonTranslatorsFactory,
 											   systelab::json_adapter::IJSONAdapter& jsonAdapter,
-											   service::IAuthorizationValidatorService& authorizationValidatorService)
+											   service::IAuthorizationValidatorService& authorizationValidatorService,
+											   service::IUUIDGeneratorService& uuidGeneratorService)
 		:m_headers(headers)
 		,m_requestContent(requestContent)
 		,m_patientMgr(patientMgr)
@@ -32,6 +34,7 @@ namespace seed_cpp { namespace rest {
 		,m_jsonTranslatorsFactory(jsonTranslatorsFactory)
 		,m_jsonAdapter(jsonAdapter)
 		,m_authorizationValidatorService(authorizationValidatorService)
+		,m_uuidGeneratorService(uuidGeneratorService)
 	{
 	}
 
@@ -59,6 +62,9 @@ namespace seed_cpp { namespace rest {
 			auto patientToAdd = std::make_unique<model::Patient>();
 			auto patientJSONLoadTranslator = m_jsonTranslatorsFactory.buildPatientLoadTranslator(*patientToAdd);
 			patientJSONLoadTranslator->loadEntityFromJSON(jsonRequest->getRootValue());
+
+			std::string uuid = m_uuidGeneratorService.generateUUID();
+			patientToAdd->setId(uuid);
 
 			auto patientSaveDAO = m_dbDAOFactory.buildPatientSaveDAO(*patientToAdd);
 			patientSaveDAO->addEntity();

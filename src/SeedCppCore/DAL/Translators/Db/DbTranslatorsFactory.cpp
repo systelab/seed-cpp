@@ -18,17 +18,17 @@ namespace seed_cpp { namespace dal {
 
 	std::unique_ptr<IDatabaseEntityTranslator> DbTranslatorsFactory::buildPatientTranslator(model::Patient& patient) const
 	{
-		return std::unique_ptr<IDatabaseEntityTranslator>(new dal::PatientDbTranslator(patient));
+		return std::make_unique<PatientDbTranslator>(patient);
 	}
 
-	std::unique_ptr<IDatabaseEntityTranslator> DbTranslatorsFactory::buildAddressTranslator(unsigned int patientId, model::Address& address) const
+	std::unique_ptr<IDatabaseEntityTranslator> DbTranslatorsFactory::buildAddressTranslator(const std::string& patientId, model::Address& address) const
 	{
-		return std::unique_ptr<IDatabaseEntityTranslator>(new dal::AddressDbTranslator(patientId, address));
+		return std::make_unique<AddressDbTranslator>(patientId, address);
 	}
 
 	std::unique_ptr<IDatabaseEntityTranslator> DbTranslatorsFactory::buildUserTranslator(model::User& user) const
 	{
-		return std::unique_ptr<IDatabaseEntityTranslator>(new dal::UserDbTranslator(user));
+		return std::make_unique<UserDbTranslator>(user);
 	}
 
 }}

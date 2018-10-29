@@ -19,14 +19,14 @@ namespace seed_cpp { namespace model {
 		User();
 		virtual ~User();
 
-		boost::optional<unsigned int> getId() const;
+		boost::optional<std::string> getId() const;
 		std::string getSurname() const;
 		std::string getName() const;
 		std::string getLogin() const;
 		std::string getPassword() const;
 		Role getRole() const;
 
-		void setId(const boost::optional<unsigned int>&);
+		void setId(const boost::optional<std::string>&);
 		void setSurname(const std::string&);
 		void setName(const std::string&);
 		void setLogin(const std::string&);
@@ -34,7 +34,7 @@ namespace seed_cpp { namespace model {
 		void setRole(Role);
 
 	private:
-		boost::optional<unsigned int> m_id;
+		boost::optional<std::string> m_id;
 		std::string m_surname;
 		std::string m_name;
 		std::string m_login;

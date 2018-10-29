@@ -12,7 +12,7 @@ namespace seed_cpp { namespace dal {
 		virtual ~DbTranslatorsFactory();
 
 		std::unique_ptr<IDatabaseEntityTranslator> buildPatientTranslator(model::Patient&) const;
-		std::unique_ptr<IDatabaseEntityTranslator> buildAddressTranslator(unsigned int patientId, model::Address&) const;
+		std::unique_ptr<IDatabaseEntityTranslator> buildAddressTranslator(const std::string& patientId, model::Address&) const;
 		std::unique_ptr<IDatabaseEntityTranslator> buildUserTranslator(model::User&) const;
 	};
 

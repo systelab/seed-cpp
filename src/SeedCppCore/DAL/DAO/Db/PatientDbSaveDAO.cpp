@@ -28,7 +28,7 @@ namespace seed_cpp { namespace dal {
 
 	void PatientDbSaveDAO::addEntity()
 	{
-		if (m_item.getId().is_initialized())
+		if (!m_item.getId().is_initialized())
 		{
 			throw std::exception( "Attempting to add a patient with an ID to database." );
 		}
@@ -44,7 +44,6 @@ namespace seed_cpp { namespace dal {
 			std::unique_ptr<dal::IDatabaseEntityTranslator> itemTranslator = m_translatorsFactory.buildPatientTranslator(m_item);
 			itemTranslator->fillRecordFromEntity(*itemRecord);
 			itemsTable.insertRecord(*itemRecord);
-			m_item.setId(itemRecord->getFieldValue("id").getIntValue());
 
 			addAddress();
 
@@ -119,7 +118,7 @@ namespace seed_cpp { namespace dal {
 		systelab::db::ITable& addressTable = m_db.getTable("Address");
 		std::unique_ptr<systelab::db::ITableRecord> addressRecord = addressTable.createRecord();
 
-		unsigned int patientId = *m_item.getId();
+		std::string patientId = *m_item.getId();
 		model::Address& address = m_item.getAddress();
 		std::unique_ptr<dal::IDatabaseEntityTranslator> addressTranslator = m_translatorsFactory.buildAddressTranslator(patientId, address);
 		addressTranslator->fillRecordFromEntity(*addressRecord);
@@ -133,7 +132,7 @@ namespace seed_cpp { namespace dal {
 		systelab::db::ITable& addressTable = m_db.getTable("Address");
 		std::unique_ptr<systelab::db::ITableRecord> addressRecord = addressTable.createRecord();
 
-		unsigned int patientId = *m_item.getId();
+		std::string patientId = *m_item.getId();
 		model::Address& address = m_item.getAddress();
 		std::unique_ptr<dal::IDatabaseEntityTranslator> addressTranslator = m_translatorsFactory.buildAddressTranslator(patientId, address);
 		addressTranslator->fillRecordFromEntity(*addressRecord);

@@ -19,7 +19,7 @@
 namespace seed_cpp { namespace rest {
 
 	PatientsPutEndpoint::PatientsPutEndpoint(const systelab::web_server::RequestHeaders& headers,
-											 unsigned int patientId,
+											 const std::string& patientId,
 											 const std::string& requestContent,
 											 model::EntityMgr<model::Patient>& patientMgr,
 											 dal::IDbDAOFactory& dbDAOFactory,

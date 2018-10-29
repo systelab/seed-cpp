@@ -20,7 +20,7 @@ namespace seed_cpp { namespace model {
 	{
 	}
 
-	boost::optional<unsigned int> User::getId() const
+	boost::optional<std::string> User::getId() const
 	{
 		return m_id;
 	}
@@ -50,7 +50,7 @@ namespace seed_cpp { namespace model {
 		return m_role;
 	}
 
-	void User::setId(const boost::optional<unsigned int>& id)
+	void User::setId(const boost::optional<std::string>& id)
 	{
 		m_id = id;
 	}

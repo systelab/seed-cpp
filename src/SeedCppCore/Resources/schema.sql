@@ -5,7 +5,7 @@ PRAGMA encoding = "UTF-8";
 --
 
 CREATE TABLE IF NOT EXISTS 'User' (
-  'id' INTEGER NOT NULL,
+  'id' TEXT NOT NULL,
   'name' TEXT NOT NULL,
   'surname' TEXT NOT NULL,
   'login' TEXT NOT NULL,
@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS 'User' (
 --
 
 CREATE TABLE IF NOT EXISTS 'Patient' (
-  'id' INTEGER NOT NULL,
+  'id' TEXT NOT NULL,
   'name' TEXT NOT NULL,
   'surname' TEXT NOT NULL,
   'dob' DATETIME NOT NULL,
@@ -34,8 +34,8 @@ CREATE TABLE IF NOT EXISTS 'Patient' (
 --
 
 CREATE TABLE IF NOT EXISTS 'Address' (
-  'id' INTEGER,
-  'patientId' INTEGER NOT NULL,
+  'id' INTEGER NOT NULL,
+  'patientId' TEXT NOT NULL,
   'coordinates' TEXT NOT NULL,
   'street' TEXT NOT NULL,
   'city' TEXT NOT NULL,

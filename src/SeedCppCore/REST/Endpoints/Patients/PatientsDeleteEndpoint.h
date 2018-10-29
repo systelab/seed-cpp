@@ -24,7 +24,7 @@ namespace seed_cpp { namespace rest {
 	{
 	public:
 		PatientsDeleteEndpoint(const systelab::web_server::RequestHeaders&,
-							   unsigned int id,
+							   const std::string& id,
 							   model::EntityMgr<model::Patient>&,
 							   dal::IDbDAOFactory&,
 							   service::IAuthorizationValidatorService&);
@@ -35,7 +35,7 @@ namespace seed_cpp { namespace rest {
 
 	private:
 		const systelab::web_server::RequestHeaders m_headers;
-		unsigned int m_id;
+		const std::string m_id;
 		model::EntityMgr<model::Patient>& m_patientMgr;
 		dal::IDbDAOFactory& m_dbDAOFactory;
 		service::IAuthorizationValidatorService& m_authorizationValidatorService;

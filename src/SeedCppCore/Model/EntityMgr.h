@@ -34,7 +34,7 @@ namespace seed_cpp { namespace model {
 			return m_entities[index].get();
 		}
 
-		const Entity* getEntityById(unsigned int id) const
+		const Entity* getEntityById(const std::string& id) const
 		{
 			auto it = std::find_if(m_entities.begin(), m_entities.end(),
 				[id](const std::unique_ptr<Entity>& entity)
@@ -57,7 +57,7 @@ namespace seed_cpp { namespace model {
 				throw std::exception("EntityMgr<Entity>::editEntity(): Trying to edit an entity without id");
 			}
 
-			unsigned int id = *entity->getId();
+			std::string id = *entity->getId();
 			for (auto itr = m_entities.begin(); itr != m_entities.end(); itr++)
 			{
 				if ((*itr)->getId() == id)
@@ -70,7 +70,7 @@ namespace seed_cpp { namespace model {
 			throw std::exception("EntityMgr<Entity>::deleteEntity: Trying to edit an entity that it's not on manager");
 		}
 
-		void deleteEntity(unsigned int id)
+		void deleteEntity(const std::string& id)
 		{
 			auto it = std::find_if(m_entities.begin(), m_entities.end(),
 				[id](const std::unique_ptr<Entity>& entity)
