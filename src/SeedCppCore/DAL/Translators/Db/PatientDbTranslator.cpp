@@ -20,7 +20,7 @@ namespace seed_cpp { namespace dal {
 
 	void PatientDbTranslator::fillEntityFromRecord(const systelab::db::ITableRecord& record)
 	{
-		unsigned int id = record.getFieldValue("id").getIntValue();
+		std::string id = record.getFieldValue("id").getStringValue();
 		std::string name = record.getFieldValue("name").getStringValue();
 		std::string surname = record.getFieldValue("surname").getStringValue();
 		boost::posix_time::ptime dob = record.getFieldValue("dob").getDateTimeValue();
@@ -35,21 +35,13 @@ namespace seed_cpp { namespace dal {
 
 	void PatientDbTranslator::fillRecordFromEntity(systelab::db::ITableRecord& record) const
 	{
-		boost::optional<unsigned int> id = m_patient.getId();
-		if (id)
-		{
-			record.getFieldValue("id").setIntValue((int) *id);
-		}
-		else
-		{
-			record.getFieldValue("id").setDefault();
-		}
-
+		std::string id = *m_patient.getId();
 		std::string name = m_patient.getName();
 		std::string surname = m_patient.getSurname();
 		boost::posix_time::ptime dob = m_patient.getDob();
 		std::string email = m_patient.getEmail();
 
+		record.getFieldValue("id").setStringValue(id);
 		record.getFieldValue("name").setStringValue(name);
 		record.getFieldValue("surname").setStringValue(surname);
 		record.getFieldValue("dob").setDateTimeValue(dob);

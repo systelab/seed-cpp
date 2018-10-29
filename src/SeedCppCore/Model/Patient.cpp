@@ -30,7 +30,7 @@ namespace seed_cpp { namespace model {
 	{
 	}
 
-	boost::optional<unsigned int> Patient::getId() const
+	boost::optional<std::string> Patient::getId() const
 	{
 		return m_id;
 	}
@@ -60,7 +60,7 @@ namespace seed_cpp { namespace model {
 		return *m_address;
 	}
 
-	void Patient::setId(const boost::optional<unsigned int>& id)
+	void Patient::setId(const boost::optional<std::string>& id)
 	{
 		m_id = id;
 	}
