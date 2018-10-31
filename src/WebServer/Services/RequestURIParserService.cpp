@@ -84,10 +84,15 @@ namespace systelab { namespace web_server {
 
 	void RequestURIParserService::parseQueryString(Request& request) const
 	{
-		if (request.getURI().find("?") != std::string::npos)
+		std::string requestURI = request.getURI();
+		if (requestURI.find("?") != std::string::npos)
 		{
+			std::string requestURIWithoutQueryStrings = requestURI.substr(0, requestURI.find("?"));
+			request.setURI(requestURIWithoutQueryStrings);
+
+			std::string queryStrings = requestURI.substr(requestURIWithoutQueryStrings.size());
 			std::regex pattern("([\\w+%]+)=([^&]*)");
-			auto words_begin = std::sregex_iterator(request.getURI().begin(), request.getURI().end(), pattern);
+			auto words_begin = std::sregex_iterator(queryStrings.begin(), queryStrings.end(), pattern);
 			auto words_end = std::sregex_iterator();
 
 			for (std::sregex_iterator i = words_begin; i != words_end; i++)
