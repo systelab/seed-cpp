@@ -31,12 +31,13 @@ namespace seed_cpp { namespace rest {
 	std::unique_ptr<IEndpoint> EndpointsFactory::buildPatientsGetAllEndpoint(const EndpointRequestData& requestData)
 	{
 		systelab::web_server::RequestHeaders headers = requestData.getHeaders();
+		systelab::web_server::RequestQueryStrings queryStrings = requestData.getQueryStrings();
 		model::EntityMgr<model::Patient>& patientMgr = m_core.getModel().getPatientMgr();
 		dal::IJSONTranslatorsFactory& jsonTranslatorsFactory = m_core.getJSONTranslatorsFactory();
 		systelab::json_adapter::IJSONAdapter& jsonAdapter = m_core.getJSONAdapter();
 		service::IAuthorizationValidatorService& authorizationValidatorService = m_core.getServicesMgr().getAuthorizationValidatorService();
 
-		return std::make_unique<PatientsGetAllEndpoint>(headers, patientMgr, jsonTranslatorsFactory,
+		return std::make_unique<PatientsGetAllEndpoint>(headers, queryStrings, patientMgr, jsonTranslatorsFactory,
 														jsonAdapter, authorizationValidatorService);
 	}
 
