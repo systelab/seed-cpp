@@ -57,7 +57,7 @@ namespace seed_cpp { namespace dal {
 
 		std::string patientId = *patient.getId();
 		systelab::db::ITable& table = m_db.getTable("Address");
-		std::unique_ptr<sdb::IFieldValue> patientIdFieldValue = table.createFieldValue(table.getField("id"), patientId);
+		std::unique_ptr<sdb::IFieldValue> patientIdFieldValue = table.createFieldValue(table.getField("patientId"), patientId);
 		std::unique_ptr<sdb::ITableRecordSet> addressRecordset = table.filterRecordsByField(*patientIdFieldValue);
 		if (addressRecordset->isCurrentRecordValid())
 		{
