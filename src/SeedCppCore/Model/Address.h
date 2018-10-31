@@ -25,6 +25,10 @@ namespace seed_cpp { namespace model {
 		void setCity(const std::string&);
 		void setZip(const std::string&);
 
+		Address& operator= (const Address&);
+		friend bool operator== (const Address&, const Address&);
+		friend bool operator!= (const Address&, const Address&);
+
 	private:
 		boost::optional<unsigned int> m_id;
 		std::string m_coordinates;

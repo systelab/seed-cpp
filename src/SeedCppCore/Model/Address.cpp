@@ -76,4 +76,35 @@ namespace seed_cpp { namespace model {
 		m_zip = zip;
 	}
 
+	Address& Address::operator= (const Address& other)
+	{
+		m_id = other.m_id;
+		m_coordinates = other.m_coordinates;
+		m_street = other.m_street;
+		m_city = other.m_city;
+		m_zip = other.m_zip;
+
+		return *this;
+	}
+
+	bool operator== (const Address& lhs, const Address& rhs)
+	{
+		if ( (lhs.m_id != rhs.m_id) ||
+			 (lhs.m_coordinates != rhs.m_coordinates) ||
+			 (lhs.m_street != rhs.m_street) ||
+			 (lhs.m_city != rhs.m_city) ||
+			 (lhs.m_zip != rhs.m_zip) )
+
+		{
+			return false;
+		}
+
+		return true;
+	}
+
+	bool operator!= (const Address& lhs, const Address& rhs)
+	{
+		return !(lhs == rhs);
+	}
+
 }}

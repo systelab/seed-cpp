@@ -30,6 +30,10 @@ namespace seed_cpp { namespace model {
 		void setDob(const boost::posix_time::ptime&);
 		void setAddress(std::unique_ptr<Address>);
 
+		Patient& operator= (const Patient&);
+		friend bool operator== (const Patient&, const Patient&);
+		friend bool operator!= (const Patient&, const Patient&);
+
 	private:
 		boost::optional<std::string> m_id;
 		std::string m_surname;

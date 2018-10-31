@@ -12,7 +12,7 @@ namespace seed_cpp { namespace model {
 		,m_name("")
 		,m_email("")
 		,m_dob()
-		,m_address(new Address())
+		,m_address(std::make_unique<Address>())
 	{
 	}
 
@@ -88,6 +88,42 @@ namespace seed_cpp { namespace model {
 	void Patient::setAddress(std::unique_ptr<Address> address)
 	{
 		m_address = std::move(address);
+	}
+
+	Patient& Patient::operator= (const Patient& other)
+	{
+		m_id = other.m_id;
+		m_surname = other.m_surname;
+		m_name = other.m_name;
+		*m_address = *other.m_address;
+		m_email = other.m_email;
+		m_dob = other.m_dob;
+
+		return *this;
+	}
+
+	bool operator== (const Patient& lhs, const Patient& rhs)
+	{
+		if ( (lhs.m_id != rhs.m_id) ||
+			 (lhs.m_surname != rhs.m_surname) ||
+			 (lhs.m_name != rhs.m_name) ||
+			 (lhs.m_email != rhs.m_email) )
+
+		{
+			return false;
+		}
+
+		if ((*lhs.m_address) != (*rhs.m_address))
+		{
+			return false;
+		}
+
+		return true;
+	}
+
+	bool operator!= (const Patient& lhs, const Patient& rhs)
+	{
+		return !(lhs == rhs);
 	}
 
 }}
