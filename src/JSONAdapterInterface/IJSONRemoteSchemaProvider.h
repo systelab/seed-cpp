@@ -1,11 +1,12 @@
 #pragma once
 
+#include <memory>
 #include <string>
 
 
 namespace systelab { namespace json_adapter {
 
-	class IJSONSchemaValidator;
+	class IJSONDocument;
 
 	class IJSONRemoteSchemaProvider
 	{
