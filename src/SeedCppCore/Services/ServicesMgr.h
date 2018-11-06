@@ -9,8 +9,10 @@ namespace seed_cpp { namespace service {
 
 	class IAuthorizationValidatorService;
 	class IBase64EncodeService;
+	class IJSONValidatorService;
 	class IJWTBuilderService;
 	class IJWTValidatorService;
+	class IResourceService;
 	class ISignatureService;
 	class ITimeService;
 	class IUserModelService;
@@ -32,7 +34,11 @@ namespace seed_cpp { namespace service {
 		ISignatureService& getSignatureService() const;
 		IBase64EncodeService& getBase64EncodeService() const;
 
+		// Validator services
+		IJSONValidatorService& getJSONValidatorService() const;
+
 		// System services
+		IResourceService& getResourceService() const;
 		ITimeService& getTimeService() const;
 		IUUIDGeneratorService& getUUIDGeneratorService() const;
 
@@ -47,6 +53,9 @@ namespace seed_cpp { namespace service {
 		mutable std::unique_ptr<ISignatureService> m_signatureService;
 		mutable std::unique_ptr<IBase64EncodeService> m_base64EncodeService;
 
+		mutable std::unique_ptr<IJSONValidatorService> m_jsonValidatorService;
+
+		mutable std::unique_ptr<IResourceService> m_resourceService;
 		mutable std::unique_ptr<ITimeService> m_timeService;
 		mutable std::unique_ptr<IUUIDGeneratorService> m_uuidGeneratorService;
 	};

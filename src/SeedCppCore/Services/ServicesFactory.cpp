@@ -11,8 +11,10 @@
 #include "Services/Security/JWTBuilderService.h"
 #include "Services/Security/JWTValidatorService.h"
 #include "Services/Security/SignatureService.h"
+#include "Services/System/ResourceService.h"
 #include "Services/System/TimeService.h"
 #include "Services/System/UUIDGeneratorService.h"
+#include "Services/Validator/JSONValidatorService.h"
 
 
 namespace seed_cpp { namespace service {
@@ -79,7 +81,22 @@ namespace seed_cpp { namespace service {
 	}
 
 
+	// Validator services
+	std::unique_ptr<IJSONValidatorService> ServicesFactory::buildJSONValidatorService() const
+	{
+		service::IResourceService& resourceService = m_core.getServicesMgr().getResourceService();
+		systelab::json_adapter::IJSONAdapter& jsonAdapter = m_core.getJSONAdapter();
+
+		return std::make_unique<JSONValidatorService>(resourceService, jsonAdapter);
+	}
+
+
 	// System services
+	std::unique_ptr<IResourceService> ServicesFactory::buildResourceService() const
+	{
+		return std::make_unique<ResourceService>();
+	}
+
 	std::unique_ptr<ITimeService> ServicesFactory::buildTimeService() const
 	{
 		return std::make_unique<TimeService>();

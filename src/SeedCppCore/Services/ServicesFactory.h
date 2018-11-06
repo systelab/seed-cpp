@@ -25,7 +25,11 @@ namespace seed_cpp { namespace service {
 		std::unique_ptr<ISignatureService> buildSignatureService() const;
 		std::unique_ptr<IBase64EncodeService> buildBase64EncodeService() const;
 
-		// Time services
+		// Validator services
+		std::unique_ptr<IJSONValidatorService> buildJSONValidatorService() const;
+
+		// System services
+		std::unique_ptr<IResourceService> buildResourceService() const;
 		std::unique_ptr<ITimeService> buildTimeService() const;
 		std::unique_ptr<IUUIDGeneratorService> buildUUIDGeneratorService() const;
 

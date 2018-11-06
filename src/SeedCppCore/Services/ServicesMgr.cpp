@@ -8,8 +8,10 @@
 #include "Services/Security/IJWTBuilderService.h"
 #include "Services/Security/IJWTValidatorService.h"
 #include "Services/Security/ISignatureService.h"
+#include "Services/System/IResourceService.h"
 #include "Services/System/ITimeService.h"
 #include "Services/System/IUUIDGeneratorService.h"
+#include "Services/Validator/IJSONValidatorService.h"
 
 
 namespace seed_cpp { namespace service {
@@ -22,7 +24,10 @@ namespace seed_cpp { namespace service {
 		,m_jwtValidatorService()
 		,m_signatureService()
 		,m_base64EncodeService()
+		,m_jsonValidatorService()
+		,m_resourceService()
 		,m_timeService()
+		,m_uuidGeneratorService()
 	{
 	}
 	
@@ -30,6 +35,8 @@ namespace seed_cpp { namespace service {
 	{
 	}
 
+
+	// Model services
 	IUserModelService& ServicesMgr::getUserModelService() const
 	{
 		if (!m_userModelService.get())
@@ -40,6 +47,8 @@ namespace seed_cpp { namespace service {
 		return *m_userModelService;
 	}
 
+
+	// Security services
 	IAuthorizationValidatorService& ServicesMgr::getAuthorizationValidatorService() const
 	{
 		if (!m_authorizationValidatorService.get())
@@ -88,6 +97,30 @@ namespace seed_cpp { namespace service {
 		}
 
 		return *m_base64EncodeService;
+	}
+
+
+	// Validator services
+	IJSONValidatorService& ServicesMgr::getJSONValidatorService() const
+	{
+		if (!m_jsonValidatorService.get())
+		{
+			m_jsonValidatorService = m_servicesFactory.buildJSONValidatorService();
+		}
+
+		return *m_jsonValidatorService;
+	}
+
+
+	// System services
+	IResourceService& ServicesMgr::getResourceService() const
+	{
+		if (!m_resourceService.get())
+		{
+			m_resourceService = m_servicesFactory.buildResourceService();
+		}
+
+		return *m_resourceService;
 	}
 
 	ITimeService& ServicesMgr::getTimeService() const
