@@ -1,0 +1,24 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "id": "Model/Patient.json",
+
+    "definitions":
+    {
+        "patient":
+        {
+            "type": "object",
+            "properties": 
+            {
+                "id": { "type": "string" },
+                "surname": { "type": "string" },
+                "name": { "type": "string" },
+                "email": { "type": "string" },
+                "dob": { "type": "string" },
+                "address": { "$ref": "JSON_SCHEMA_MODEL_ADDRESS#/definitions/address" }
+            },
+            "required": ["id", "surname", "name", "email", "dob", "address"]
+        }
+    },
+
+    "$ref": "#/definitions/patient"
+}

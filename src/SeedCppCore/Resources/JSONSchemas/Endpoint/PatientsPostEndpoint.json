@@ -1,0 +1,30 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "id": "Endpoint/PatientsPostEndpoint.json",
+
+    "definitions":
+    {
+        "patientsPostEndpoint":
+        {
+            "description": "Create a new patient",
+            "href": "/seed/v1/patients",
+            "method": "POST",
+            "schema":
+            {
+                "type": "object",
+                "properties": 
+                {
+                    "surname": { "type": "string" },
+                    "name": { "type": "string" },
+                    "email": { "type": "string" },
+                    "dob": { "type": "string" },
+                    "address": { "$ref": "JSON_SCHEMA_MODEL_ADDRESS#/definitions/address" }
+                },
+                "required": ["surname", "name", "email", "dob", "address"]
+            },
+            "additionalProperties": false
+        }
+    },
+
+    "$ref": "#/definitions/patientsPostEndpoint/schema"
+}

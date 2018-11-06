@@ -1,0 +1,22 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "id": "Model/Address.json",
+
+    "definitions":
+    {
+        "address":
+        {
+            "type": "object",
+            "properties": 
+            {
+                "coordinates": { "type": "string" },
+                "street": { "type": "string" },
+                "city": { "type": "string" },
+                "zip": { "type": "string" }
+            },
+            "required": ["coordinates", "street", "city", "zip"]
+        }
+    },
+
+    "$ref": "#/definitions/address"
+}
