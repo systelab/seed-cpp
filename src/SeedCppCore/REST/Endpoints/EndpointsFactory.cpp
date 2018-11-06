@@ -64,12 +64,13 @@ namespace seed_cpp { namespace rest {
 		dal::IJSONTranslatorsFactory& jsonTranslatorsFactory = m_core.getJSONTranslatorsFactory();
 		systelab::json_adapter::IJSONAdapter& jsonAdapter = m_core.getJSONAdapter();
 		service::IAuthorizationValidatorService& authorizationValidatorService = m_core.getServicesMgr().getAuthorizationValidatorService();
+		service::IJSONValidatorService& jsonValidatorService = m_core.getServicesMgr().getJSONValidatorService();
 		service::IUUIDGeneratorService& uuidGeneratorService = m_core.getServicesMgr().getUUIDGeneratorService();
 
 		return std::make_unique<PatientsPostEndpoint>(headers, requestContent, patientMgr,
 													  dbDAOFactory, jsonTranslatorsFactory,
 													  jsonAdapter, authorizationValidatorService,
-													  uuidGeneratorService);
+													  jsonValidatorService, uuidGeneratorService);
 	}
 
 	std::unique_ptr<IEndpoint> EndpointsFactory::buildPatientsPutEndpoint(const EndpointRequestData& requestData)
@@ -82,10 +83,11 @@ namespace seed_cpp { namespace rest {
 		dal::IJSONTranslatorsFactory& jsonTranslatorsFactory = m_core.getJSONTranslatorsFactory();
 		systelab::json_adapter::IJSONAdapter& jsonAdapter = m_core.getJSONAdapter();
 		service::IAuthorizationValidatorService& authorizationValidatorService = m_core.getServicesMgr().getAuthorizationValidatorService();
+		service::IJSONValidatorService& jsonValidatorService = m_core.getServicesMgr().getJSONValidatorService();
 
 		return std::make_unique<PatientsPutEndpoint>(headers, patientId, requestContent, patientMgr,
 													 dbDAOFactory, jsonTranslatorsFactory, jsonAdapter,
-													 authorizationValidatorService);
+													 authorizationValidatorService, jsonValidatorService);
 	}
 
 	std::unique_ptr<IEndpoint> EndpointsFactory::buildPatientsDeleteEndpoint(const EndpointRequestData& requestData)

@@ -9,6 +9,7 @@
 #include "Model/Patient.h"
 #include "REST/Helpers/ReplyBuilderHelper.h"
 #include "Services/Security/IAuthorizationValidatorService.h"
+#include "Services/Validator/IJSONValidatorService.h"
 
 #include "JSONAdapterInterface/IJSONAdapter.h"
 #include "JSONAdapterInterface/IJSONDocument.h"
@@ -25,7 +26,8 @@ namespace seed_cpp { namespace rest {
 											 dal::IDbDAOFactory& dbDAOFactory,
 											 dal::IJSONTranslatorsFactory& jsonTranslatorsFactory,
 											 systelab::json_adapter::IJSONAdapter& jsonAdapter,
-											 service::IAuthorizationValidatorService& authorizationValidatorService)
+											 service::IAuthorizationValidatorService& authorizationValidatorService,
+											 service::IJSONValidatorService& jsonValidatorService)
 		:m_headers(headers)
 		,m_patientId(patientId)
 		,m_requestContent(requestContent)
@@ -34,6 +36,7 @@ namespace seed_cpp { namespace rest {
 		,m_jsonTranslatorsFactory(jsonTranslatorsFactory)
 		,m_jsonAdapter(jsonAdapter)
 		,m_authorizationValidatorService(authorizationValidatorService)
+		,m_jsonValidatorService(jsonValidatorService)
 	{
 	}
 	
@@ -54,7 +57,18 @@ namespace seed_cpp { namespace rest {
 			return ReplyBuilderHelper::build(systelab::web_server::Reply::BAD_REQUEST);
 		}
 
-		// TBD: Validate schema
+		try
+		{
+			m_jsonValidatorService.validate(*jsonRequest, "JSON_SCHEMA_ENDPOINT_PATIENTS_PUT");
+		}
+		catch(service::IJSONValidatorService::JSONValidationException& exc)
+		{
+			auto jsonResponse = m_jsonAdapter.buildEmptyDocument();
+			auto& jsonRootValue = jsonResponse->getRootValue();
+			jsonRootValue.setType(systelab::json_adapter::OBJECT_TYPE);
+			jsonRootValue.addMember("reason", exc.toString());
+			return ReplyBuilderHelper::build(systelab::web_server::Reply::BAD_REQUEST, jsonResponse->serialize());
+		}
 
 		try
 		{
