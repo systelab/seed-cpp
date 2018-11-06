@@ -140,6 +140,7 @@
     <ClInclude Include="Model\Model.h" />
     <ClInclude Include="Model\Patient.h" />
     <ClInclude Include="Model\User.h" />
+    <ClInclude Include="Resources\Resource.h" />
     <ClInclude Include="REST\Endpoints\EndpointRequestData.h" />
     <ClInclude Include="REST\Endpoints\EndpointsFactory.h" />
     <ClInclude Include="REST\Endpoints\IEndpoint.h" />
@@ -172,10 +173,14 @@
     <ClInclude Include="Services\Security\SignatureService.h" />
     <ClInclude Include="Services\ServicesFactory.h" />
     <ClInclude Include="Services\ServicesMgr.h" />
+    <ClInclude Include="Services\System\IResourceService.h" />
     <ClInclude Include="Services\System\ITimeService.h" />
     <ClInclude Include="Services\System\IUUIDGeneratorService.h" />
+    <ClInclude Include="Services\System\ResourceService.h" />
     <ClInclude Include="Services\System\TimeService.h" />
     <ClInclude Include="Services\System\UUIDGeneratorService.h" />
+    <ClInclude Include="Services\Validator\IJSONValidatorService.h" />
+    <ClInclude Include="Services\Validator\JSONValidatorService.h" />
     <ClInclude Include="Stdafx.h" />
   </ItemGroup>
   <ItemGroup>
@@ -218,12 +223,23 @@
     <ClCompile Include="Services\Security\SignatureService.cpp" />
     <ClCompile Include="Services\ServicesFactory.cpp" />
     <ClCompile Include="Services\ServicesMgr.cpp" />
+    <ClCompile Include="Services\System\ResourceService.cpp" />
     <ClCompile Include="Services\System\TimeService.cpp" />
     <ClCompile Include="Services\System\UUIDGeneratorService.cpp" />
+    <ClCompile Include="Services\Validator\JSONValidatorService.cpp" />
     <ClCompile Include="Stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\JSONSchemas\Endpoint\PatientsPostEndpoint.json" />
+    <None Include="Resources\JSONSchemas\Endpoint\PatientsPutEndpoint.json" />
+    <None Include="Resources\JSONSchemas\Model\Address.json" />
+    <None Include="Resources\JSONSchemas\Model\Patient.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Resources\SeedCppCore.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

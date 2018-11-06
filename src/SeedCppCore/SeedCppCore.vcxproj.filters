@@ -111,6 +111,24 @@
     <Filter Include="Header Files\Services\System">
       <UniqueIdentifier>{9e1f5966-c982-4c5c-b19f-3b3575296283}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Services\Validator">
+      <UniqueIdentifier>{0c22ca42-ea41-4029-b956-18c87412cba1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Services\Validator">
+      <UniqueIdentifier>{8b606afb-eaf4-48b1-96a0-3ca12d888ce9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{ebdacb9c-b067-476b-bd07-dfb82a410343}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\JSONSchemas">
+      <UniqueIdentifier>{62308550-e7a6-4f38-b875-a3f794e43b9f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\JSONSchemas\Endpoint">
+      <UniqueIdentifier>{b16c0e90-7da1-4915-8381-0392aecb03d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\JSONSchemas\Model">
+      <UniqueIdentifier>{b991216d-4e0d-41bb-b7ea-d7bf798966fd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Stdafx.h">
@@ -308,6 +326,21 @@
     <ClInclude Include="Services\System\IUUIDGeneratorService.h">
       <Filter>Header Files\Services\System</Filter>
     </ClInclude>
+    <ClInclude Include="Services\Validator\JSONValidatorService.h">
+      <Filter>Header Files\Services\Validator</Filter>
+    </ClInclude>
+    <ClInclude Include="Services\System\ResourceService.h">
+      <Filter>Header Files\Services\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Services\System\IResourceService.h">
+      <Filter>Header Files\Services\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Services\Validator\IJSONValidatorService.h">
+      <Filter>Header Files\Services\Validator</Filter>
+    </ClInclude>
+    <ClInclude Include="Resources\Resource.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Stdafx.cpp">
@@ -436,5 +469,30 @@
     <ClCompile Include="Services\System\UUIDGeneratorService.cpp">
       <Filter>Source Files\Services\System</Filter>
     </ClCompile>
+    <ClCompile Include="Services\Validator\JSONValidatorService.cpp">
+      <Filter>Source Files\Services\Validator</Filter>
+    </ClCompile>
+    <ClCompile Include="Services\System\ResourceService.cpp">
+      <Filter>Source Files\Services\System</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\JSONSchemas\Endpoint\PatientsPutEndpoint.json">
+      <Filter>Resource Files\JSONSchemas\Endpoint</Filter>
+    </None>
+    <None Include="Resources\JSONSchemas\Endpoint\PatientsPostEndpoint.json">
+      <Filter>Resource Files\JSONSchemas\Endpoint</Filter>
+    </None>
+    <None Include="Resources\JSONSchemas\Model\Patient.json">
+      <Filter>Resource Files\JSONSchemas\Model</Filter>
+    </None>
+    <None Include="Resources\JSONSchemas\Model\Address.json">
+      <Filter>Resource Files\JSONSchemas\Model</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Resources\SeedCppCore.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

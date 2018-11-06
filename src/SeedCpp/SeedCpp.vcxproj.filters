@@ -9,8 +9,11 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
-    <Filter Include="Resources">
+    <Filter Include="Resource Files">
       <UniqueIdentifier>{f5041f8e-5f94-471a-ad39-365f3f505205}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Database">
+      <UniqueIdentifier>{a9005c38-4f0e-4d48-966d-f67226b6808a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -27,8 +30,8 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="..\SeedCppCore\Resources\schema.sql">
-      <Filter>Resources</Filter>
+    <CustomBuild Include="..\SeedCppCore\Resources\Database\schema.sql">
+      <Filter>Resource Files\Database</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>
