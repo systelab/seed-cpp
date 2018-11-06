@@ -10,4 +10,17 @@
 
 #define BOOST_CONFIG_SUPPRESS_OUTDATED_MESSAGE
 
+// Windows
+#define WIN32_LEAN_AND_MEAN             // Exclude rarely-used stuff from Windows headers
+#define NOMINMAX
+
+#include <windows.h>
+
+// STL
 #include <string>
+#include <map>
+#include <functional>
+#include <algorithm>
+#include <vector>
+#include <set>
+
