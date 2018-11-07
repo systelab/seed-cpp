@@ -125,6 +125,7 @@
     <ClInclude Include="DAL\DAO\ITransactionDAO.h" />
     <ClInclude Include="DAL\DAO\ITransactionDAOMgr.h" />
     <ClInclude Include="DAL\Translators\Db\AddressDbTranslator.h" />
+    <ClInclude Include="DAL\Translators\Db\BaseEntityDbTranslator.h" />
     <ClInclude Include="DAL\Translators\Db\DbTranslatorsFactory.h" />
     <ClInclude Include="DAL\Translators\Db\IDatabaseEntityTranslator.h" />
     <ClInclude Include="DAL\Translators\Db\IDbTranslatorsFactory.h" />
@@ -193,6 +194,7 @@
     <ClCompile Include="DAL\DAO\Db\UserDbLoadDAO.cpp" />
     <ClCompile Include="DAL\DAO\Db\UserDbSaveDAO.cpp" />
     <ClCompile Include="DAL\Translators\Db\AddressDbTranslator.cpp" />
+    <ClCompile Include="DAL\Translators\Db\BaseEntityDbTranslator.cpp" />
     <ClCompile Include="DAL\Translators\Db\DbTranslatorsFactory.cpp" />
     <ClCompile Include="DAL\Translators\Db\PatientDbTranslator.cpp" />
     <ClCompile Include="DAL\Translators\Db\UserDbTranslator.cpp" />

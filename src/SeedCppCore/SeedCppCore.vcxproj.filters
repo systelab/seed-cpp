@@ -344,6 +344,9 @@
     <ClInclude Include="Model\BaseEntity.h">
       <Filter>Header Files\Model</Filter>
     </ClInclude>
+    <ClInclude Include="DAL\Translators\Db\BaseEntityDbTranslator.h">
+      <Filter>Header Files\DAL\Translators\Db</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Stdafx.cpp">
@@ -480,6 +483,9 @@
     </ClCompile>
     <ClCompile Include="Model\BaseEntity.cpp">
       <Filter>Source Files\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="DAL\Translators\Db\BaseEntityDbTranslator.cpp">
+      <Filter>Source Files\DAL\Translators\Db</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
