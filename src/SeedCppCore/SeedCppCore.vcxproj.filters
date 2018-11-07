@@ -341,6 +341,9 @@
     <ClInclude Include="Resources\Resource.h">
       <Filter>Resource Files</Filter>
     </ClInclude>
+    <ClInclude Include="Model\BaseEntity.h">
+      <Filter>Header Files\Model</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Stdafx.cpp">
@@ -474,6 +477,9 @@
     </ClCompile>
     <ClCompile Include="Services\System\ResourceService.cpp">
       <Filter>Source Files\Services\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Model\BaseEntity.cpp">
+      <Filter>Source Files\Model</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

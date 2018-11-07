@@ -1,12 +1,13 @@
 #pragma once
 
-#include <boost/optional.hpp>
+#include "Model/BaseEntity.h"
+
 #include <string>
 
 
 namespace seed_cpp { namespace model {
 
-	class User
+	class User : public BaseEntity
 	{
 	public:
 		enum Role
@@ -17,24 +18,26 @@ namespace seed_cpp { namespace model {
 
 	public:
 		User();
-		virtual ~User();
+		User(const User&);
+		virtual ~User() = default;
 
-		boost::optional<std::string> getId() const;
 		std::string getSurname() const;
 		std::string getName() const;
 		std::string getLogin() const;
 		std::string getPassword() const;
 		Role getRole() const;
 
-		void setId(const boost::optional<std::string>&);
 		void setSurname(const std::string&);
 		void setName(const std::string&);
 		void setLogin(const std::string&);
 		void setPassword(const std::string&);
 		void setRole(Role);
 
+		User& operator= (const User&);
+		friend bool operator== (const User&, const User&);
+		friend bool operator!= (const User&, const User&);
+
 	private:
-		boost::optional<std::string> m_id;
 		std::string m_surname;
 		std::string m_name;
 		std::string m_login;

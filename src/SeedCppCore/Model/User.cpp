@@ -1,13 +1,11 @@
 #include "StdAfx.h"
 #include "User.h"
 
-#include "Address.h"
-
 
 namespace seed_cpp { namespace model {
 
 	User::User()
-		:m_id()
+		:BaseEntity()
 		,m_surname("")
 		,m_name("")
 		,m_login("")
@@ -16,13 +14,14 @@ namespace seed_cpp { namespace model {
 	{
 	}
 
-	User::~User()
+	User::User(const User& other)
+		:BaseEntity(other)
+		,m_surname(other.m_surname)
+		,m_name(other.m_name)
+		,m_login(other.m_login)
+		,m_password(other.m_password)
+		,m_role(other.m_role)
 	{
-	}
-
-	boost::optional<std::string> User::getId() const
-	{
-		return m_id;
 	}
 
 	std::string User::getSurname() const
@@ -50,11 +49,6 @@ namespace seed_cpp { namespace model {
 		return m_role;
 	}
 
-	void User::setId(const boost::optional<std::string>& id)
-	{
-		m_id = id;
-	}
-
 	void User::setSurname(const std::string& surname)
 	{
 		m_surname = surname;
@@ -78,6 +72,45 @@ namespace seed_cpp { namespace model {
 	void User::setRole(Role role)
 	{
 		m_role = role;
+	}
+
+	User& User::operator= (const User& other)
+	{
+		BaseEntity::operator=(other);
+
+		m_surname = other.m_surname;
+		m_name = other.m_name;
+		m_login = other.m_login;
+		m_password = other.m_password;
+		m_role = other.m_role;
+
+		return *this;
+	}
+
+	bool operator== (const User& lhs, const User& rhs)
+	{
+		const auto& lhsBase = (const BaseEntity&) lhs;
+		const auto& rhsBase = (const BaseEntity&) rhs;
+		if (lhsBase != rhsBase)
+		{
+			return false;
+		}
+
+		if ( (lhs.m_surname != rhs.m_surname) ||
+			 (lhs.m_name != rhs.m_name) ||
+			 (lhs.m_login != rhs.m_login) ||
+			 (lhs.m_password != rhs.m_password) ||
+			 (lhs.m_role) != (rhs.m_role) )
+		{
+			return false;
+		}
+
+		return true;
+	}
+
+	bool operator!= (const User& lhs, const User& rhs)
+	{
+		return !(lhs == rhs);
 	}
 
 }}

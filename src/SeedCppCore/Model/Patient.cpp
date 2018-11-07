@@ -7,7 +7,7 @@
 namespace seed_cpp { namespace model {
 
 	Patient::Patient()
-		:m_id()
+		:BaseEntity()
 		,m_surname("")
 		,m_name("")
 		,m_email("")
@@ -17,22 +17,13 @@ namespace seed_cpp { namespace model {
 	}
 
 	Patient::Patient(const Patient& other)
-		:m_id(other.m_id)
+		:BaseEntity(other)
 		,m_surname(other.m_surname)
 		,m_name(other.m_name)
 		,m_email(other.m_email)
 		,m_dob(other.m_dob)
 		,m_address(std::make_unique<Address>(*other.m_address))
 	{
-	}
-
-	Patient::~Patient()
-	{
-	}
-
-	boost::optional<std::string> Patient::getId() const
-	{
-		return m_id;
 	}
 
 	std::string Patient::getSurname() const
@@ -58,11 +49,6 @@ namespace seed_cpp { namespace model {
 	Address& Patient::getAddress() const
 	{
 		return *m_address;
-	}
-
-	void Patient::setId(const boost::optional<std::string>& id)
-	{
-		m_id = id;
 	}
 
 	void Patient::setSurname(const std::string& surname)
@@ -92,28 +78,31 @@ namespace seed_cpp { namespace model {
 
 	Patient& Patient::operator= (const Patient& other)
 	{
-		m_id = other.m_id;
+		BaseEntity::operator=(other);
+
 		m_surname = other.m_surname;
 		m_name = other.m_name;
-		*m_address = *other.m_address;
 		m_email = other.m_email;
 		m_dob = other.m_dob;
+		*m_address = *other.m_address;
 
 		return *this;
 	}
 
 	bool operator== (const Patient& lhs, const Patient& rhs)
 	{
-		if ( (lhs.m_id != rhs.m_id) ||
-			 (lhs.m_surname != rhs.m_surname) ||
-			 (lhs.m_name != rhs.m_name) ||
-			 (lhs.m_email != rhs.m_email) )
-
+		const auto& lhsBase = (const BaseEntity&) lhs;
+		const auto& rhsBase = (const BaseEntity&) rhs;
+		if (lhsBase != rhsBase)
 		{
 			return false;
 		}
 
-		if ((*lhs.m_address) != (*rhs.m_address))
+		if ( (lhs.m_surname != rhs.m_surname) ||
+			 (lhs.m_name != rhs.m_name) ||
+			 (lhs.m_email != rhs.m_email) ||
+			 (lhs.m_dob != rhs.m_dob) ||
+			 (*lhs.m_address) != (*rhs.m_address) )
 		{
 			return false;
 		}

@@ -136,6 +136,7 @@
     <ClInclude Include="DAL\Translators\JSON\JSONTranslatorsFactory.h" />
     <ClInclude Include="DAL\Translators\JSON\PatientJSONTranslator.h" />
     <ClInclude Include="Model\Address.h" />
+    <ClInclude Include="Model\BaseEntity.h" />
     <ClInclude Include="Model\EntityMgr.h" />
     <ClInclude Include="Model\Model.h" />
     <ClInclude Include="Model\Patient.h" />
@@ -198,6 +199,7 @@
     <ClCompile Include="DAL\Translators\JSON\JSONTranslatorsFactory.cpp" />
     <ClCompile Include="DAL\Translators\JSON\PatientJSONTranslator.cpp" />
     <ClCompile Include="Model\Address.cpp" />
+    <ClCompile Include="Model\BaseEntity.cpp" />
     <ClCompile Include="Model\Model.cpp" />
     <ClCompile Include="Model\Patient.cpp" />
     <ClCompile Include="Model\User.cpp" />

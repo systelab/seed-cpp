@@ -1,7 +1,8 @@
 #pragma once
 
+#include "Model/BaseEntity.h"
+
 #include <boost/date_time/posix_time/posix_time.hpp>
-#include <boost/optional.hpp>
 #include <string>
 
 
@@ -9,21 +10,19 @@ namespace seed_cpp { namespace model {
 
 	class Address;
 
-	class Patient
+	class Patient : public BaseEntity
 	{
 	public:
 		Patient();
 		Patient(const Patient&);
-		virtual ~Patient();
+		virtual ~Patient() = default;
 
-		boost::optional<std::string> getId() const;
 		std::string getSurname() const;
 		std::string getName() const;
 		std::string getEmail() const;
 		boost::posix_time::ptime getDob() const;
 		Address& getAddress() const;
 
-		void setId(const boost::optional<std::string>&);
 		void setSurname(const std::string&);
 		void setName(const std::string&);
 		void setEmail(const std::string&);
@@ -35,7 +34,6 @@ namespace seed_cpp { namespace model {
 		friend bool operator!= (const Patient&, const Patient&);
 
 	private:
-		boost::optional<std::string> m_id;
 		std::string m_surname;
 		std::string m_name;
 		std::string m_email;
