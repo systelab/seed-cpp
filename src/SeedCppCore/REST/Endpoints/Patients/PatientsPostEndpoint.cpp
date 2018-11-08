@@ -1,15 +1,14 @@
 #include "StdAfx.h"
 #include "PatientsPostEndpoint.h"
 
-#include "DAL/DAO/Db/IDbDAOFactory.h"
-#include "DAL/DAO/ISaveDAO.h"
+#include "Model/EntityMgr.h"
+#include "Model/Patient.h"
 #include "DAL/Translators/JSON/IJSONLoadTranslator.h"
 #include "DAL/Translators/JSON/IJSONSaveTranslator.h"
 #include "DAL/Translators/JSON/IJSONTranslatorsFactory.h"
-#include "Model/Patient.h"
 #include "REST/Helpers/ReplyBuilderHelper.h"
+#include "Services/Model/IPatientModelService.h"
 #include "Services/Security/IAuthorizationValidatorService.h"
-#include "Services/System/IUUIDGeneratorService.h"
 #include "Services/Validator/IJSONValidatorService.h"
 
 #include "JSONAdapterInterface/IJSONAdapter.h"
@@ -22,22 +21,18 @@ namespace seed_cpp { namespace rest {
 
 	PatientsPostEndpoint::PatientsPostEndpoint(const systelab::web_server::RequestHeaders& headers,
 											   const std::string& requestContent,
-											   model::EntityMgr<model::Patient>& patientMgr,
-											   dal::IDbDAOFactory& dbDAOFactory,
 											   dal::IJSONTranslatorsFactory& jsonTranslatorsFactory,
 											   systelab::json_adapter::IJSONAdapter& jsonAdapter,
 											   service::IAuthorizationValidatorService& authorizationValidatorService,
 											   service::IJSONValidatorService& jsonValidatorService,
-											   service::IUUIDGeneratorService& uuidGeneratorService)
+											   service::IPatientModelService& patientModelService)
 		:m_headers(headers)
 		,m_requestContent(requestContent)
-		,m_patientMgr(patientMgr)
-		,m_dbDAOFactory(dbDAOFactory)
 		,m_jsonTranslatorsFactory(jsonTranslatorsFactory)
 		,m_jsonAdapter(jsonAdapter)
 		,m_authorizationValidatorService(authorizationValidatorService)
 		,m_jsonValidatorService(jsonValidatorService)
-		,m_uuidGeneratorService(uuidGeneratorService)
+		,m_patientModelService(patientModelService)
 	{
 	}
 
@@ -77,12 +72,7 @@ namespace seed_cpp { namespace rest {
 			auto patientJSONLoadTranslator = m_jsonTranslatorsFactory.buildPatientLoadTranslator(*patientToAdd);
 			patientJSONLoadTranslator->loadEntityFromJSON(jsonRequest->getRootValue());
 
-			std::string uuid = m_uuidGeneratorService.generateUUID();
-			patientToAdd->setId(uuid);
-
-			auto patientSaveDAO = m_dbDAOFactory.buildPatientSaveDAO(*patientToAdd);
-			patientSaveDAO->addEntity();
-			const model::Patient& addedPatient = m_patientMgr.addEntity(std::move(patientToAdd));
+			const model::Patient& addedPatient = m_patientModelService.addEntity(std::move(patientToAdd));
 
 			auto jsonResponse = m_jsonAdapter.buildEmptyDocument();
 			auto patientJSONSaveTranslator = m_jsonTranslatorsFactory.buildPatientSaveTranslator(addedPatient);

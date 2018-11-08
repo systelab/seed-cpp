@@ -161,7 +161,10 @@
     <ClInclude Include="REST\Router\RouteParam.h" />
     <ClInclude Include="REST\Router\Router.h" />
     <ClInclude Include="Services\IServicesFactory.h" />
+    <ClInclude Include="Services\Model\EntityModelService.h" />
+    <ClInclude Include="Services\Model\IPatientModelService.h" />
     <ClInclude Include="Services\Model\IUserModelService.h" />
+    <ClInclude Include="Services\Model\PatientModelService.h" />
     <ClInclude Include="Services\Model\UserModelService.h" />
     <ClInclude Include="Services\Security\AuthorizationValidatorService.h" />
     <ClInclude Include="Services\Security\Base64EncodeService.h" />
@@ -189,6 +192,7 @@
     <ClCompile Include="Core.cpp" />
     <ClCompile Include="DAL\DAO\Db\DbDAOFactory.cpp" />
     <ClCompile Include="DAL\DAO\Db\DbTransactionDAO.cpp" />
+    <ClCompile Include="DAL\DAO\Db\IDbDAOFactory.cpp" />
     <ClCompile Include="DAL\DAO\Db\PatientDbLoadDAO.cpp" />
     <ClCompile Include="DAL\DAO\Db\PatientDbSaveDAO.cpp" />
     <ClCompile Include="DAL\DAO\Db\UserDbLoadDAO.cpp" />
@@ -219,6 +223,7 @@
     <ClCompile Include="REST\Router\Route.cpp" />
     <ClCompile Include="REST\Router\RouteFragment.cpp" />
     <ClCompile Include="REST\Router\Router.cpp" />
+    <ClCompile Include="Services\Model\PatientModelService.cpp" />
     <ClCompile Include="Services\Model\UserModelService.cpp" />
     <ClCompile Include="Services\Security\AuthorizationValidatorService.cpp" />
     <ClCompile Include="Services\Security\Base64EncodeService.cpp" />

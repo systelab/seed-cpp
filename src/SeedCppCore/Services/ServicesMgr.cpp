@@ -2,6 +2,7 @@
 #include "ServicesMgr.h"
 
 #include "Services/IServicesFactory.h"
+#include "Services/Model/IPatientModelService.h"
 #include "Services/Model/IUserModelService.h"
 #include "Services/Security/IAuthorizationValidatorService.h"
 #include "Services/Security/IBase64EncodeService.h"
@@ -18,6 +19,7 @@ namespace seed_cpp { namespace service {
 
 	ServicesMgr::ServicesMgr(service::IServicesFactory& factory)
 		:m_servicesFactory(factory)
+		,m_patientModelService()
 		,m_userModelService()
 		,m_authorizationValidatorService()
 		,m_jwtBuilderService()
@@ -37,6 +39,16 @@ namespace seed_cpp { namespace service {
 
 
 	// Model services
+	IPatientModelService& ServicesMgr::getPatientModelService() const
+	{
+		if (!m_patientModelService.get())
+		{
+			m_patientModelService = m_servicesFactory.buildPatientModelService();
+		}
+
+		return *m_patientModelService;
+	}
+
 	IUserModelService& ServicesMgr::getUserModelService() const
 	{
 		if (!m_userModelService.get())

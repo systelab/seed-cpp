@@ -3,6 +3,10 @@
 #include "IUserModelService.h"
 #include "Model/EntityMgr.h"
 
+#include "Model/User.h"
+#include "Services/Model/EntityModelService.h"
+#include "Services/Model/IUserModelService.h"
+
 
 namespace seed_cpp { namespace model {
 	class User;
@@ -10,11 +14,21 @@ namespace seed_cpp { namespace model {
 
 namespace seed_cpp { namespace service {
 
-	class UserModelService : public IUserModelService
+	class UserModelService : public IUserModelService,
+							 public EntityModelService<model::User>
 	{
 	public:
-		UserModelService(model::EntityMgr<model::User>&);
-		virtual ~UserModelService();
+		UserModelService(model::EntityMgr<model::User>&,
+						 dal::IDbDAOFactory&,
+						 service::IUUIDGeneratorService&,
+						 service::ITimeService&);
+		virtual ~UserModelService() = default;
+
+		model::EntityMgr<model::User>& getEntityMgr() const;
+		const model::User* getEntityById(const std::string& id) const;
+		const model::User& addEntity(std::unique_ptr<model::User>);
+		const model::User& editEntity(std::unique_ptr<model::User>);
+		void deleteEntity(const std::string& id);
 
 		const model::User* getUserByLogin(const std::string&) const;
 

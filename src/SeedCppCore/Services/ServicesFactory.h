@@ -16,6 +16,7 @@ namespace seed_cpp { namespace service {
 		virtual ~ServicesFactory();
 
 		// Model services
+		std::unique_ptr<IPatientModelService> buildPatientModelService() const;
 		std::unique_ptr<IUserModelService> buildUserModelService() const;
 
 		// Security services

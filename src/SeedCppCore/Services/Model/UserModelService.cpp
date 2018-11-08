@@ -6,13 +6,38 @@
 
 namespace seed_cpp { namespace service {
 
-	UserModelService::UserModelService(model::EntityMgr<model::User>& userMgr)
-		:m_userMgr(userMgr)
+	UserModelService::UserModelService(model::EntityMgr<model::User>& userMgr,
+									   dal::IDbDAOFactory& daoFactory,
+									   service::IUUIDGeneratorService& uuidGeneratorService,
+									   service::ITimeService& timeService)
+		:EntityModelService(userMgr, daoFactory, uuidGeneratorService, timeService)
+		,m_userMgr(userMgr)
 	{
 	}
 	
-	UserModelService::~UserModelService()
+	model::EntityMgr<model::User>& UserModelService::getEntityMgr() const
 	{
+		return EntityModelService::getEntityMgr();
+	}
+
+	const model::User* UserModelService::getEntityById(const std::string& id) const
+	{
+		return EntityModelService::getEntityById(id);
+	}
+
+	const model::User& UserModelService::addEntity(std::unique_ptr<model::User> entity)
+	{
+		return EntityModelService::addEntity(std::move(entity));
+	}
+
+	const model::User& UserModelService::editEntity(std::unique_ptr<model::User> entity)
+	{
+		return EntityModelService::editEntity(std::move(entity));
+	}
+
+	void UserModelService::deleteEntity(const std::string& id)
+	{
+		EntityModelService::deleteEntity(id);
 	}
 
 	const model::User* UserModelService::getUserByLogin(const std::string& login) const

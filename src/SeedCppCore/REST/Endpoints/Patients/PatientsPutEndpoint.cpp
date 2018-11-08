@@ -1,13 +1,12 @@
 #include "StdAfx.h"
 #include "PatientsPutEndpoint.h"
 
-#include "DAL/DAO/Db/IDbDAOFactory.h"
-#include "DAL/DAO/ISaveDAO.h"
 #include "DAL/Translators/JSON/IJSONLoadTranslator.h"
 #include "DAL/Translators/JSON/IJSONSaveTranslator.h"
 #include "DAL/Translators/JSON/IJSONTranslatorsFactory.h"
 #include "Model/Patient.h"
 #include "REST/Helpers/ReplyBuilderHelper.h"
+#include "Services/Model/IPatientModelService.h"
 #include "Services/Security/IAuthorizationValidatorService.h"
 #include "Services/Validator/IJSONValidatorService.h"
 
@@ -22,21 +21,19 @@ namespace seed_cpp { namespace rest {
 	PatientsPutEndpoint::PatientsPutEndpoint(const systelab::web_server::RequestHeaders& headers,
 											 const std::string& patientId,
 											 const std::string& requestContent,
-											 model::EntityMgr<model::Patient>& patientMgr,
-											 dal::IDbDAOFactory& dbDAOFactory,
 											 dal::IJSONTranslatorsFactory& jsonTranslatorsFactory,
 											 systelab::json_adapter::IJSONAdapter& jsonAdapter,
 											 service::IAuthorizationValidatorService& authorizationValidatorService,
-											 service::IJSONValidatorService& jsonValidatorService)
+											 service::IJSONValidatorService& jsonValidatorService,
+											 service::IPatientModelService& patientModelService)
 		:m_headers(headers)
 		,m_patientId(patientId)
 		,m_requestContent(requestContent)
-		,m_patientMgr(patientMgr)
-		,m_dbDAOFactory(dbDAOFactory)
 		,m_jsonTranslatorsFactory(jsonTranslatorsFactory)
 		,m_jsonAdapter(jsonAdapter)
 		,m_authorizationValidatorService(authorizationValidatorService)
 		,m_jsonValidatorService(jsonValidatorService)
+		,m_patientModelService(patientModelService)
 	{
 	}
 	
@@ -72,16 +69,14 @@ namespace seed_cpp { namespace rest {
 
 		try
 		{
-			const model::Patient* existingPatient = m_patientMgr.getEntityById(m_patientId);
+			const model::Patient* existingPatient = m_patientModelService.getEntityById(m_patientId);
 			if (existingPatient)
 			{
 				auto patientToUpdate = std::make_unique<model::Patient>(*existingPatient);
 				auto patientJSONLoadTranslator = m_jsonTranslatorsFactory.buildPatientLoadTranslator(*patientToUpdate);
 				patientJSONLoadTranslator->loadEntityFromJSON(jsonRequest->getRootValue());
 
-				auto patientSaveDAO = m_dbDAOFactory.buildPatientSaveDAO(*patientToUpdate);
-				patientSaveDAO->updateEntity();
-				const model::Patient& updatedPatient = m_patientMgr.editEntity(std::move(patientToUpdate));
+				const model::Patient& updatedPatient = m_patientModelService.editEntity(std::move(patientToUpdate));
 
 				auto jsonResponse = m_jsonAdapter.buildEmptyDocument();
 				auto patientJSONSaveTranslator = m_jsonTranslatorsFactory.buildPatientSaveTranslator(updatedPatient);
@@ -95,9 +90,7 @@ namespace seed_cpp { namespace rest {
 				auto patientJSONLoadTranslator = m_jsonTranslatorsFactory.buildPatientLoadTranslator(*patientToAdd);
 				patientJSONLoadTranslator->loadEntityFromJSON(jsonRequest->getRootValue());
 
-				auto patientSaveDAO = m_dbDAOFactory.buildPatientSaveDAO(*patientToAdd);
-				patientSaveDAO->addEntity();
-				const model::Patient& addedPatient = m_patientMgr.addEntity(std::move(patientToAdd));
+				const model::Patient& addedPatient = m_patientModelService.editEntity(std::move(patientToAdd));
 
 				auto jsonResponse = m_jsonAdapter.buildEmptyDocument();
 				auto patientJSONSaveTranslator = m_jsonTranslatorsFactory.buildPatientSaveTranslator(addedPatient);

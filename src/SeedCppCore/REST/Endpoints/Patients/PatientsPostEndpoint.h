@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Model/EntityMgr.h"
 #include "REST/Endpoints/IEndpoint.h"
 
 #include "WebServerInterface/Model/RequestHeaders.h"
@@ -12,7 +11,6 @@ namespace systelab { namespace json_adapter {
 
 namespace seed_cpp {
 	namespace dal {
-		class IDbDAOFactory;
 		class IJSONTranslatorsFactory;
 	}
 	namespace model {
@@ -21,7 +19,7 @@ namespace seed_cpp {
 	namespace service {
 		class IAuthorizationValidatorService;
 		class IJSONValidatorService;
-		class IUUIDGeneratorService;
+		class IPatientModelService;
 	}
 }
 
@@ -34,13 +32,11 @@ namespace seed_cpp { namespace rest {
 	public:
 		PatientsPostEndpoint(const systelab::web_server::RequestHeaders&,
 							 const std::string& requestContent,
-							 model::EntityMgr<model::Patient>&,
-							 dal::IDbDAOFactory&,
 							 dal::IJSONTranslatorsFactory&,
 							 systelab::json_adapter::IJSONAdapter&,
 							 service::IAuthorizationValidatorService&,
 							 service::IJSONValidatorService&,
-							 service::IUUIDGeneratorService&);
+							 service::IPatientModelService&);
 		virtual ~PatientsPostEndpoint();
 
 		bool hasAccess() const;
@@ -49,13 +45,11 @@ namespace seed_cpp { namespace rest {
 	private:
 		const systelab::web_server::RequestHeaders m_headers;
 		std::string m_requestContent;
-		model::EntityMgr<model::Patient>& m_patientMgr;
-		dal::IDbDAOFactory& m_dbDAOFactory;
 		dal::IJSONTranslatorsFactory& m_jsonTranslatorsFactory;
 		systelab::json_adapter::IJSONAdapter& m_jsonAdapter;
 		service::IAuthorizationValidatorService& m_authorizationValidatorService;
 		service::IJSONValidatorService& m_jsonValidatorService;
-		service::IUUIDGeneratorService& m_uuidGeneratorService;
+		service::IPatientModelService& m_patientModelService;
 	};
 
 }}

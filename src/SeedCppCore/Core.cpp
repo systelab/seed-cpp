@@ -12,6 +12,7 @@
 #include "REST/Endpoints/EndpointsFactory.h"
 #include "Services/ServicesFactory.h"
 #include "Services/ServicesMgr.h"
+#include "Services/Model/IUserModelService.h"
 #include "Services/System/IUUIDGeneratorService.h"
 
 #include "DbAdapterInterface/IDatabase.h"
@@ -105,19 +106,14 @@ namespace seed_cpp {
 		model::EntityMgr<model::User>& userMgr = getModel().getUserMgr();
 		if (userMgr.count() == 0)
 		{
-			std::string uuid = m_servicesMgr->getUUIDGeneratorService().generateUUID();
-
 			auto defaultUser = std::make_unique<model::User>();
-			defaultUser->setId(uuid);
 			defaultUser->setSurname("Systelab");
 			defaultUser->setName("Systelab");
 			defaultUser->setLogin("Systelab");
 			defaultUser->setPassword("Systelab");
 			defaultUser->setRole(model::User::ADMIN_ROLE);
 
-			auto userSaveDAO = getDbDAOFactory().buildUserSaveDAO(*defaultUser);
-			userSaveDAO->addEntity();
-			userMgr.addEntity(std::move(defaultUser));
+			m_servicesMgr->getUserModelService().addEntity(std::move(defaultUser));
 		}
 
 		std::unique_ptr<dal::ILoadDAO> patientLoadDAO = m_dbDAOFactory->buildPatientLoadDAO();

@@ -6,17 +6,10 @@
 #include "WebServerInterface/Model/RequestHeaders.h"
 
 
-namespace seed_cpp {
-	namespace dal {
-		class IDbDAOFactory;
-	}
-	namespace model {
-		class Patient;
-	}
-	namespace service {
-		class IAuthorizationValidatorService;
-	}
-}
+namespace seed_cpp { namespace service {
+	class IAuthorizationValidatorService;
+	class IPatientModelService;
+}}
 
 namespace seed_cpp { namespace rest {
 
@@ -25,8 +18,7 @@ namespace seed_cpp { namespace rest {
 	public:
 		PatientsDeleteEndpoint(const systelab::web_server::RequestHeaders&,
 							   const std::string& id,
-							   model::EntityMgr<model::Patient>&,
-							   dal::IDbDAOFactory&,
+							   service::IPatientModelService&,
 							   service::IAuthorizationValidatorService&);
 		virtual ~PatientsDeleteEndpoint();
 
@@ -36,8 +28,7 @@ namespace seed_cpp { namespace rest {
 	private:
 		const systelab::web_server::RequestHeaders m_headers;
 		const std::string m_id;
-		model::EntityMgr<model::Patient>& m_patientMgr;
-		dal::IDbDAOFactory& m_dbDAOFactory;
+		service::IPatientModelService& m_patientModelService;
 		service::IAuthorizationValidatorService& m_authorizationValidatorService;
 	};
 

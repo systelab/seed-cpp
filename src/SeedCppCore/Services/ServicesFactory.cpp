@@ -5,6 +5,7 @@
 #include "Model/Model.h"
 #include "Model/User.h"
 #include "Services/ServicesMgr.h"
+#include "Services/Model/PatientModelService.h"
 #include "Services/Model/UserModelService.h"
 #include "Services/Security/AuthorizationValidatorService.h"
 #include "Services/Security/Base64EncodeService.h"
@@ -29,10 +30,24 @@ namespace seed_cpp { namespace service {
 	}
 
 	// Model services
+	std::unique_ptr<IPatientModelService> ServicesFactory::buildPatientModelService() const
+	{
+		model::EntityMgr<model::Patient>& patientMgr = m_core.getModel().getPatientMgr();
+		dal::IDbDAOFactory& dbDAOFactory = m_core.getDbDAOFactory();
+		IUUIDGeneratorService& uuidGeneratorService = m_core.getServicesMgr().getUUIDGeneratorService();
+		ITimeService& timeService = m_core.getServicesMgr().getTimeService();
+
+		return std::make_unique<PatientModelService>(patientMgr, dbDAOFactory, uuidGeneratorService, timeService);
+	}
+
 	std::unique_ptr<IUserModelService> ServicesFactory::buildUserModelService() const
 	{
 		model::EntityMgr<model::User>& userMgr = m_core.getModel().getUserMgr();
-		return std::make_unique<UserModelService>(userMgr);
+		dal::IDbDAOFactory& dbDAOFactory = m_core.getDbDAOFactory();
+		IUUIDGeneratorService& uuidGeneratorService = m_core.getServicesMgr().getUUIDGeneratorService();
+		ITimeService& timeService = m_core.getServicesMgr().getTimeService();
+
+		return std::make_unique<UserModelService>(userMgr, dbDAOFactory, uuidGeneratorService, timeService);
 	}
 
 

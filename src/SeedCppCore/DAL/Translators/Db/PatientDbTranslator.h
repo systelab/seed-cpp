@@ -1,6 +1,6 @@
 #pragma once
 
-#include "IDatabaseEntityTranslator.h"
+#include "DAL/Translators/Db/BaseEntityDbTranslator.h"
 
 
 namespace seed_cpp { namespace model {
@@ -9,11 +9,11 @@ namespace seed_cpp { namespace model {
 
 namespace seed_cpp { namespace dal {
 
-	class PatientDbTranslator : public IDatabaseEntityTranslator
+	class PatientDbTranslator : public BaseEntityDbTranslator
 	{
 	public:
 		PatientDbTranslator(model::Patient&);
-		virtual ~PatientDbTranslator();
+		virtual ~PatientDbTranslator() = default;
 
 		void fillEntityFromRecord(const systelab::db::ITableRecord&);
 		void fillRecordFromEntity(systelab::db::ITableRecord&) const;

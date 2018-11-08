@@ -10,24 +10,21 @@
 namespace seed_cpp { namespace dal {
 
 	UserDbTranslator::UserDbTranslator(model::User& user)
-		:m_user(user)
-	{
-	}
-
-	UserDbTranslator::~UserDbTranslator()
+		:BaseEntityDbTranslator(user)
+		,m_user(user)
 	{
 	}
 
 	void UserDbTranslator::fillEntityFromRecord(const systelab::db::ITableRecord& record)
 	{
-		std::string id = record.getFieldValue("id").getStringValue();
+		BaseEntityDbTranslator::fillEntityFromRecord(record);
+
 		std::string name = record.getFieldValue("name").getStringValue();
 		std::string surname = record.getFieldValue("surname").getStringValue();
 		std::string login = record.getFieldValue("login").getStringValue();
 		std::string password = record.getFieldValue("password").getStringValue();
 		model::User::Role role = (model::User::Role) record.getFieldValue("role").getIntValue();
 
-		m_user.setId(id);
 		m_user.setName(name);
 		m_user.setSurname(surname);
 		m_user.setLogin(login);
@@ -37,14 +34,14 @@ namespace seed_cpp { namespace dal {
 
 	void UserDbTranslator::fillRecordFromEntity(systelab::db::ITableRecord& record) const
 	{
-		std::string id = *m_user.getId();
+		BaseEntityDbTranslator::fillRecordFromEntity(record);
+
 		std::string name = m_user.getName();
 		std::string surname = m_user.getSurname();
 		std::string login = m_user.getLogin();
 		std::string password = m_user.getPassword();
 		int role = (int) m_user.getRole();
 
-		record.getFieldValue("id").setStringValue(id);
 		record.getFieldValue("name").setStringValue(name);
 		record.getFieldValue("surname").setStringValue(surname);
 		record.getFieldValue("login").setStringValue(login);

@@ -10,7 +10,9 @@ CREATE TABLE IF NOT EXISTS 'User' (
   'surname' TEXT NOT NULL,
   'login' TEXT NOT NULL,
   'password' TEXT NOT NULL,
-  'role' INTEGER NOT NULL, 
+  'role' INTEGER NOT NULL,
+  'creationTime' DATETIME NOT NULL,
+  'updateTime' DATETIME NOT NULL,
   PRIMARY KEY (id)
 );
 
@@ -25,6 +27,8 @@ CREATE TABLE IF NOT EXISTS 'Patient' (
   'surname' TEXT NOT NULL,
   'dob' DATETIME NOT NULL,
   'email' TEXT NOT NULL,
+  'creationTime' DATETIME NOT NULL,
+  'updateTime' DATETIME NOT NULL,
   PRIMARY KEY (id)
 );
 

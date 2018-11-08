@@ -14,6 +14,7 @@ namespace seed_cpp { namespace service {
 	class IJSONValidatorService;
 	class IJWTBuilderService;
 	class IJWTValidatorService;
+	class IPatientModelService;
 	class IResourceService;
 	class ISignatureService;
 	class ITimeService;
@@ -26,6 +27,7 @@ namespace seed_cpp { namespace service {
 		virtual ~IServicesFactory() {};
 
 		// Model services
+		virtual std::unique_ptr<IPatientModelService> buildPatientModelService() const = 0;
 		virtual std::unique_ptr<IUserModelService> buildUserModelService() const = 0;
 
 		// Security services

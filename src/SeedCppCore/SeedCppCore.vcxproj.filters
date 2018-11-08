@@ -347,6 +347,15 @@
     <ClInclude Include="DAL\Translators\Db\BaseEntityDbTranslator.h">
       <Filter>Header Files\DAL\Translators\Db</Filter>
     </ClInclude>
+    <ClInclude Include="Services\Model\IPatientModelService.h">
+      <Filter>Header Files\Services\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Services\Model\PatientModelService.h">
+      <Filter>Header Files\Services\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Services\Model\EntityModelService.h">
+      <Filter>Header Files\Services\Model</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Stdafx.cpp">
@@ -486,6 +495,12 @@
     </ClCompile>
     <ClCompile Include="DAL\Translators\Db\BaseEntityDbTranslator.cpp">
       <Filter>Source Files\DAL\Translators\Db</Filter>
+    </ClCompile>
+    <ClCompile Include="Services\Model\PatientModelService.cpp">
+      <Filter>Source Files\Services\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="DAL\DAO\Db\IDbDAOFactory.cpp">
+      <Filter>Source Files\DAL\DAO\Db</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

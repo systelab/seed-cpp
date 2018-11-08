@@ -12,6 +12,7 @@ namespace seed_cpp { namespace service {
 	class IJSONValidatorService;
 	class IJWTBuilderService;
 	class IJWTValidatorService;
+	class IPatientModelService;
 	class IResourceService;
 	class ISignatureService;
 	class ITimeService;
@@ -25,6 +26,7 @@ namespace seed_cpp { namespace service {
 		virtual ~ServicesMgr();
 
 		// Model services
+		IPatientModelService& getPatientModelService() const;
 		IUserModelService& getUserModelService() const;
 
 		// Security services
@@ -45,6 +47,7 @@ namespace seed_cpp { namespace service {
 	private:
 		IServicesFactory& m_servicesFactory;
 
+		mutable std::unique_ptr<IPatientModelService> m_patientModelService;
 		mutable std::unique_ptr<IUserModelService> m_userModelService;
 
 		mutable std::unique_ptr<IAuthorizationValidatorService> m_authorizationValidatorService;
