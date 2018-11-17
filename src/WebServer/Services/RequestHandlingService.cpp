@@ -49,6 +49,27 @@ namespace systelab { namespace web_server {
 			if (m_corsConfiguration.isAllowedOrigin(origin))
 			{
 				reply.addHeader("Access-Control-Allow-Origin", origin);
+
+				std::string allowedHeaders = m_corsConfiguration.getAllowedHeaders();
+				if (!allowedHeaders.empty())
+				{
+					reply.addHeader("Access-Control-Allow-Headers", allowedHeaders);
+				}
+
+				bool allowedCredentials = m_corsConfiguration.areAllowedCredentials();
+				reply.addHeader("Access-Control-Allow-Credentials", allowedCredentials ? "true" : "false");
+
+				std::string allowedMethods = m_corsConfiguration.getAllowedMethods();
+				if (!allowedMethods.empty())
+				{
+					reply.addHeader("Access-Control-Allow-Methods", allowedMethods);
+				}
+
+				unsigned int maxAge = m_corsConfiguration.getMaxAge();
+				reply.addHeader("Access-Control-Max-Age", std::to_string(maxAge));
+
+				std::string exposedHeaders = m_corsConfiguration.getExposedHeaders();
+				reply.addHeader("Access-Control-Expose-Headers", exposedHeaders);
 			}
 		}
 	}

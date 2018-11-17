@@ -17,10 +17,9 @@
                     "surname": { "type": "string" },
                     "name": { "type": "string" },
                     "email": { "type": "string" },
-                    "dob": { "type": "string" },
                     "address": { "$ref": "JSON_SCHEMA_MODEL_ADDRESS#/definitions/address" }
                 },
-                "required": ["surname", "name", "email", "dob", "address"]
+                "required": ["surname", "name", "email", "address"]
             },
             "additionalProperties": false
         }

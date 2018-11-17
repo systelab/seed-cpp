@@ -46,27 +46,44 @@ namespace seed_cpp { namespace dal {
 
 	void PatientJSONLoadTranslator::loadEntityFromJSON(const systelab::json_adapter::IJSONValue& jsonPatient)
 	{
-		std::string surname = jsonPatient.getObjectMemberValue("surname").getString();
-		std::string name = jsonPatient.getObjectMemberValue("name").getString();
-		std::string email = jsonPatient.getObjectMemberValue("email").getString();
-		boost::posix_time::ptime dob = boost::posix_time::from_iso_string(jsonPatient.getObjectMemberValue("dob").getString());
+		if (jsonPatient.hasObjectMember("surname"))
+		{
+			std::string surname = jsonPatient.getObjectMemberValue("surname").getString();
+			m_patient.setSurname(surname);
+		}
 
-		m_patient.setSurname(surname);
-		m_patient.setName(name);
-		m_patient.setEmail(email);
-		m_patient.setDob(dob);
+		if (jsonPatient.hasObjectMember("name"))
+		{
+			std::string name = jsonPatient.getObjectMemberValue("name").getString();
+			m_patient.setName(name);
+		}
 
-		const systelab::json_adapter::IJSONValue& jsonAddress = jsonPatient.getObjectMemberValue("address");
-		std::string coordinates = jsonAddress.getObjectMemberValue("coordinates").getString();
-		std::string street = jsonAddress.getObjectMemberValue("street").getString();
-		std::string city = jsonAddress.getObjectMemberValue("city").getString();
-		std::string zip = jsonAddress.getObjectMemberValue("zip").getString();
+		if (jsonPatient.hasObjectMember("email"))
+		{
+			std::string email = jsonPatient.getObjectMemberValue("email").getString();
+			m_patient.setEmail(email);
+		}
 
-		model::Address& address = m_patient.getAddress();
-		address.setCoordinates(coordinates);
-		address.setStreet(street);
-		address.setCity(city);
-		address.setZip(zip);
+		if (jsonPatient.hasObjectMember("dob"))
+		{
+			boost::posix_time::ptime dob = boost::posix_time::from_iso_string(jsonPatient.getObjectMemberValue("dob").getString());
+			m_patient.setDob(dob);
+		}
+
+		if (jsonPatient.hasObjectMember("address"))
+		{
+			const systelab::json_adapter::IJSONValue& jsonAddress = jsonPatient.getObjectMemberValue("address");
+			std::string coordinates = jsonAddress.getObjectMemberValue("coordinates").getString();
+			std::string street = jsonAddress.getObjectMemberValue("street").getString();
+			std::string city = jsonAddress.getObjectMemberValue("city").getString();
+			std::string zip = jsonAddress.getObjectMemberValue("zip").getString();
+
+			model::Address& address = m_patient.getAddress();
+			address.setCoordinates(coordinates);
+			address.setStreet(street);
+			address.setCity(city);
+			address.setZip(zip);
+		}
 	}
 
 }}

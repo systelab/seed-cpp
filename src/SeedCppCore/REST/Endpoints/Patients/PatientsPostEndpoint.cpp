@@ -72,6 +72,11 @@ namespace seed_cpp { namespace rest {
 			auto patientJSONLoadTranslator = m_jsonTranslatorsFactory.buildPatientLoadTranslator(*patientToAdd);
 			patientJSONLoadTranslator->loadEntityFromJSON(jsonRequest->getRootValue());
 
+			if (patientToAdd->getDob().is_not_a_date_time())
+			{
+				patientToAdd->setDob(boost::posix_time::ptime({1970,01,01}));
+			}
+
 			const model::Patient& addedPatient = m_patientModelService.addEntity(std::move(patientToAdd));
 
 			auto jsonResponse = m_jsonAdapter.buildEmptyDocument();
