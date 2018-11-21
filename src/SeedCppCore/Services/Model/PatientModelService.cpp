@@ -17,24 +17,29 @@ namespace seed_cpp { namespace service {
 		return EntityModelService::getEntityMgr();
 	}
 
-	const model::Patient* PatientModelService::getEntityById(const std::string& id) const
+	const model::Patient* PatientModelService::getEntityById(const std::string& id,
+															 const model::LockableEntityMgrSubject::IReadLock& readLock) const
 	{
-		return EntityModelService::getEntityById(id);
+		return EntityModelService::getEntityById(id, readLock);
 	}
 
-	const model::Patient& PatientModelService::addEntity(std::unique_ptr<model::Patient> entity)
+	const model::Patient& PatientModelService::addEntity(std::unique_ptr<model::Patient> entity,
+														 const model::LockableEntityMgrSubject::IWriteLock& writeLock)
 	{
-		return EntityModelService::addEntity(std::move(entity));
+		return EntityModelService::addEntity(std::move(entity), writeLock);
 	}
 
-	const model::Patient& PatientModelService::editEntity(std::unique_ptr<model::Patient> entity)
+	const model::Patient& PatientModelService::editEntity(std::unique_ptr<model::Patient> entity,
+														  const model::LockableEntityMgrSubject::IWriteLock& writeLock)
 	{
-		return EntityModelService::editEntity(std::move(entity));
+		return EntityModelService::editEntity(std::move(entity), writeLock);
 	}
 
-	void PatientModelService::deleteEntity(const std::string& id)
+	void PatientModelService::deleteEntity(const std::string& id,
+										   const model::LockableEntityMgrSubject::IWriteLock& writeLock)
 	{
-		EntityModelService::deleteEntity(id);
+		EntityModelService::deleteEntity(id, writeLock);
 	}
 
 }}
+

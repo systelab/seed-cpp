@@ -1,5 +1,8 @@
 #pragma once
 
+#pragma warning (push)
+#pragma warning (disable: 4346)
+
 #include "DAL/DAO/ILoadDAO.h"
 #include "DAL/DAO/ISaveDAO.h"
 #include "DAL/DAO/ITransactionDAO.h"
@@ -33,12 +36,14 @@ namespace seed_cpp { namespace service {
 			return m_entityMgr;
 		}
 
-		const _Entity* getEntityById(const std::string& id) const
+		const _Entity* getEntityById(const std::string& id,
+									 const model::LockableEntityMgrSubject::IReadLock& readLock) const
 		{
-			return m_entityMgr.getEntityById(id);
+			return m_entityMgr.getEntityById(id, readLock);
 		}
 
-		const _Entity& addEntity(std::unique_ptr<_Entity> entityToAdd)
+		const _Entity& addEntity(std::unique_ptr<_Entity> entityToAdd,
+								 const model::LockableEntityMgrSubject::IWriteLock& writeLock)
 		{
 			auto transaction = m_daoFactory.startTransaction();
 
@@ -54,7 +59,7 @@ namespace seed_cpp { namespace service {
 				auto dao = m_daoFactory.buildEntitySaveDAO(*entityToAdd);
 				dao->addEntity();
 
-				const _Entity& addedEntity = m_entityMgr.addEntity(std::move(entityToAdd));
+				const _Entity& addedEntity = m_entityMgr.addEntity(std::move(entityToAdd), writeLock);
 
 				transaction->commit();
 
@@ -67,7 +72,8 @@ namespace seed_cpp { namespace service {
 			}
 		}
 
-		const _Entity& editEntity(std::unique_ptr<_Entity> entityToEdit)
+		const _Entity& editEntity(std::unique_ptr<_Entity> entityToEdit,
+								  const model::LockableEntityMgrSubject::IWriteLock& writeLock)
 		{
 			auto transaction = m_daoFactory.startTransaction();
 
@@ -79,7 +85,7 @@ namespace seed_cpp { namespace service {
 				auto dao = m_daoFactory.buildEntitySaveDAO(*entityToEdit);
 				dao->updateEntity();
 
-				const _Entity& editedEntity = m_entityMgr.editEntity(std::move(entityToEdit));
+				const _Entity& editedEntity = m_entityMgr.editEntity(std::move(entityToEdit), writeLock);
 
 				transaction->commit();
 
@@ -92,19 +98,19 @@ namespace seed_cpp { namespace service {
 			}
 		}
 
-		void deleteEntity(const std::string& id)
+		void deleteEntity(const std::string& id, const model::LockableEntityMgrSubject::IWriteLock& writeLock)
 		{
 			auto transaction = m_daoFactory.startTransaction();
 
 			try
 			{
-				const _Entity* entityToDelete = m_entityMgr.getEntityById(id);
+				const _Entity* entityToDelete = m_entityMgr.getEntityById(id, writeLock);
 				if (entityToDelete)
 				{
 					_Entity entityToDeleteCopy = *entityToDelete;
 					auto dao = m_daoFactory.buildEntitySaveDAO(entityToDeleteCopy);
 					dao->deleteEntity();
-					m_entityMgr.deleteEntity(id);
+					m_entityMgr.deleteEntity(id, writeLock);
 				}
 				else
 				{

@@ -1,6 +1,7 @@
 #include "StdAfx.h"
 #include "AuthorizationValidatorService.h"
 
+#include "Model/User.h"
 #include "Services/Model/IUserModelService.h"
 #include "Services/Security/IJWTValidatorService.h"
 #include "Services/System/ITimeService.h"
@@ -109,7 +110,8 @@ namespace seed_cpp { namespace service {
 		}
 
 		std::string login = it->second;
-		const model::User* user = m_userModelService.getUserByLogin(login);
+		model::EntityMgr<model::User>::SharedLock readLock(m_userModelService.getEntityMgr());
+		const model::User* user = m_userModelService.getUserByLogin(login, readLock);
 		if (!user)
 		{
 			return false;

@@ -19,10 +19,10 @@ namespace seed_cpp { namespace service {
 		virtual ~PatientModelService() = default;
 
 		model::EntityMgr<model::Patient>& getEntityMgr() const;
-		const model::Patient* getEntityById(const std::string& id) const;
-		const model::Patient& addEntity(std::unique_ptr<model::Patient>);
-		const model::Patient& editEntity(std::unique_ptr<model::Patient>);
-		void deleteEntity(const std::string& id);
+		const model::Patient* getEntityById(const std::string& id, const model::LockableEntityMgrSubject::IReadLock&) const;
+		const model::Patient& addEntity(std::unique_ptr<model::Patient>, const model::LockableEntityMgrSubject::IWriteLock&);
+		const model::Patient& editEntity(std::unique_ptr<model::Patient>, const model::LockableEntityMgrSubject::IWriteLock&);
+		void deleteEntity(const std::string& id, const model::LockableEntityMgrSubject::IWriteLock&);
 	};
 
 }}

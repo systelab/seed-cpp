@@ -356,6 +356,12 @@
     <ClInclude Include="Services\Model\EntityModelService.h">
       <Filter>Header Files\Services\Model</Filter>
     </ClInclude>
+    <ClInclude Include="Model\ILockableEntityMgrObserver.h">
+      <Filter>Header Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Model\LockableEntityMgrSubject.h">
+      <Filter>Header Files\Model</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Stdafx.cpp">
@@ -501,6 +507,9 @@
     </ClCompile>
     <ClCompile Include="DAL\DAO\Db\IDbDAOFactory.cpp">
       <Filter>Source Files\DAL\DAO\Db</Filter>
+    </ClCompile>
+    <ClCompile Include="Model\LockableEntityMgrSubject.cpp">
+      <Filter>Source Files\Model</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

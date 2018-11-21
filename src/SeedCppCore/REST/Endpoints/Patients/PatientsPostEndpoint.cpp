@@ -77,7 +77,8 @@ namespace seed_cpp { namespace rest {
 				patientToAdd->setDob(boost::posix_time::ptime({1970,01,01}));
 			}
 
-			const model::Patient& addedPatient = m_patientModelService.addEntity(std::move(patientToAdd));
+			model::EntityMgr<model::Patient>::UniqueLock writeLock(m_patientModelService.getEntityMgr());
+			const model::Patient& addedPatient = m_patientModelService.addEntity(std::move(patientToAdd), writeLock);
 
 			auto jsonResponse = m_jsonAdapter.buildEmptyDocument();
 			auto patientJSONSaveTranslator = m_jsonTranslatorsFactory.buildPatientSaveTranslator(addedPatient);

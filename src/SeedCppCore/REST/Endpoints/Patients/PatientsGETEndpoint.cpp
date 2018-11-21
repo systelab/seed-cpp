@@ -41,7 +41,8 @@ namespace seed_cpp { namespace rest {
 
 	std::unique_ptr<systelab::web_server::Reply> PatientsGetEndpoint::execute()
 	{
-		const model::Patient* patient = m_patientMgr.getEntityById(m_id);
+		model::EntityMgr<model::Patient>::SharedLock readLock(m_patientMgr);
+		const model::Patient* patient = m_patientMgr.getEntityById(m_id, readLock);
 		if (!patient)
 		{
 			return ReplyBuilderHelper::build(systelab::web_server::Reply::NOT_FOUND);

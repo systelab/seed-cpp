@@ -1,5 +1,8 @@
 #pragma once
 
+#include "LockableEntityMgrSubject.h"
+
+#include <boost/thread/shared_mutex.hpp>
 #include <memory>
 #include <vector>
 
@@ -7,7 +10,7 @@
 namespace seed_cpp { namespace model {
 
 	template <class Entity>
-	class EntityMgr
+	class EntityMgr : public LockableEntityMgrSubject
 	{
 	public:
 		EntityMgr()
@@ -24,17 +27,35 @@ namespace seed_cpp { namespace model {
 		{
 		}
 
+		struct SharedLock : public boost::shared_lock<boost::shared_mutex> 
+						  , public IReadLock
+		{
+			SharedLock(EntityMgr<Entity>& mgr)
+				:boost::shared_lock<boost::shared_mutex>(mgr.m_mutex)
+			{
+			}
+		};
+
+		struct UniqueLock : public boost::unique_lock<boost::shared_mutex>
+						  , public IWriteLock
+		{
+			UniqueLock(EntityMgr<Entity>& mgr)
+				:boost::unique_lock<boost::shared_mutex>(mgr.m_mutex)
+			{
+			}
+		};
+
 		unsigned int count() const
 		{
 			return (unsigned int) m_entities.size();
 		}
 
-		const Entity* getEntity(unsigned int index) const
+		const Entity* getEntity(unsigned int index, const IReadLock&) const
 		{
 			return m_entities[index].get();
 		}
 
-		const Entity* getEntityById(const std::string& id) const
+		const Entity* getEntityById(const std::string& id, const IReadLock&) const
 		{
 			auto it = std::find_if(m_entities.begin(), m_entities.end(),
 				[id](const std::unique_ptr<Entity>& entity)
@@ -44,13 +65,13 @@ namespace seed_cpp { namespace model {
 			return ((it != m_entities.end()) ? it->get() : NULL);
 		}
 
-		const Entity& addEntity(std::unique_ptr<Entity> entity)
+		const Entity& addEntity(std::unique_ptr<Entity> entity, const IWriteLock&)
 		{
 			m_entities.push_back(std::move(entity));
 			return *m_entities.back();
 		}
 
-		const Entity& editEntity(std::unique_ptr<Entity> entity)
+		const Entity& editEntity(std::unique_ptr<Entity> entity, const IWriteLock&)
 		{
 			if (!entity->getId())
 			{
@@ -70,7 +91,7 @@ namespace seed_cpp { namespace model {
 			throw std::exception("EntityMgr<Entity>::deleteEntity: Trying to edit an entity that it's not on manager");
 		}
 
-		void deleteEntity(const std::string& id)
+		void deleteEntity(const std::string& id, const IWriteLock&)
 		{
 			auto it = std::find_if(m_entities.begin(), m_entities.end(),
 				[id](const std::unique_ptr<Entity>& entity)
@@ -90,13 +111,14 @@ namespace seed_cpp { namespace model {
 			}
 		}
 
-		void setEntities(std::vector<std::unique_ptr<Entity> > entities)
+		void setEntities(std::vector<std::unique_ptr<Entity> > entities, const IWriteLock&)
 		{
 			m_entities = std::move(entities);
 		}
 
 	private:
 		std::vector<std::unique_ptr<Entity> > m_entities;
+		boost::shared_mutex m_mutex;
 	};
 
 }}

@@ -69,14 +69,15 @@ namespace seed_cpp { namespace rest {
 
 		try
 		{
-			const model::Patient* existingPatient = m_patientModelService.getEntityById(m_patientId);
+			model::EntityMgr<model::Patient>::UniqueLock writeLock(m_patientModelService.getEntityMgr());
+			const model::Patient* existingPatient = m_patientModelService.getEntityById(m_patientId, writeLock);
 			if (existingPatient)
 			{
 				auto patientToUpdate = std::make_unique<model::Patient>(*existingPatient);
 				auto patientJSONLoadTranslator = m_jsonTranslatorsFactory.buildPatientLoadTranslator(*patientToUpdate);
 				patientJSONLoadTranslator->loadEntityFromJSON(jsonRequest->getRootValue());
 
-				const model::Patient& updatedPatient = m_patientModelService.editEntity(std::move(patientToUpdate));
+				const model::Patient& updatedPatient = m_patientModelService.editEntity(std::move(patientToUpdate), writeLock);
 
 				auto jsonResponse = m_jsonAdapter.buildEmptyDocument();
 				auto patientJSONSaveTranslator = m_jsonTranslatorsFactory.buildPatientSaveTranslator(updatedPatient);
@@ -90,7 +91,7 @@ namespace seed_cpp { namespace rest {
 				auto patientJSONLoadTranslator = m_jsonTranslatorsFactory.buildPatientLoadTranslator(*patientToAdd);
 				patientJSONLoadTranslator->loadEntityFromJSON(jsonRequest->getRootValue());
 
-				const model::Patient& addedPatient = m_patientModelService.editEntity(std::move(patientToAdd));
+				const model::Patient& addedPatient = m_patientModelService.editEntity(std::move(patientToAdd), writeLock);
 
 				auto jsonResponse = m_jsonAdapter.buildEmptyDocument();
 				auto patientJSONSaveTranslator = m_jsonTranslatorsFactory.buildPatientSaveTranslator(addedPatient);

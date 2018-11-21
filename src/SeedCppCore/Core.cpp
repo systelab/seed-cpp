@@ -113,7 +113,8 @@ namespace seed_cpp {
 			defaultUser->setPassword("Systelab");
 			defaultUser->setRole(model::User::ADMIN_ROLE);
 
-			m_servicesMgr->getUserModelService().addEntity(std::move(defaultUser));
+			model::EntityMgr<model::User>::UniqueLock writeLock(userMgr);
+			m_servicesMgr->getUserModelService().addEntity(std::move(defaultUser), writeLock);
 		}
 
 		std::unique_ptr<dal::ILoadDAO> patientLoadDAO = m_dbDAOFactory->buildPatientLoadDAO();

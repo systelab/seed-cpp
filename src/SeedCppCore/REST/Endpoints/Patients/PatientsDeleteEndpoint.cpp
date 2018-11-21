@@ -34,7 +34,8 @@ namespace seed_cpp { namespace rest {
 
 	std::unique_ptr<systelab::web_server::Reply> PatientsDeleteEndpoint::execute()
 	{
-		const model::Patient* existingPatient = m_patientModelService.getEntityById(m_id);
+		model::EntityMgr<model::Patient>::UniqueLock writeLock(m_patientModelService.getEntityMgr());
+		const model::Patient* existingPatient = m_patientModelService.getEntityById(m_id, writeLock);
 		if (!existingPatient)
 		{
 			return ReplyBuilderHelper::build(systelab::web_server::Reply::NOT_FOUND);
@@ -42,7 +43,7 @@ namespace seed_cpp { namespace rest {
 
 		try
 		{
-			m_patientModelService.deleteEntity(m_id);
+			m_patientModelService.deleteEntity(m_id, writeLock);
 			return ReplyBuilderHelper::build(systelab::web_server::Reply::NO_CONTENT);
 		}
 		catch (std::exception& exc)

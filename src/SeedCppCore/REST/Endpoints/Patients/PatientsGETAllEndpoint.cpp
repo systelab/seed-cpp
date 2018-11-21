@@ -100,12 +100,13 @@ namespace seed_cpp { namespace rest {
 		}
 
 		std::vector<model::Patient> content;
+		model::EntityMgr<model::Patient>::SharedLock readLock(m_patientMgr);
 		unsigned int totalElements = m_patientMgr.count();
 		unsigned int indexBegin = page * size;
 		unsigned int indexEnd = ((indexBegin + size) < totalElements) ? (indexBegin + size) : totalElements;
 		for (unsigned int i = indexBegin; i < indexEnd; i++)
 		{
-			content.push_back(*m_patientMgr.getEntity(i));
+			content.push_back(*m_patientMgr.getEntity(i, readLock));
 		}
 
 		auto paginationData = std::make_unique<PaginationData>();

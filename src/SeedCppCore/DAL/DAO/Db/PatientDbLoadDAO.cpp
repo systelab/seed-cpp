@@ -39,7 +39,8 @@ namespace seed_cpp { namespace dal {
 			itemsRecordset->nextRecord();
 		}
 
-		m_model.setEntities(std::move(items));
+		model::EntityMgr<model::Patient>::UniqueLock writeLock(m_model);
+		m_model.setEntities(std::move(items), writeLock);
 	}
 
 	void PatientDbLoadDAO::loadPatient(const systelab::db::ITableRecord& src, model::Patient& patient) const
