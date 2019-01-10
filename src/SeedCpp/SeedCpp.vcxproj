@@ -133,8 +133,8 @@ $(SolutionDir)tools\sqlite\sqlite3.exe $(TargetDir)seed_cpp.db &lt; %(FullPath)<
 $(SolutionDir)tools\sqlite\sqlite3.exe $(TargetDir)seed_cpp.db &lt; %(FullPath)</Command>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Generating empty database</Message>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Generating empty database</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(TargetDir)seed_cpp.db;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(TargetDir)seed_cpp.db;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(TargetDir)seed_cpp.db</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(TargetDir)seed_cpp.db</Outputs>
     </CustomBuild>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
