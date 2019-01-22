@@ -136,6 +136,7 @@
     <ClInclude Include="DAL\Translators\JSON\IJSONTranslatorsFactory.h" />
     <ClInclude Include="DAL\Translators\JSON\JSONTranslatorsFactory.h" />
     <ClInclude Include="DAL\Translators\JSON\PatientJSONTranslator.h" />
+    <ClInclude Include="DAL\Translators\JSON\UserJSONTranslator.h" />
     <ClInclude Include="Model\Address.h" />
     <ClInclude Include="Model\BaseEntity.h" />
     <ClInclude Include="Model\EntityMgr.h" />
@@ -154,7 +155,12 @@
     <ClInclude Include="REST\Endpoints\Patients\PatientsGetEndpoint.h" />
     <ClInclude Include="REST\Endpoints\Patients\PatientsPostEndpoint.h" />
     <ClInclude Include="REST\Endpoints\Patients\PatientsPutEndpoint.h" />
+    <ClInclude Include="REST\Endpoints\Users\UsersDeleteEndpoint.h" />
+    <ClInclude Include="REST\Endpoints\Users\UsersGetAllEndpoint.h" />
+    <ClInclude Include="REST\Endpoints\Users\UsersGetEndpoint.h" />
     <ClInclude Include="REST\Endpoints\Users\UsersLoginPostEndpoint.h" />
+    <ClInclude Include="REST\Endpoints\Users\UsersPostEndpoint.h" />
+    <ClInclude Include="REST\Endpoints\Users\UsersPutEndpoint.h" />
     <ClInclude Include="REST\Helpers\ReplyBuilderHelper.h" />
     <ClInclude Include="REST\Helpers\RequestURLEncodedParserHelper.h" />
     <ClInclude Include="REST\RESTAPIWebService.h" />
@@ -206,6 +212,7 @@
     <ClCompile Include="DAL\Translators\Db\UserDbTranslator.cpp" />
     <ClCompile Include="DAL\Translators\JSON\JSONTranslatorsFactory.cpp" />
     <ClCompile Include="DAL\Translators\JSON\PatientJSONTranslator.cpp" />
+    <ClCompile Include="DAL\Translators\JSON\UserJSONTranslator.cpp" />
     <ClCompile Include="Model\Address.cpp" />
     <ClCompile Include="Model\BaseEntity.cpp" />
     <ClCompile Include="Model\LockableEntityMgrSubject.cpp" />
@@ -219,7 +226,12 @@
     <ClCompile Include="REST\Endpoints\Patients\PatientsGetEndpoint.cpp" />
     <ClCompile Include="REST\Endpoints\Patients\PatientsPostEndpoint.cpp" />
     <ClCompile Include="REST\Endpoints\Patients\PatientsPutEndpoint.cpp" />
+    <ClCompile Include="REST\Endpoints\Users\UsersDeleteEndpoint.cpp" />
+    <ClCompile Include="REST\Endpoints\Users\UsersGetAllEndpoint.cpp" />
+    <ClCompile Include="REST\Endpoints\Users\UsersGetEndpoint.cpp" />
     <ClCompile Include="REST\Endpoints\Users\UsersLoginPostEndpoint.cpp" />
+    <ClCompile Include="REST\Endpoints\Users\UsersPostEndpoint.cpp" />
+    <ClCompile Include="REST\Endpoints\Users\UsersPutEndpoint.cpp" />
     <ClCompile Include="REST\Helpers\ReplyBuilderHelper.cpp" />
     <ClCompile Include="REST\Helpers\RequestURLEncodedParserHelper.cpp" />
     <ClCompile Include="REST\RESTAPIWebService.cpp" />

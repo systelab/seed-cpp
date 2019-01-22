@@ -23,6 +23,11 @@ namespace seed_cpp { namespace rest {
 		std::unique_ptr<IEndpoint> buildPatientsDeleteEndpoint(const EndpointRequestData&);
 
 		// Users
+		std::unique_ptr<IEndpoint> buildUsersGetAllEndpoint(const EndpointRequestData&);
+		std::unique_ptr<IEndpoint> buildUsersGetEndpoint(const EndpointRequestData&);
+		std::unique_ptr<IEndpoint> buildUsersPostEndpoint(const EndpointRequestData&);
+		std::unique_ptr<IEndpoint> buildUsersPutEndpoint(const EndpointRequestData&);
+		std::unique_ptr<IEndpoint> buildUsersDeleteEndpoint(const EndpointRequestData&);
 		std::unique_ptr<IEndpoint> buildUsersLoginPostEndpoint(const EndpointRequestData&);
 
 	private:

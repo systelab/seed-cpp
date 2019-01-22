@@ -11,7 +11,12 @@
 #include "REST/Endpoints/Patients/PatientsGetEndpoint.h"
 #include "REST/Endpoints/Patients/PatientsPostEndpoint.h"
 #include "REST/Endpoints/Patients/PatientsPutEndpoint.h"
+#include "REST/Endpoints/Users/UsersDeleteEndpoint.h"
+#include "REST/Endpoints/Users/UsersGetAllEndpoint.h"
+#include "REST/Endpoints/Users/UsersGetEndpoint.h"
 #include "REST/Endpoints/Users/UsersLoginPostEndpoint.h"
+#include "REST/Endpoints/Users/UsersPostEndpoint.h"
+#include "REST/Endpoints/Users/UsersPutEndpoint.h"
 #include "Services/ServicesMgr.h"
 
 
@@ -100,6 +105,76 @@ namespace seed_cpp { namespace rest {
 
 
 	// Users
+	std::unique_ptr<IEndpoint> EndpointsFactory::buildUsersGetAllEndpoint(const EndpointRequestData& requestData)
+	{
+		systelab::web_server::RequestHeaders headers = requestData.getHeaders();
+		systelab::web_server::RequestQueryStrings queryStrings = requestData.getQueryStrings();
+		model::EntityMgr<model::User>& userMgr = m_core.getModel().getUserMgr();
+		dal::IJSONTranslatorsFactory& jsonTranslatorsFactory = m_core.getJSONTranslatorsFactory();
+		systelab::json_adapter::IJSONAdapter& jsonAdapter = m_core.getJSONAdapter();
+		service::IAuthorizationValidatorService& authorizationValidatorService = m_core.getServicesMgr().getAuthorizationValidatorService();
+
+		return std::make_unique<UsersGetAllEndpoint>(headers, queryStrings, userMgr, jsonTranslatorsFactory,
+													 jsonAdapter, authorizationValidatorService);
+	}
+
+	std::unique_ptr<IEndpoint> EndpointsFactory::buildUsersGetEndpoint(const EndpointRequestData& requestData)
+	{
+		systelab::web_server::RequestHeaders headers = requestData.getHeaders();
+		std::string userId = requestData.getRouteParameters()[0].getValue<std::string>();
+		model::EntityMgr<model::User>& userMgr = m_core.getModel().getUserMgr();
+		dal::IJSONTranslatorsFactory& jsonTranslatorsFactory = m_core.getJSONTranslatorsFactory();
+		systelab::json_adapter::IJSONAdapter& jsonAdapter = m_core.getJSONAdapter();
+		service::IAuthorizationValidatorService& authorizationValidatorService = m_core.getServicesMgr().getAuthorizationValidatorService();
+
+		return std::make_unique<UsersGetEndpoint>(headers, userId, userMgr,
+												  jsonTranslatorsFactory, jsonAdapter,
+												  authorizationValidatorService);
+	}
+
+	std::unique_ptr<IEndpoint> EndpointsFactory::buildUsersPostEndpoint(const EndpointRequestData& requestData)
+	{
+		systelab::web_server::RequestHeaders headers = requestData.getHeaders();
+		const std::string& requestContent = requestData.getContent();
+		dal::IJSONTranslatorsFactory& jsonTranslatorsFactory = m_core.getJSONTranslatorsFactory();
+		systelab::json_adapter::IJSONAdapter& jsonAdapter = m_core.getJSONAdapter();
+		service::IAuthorizationValidatorService& authorizationValidatorService = m_core.getServicesMgr().getAuthorizationValidatorService();
+		service::IJSONValidatorService& jsonValidatorService = m_core.getServicesMgr().getJSONValidatorService();
+		service::IUserModelService& userModelService = m_core.getServicesMgr().getUserModelService();
+
+		return std::make_unique<UsersPostEndpoint>(headers, requestContent, jsonTranslatorsFactory,
+												   jsonAdapter, authorizationValidatorService,
+												   jsonValidatorService, userModelService);
+	}
+
+	std::unique_ptr<IEndpoint> EndpointsFactory::buildUsersPutEndpoint(const EndpointRequestData& requestData)
+	{
+		systelab::web_server::RequestHeaders headers = requestData.getHeaders();
+		std::string userId = requestData.getRouteParameters()[0].getValue<std::string>();
+		const std::string& requestContent = requestData.getContent();
+		dal::IJSONTranslatorsFactory& jsonTranslatorsFactory = m_core.getJSONTranslatorsFactory();
+		systelab::json_adapter::IJSONAdapter& jsonAdapter = m_core.getJSONAdapter();
+		service::IAuthorizationValidatorService& authorizationValidatorService = m_core.getServicesMgr().getAuthorizationValidatorService();
+		service::IJSONValidatorService& jsonValidatorService = m_core.getServicesMgr().getJSONValidatorService();
+		service::IUserModelService& userModelService = m_core.getServicesMgr().getUserModelService();
+
+		return std::make_unique<UsersPutEndpoint>(headers, userId, requestContent, jsonTranslatorsFactory,
+												  jsonAdapter, authorizationValidatorService,
+												  jsonValidatorService, userModelService);
+	}
+
+	std::unique_ptr<IEndpoint> EndpointsFactory::buildUsersDeleteEndpoint(const EndpointRequestData& requestData)
+	{
+		systelab::web_server::RequestHeaders headers = requestData.getHeaders();
+		std::string userId = requestData.getRouteParameters()[0].getValue<std::string>();
+		service::ServicesMgr& servicesMgr = m_core.getServicesMgr();
+		service::IUserModelService& userModelService = servicesMgr.getUserModelService();
+		service::IAuthorizationValidatorService& authorizationValidatorService = servicesMgr.getAuthorizationValidatorService();
+
+		return std::make_unique<UsersDeleteEndpoint>(headers, userId, userModelService,
+													 authorizationValidatorService);
+	}
+
 	std::unique_ptr<IEndpoint> EndpointsFactory::buildUsersLoginPostEndpoint(const EndpointRequestData& requestData)
 	{
 		const std::string& requestContent = requestData.getContent();

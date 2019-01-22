@@ -26,6 +26,11 @@ namespace seed_cpp { namespace rest {
 		m_router->addRoute("DELETE", "seed/v1/patients/:id",     std::bind(&IEndpointsFactory::buildPatientsDeleteEndpoint, std::ref(m_endpointsFactory), _1));
 
 		// Users
+		m_router->addRoute("GET",    "seed/v1/users",            std::bind(&IEndpointsFactory::buildUsersGetAllEndpoint,    std::ref(m_endpointsFactory), _1));
+		m_router->addRoute("GET",    "seed/v1/users/:id",        std::bind(&IEndpointsFactory::buildUsersGetEndpoint,       std::ref(m_endpointsFactory), _1));
+		m_router->addRoute("POST",   "seed/v1/users/user",       std::bind(&IEndpointsFactory::buildUsersPostEndpoint,      std::ref(m_endpointsFactory), _1));
+		m_router->addRoute("PUT",    "seed/v1/users/:id",        std::bind(&IEndpointsFactory::buildUsersPutEndpoint,       std::ref(m_endpointsFactory), _1));
+		m_router->addRoute("DELETE", "seed/v1/users/:id",        std::bind(&IEndpointsFactory::buildUsersDeleteEndpoint,    std::ref(m_endpointsFactory), _1));
 		m_router->addRoute("POST",   "seed/v1/users/login",      std::bind(&IEndpointsFactory::buildUsersLoginPostEndpoint, std::ref(m_endpointsFactory), _1));
 	}
 

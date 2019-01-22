@@ -1,0 +1,24 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "id": "Model/User.json",
+
+    "definitions":
+    {
+        "user":
+        {
+            "type": "object",
+            "properties": 
+            {
+                "id": { "type": "string" },
+                "name": { "type": "string" },
+                "surname": { "type": "string" },
+                "login": { "type": "string" },
+                "password": { "type": "string" },
+                "role": { "type": "string", "enum": ["admin", "user"] }
+            },
+            "required": ["id", "name", "surname", "login", "password", "role"]
+        }
+    },
+
+    "$ref": "#/definitions/user"
+}

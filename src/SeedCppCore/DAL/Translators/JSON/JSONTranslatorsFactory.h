@@ -13,6 +13,9 @@ namespace seed_cpp { namespace dal {
 
 		std::unique_ptr<IJSONLoadTranslator> buildPatientLoadTranslator(model::Patient&) const;
 		std::unique_ptr<IJSONSaveTranslator> buildPatientSaveTranslator(const model::Patient&) const;
+
+		std::unique_ptr<IJSONLoadTranslator> buildUserLoadTranslator(model::User&) const;
+		std::unique_ptr<IJSONSaveTranslator> buildUserSaveTranslator(const model::User&) const;
 	};
 
 }}

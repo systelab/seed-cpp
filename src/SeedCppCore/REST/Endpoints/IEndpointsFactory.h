@@ -21,6 +21,11 @@ namespace seed_cpp { namespace rest {
 		virtual std::unique_ptr<IEndpoint> buildPatientsDeleteEndpoint(const EndpointRequestData&) = 0;
 
 		// Users
+		virtual std::unique_ptr<IEndpoint> buildUsersGetAllEndpoint(const EndpointRequestData&) = 0;
+		virtual std::unique_ptr<IEndpoint> buildUsersGetEndpoint(const EndpointRequestData&) = 0;
+		virtual std::unique_ptr<IEndpoint> buildUsersPostEndpoint(const EndpointRequestData&) = 0;
+		virtual std::unique_ptr<IEndpoint> buildUsersPutEndpoint(const EndpointRequestData&) = 0;
+		virtual std::unique_ptr<IEndpoint> buildUsersDeleteEndpoint(const EndpointRequestData&) = 0;
 		virtual std::unique_ptr<IEndpoint> buildUsersLoginPostEndpoint(const EndpointRequestData&) = 0;
 	};
 

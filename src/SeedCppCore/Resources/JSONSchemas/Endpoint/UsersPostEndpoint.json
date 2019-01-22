@@ -1,0 +1,30 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "id": "Endpoint/UsersPostEndpoint.json",
+
+    "definitions":
+    {
+        "usersPostEndpoint":
+        {
+            "description": "Create a new user",
+            "href": "/seed/v1/users",
+            "method": "POST",
+            "schema":
+            {
+                "type": "object",
+                "properties": 
+                {
+                    "name": { "type": "string" },
+                    "surname": { "type": "string" },
+                    "login": { "type": "string" },
+                    "password": { "type": "string" },
+                    "role": { "type": "string", "enum": ["admin", "user"] }
+                },
+                "required": ["name", "surname", "login", "password", "role"]
+            },
+            "additionalProperties": false
+        }
+    },
+
+    "$ref": "#/definitions/usersPostEndpoint/schema"
+}

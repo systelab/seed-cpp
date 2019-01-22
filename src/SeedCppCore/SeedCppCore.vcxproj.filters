@@ -362,6 +362,24 @@
     <ClInclude Include="Model\LockableEntityMgrSubject.h">
       <Filter>Header Files\Model</Filter>
     </ClInclude>
+    <ClInclude Include="REST\Endpoints\Users\UsersGetAllEndpoint.h">
+      <Filter>Header Files\REST\Endpoints\Users</Filter>
+    </ClInclude>
+    <ClInclude Include="DAL\Translators\JSON\UserJSONTranslator.h">
+      <Filter>Header Files\DAL\Translators\JSON</Filter>
+    </ClInclude>
+    <ClInclude Include="REST\Endpoints\Users\UsersGetEndpoint.h">
+      <Filter>Header Files\REST\Endpoints\Users</Filter>
+    </ClInclude>
+    <ClInclude Include="REST\Endpoints\Users\UsersDeleteEndpoint.h">
+      <Filter>Header Files\REST\Endpoints\Users</Filter>
+    </ClInclude>
+    <ClInclude Include="REST\Endpoints\Users\UsersPostEndpoint.h">
+      <Filter>Header Files\REST\Endpoints\Users</Filter>
+    </ClInclude>
+    <ClInclude Include="REST\Endpoints\Users\UsersPutEndpoint.h">
+      <Filter>Header Files\REST\Endpoints\Users</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Stdafx.cpp">
@@ -510,6 +528,24 @@
     </ClCompile>
     <ClCompile Include="Model\LockableEntityMgrSubject.cpp">
       <Filter>Source Files\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="REST\Endpoints\Users\UsersGetAllEndpoint.cpp">
+      <Filter>Source Files\REST\Endpoints\Users</Filter>
+    </ClCompile>
+    <ClCompile Include="DAL\Translators\JSON\UserJSONTranslator.cpp">
+      <Filter>Source Files\DAL\Translators\JSON</Filter>
+    </ClCompile>
+    <ClCompile Include="REST\Endpoints\Users\UsersGetEndpoint.cpp">
+      <Filter>Source Files\REST\Endpoints\Users</Filter>
+    </ClCompile>
+    <ClCompile Include="REST\Endpoints\Users\UsersDeleteEndpoint.cpp">
+      <Filter>Source Files\REST\Endpoints\Users</Filter>
+    </ClCompile>
+    <ClCompile Include="REST\Endpoints\Users\UsersPostEndpoint.cpp">
+      <Filter>Source Files\REST\Endpoints\Users</Filter>
+    </ClCompile>
+    <ClCompile Include="REST\Endpoints\Users\UsersPutEndpoint.cpp">
+      <Filter>Source Files\REST\Endpoints\Users</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
