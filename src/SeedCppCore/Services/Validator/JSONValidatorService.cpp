@@ -1,11 +1,10 @@
-#include "StdAfx.h"
 #include "JSONValidatorService.h"
 
 #include "Services/System/IResourceService.h"
 
-#include "JSONAdapterInterface/IJSONAdapter.h"
-#include "JSONAdapterInterface/IJSONDocument.h"
-#include "JSONAdapterInterface/IJSONSchemaValidator.h"
+#include "IJSONAdapter.h"
+#include "IJSONDocument.h"
+#include "IJSONSchemaValidator.h"
 
 
 namespace seed_cpp { namespace service {

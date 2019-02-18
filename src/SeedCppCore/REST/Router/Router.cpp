@@ -1,10 +1,9 @@
-#include "StdAfx.h"
 #include "Router.h"
 
 #include "REST/Router/Route.h"
 
-#include "WebServerInterface/Model/Reply.h"
-#include "WebServerInterface/Model/Request.h"
+#include "Model/Reply.h"
+#include "Model/Request.h"
 
 
 namespace seed_cpp { namespace rest {

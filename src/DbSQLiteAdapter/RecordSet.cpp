@@ -1,10 +1,9 @@
-#include "stdafx.h"
 #include "RecordSet.h"
 
 #include "Field.h"
 #include "Record.h"
 
-#include <sqlite3.h>
+#include <sqlite/sqlite3.h>
 
 
 namespace systelab { namespace db { namespace sqlite {
@@ -43,7 +42,7 @@ namespace systelab { namespace db { namespace sqlite {
 		}
 		else
 		{
-			throw std::exception( "Invalid field index" );
+            throw std::string( "Invalid field index" );
 		}
 	}
 
@@ -58,7 +57,7 @@ namespace systelab { namespace db { namespace sqlite {
 			}
 		}
 
-		throw std::exception( "The requested field doesn't exist" );
+        throw std::string( "The requested field doesn't exist" );
 	}
 
 	unsigned int RecordSet::getRecordsCount() const
@@ -131,7 +130,7 @@ namespace systelab { namespace db { namespace sqlite {
 				//return DATETIME;
 
 			default:
-				throw std::exception("SQLite type unsupported: " + SQLiteType );
+                throw std::string("SQLite type unsupported: " + SQLiteType );
 		}
 	}
 

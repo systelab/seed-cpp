@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "PatientsGetAllEndpoint.h"
 
 #include "DAL/Translators/JSON/IJSONSaveTranslator.h"
@@ -7,10 +6,10 @@
 #include "REST/Helpers/ReplyBuilderHelper.h"
 #include "Services/Security/IAuthorizationValidatorService.h"
 
-#include "JSONAdapterInterface/IJSONAdapter.h"
-#include "JSONAdapterInterface/IJSONDocument.h"
+#include "IJSONAdapter.h"
+#include "IJSONDocument.h"
 
-#include "WebServerInterface/Model/Reply.h"
+#include "Model/Reply.h"
 
 #include <boost/lexical_cast.hpp>
 #include <math.h>

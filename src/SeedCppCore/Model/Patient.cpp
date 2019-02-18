@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "Patient.h"
 
 #include "Address.h"

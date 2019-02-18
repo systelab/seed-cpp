@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "Route.h"
 
 #include "REST/Endpoints/IEndpoint.h"
@@ -6,8 +5,8 @@
 #include "REST/Helpers/ReplyBuilderHelper.h"
 #include "REST/Router/RouteParam.h"
 
-#include "WebServerInterface/Model/Request.h"
-#include "WebServerInterface/Model/Reply.h"
+#include "Model/Request.h"
+#include "Model/Reply.h"
 
 
 namespace seed_cpp { namespace rest {

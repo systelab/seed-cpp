@@ -2,8 +2,8 @@
 
 #include "REST/Router/RouteParam.h"
 
-#include "WebServerInterface/Model/RequestHeaders.h"
-#include "WebServerInterface/Model/RequestQueryStrings.h"
+#include "Model/RequestHeaders.h"
+#include "Model/RequestQueryStrings.h"
 
 #include <memory>
 #include <string>

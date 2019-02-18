@@ -2,7 +2,7 @@
 
 #include "REST/Endpoints/IEndpoint.h"
 
-#include "WebServerInterface/Model/RequestHeaders.h"
+#include "Model/RequestHeaders.h"
 
 
 namespace systelab { namespace json_adapter {

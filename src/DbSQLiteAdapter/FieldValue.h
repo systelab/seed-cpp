@@ -1,7 +1,7 @@
 #ifndef _DBSQLITEADAPTER_FIELDVALUE_QUIM_VILA_2112151751_H
 #define _DBSQLITEADAPTER_FIELDVALUE_QUIM_VILA_2112151751_H
 
-#include "DbAdapterInterface/IFieldValue.h"
+#include "IFieldValue.h"
 
 #include <memory>
 

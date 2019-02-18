@@ -1,7 +1,7 @@
 #ifndef _DBSQLITEADAPTER_TABLERECORD_QV_0303161116_H
 #define _DBSQLITEADAPTER_TABLERECORD_QV_0303161116_H
 
-#include "DbAdapterInterface/ITableRecord.h"
+#include "ITableRecord.h"
 
 #include <memory>
 #include <vector>

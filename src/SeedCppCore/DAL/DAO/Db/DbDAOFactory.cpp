@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "DbDAOFactory.h"
 
 #include "Core.h"

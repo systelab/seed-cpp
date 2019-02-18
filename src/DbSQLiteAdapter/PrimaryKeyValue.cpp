@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "PrimaryKeyValue.h"
 
 #include "Field.h"
@@ -46,11 +45,11 @@ namespace systelab { namespace db { namespace sqlite {
 						break;
 
 					case BINARY:
-						throw std::exception( "Binary fields can't belong to primary key." );
+                        throw std::string( "Binary fields can't belong to primary key." );
 						break;
 
 					default:
-						throw std::exception( "Unknown field type." );
+                        throw std::string( "Unknown field type." );
 				}
 			}
 
@@ -85,7 +84,7 @@ namespace systelab { namespace db { namespace sqlite {
 		}
 		else
 		{
-			throw std::exception( "Invalid primary key field index" );
+            throw std::string( "Invalid primary key field index" );
 		}
 	}
 
@@ -100,7 +99,7 @@ namespace systelab { namespace db { namespace sqlite {
 			}
 		}
 
-		throw std::exception( "The requested primary key field doesn't exist" );
+        throw std::string( "The requested primary key field doesn't exist" );
 	}
 
 }}}

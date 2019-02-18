@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "Model.h"
 
 #include "Model/Patient.h"

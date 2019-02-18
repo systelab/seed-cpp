@@ -1,6 +1,6 @@
 #pragma once
 
-#include "JSONAdapterInterface/IJSONSchemaValidator.h"
+#include "IJSONSchemaValidator.h"
 
 #include <memory>
 #include <rapidjson/schema.h>

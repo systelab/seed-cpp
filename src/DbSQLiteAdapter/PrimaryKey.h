@@ -1,7 +1,7 @@
 #ifndef _DBSQLITEADAPTER_PRIMARYKEY_QV_2502161134_H
 #define _DBSQLITEADAPTER_PRIMARYKEY_QV_2502161134_H
 
-#include "DbAdapterInterface/IPrimaryKey.h"
+#include "IPrimaryKey.h"
 
 #include <vector>
 

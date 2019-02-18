@@ -2,7 +2,7 @@
 
 #include "Services/Validator/IJSONValidatorService.h"
 
-#include "JSONAdapterInterface/IJSONRemoteSchemaProvider.h"
+#include "IJSONRemoteSchemaProvider.h"
 
 #include <memory>
 

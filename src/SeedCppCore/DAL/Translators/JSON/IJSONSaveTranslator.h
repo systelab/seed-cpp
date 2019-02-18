@@ -1,7 +1,7 @@
 #pragma once
 
-#include "JSONAdapterInterface/IJSONDocument.h"
-#include "JSONAdapterInterface/IJSONValue.h"
+#include "IJSONDocument.h"
+#include "IJSONValue.h"
 
 
 namespace seed_cpp { namespace dal {

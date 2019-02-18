@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "Table.h"
 
 #include "Field.h"
@@ -7,9 +6,9 @@
 #include "PrimaryKey.h"
 #include "PrimaryKeyValue.h"
 
-#include "DbAdapterInterface/IDatabase.h"
+#include "IDatabase.h"
 
-#include <sqlite3.h>
+#include <sqlite/sqlite3.h>
 
 
 namespace systelab { namespace db { namespace sqlite {
@@ -49,7 +48,7 @@ namespace systelab { namespace db { namespace sqlite {
 		}
 		else
 		{
-			throw std::exception( "Invalid field index" );
+            throw std::string( "Invalid field index" );
 		}
 	}
 
@@ -64,7 +63,7 @@ namespace systelab { namespace db { namespace sqlite {
 			}
 		}
 
-		throw std::exception( "The requested field doesn't exist" );
+        throw std::string( "The requested field doesn't exist" );
 	}
 
 	std::unique_ptr<IFieldValue> Table::createFieldValue(const IField& field) const
@@ -153,7 +152,7 @@ namespace systelab { namespace db { namespace sqlite {
 
 			if (!isOwned(field))
 			{
-				throw std::exception("Can't filter by fields that don't come from this table.");
+                throw std::string("Can't filter by fields that don't come from this table.");
 			}
 
 			if (!conditionFieldValue.isDefault())
@@ -211,7 +210,7 @@ namespace systelab { namespace db { namespace sqlite {
 	{
 		if (&record.getTable() != this)
 		{
-			throw std::exception("Can't copy records from other tables." );
+            throw std::string("Can't copy records from other tables." );
 		}
 
 		std::vector< std::unique_ptr<IFieldValue> > copyFieldValues;
@@ -230,7 +229,7 @@ namespace systelab { namespace db { namespace sqlite {
 	{
 		if (&record.getTable() != this)
 		{
-			throw std::exception("Can't insert records from other tables." );
+            throw std::string("Can't insert records from other tables." );
 		}
 
 		std::vector<std::string> fieldNamesSQL;
@@ -287,7 +286,7 @@ namespace systelab { namespace db { namespace sqlite {
 	{
 		if (&record.getTable() != this)
 		{
-			throw std::exception("Can't update records from other tables." );
+            throw std::string("Can't update records from other tables." );
 		}
 
 		std::unique_ptr<IPrimaryKeyValue> primaryKeyValue = createPrimaryKeyValue();
@@ -321,7 +320,7 @@ namespace systelab { namespace db { namespace sqlite {
 	{
 		if (&primaryKeyValue.getTable() != this)
 		{
-			throw std::exception( "Can't update records using a primary key value from another table." );
+            throw std::string( "Can't update records using a primary key value from another table." );
 		}
 
 		std::vector<IFieldValue*> conditionValues;
@@ -338,7 +337,7 @@ namespace systelab { namespace db { namespace sqlite {
 	{
 		if (&record.getTable() != this)
 		{
-			throw std::exception("Can't delete records from other tables." );
+            throw std::string("Can't delete records from other tables." );
 		}
 
 		std::vector<IFieldValue*> conditionValues;
@@ -359,7 +358,7 @@ namespace systelab { namespace db { namespace sqlite {
 	{
 		if (&primaryKeyValue.getTable() != this)
 		{
-			throw std::exception( "Can't delete records using a primary key value from another table." );
+            throw std::string( "Can't delete records using a primary key value from another table." );
 		}
 
 		std::vector<IFieldValue*> conditionValues;
@@ -383,7 +382,7 @@ namespace systelab { namespace db { namespace sqlite {
 
 			if (!isOwned(field))
 			{
-				throw std::exception("Can't update records using new values that aren't owned by this table." );
+                throw std::string("Can't update records using new values that aren't owned by this table." );
 			}
 
 			if (!newFieldValue.isDefault())
@@ -403,7 +402,7 @@ namespace systelab { namespace db { namespace sqlite {
 
 			if (!isOwned(field))
 			{
-				throw std::exception("Can't update records using condition values that aren't owned by this table." );
+                throw std::string("Can't update records using condition values that aren't owned by this table." );
 			}
 
 			if (!conditionFieldValue.isDefault())
@@ -443,7 +442,7 @@ namespace systelab { namespace db { namespace sqlite {
 
 			if (!isOwned(field))
 			{
-				throw std::exception("Can't update records using condition values that aren't owned by this table." );
+                throw std::string("Can't update records using condition values that aren't owned by this table." );
 			}
 
 			if (!conditionFieldValue.isDefault())
@@ -516,7 +515,7 @@ namespace systelab { namespace db { namespace sqlite {
 		if (m_fields.empty())
 		{
 			std::string excMessage = "Table " + m_name + " doesn't exist in database.";
-			throw std::exception(excMessage.c_str());
+            throw std::string(excMessage.c_str());
 		}
 	}
 
@@ -545,7 +544,7 @@ namespace systelab { namespace db { namespace sqlite {
 		else
 		{
 			std::string excMessage = "SQLite type name not recognized: " + SQLiteTypeName;
-			throw std::exception(excMessage.c_str());
+            throw std::string(excMessage.c_str());
 		}
 	}
 
@@ -608,10 +607,10 @@ namespace systelab { namespace db { namespace sqlite {
 					fieldValueStream << "'" << boost::posix_time::to_iso_string( fieldValue.getDateTimeValue() ) << "'";
 					break;
 				case BINARY:
-					throw std::exception("Insert of tables with binary fields not implemented." );
+                    throw std::string("Insert of tables with binary fields not implemented." );
 					break;
 				default:
-					throw std::exception("Invalid record field type." );
+                    throw std::string("Invalid record field type." );
 					break;
 			}
 		}

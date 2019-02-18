@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "FieldValue.h"
 #include "BinaryValue.h"
 
@@ -31,7 +30,7 @@ namespace systelab { namespace db { namespace sqlite {
 	{
 		if (m_field.getType() != BOOLEAN)
 		{
-			throw std::exception( "Field doesn't accept a boolean value" );
+            throw std::string( "Field doesn't accept a boolean value" );
 		}
 	}
 
@@ -48,7 +47,7 @@ namespace systelab { namespace db { namespace sqlite {
 	{
 		if (m_field.getType() != INT)
 		{
-			throw std::exception( "Field doesn't accept an integer value" );
+            throw std::string( "Field doesn't accept an integer value" );
 		}
 	}
 
@@ -65,7 +64,7 @@ namespace systelab { namespace db { namespace sqlite {
 	{
 		if (m_field.getType() != DOUBLE)
 		{
-			throw std::exception( "Field doesn't accept a double value" );
+            throw std::string( "Field doesn't accept a double value" );
 		}
 	}
 
@@ -82,7 +81,7 @@ namespace systelab { namespace db { namespace sqlite {
 	{
 		if (m_field.getType() != STRING)
 		{
-			throw std::exception( "Field doesn't accept a string value" );
+            throw std::string( "Field doesn't accept a string value" );
 		}
 	}
 
@@ -99,7 +98,7 @@ namespace systelab { namespace db { namespace sqlite {
 	{
 		if (m_field.getType() != DATETIME)
 		{
-			throw std::exception( "Field doesn't accept a datetime value" );
+            throw std::string( "Field doesn't accept a datetime value" );
 		}
 
 		if (!value.is_not_a_date_time())
@@ -122,7 +121,7 @@ namespace systelab { namespace db { namespace sqlite {
 	{
 		if (m_field.getType() != BINARY)
 		{
-			throw std::exception( "Field doesn't accept a binary value" );
+            throw std::string( "Field doesn't accept a binary value" );
 		}
 	}
 
@@ -155,18 +154,18 @@ namespace systelab { namespace db { namespace sqlite {
 			}
 			else
 			{
-				throw std::exception( "Field type isn't boolean" );
+                throw std::string( "Field type isn't boolean" );
 			}
 		}
 		else
 		{
 			if (isNull())
 			{
-				throw std::exception( "Field value is null" );
+                throw std::string( "Field value is null" );
 			}
 			else
 			{
-				throw std::exception( "Field value is default" );
+                throw std::string( "Field value is default" );
 			}
 		}
 	}
@@ -181,18 +180,18 @@ namespace systelab { namespace db { namespace sqlite {
 			}
 			else
 			{
-				throw std::exception( "Field type isn't integer" );
+                throw std::string( "Field type isn't integer" );
 			}
 		}
 		else
 		{
 			if (isNull())
 			{
-				throw std::exception( "Field value is null" );
+                throw std::string( "Field value is null" );
 			}
 			else
 			{
-				throw std::exception( "Field value is default" );
+                throw std::string( "Field value is default" );
 			}
 		}
 	}
@@ -207,18 +206,18 @@ namespace systelab { namespace db { namespace sqlite {
 			}
 			else
 			{
-				throw std::exception( "Field type isn't double" );
+                throw std::string( "Field type isn't double" );
 			}
 		}
 		else
 		{
 			if (isNull())
 			{
-				throw std::exception( "Field value is null" );
+                throw std::string( "Field value is null" );
 			}
 			else
 			{
-				throw std::exception( "Field value is default" );
+                throw std::string( "Field value is default" );
 			}
 		}
 	}
@@ -233,18 +232,18 @@ namespace systelab { namespace db { namespace sqlite {
 			}
 			else
 			{
-				throw std::exception( "Field type isn't string" );
+                throw std::string( "Field type isn't string" );
 			}
 		}
 		else
 		{
 			if (isNull())
 			{
-				throw std::exception( "Field value is null" );
+                throw std::string( "Field value is null" );
 			}
 			else
 			{
-				throw std::exception( "Field value is default" );
+                throw std::string( "Field value is default" );
 			}
 		}
 	}
@@ -270,12 +269,12 @@ namespace systelab { namespace db { namespace sqlite {
 			}
 			else
 			{
-				throw std::exception( "Field type isn't datetime" );
+                throw std::string( "Field type isn't datetime" );
 			}
 		}
 		else
 		{
-			throw std::exception( "Field value is default" );
+            throw std::string( "Field value is default" );
 		}
 	}
 
@@ -289,18 +288,18 @@ namespace systelab { namespace db { namespace sqlite {
 			}
 			else
 			{
-				throw std::exception( "Field type isn't binary" );
+                throw std::string( "Field type isn't binary" );
 			}
 		}
 		else
 		{
 			if (isNull())
 			{
-				throw std::exception( "Field value is null" );
+                throw std::string( "Field value is null" );
 			}
 			else
 			{
-				throw std::exception( "Field value is default" );
+                throw std::string( "Field value is default" );
 			}
 		}
 	}
@@ -310,7 +309,7 @@ namespace systelab { namespace db { namespace sqlite {
 		FieldTypes srcFieldType = srcFieldValue.getField().getType();
 		if (srcFieldType != getField().getType())
 		{
-			throw std::exception( "Can't set the value of a field of another type" );
+            throw std::string( "Can't set the value of a field of another type" );
 		}
 
 		if (srcFieldValue.isNull())
@@ -381,7 +380,7 @@ namespace systelab { namespace db { namespace sqlite {
 		}
 		else
 		{
-			throw std::exception( "Field type isn't boolean" );
+            throw std::string( "Field type isn't boolean" );
 		}
 	}
 
@@ -395,7 +394,7 @@ namespace systelab { namespace db { namespace sqlite {
 		}
 		else
 		{
-			throw std::exception( "Field type isn't integer" );
+            throw std::string( "Field type isn't integer" );
 		}
 	}
 
@@ -409,7 +408,7 @@ namespace systelab { namespace db { namespace sqlite {
 		}
 		else
 		{
-			throw std::exception( "Field type isn't double" );
+            throw std::string( "Field type isn't double" );
 		}
 	}
 
@@ -423,7 +422,7 @@ namespace systelab { namespace db { namespace sqlite {
 		}
 		else
 		{
-			throw std::exception( "Field type isn't string" );
+            throw std::string( "Field type isn't string" );
 		}
 	}
 
@@ -437,7 +436,7 @@ namespace systelab { namespace db { namespace sqlite {
 		}
 		else
 		{
-			throw std::exception( "Field type isn't datetime" );
+            throw std::string( "Field type isn't datetime" );
 		}
 	}
 
@@ -451,7 +450,7 @@ namespace systelab { namespace db { namespace sqlite {
 		}
 		else
 		{
-			throw std::exception( "Field type isn't binary" );
+            throw std::string( "Field type isn't binary" );
 		}
 	}
 
@@ -481,10 +480,10 @@ namespace systelab { namespace db { namespace sqlite {
 				break;
 
 			case BINARY:
-				throw std::exception( "Binary field type not implemented." );
+                throw std::string( "Binary field type not implemented." );
 
 			default:
-				throw std::exception( "Invalid field type." );
+                throw std::string( "Invalid field type." );
 				break;
 		}
 	}
@@ -522,10 +521,10 @@ namespace systelab { namespace db { namespace sqlite {
 					return std::unique_ptr<IFieldValue>( new FieldValue(m_field, m_dateTimeValue) );
 
 				case BINARY:
-					throw std::exception( "Binary field type not implemented." );
+                    throw std::string( "Binary field type not implemented." );
 
 				default:
-					throw std::exception( "Invalid field type." );
+                    throw std::string( "Invalid field type." );
 					break;
 			}
 		}

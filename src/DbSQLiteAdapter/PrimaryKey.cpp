@@ -1,7 +1,6 @@
-#include "stdafx.h"
 #include "PrimaryKey.h"
 
-#include "DbAdapterInterface/ITable.h"
+#include "ITable.h"
 
 namespace systelab { namespace db { namespace sqlite {
 
@@ -41,7 +40,7 @@ namespace systelab { namespace db { namespace sqlite {
 		}
 		else
 		{
-			throw std::exception( "Invalid primary key field index" );
+            throw std::string( "Invalid primary key field index" );
 		}
 	}
 
@@ -56,7 +55,7 @@ namespace systelab { namespace db { namespace sqlite {
 			}
 		}
 
-		throw std::exception( "The requested primary key field doesn't exist" );
+        throw std::string( "The requested primary key field doesn't exist" );
 	}
 
 }}}

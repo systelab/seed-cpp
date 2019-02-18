@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "PatientJSONTranslator.h"
 
 #include "Model/Address.h"

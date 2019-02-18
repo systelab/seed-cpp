@@ -1,8 +1,8 @@
 #ifndef _DBSQLITEADAPTER_DATABASE_QUIM_VILA_2112151554_H
 #define _DBSQLITEADAPTER_DATABASE_QUIM_VILA_2112151554_H
 
-#include "DbAdapterInterface/IDatabase.h"
-#include "DbAdapterInterface/ITableRecordSet.h"
+#include "IDatabase.h"
+#include "ITableRecordSet.h"
 
 #include <map>
 

@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "SignatureService.h"
 
 #include "Services/Security/IBase64EncodeService.h"

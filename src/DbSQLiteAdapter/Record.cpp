@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "Record.h"
 
 #include "Field.h"
@@ -6,7 +5,7 @@
 
 #include "../DbAdapterInterface/IRecordSet.h"
 
-#include <sqlite3.h>
+#include <sqlite/sqlite3.h>
 
 
 namespace systelab { namespace db { namespace sqlite {
@@ -77,7 +76,7 @@ namespace systelab { namespace db { namespace sqlite {
 					}
 
 					default:
-						throw std::exception( "Unknown field type." );
+                        throw std::string( "Unknown field type." );
 				}
 			}
 
@@ -111,7 +110,7 @@ namespace systelab { namespace db { namespace sqlite {
 		}
 		else
 		{
-			throw std::exception( "Invalid field value index" );
+            throw std::string( "Invalid field value index" );
 		}
 	}
 
@@ -126,7 +125,7 @@ namespace systelab { namespace db { namespace sqlite {
 			}
 		}
 
-		throw std::exception( "The requested field value doesn't exist" );
+        throw std::string( "The requested field value doesn't exist" );
 	}
 
 	bool Record::hasFieldValue(const std::string& fieldName) const

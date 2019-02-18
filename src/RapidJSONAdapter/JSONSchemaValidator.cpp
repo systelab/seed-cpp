@@ -1,8 +1,7 @@
-#include "StdAfx.h"
 #include "JSONSchemaValidator.h"
 
-#include "JSONAdapterInterface/IJSONDocument.h"
-#include "JSONAdapterInterface/IJSONRemoteSchemaProvider.h"
+#include "IJSONDocument.h"
+#include "IJSONRemoteSchemaProvider.h"
 
 #include <rapidjson/writer.h>
 #include <rapidjson/stringbuffer.h>
@@ -33,7 +32,7 @@ namespace systelab { namespace json_adapter { namespace rapidjson_adapter {
 		}
 
 		rapidjson::Document jsonDocument;
-		jsonDocument.Parse(remoteSchemaDocument->serialize());
+        jsonDocument.Parse(remoteSchemaDocument->serialize().c_str());
 		if (jsonDocument.HasParseError())
 		{
 			return std::unique_ptr<rapidjson::SchemaDocument>();
@@ -48,7 +47,7 @@ namespace systelab { namespace json_adapter { namespace rapidjson_adapter {
 		,m_schemaDocument()
 	{
 		rapidjson::Document jsonDocument;
-		jsonDocument.Parse(document.serialize());
+        jsonDocument.Parse(document.serialize().c_str());
 		m_schemaDocument = std::make_unique<rapidjson::SchemaDocument>(jsonDocument);
 	}
 
@@ -58,7 +57,7 @@ namespace systelab { namespace json_adapter { namespace rapidjson_adapter {
 		,m_schemaDocument()
 	{
 		rapidjson::Document jsonDocument;
-		jsonDocument.Parse(document.serialize());
+        jsonDocument.Parse(document.serialize().c_str());
 
 		m_schemaDocument = std::make_unique<rapidjson::SchemaDocument>(jsonDocument, m_rapidjsonRemoteSchemaProvider.get());
 	}
@@ -70,7 +69,7 @@ namespace systelab { namespace json_adapter { namespace rapidjson_adapter {
 	bool JSONSchemaValidator::validate(const IJSONDocument& inputDocument, std::string& reason) const
 	{
 		rapidjson::Document inputJSONDocument;
-		inputJSONDocument.Parse(inputDocument.serialize());
+        inputJSONDocument.Parse(inputDocument.serialize().c_str());
 
 		rapidjson::SchemaValidator schemaValidator(*m_schemaDocument);
 		if (!inputJSONDocument.Accept(schemaValidator))

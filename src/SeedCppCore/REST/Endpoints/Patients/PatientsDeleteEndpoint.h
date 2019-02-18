@@ -3,7 +3,7 @@
 #include "Model/EntityMgr.h"
 #include "REST/Endpoints/IEndpoint.h"
 
-#include "WebServerInterface/Model/RequestHeaders.h"
+#include "Model/RequestHeaders.h"
 
 
 namespace seed_cpp { namespace service {

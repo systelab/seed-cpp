@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "Transaction.h"
 
 #include "../DbAdapterInterface/IDatabase.h"

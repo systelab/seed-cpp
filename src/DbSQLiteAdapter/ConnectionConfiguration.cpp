@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "ConnectionConfiguration.h"
 
 namespace systelab { namespace db { namespace sqlite {

@@ -1,7 +1,7 @@
 #ifndef _DBSQLITEADAPTER_TRANSACTION_QUIM_VILA_2112151606_H
 #define _DBSQLITEADAPTER_TRANSACTION_QUIM_VILA_2112151606_H
 
-#include "DbAdapterInterface/ITransaction.h"
+#include "ITransaction.h"
 
 namespace systelab { namespace db {
 	class IDatabase;

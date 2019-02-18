@@ -1,14 +1,13 @@
-#include "StdAfx.h"
 #include "UserDbLoadDAO.h"
 
 #include "DAL/Translators/Db/IDatabaseEntityTranslator.h"
 #include "DAL/Translators/Db/IDbTranslatorsFactory.h"
 #include "Model/User.h"
 
-#include "DbAdapterInterface/IDatabase.h"
-#include "DbAdapterInterface/IFieldValue.h"
-#include "DbAdapterInterface/ITable.h"
-#include "DbAdapterInterface/ITableRecord.h"
+#include "IDatabase.h"
+#include "IFieldValue.h"
+#include "ITable.h"
+#include "ITableRecord.h"
 
 
 namespace seed_cpp { namespace dal {

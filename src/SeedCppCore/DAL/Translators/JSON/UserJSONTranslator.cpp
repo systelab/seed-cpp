@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "UserJSONTranslator.h"
 
 #include "Model/User.h"

@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "Core.h"
 
 #include "DAL/DAO/ILoadDAO.h"
@@ -15,9 +14,9 @@
 #include "Services/Model/IUserModelService.h"
 #include "Services/System/IUUIDGeneratorService.h"
 
-#include "DbAdapterInterface/IDatabase.h"
-#include "JSONAdapterInterface/IJSONAdapter.h"
-#include "WebServerInterface/IWebServer.h"
+#include "IDatabase.h"
+#include "IJSONAdapter.h"
+#include "IWebServer.h"
 
 
 namespace seed_cpp {

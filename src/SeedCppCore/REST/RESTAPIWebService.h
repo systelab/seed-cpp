@@ -1,6 +1,6 @@
 #pragma once
 
-#include "WebServerInterface/IWebService.h"
+#include "IWebService.h"
 #include <memory>
 
 

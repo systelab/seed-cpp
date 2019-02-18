@@ -1,6 +1,6 @@
 #pragma once
 
-#include "WebServerInterface/IWebServer.h"
+#include "IWebServer.h"
 
 #include <boost/asio.hpp>
 #include <string>

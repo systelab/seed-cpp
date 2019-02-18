@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "UserDbSaveDAO.h"
 
 #include "DAL/DAO/ISaveDAO.h"
@@ -8,8 +7,8 @@
 #include "DAL/Translators/Db/IDbTranslatorsFactory.h"
 #include "Model/User.h"
 
-#include "DbAdapterInterface/IDatabase.h"
-#include "DbAdapterInterface/ITable.h"
+#include "IDatabase.h"
+#include "ITable.h"
 
 
 namespace seed_cpp { namespace dal {

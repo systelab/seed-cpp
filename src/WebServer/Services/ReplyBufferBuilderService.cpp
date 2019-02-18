@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "ReplyBufferBuilderService.h"
 
 #include <string>
@@ -78,7 +77,7 @@ namespace systelab { namespace web_server {
 			case Reply::StatusType::SERVICE_UNAVAILABLE:
 				return "HTTP/1.0 503 Service Unavailable";
 			default:
-				throw std::exception("");
+                throw std::string("");
 		}
 	}
 

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "IReplyBufferBuilderService.h"
-#include "WebServerInterface/Model/Reply.h"
+#include "Model/Reply.h"
 
 
 namespace systelab { namespace web_server {

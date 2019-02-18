@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "LockableEntityMgrSubject.h"
 
 #include "ILockableEntityMgrObserver.h"

@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "PatientsGetEndpoint.h"
 
 #include "DAL/Translators/JSON/IJSONSaveTranslator.h"
@@ -7,10 +6,10 @@
 #include "REST/Helpers/ReplyBuilderHelper.h"
 #include "Services/Security/IAuthorizationValidatorService.h"
 
-#include "JSONAdapterInterface/IJSONAdapter.h"
-#include "JSONAdapterInterface/IJSONDocument.h"
+#include "IJSONAdapter.h"
+#include "IJSONDocument.h"
 
-#include "WebServerInterface/Model/Reply.h"
+#include "Model/Reply.h"
 
 
 namespace seed_cpp { namespace rest {

@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "JSONAdapter.h"
 
 #include "JSONDocument.h"
@@ -24,7 +23,7 @@ namespace systelab { namespace json_adapter { namespace rapidjson_adapter {
 	std::unique_ptr<IJSONDocument> JSONAdapter::buildDocumentFromString(const std::string& content) const
 	{
 		std::unique_ptr<rapidjson::Document> rapidjsonDocument = std::make_unique<rapidjson::Document>();
-		rapidjsonDocument->Parse(content);
+        rapidjsonDocument->Parse(content.c_str());
 		if (!rapidjsonDocument->HasParseError())
 		{
 			return std::make_unique<JSONDocument>(std::move(rapidjsonDocument));

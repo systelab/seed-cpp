@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "Database.h"
 
 #include "Table.h"
@@ -6,7 +5,7 @@
 #include "RecordSet.h"
 #include "TableRecordSet.h"
 
-#include <sqlite3.h>
+#include <sqlite/sqlite3.h>
 
 
 namespace systelab { namespace db { namespace sqlite {
@@ -90,7 +89,7 @@ namespace systelab { namespace db { namespace sqlite {
 				exceptionStream << "# ERR: " << sqlError << std::endl;
 
 				std::string exceptionStr = exceptionStream.str();
-				throw std::exception(exceptionStr.c_str());
+                throw std::string(exceptionStr);
 			}
 		}
 		else
@@ -102,7 +101,7 @@ namespace systelab { namespace db { namespace sqlite {
 			exceptionStream << "# ERR: " << sqlError << std::endl;
 
 			std::string exceptionStr = exceptionStream.str();
-			throw std::exception(exceptionStr.c_str());
+            throw std::string(exceptionStr);
 		}
 	}
 
@@ -124,7 +123,7 @@ namespace systelab { namespace db { namespace sqlite {
 			exceptionStream << "# ERR: " << sqlError << std::endl;
 
 			std::string exceptionStr = exceptionStream.str();
-			throw std::exception(exceptionStr.c_str());
+            throw std::string(exceptionStr);
 		}
 		if (errors != NULL)
 		{

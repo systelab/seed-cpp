@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "UsersLoginPostEndpoint.h"
 
 #include "Model/User.h"
@@ -8,7 +7,7 @@
 #include "Services/Security/IJWTBuilderService.h"
 #include "Services/System/ITimeService.h"
 
-#include "WebServerInterface/Model/Reply.h"
+#include "Model/Reply.h"
 
 
 namespace seed_cpp { namespace rest {

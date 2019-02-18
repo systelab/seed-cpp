@@ -1,12 +1,11 @@
-#include "StdAfx.h"
 #include "JWTValidatorService.h"
 
 #include "Services/Security/IBase64EncodeService.h"
 #include "Services/Security/ISignatureService.h"
 
-#include "JSONAdapterInterface/IJSONAdapter.h"
-#include "JSONAdapterInterface/IJSONDocument.h"
-#include "JSONAdapterInterface/IJSONValue.h"
+#include "IJSONAdapter.h"
+#include "IJSONDocument.h"
+#include "IJSONValue.h"
 
 #include <boost/date_time/posix_time/conversion.hpp>
 #include <vector>

@@ -11,7 +11,6 @@ git checkout --recurse-submodules tags/boost-1.67.0
 # Clean compilation directoy
 cd $current_path
 bin_path=$( cd ../bin ; pwd -P)
-echo $bin_path
 rm -rf $bin_path/boost_build
 
 # Compile boost
@@ -22,4 +21,4 @@ echo Running: bootstrap.sh --prefix=$bin_path/boost_build --with-libraries=threa
 
 echo ----------------------------------
 echo Running: b2 install
-./b2
+./b2 install

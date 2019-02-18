@@ -1,7 +1,7 @@
 #ifndef _DBSQLITEADAPTER_BINARYVALUE_QUIM_VILA_2112151746_H
 #define _DBSQLITEADAPTER_BINARYVALUE_QUIM_VILA_2112151746_H
 
-#include "DbAdapterInterface/IBinaryValue.h"
+#include "IBinaryValue.h"
 
 namespace systelab { namespace db { namespace sqlite {
 
