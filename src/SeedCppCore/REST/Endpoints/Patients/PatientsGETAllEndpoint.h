@@ -3,8 +3,8 @@
 #include "Model/EntityMgr.h"
 #include "REST/Endpoints/IEndpoint.h"
 
-#include "WebServerInterface/Model/RequestHeaders.h"
-#include "WebServerInterface/Model/RequestQueryStrings.h"
+#include "Model/RequestHeaders.h"
+#include "Model/RequestQueryStrings.h"
 
 
 namespace systelab { namespace json_adapter {

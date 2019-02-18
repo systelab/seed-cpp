@@ -1,9 +1,9 @@
 #ifndef _DBSQLITEADAPTER_FIELD_QUIM_VILA_2112151646_H
 #define _DBSQLITEADAPTER_FIELD_QUIM_VILA_2112151646_H
 
-#include "DbAdapterInterface/IField.h"
+#include "IField.h"
 
-#include "DbAdapterInterface/IBinaryValue.h"
+#include "IBinaryValue.h"
 
 
 namespace systelab { namespace db { namespace sqlite {

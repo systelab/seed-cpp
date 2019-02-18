@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "Reply.h"
 
 #include <string>
@@ -46,7 +45,7 @@ namespace systelab { namespace web_server {
 		else
 		{
 			std::string exc = std::string("Header '") + name + std::string("' not found.");
-			throw std::exception(exc.c_str());
+            throw std::string(exc);
 		}
 	}
 

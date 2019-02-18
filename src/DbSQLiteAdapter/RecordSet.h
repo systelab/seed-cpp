@@ -1,8 +1,8 @@
 #ifndef _DBSQLITEADAPTER_RECORDSET_QUIM_VILA_21212151651_H
 #define _DBSQLITEADAPTER_RECORDSET_QUIM_VILA_21212151651_H
 
-#include "DbAdapterInterface/IRecordSet.h"
-#include "DbAdapterInterface/Types.h"
+#include "IRecordSet.h"
+#include "Types.h"
 
 #include <memory>
 #include <vector>

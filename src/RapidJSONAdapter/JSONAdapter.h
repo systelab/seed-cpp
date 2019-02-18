@@ -1,6 +1,6 @@
 #pragma once
 
-#include "JSONAdapterInterface/IJSONAdapter.h"
+#include "IJSONAdapter.h"
 
 #include <rapidjson/document.h>
 

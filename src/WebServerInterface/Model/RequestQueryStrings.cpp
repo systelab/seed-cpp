@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "RequestQueryStrings.h"
 
 
@@ -33,7 +32,7 @@ namespace systelab { namespace web_server {
 		else
 		{
 			std::string exc = std::string("Query string item '") + name + std::string("' not found.");
-			throw std::exception(exc.c_str());
+            throw std::string(exc);
 		}
 	}
 

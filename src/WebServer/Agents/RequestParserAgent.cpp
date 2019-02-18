@@ -1,7 +1,6 @@
-#include "StdAfx.h"
 #include "RequestParserAgent.h"
 
-#include "WebServerInterface/Model/Request.h"
+#include "Model/Request.h"
 
 #include <boost/lexical_cast.hpp>
 

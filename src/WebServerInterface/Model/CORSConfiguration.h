@@ -1,7 +1,7 @@
 #pragma once
 
 #include <set>
-
+#include <string>
 
 namespace systelab { namespace web_server {
 

@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "UserModelService.h"
 
 #include "Model/User.h"

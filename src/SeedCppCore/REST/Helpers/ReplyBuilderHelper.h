@@ -1,6 +1,6 @@
 #pragma once
 
-#include "WebServerInterface/Model/Reply.h"
+#include "Model/Reply.h"
 
 
 namespace seed_cpp { namespace rest {

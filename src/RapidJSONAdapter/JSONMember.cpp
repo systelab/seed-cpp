@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "JSONMember.h"
 
 #include "JSONValue.h"

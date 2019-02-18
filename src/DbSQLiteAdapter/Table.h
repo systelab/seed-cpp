@@ -1,7 +1,7 @@
 #ifndef _DBSQLITEADAPTER_TABLE_QUIM_VILA_2112151641_H
 #define _DBSQLITEADAPTER_TABLE_QUIM_VILA_2112151641_H
 
-#include "DbAdapterInterface/ITable.h"
+#include "ITable.h"
 
 #include "Database.h"
 

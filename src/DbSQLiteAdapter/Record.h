@@ -1,7 +1,7 @@
 #ifndef _DBSQLITEADAPTER_RECORD_QUIM_VILA_2112151735_H
 #define _DBSQLITEADAPTER_RECORD_QUIM_VILA_2112151735_H
 
-#include "DbAdapterInterface/IRecord.h"
+#include "IRecord.h"
 
 #include <memory>
 #include <vector>

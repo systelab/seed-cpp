@@ -1,7 +1,7 @@
 #ifndef _DBSQLITEADAPTER_CONNECTIONCONFIGURATION_QV_2302160917_H
 #define _DBSQLITEADAPTER_CONNECTIONCONFIGURATION_QV_2302160917_H
 
-#include "DbAdapterInterface/IConnectionConfiguration.h"
+#include "IConnectionConfiguration.h"
 
 namespace systelab { namespace db { namespace sqlite {
 

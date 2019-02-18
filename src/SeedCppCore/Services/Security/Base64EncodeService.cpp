@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "Base64EncodeService.h"
 
 #include <boost/throw_exception.hpp>

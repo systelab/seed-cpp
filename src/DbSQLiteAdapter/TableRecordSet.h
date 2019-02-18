@@ -1,9 +1,9 @@
 #ifndef _DBSQLITEADAPTER_TABLERECORDSET_QV_0303161126_H
 #define _DBSQLITEADAPTER_TABLERECORDSET_QV_0303161126_H
 
-#include "DbAdapterInterface/ITableRecordSet.h"
-#include "DbAdapterInterface/ITableRecord.h"
-#include "DbAdapterInterface/Types.h"
+#include "ITableRecordSet.h"
+#include "ITableRecord.h"
+#include "Types.h"
 
 #include <memory>
 #include <vector>

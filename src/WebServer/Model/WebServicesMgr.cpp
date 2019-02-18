@@ -1,7 +1,6 @@
-#include "StdAfx.h"
 #include "WebServicesMgr.h"
 
-#include "WebServerInterface/IWebService.h"
+#include "IWebService.h"
 
 
 namespace systelab { namespace web_server {

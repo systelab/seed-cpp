@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ServicesMgr.h"
 
 #include "Services/IServicesFactory.h"

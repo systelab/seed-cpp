@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "UsersDeleteEndpoint.h"
 
 #include "Model/User.h"
@@ -6,8 +5,8 @@
 #include "Services/Model/IUserModelService.h"
 #include "Services/Security/IAuthorizationValidatorService.h"
 
-#include "WebServerInterface/Model/Reply.h"
-#include "WebServerInterface/Model/RequestHeaders.h"
+#include "Model/Reply.h"
+#include "Model/RequestHeaders.h"
 
 
 namespace seed_cpp { namespace rest {

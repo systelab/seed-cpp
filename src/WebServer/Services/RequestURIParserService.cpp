@@ -1,7 +1,6 @@
-#include "stdafx.h"
 #include "RequestURIParserService.h"
 
-#include "WebServerInterface/Model/Request.h"
+#include "Model/Request.h"
 
 #include <sstream>
 #include <regex>

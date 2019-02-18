@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "PatientsPostEndpoint.h"
 
 #include "Model/EntityMgr.h"
@@ -11,10 +10,10 @@
 #include "Services/Security/IAuthorizationValidatorService.h"
 #include "Services/Validator/IJSONValidatorService.h"
 
-#include "JSONAdapterInterface/IJSONAdapter.h"
-#include "JSONAdapterInterface/IJSONDocument.h"
+#include "IJSONAdapter.h"
+#include "IJSONDocument.h"
 
-#include "WebServerInterface/Model/Reply.h"
+#include "Model/Reply.h"
 
 
 namespace seed_cpp { namespace rest {

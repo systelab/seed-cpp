@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "IDbDAOFactory.h"
 
 #include "DAL/DAO/ILoadDAO.h"

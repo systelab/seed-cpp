@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "Connection.h"
 
 #include "Agents/IRequestParserAgent.h"
@@ -6,9 +5,9 @@
 #include "Services/IRequestURIParserService.h"
 #include "Services/IRequestHandlingService.h"
 
-#include "WebServerInterface/Model/Configuration.h"
-#include "WebServerInterface/Model/Reply.h"
-#include "WebServerInterface/Model/Request.h"
+#include "Model/Configuration.h"
+#include "Model/Reply.h"
+#include "Model/Request.h"
 
 #include <vector>
 #include <boost/bind.hpp>

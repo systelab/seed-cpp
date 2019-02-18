@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "PatientDbSaveDAO.h"
 
 #include "DAL/DAO/ISaveDAO.h"
@@ -9,8 +8,8 @@
 #include "Model/Address.h"
 #include "Model/Patient.h"
 
-#include "DbAdapterInterface/IDatabase.h"
-#include "DbAdapterInterface/ITable.h"
+#include "IDatabase.h"
+#include "ITable.h"
 
 
 namespace seed_cpp { namespace dal {

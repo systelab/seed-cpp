@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "WebServer.h"
 
 #include "Connection.h"
@@ -8,11 +7,11 @@
 #include "Services/RequestHandlingService.h"
 #include "Services/RequestURIParserService.h"
 
-#include "WebServerInterface/IWebService.h"
-#include "WebServerInterface/Model/Configuration.h"
-#include "WebServerInterface/Model/CORSConfiguration.h"
-#include "WebServerInterface/Model/Reply.h"
-#include "WebServerInterface/Model/Request.h"
+#include "IWebService.h"
+#include "Model/Configuration.h"
+#include "Model/CORSConfiguration.h"
+#include "Model/Reply.h"
+#include "Model/Request.h"
 
 #include <vector>
 

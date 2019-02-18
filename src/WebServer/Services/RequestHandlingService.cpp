@@ -1,12 +1,11 @@
-#include "stdafx.h"
 #include "RequestHandlingService.h"
 
-#include "Model/WebServicesMgr.h"
+#include "../Model/WebServicesMgr.h"
 
-#include "WebServerInterface/IWebService.h"
-#include "WebServerInterface/Model/CORSConfiguration.h"
-#include "WebServerInterface/Model/Reply.h"
-#include "WebServerInterface/Model/Request.h"
+#include "IWebService.h"
+#include "Model/CORSConfiguration.h"
+#include "Model/Reply.h"
+#include "Model/Request.h"
 
 
 namespace systelab { namespace web_server {

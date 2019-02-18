@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "EndpointsFactory.h"
 
 #include "Core.h"
