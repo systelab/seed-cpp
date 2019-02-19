@@ -1,25 +1,31 @@
 #pragma once
 
-namespace systelab { namespace json_adapter {
-	class IJSONDocument;
-}}
+#include <stdexcept>
+#include <string>
 
-namespace seed_cpp { namespace service {
+namespace systelab {
+namespace json_adapter {
+class IJSONDocument;
+}
+} // namespace systelab
 
-	class IJSONValidatorService
-	{
-	public:
-		virtual ~IJSONValidatorService() {};
+namespace seed_cpp {
+namespace service {
 
-		virtual void validate(const systelab::json_adapter::IJSONDocument&, const std::string& schemaName) const = 0;
+class IJSONValidatorService {
+public:
+  virtual ~IJSONValidatorService(){};
 
-	public:
-		struct JSONValidationException : public std::runtime_error
-		{
-			JSONValidationException(const std::string& message) : std::runtime_error(message.c_str()) {}
-			virtual std::string toString() const { return what(); };
-		};
-	};
+  virtual void validate(const systelab::json_adapter::IJSONDocument &,
+                        const std::string &schemaName) const = 0;
 
-}}
+public:
+  struct JSONValidationException : public std::runtime_error {
+    JSONValidationException(const std::string &message)
+        : std::runtime_error(message.c_str()) {}
+    virtual std::string toString() const { return what(); };
+  };
+};
 
+} // namespace service
+} // namespace seed_cpp

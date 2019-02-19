@@ -37,6 +37,10 @@ macro(boost_setup)
     endif()
 endmacro()
 
+#set(OPENSSL_INCLUDE_DIR "/usr/include/openssl")
+#set(OPENSSL_SSL_LIBRARY "/usr/lib/x86_64-linux-gnu/libssl.so")
+#set(OPENSSL_CRYPTO_LIBRARY "/usr/lib/x86_64-linux-gnu/libcrypto.so.1.1")
+
 project(seed-cpp)
 
 set(CMAKE_CXX_STANDARD 14)
@@ -49,6 +53,11 @@ find_package (Threads)
 # Call boost configuration macro
 boost_setup()
 
+# Setup external libraries through conan
+include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
+conan_basic_setup()
+
+include_directories(${OPENSSL_INCLUDE_DIR})
 include_directories(${CMAKE_SOURCE_DIR}/include)
 
 add_subdirectory(${CMAKE_SOURCE_DIR}/src)
