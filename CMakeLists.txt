@@ -4,7 +4,7 @@ macro(boost_setup)
     set(BOOST_LIB_DIR "${CMAKE_SOURCE_DIR}/include/boost")
     set(BOOST_COMPONENTS "system" "thread")
 
-    set(BOOST_ROOT "${CMAKE_SOURCE_DIR}/include/boost_build")
+    set(BOOST_ROOT "${CMAKE_BINARY_DIR}/boost_build")
     set(BOOST_INCLUDEDIR "${BOOST_ROOT}/include")
     set(BOOST_LIBRARYDIR "${BOOST_ROOT}/lib")
 
@@ -42,6 +42,7 @@ project(seed-cpp)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 SET(CMAKE_CXX_FLAGS -pthread)
+set(CMAKE_BINARY_DIR ${CMAKE_SOURCE_DIR}/bin)
 
 find_package (Threads)
 
