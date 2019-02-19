@@ -1,8 +1,8 @@
 #include "PatientDbSaveDAO.h"
 
+#include "DAL/DAO/Db/IDbDAOFactory.h"
 #include "DAL/DAO/ISaveDAO.h"
 #include "DAL/DAO/ITransactionDAO.h"
-#include "DAL/DAO/Db/IDbDAOFactory.h"
 #include "DAL/Translators/Db/IDatabaseEntityTranslator.h"
 #include "DAL/Translators/Db/IDbTranslatorsFactory.h"
 #include "Model/Address.h"
@@ -11,132 +11,121 @@
 #include "IDatabase.h"
 #include "ITable.h"
 
+namespace seed_cpp {
+namespace dal {
 
-namespace seed_cpp { namespace dal {
+PatientDbSaveDAO::PatientDbSaveDAO(
+    systelab::db::IDatabase &db, model::Patient &item,
+    dal::IDbDAOFactory &daoFactory,
+    dal::IDbTranslatorsFactory &translatorsFactory)
+    : m_db(db), m_item(item), m_daoFactory(daoFactory),
+      m_translatorsFactory(translatorsFactory) {}
 
-	PatientDbSaveDAO::PatientDbSaveDAO(systelab::db::IDatabase& db,
-									   model::Patient& item,
-									   dal::IDbDAOFactory& daoFactory,
-									   dal::IDbTranslatorsFactory& translatorsFactory)
-		:m_db(db)
-		,m_item(item)
-		,m_daoFactory(daoFactory)
-		,m_translatorsFactory(translatorsFactory)
-	{
-	}
+void PatientDbSaveDAO::addEntity() {
+  if (!m_item.getId().is_initialized()) {
+    throw std::string("Attempting to add a patient with an ID to database.");
+  }
 
-	void PatientDbSaveDAO::addEntity()
-	{
-		if (!m_item.getId().is_initialized())
-		{
-			throw std::exception( "Attempting to add a patient with an ID to database." );
-		}
+  std::unique_ptr<dal::ITransactionDAO> transaction;
+  try {
+    transaction = m_daoFactory.startTransaction();
 
-		std::unique_ptr<dal::ITransactionDAO> transaction;
-		try
-		{
-			transaction = m_daoFactory.startTransaction();
+    systelab::db::ITable &itemsTable = m_db.getTable("Patient");
+    std::unique_ptr<systelab::db::ITableRecord> itemRecord =
+        itemsTable.createRecord();
 
-			systelab::db::ITable& itemsTable = m_db.getTable("Patient");
-			std::unique_ptr<systelab::db::ITableRecord> itemRecord = itemsTable.createRecord();
+    std::unique_ptr<dal::IDatabaseEntityTranslator> itemTranslator =
+        m_translatorsFactory.buildPatientTranslator(m_item);
+    itemTranslator->fillRecordFromEntity(*itemRecord);
+    itemsTable.insertRecord(*itemRecord);
 
-			std::unique_ptr<dal::IDatabaseEntityTranslator> itemTranslator = m_translatorsFactory.buildPatientTranslator(m_item);
-			itemTranslator->fillRecordFromEntity(*itemRecord);
-			itemsTable.insertRecord(*itemRecord);
+    addAddress();
 
-			addAddress();
+    transaction->commit();
+  } catch (std::exception &exc) {
+    transaction->rollback();
+    throw exc;
+  }
+}
 
-			transaction->commit();
-		}
-		catch (std::exception& exc)
-		{
-			transaction->rollback();
-			throw exc;
-		}
-	}
+void PatientDbSaveDAO::updateEntity() {
+  if (!m_item.getId().is_initialized()) {
+    throw std::string("Attempting to update a patient without id in database.");
+  }
 
-	void PatientDbSaveDAO::updateEntity()
-	{
-		if (!m_item.getId().is_initialized())
-		{
-			throw std::exception( "Attempting to update a patient without id in database." );
-		}
+  std::unique_ptr<dal::ITransactionDAO> transaction;
+  try {
+    transaction = m_daoFactory.startTransaction();
 
-		std::unique_ptr<dal::ITransactionDAO> transaction;
-		try
-		{
-			transaction = m_daoFactory.startTransaction();
+    systelab::db::ITable &itemsTable = m_db.getTable("Patient");
+    std::unique_ptr<systelab::db::ITableRecord> itemRecord =
+        itemsTable.createRecord();
 
-			systelab::db::ITable& itemsTable = m_db.getTable("Patient");
-			std::unique_ptr<systelab::db::ITableRecord> itemRecord = itemsTable.createRecord();
+    std::unique_ptr<dal::IDatabaseEntityTranslator> itemTranslator =
+        m_translatorsFactory.buildPatientTranslator(m_item);
+    itemTranslator->fillRecordFromEntity(*itemRecord);
+    itemsTable.updateRecord(*itemRecord);
 
-			std::unique_ptr<dal::IDatabaseEntityTranslator> itemTranslator = m_translatorsFactory.buildPatientTranslator(m_item);
-			itemTranslator->fillRecordFromEntity(*itemRecord);
-			itemsTable.updateRecord(*itemRecord);
+    updateAddress();
 
-			updateAddress();
+    transaction->commit();
+  } catch (std::exception &exc) {
+    transaction->rollback();
+    throw exc;
+  }
+}
 
-			transaction->commit();
-		}
-		catch (std::exception& exc)
-		{
-			transaction->rollback();
-			throw exc;
-		}
-	}
+void PatientDbSaveDAO::deleteEntity() {
+  if (!m_item.getId().is_initialized()) {
+    throw std::string("Attempting to delete a patient without id in database.");
+  }
 
-	void PatientDbSaveDAO::deleteEntity()
-	{
-		if (!m_item.getId().is_initialized())
-		{
-			throw std::exception( "Attempting to delete a patient without id in database." );
-		}
+  std::unique_ptr<dal::ITransactionDAO> transaction;
+  try {
+    transaction = m_daoFactory.startTransaction();
 
-		std::unique_ptr<dal::ITransactionDAO> transaction;
-		try
-		{
-			transaction = m_daoFactory.startTransaction();
+    systelab::db::ITable &table = m_db.getTable("Patient");
+    auto record = table.createRecord();
+    std::unique_ptr<dal::IDatabaseEntityTranslator> itemTranslator =
+        m_translatorsFactory.buildPatientTranslator(m_item);
+    itemTranslator->fillRecordFromEntity(*record);
+    table.deleteRecord(*record);
 
-			systelab::db::ITable& table = m_db.getTable("Patient");
-			auto record = table.createRecord();
-			std::unique_ptr<dal::IDatabaseEntityTranslator> itemTranslator = m_translatorsFactory.buildPatientTranslator(m_item);
-			itemTranslator->fillRecordFromEntity(*record);
-			table.deleteRecord(*record);
+    transaction->commit();
+  } catch (std::exception &exc) {
+    transaction->rollback();
+    throw exc;
+  }
+}
 
-			transaction->commit();
-		}
-		catch (std::exception& exc)
-		{
-			transaction->rollback();
-			throw exc;
-		}
-	}
+void PatientDbSaveDAO::addAddress() {
+  systelab::db::ITable &addressTable = m_db.getTable("Address");
+  std::unique_ptr<systelab::db::ITableRecord> addressRecord =
+      addressTable.createRecord();
 
-	void PatientDbSaveDAO::addAddress()
-	{
-		systelab::db::ITable& addressTable = m_db.getTable("Address");
-		std::unique_ptr<systelab::db::ITableRecord> addressRecord = addressTable.createRecord();
+  std::string patientId = *m_item.getId();
+  model::Address &address = m_item.getAddress();
+  std::unique_ptr<dal::IDatabaseEntityTranslator> addressTranslator =
+      m_translatorsFactory.buildAddressTranslator(patientId, address);
+  addressTranslator->fillRecordFromEntity(*addressRecord);
 
-		std::string patientId = *m_item.getId();
-		model::Address& address = m_item.getAddress();
-		std::unique_ptr<dal::IDatabaseEntityTranslator> addressTranslator = m_translatorsFactory.buildAddressTranslator(patientId, address);
-		addressTranslator->fillRecordFromEntity(*addressRecord);
+  addressTable.insertRecord(*addressRecord);
+  address.setId(addressRecord->getFieldValue("id").getIntValue());
+}
 
-		addressTable.insertRecord(*addressRecord);
-		address.setId(addressRecord->getFieldValue("id").getIntValue());
-	}
+void PatientDbSaveDAO::updateAddress() {
+  systelab::db::ITable &addressTable = m_db.getTable("Address");
+  std::unique_ptr<systelab::db::ITableRecord> addressRecord =
+      addressTable.createRecord();
 
-	void PatientDbSaveDAO::updateAddress()
-	{
-		systelab::db::ITable& addressTable = m_db.getTable("Address");
-		std::unique_ptr<systelab::db::ITableRecord> addressRecord = addressTable.createRecord();
+  std::string patientId = *m_item.getId();
+  model::Address &address = m_item.getAddress();
+  std::unique_ptr<dal::IDatabaseEntityTranslator> addressTranslator =
+      m_translatorsFactory.buildAddressTranslator(patientId, address);
+  addressTranslator->fillRecordFromEntity(*addressRecord);
 
-		std::string patientId = *m_item.getId();
-		model::Address& address = m_item.getAddress();
-		std::unique_ptr<dal::IDatabaseEntityTranslator> addressTranslator = m_translatorsFactory.buildAddressTranslator(patientId, address);
-		addressTranslator->fillRecordFromEntity(*addressRecord);
+  addressTable.updateRecord(*addressRecord);
+}
 
-		addressTable.updateRecord(*addressRecord);
-	}
-
-}}
+} // namespace dal
+} // namespace seed_cpp
