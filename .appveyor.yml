@@ -1,0 +1,36 @@
+version: '1.0.{build}'
+
+image: Visual Studio 2017
+
+platform:
+  - x64
+
+configuration:
+  - Debug
+  - Release
+
+install:
+  - set PATH=%PATH%;%PYTHON%/Scripts/
+  - pip.exe install conan
+  - conan user
+  - conan --version
+
+before_build:
+  - md build
+  - cd build
+  - cmake .. -G "Visual Studio 15 2017 Win64"
+
+build:
+  project: $(APPVEYOR_BUILD_FOLDER)\build\seed-cpp.sln
+
+artifacts:
+  - path: 'build\lib\DbSQLiteAdapter.lib'
+    name: DbSQLiteAdapter.lib
+  - path: 'build\lib\WebServerInterface.lib'
+    name: WebServerInterface.lib
+  - path: 'build\lib\WebServer.lib'
+    name: WebServer.lib
+  - path: 'build\lib\RapidJSONAdapter.lib'
+    name: RapidJSONAdapter.lib
+  - path: 'build\lib\SeedCppCore.lib'
+    name: SeedCppCore.lib
