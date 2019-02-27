@@ -3,135 +3,115 @@
 #include "Field.h"
 #include "Record.h"
 
-#include <sqlite/sqlite3.h>
+#include <sqlite3.h>
 
+namespace systelab {
+namespace db {
+namespace sqlite {
 
-namespace systelab { namespace db { namespace sqlite {
+RecordSet::RecordSet(sqlite3_stmt *statement, bool allFieldsAsStrings) {
+  bool hasNext = (sqlite3_step(statement) == SQLITE_ROW);
+  createFields(statement, allFieldsAsStrings);
 
-	RecordSet::RecordSet(sqlite3_stmt* statement, bool allFieldsAsStrings)
-	{
-		bool hasNext = (sqlite3_step(statement) == SQLITE_ROW);
-		createFields(statement, allFieldsAsStrings);
+  while (hasNext) {
+    m_records.push_back(std::unique_ptr<IRecord>(new Record(*this, statement)));
+    hasNext = (sqlite3_step(statement) == SQLITE_ROW);
+  }
 
-		while (hasNext)
-		{
-			m_records.push_back( std::unique_ptr<IRecord>(new Record(*this, statement)) );
-			hasNext = (sqlite3_step(statement) == SQLITE_ROW);
-		}
+  sqlite3_finalize(statement);
 
-		sqlite3_finalize(statement);
+  m_iterator = m_records.begin();
+}
 
-		m_iterator = m_records.begin();
-	}
+RecordSet::~RecordSet() {}
 
-	RecordSet::~RecordSet()
-	{
+unsigned int RecordSet::getFieldsCount() const {
+  return (unsigned int)m_fields.size();
+}
 
-	}
+const IField &RecordSet::getField(unsigned int index) const {
+  if (index < m_fields.size()) {
+    return *(m_fields[index].get());
+  } else {
+    throw std::string("Invalid field index");
+  }
+}
 
-	unsigned int RecordSet::getFieldsCount() const
-	{
-		return (unsigned int) m_fields.size();
-	}
+const IField &RecordSet::getField(const std::string &fieldName) const {
+  unsigned int nFields = (unsigned int)m_fields.size();
+  for (unsigned int i = 0; i < nFields; i++) {
+    if (m_fields[i]->getName() == fieldName) {
+      return *(m_fields[i].get());
+    }
+  }
 
-	const IField& RecordSet::getField(unsigned int index) const
-	{
-		if (index < m_fields.size())
-		{
-			return *(m_fields[index].get());
-		}
-		else
-		{
-            throw std::string( "Invalid field index" );
-		}
-	}
+  throw std::string("The requested field doesn't exist");
+}
 
-	const IField& RecordSet::getField(const std::string& fieldName) const
-	{
-		unsigned int nFields = (unsigned int) m_fields.size();
-		for (unsigned int i = 0; i < nFields; i++)
-		{
-			if (m_fields[i]->getName() == fieldName)
-			{
-				return *(m_fields[i].get());
-			}
-		}
+unsigned int RecordSet::getRecordsCount() const {
+  return (unsigned int)m_records.size();
+}
 
-        throw std::string( "The requested field doesn't exist" );
-	}
+const IRecord &RecordSet::getCurrentRecord() const {
+  return *m_iterator->get();
+}
 
-	unsigned int RecordSet::getRecordsCount() const
-	{
-		return (unsigned int) m_records.size();
-	}
+std::unique_ptr<IRecord> RecordSet::copyCurrentRecord() const {
+  const IRecord &currentRecord = getCurrentRecord();
 
-	const IRecord& RecordSet::getCurrentRecord() const
-	{
-		return *m_iterator->get();
-	}
+  std::vector<std::unique_ptr<IFieldValue>> copiedFieldValues;
+  unsigned int nFieldValues = currentRecord.getFieldValuesCount();
+  for (unsigned int i = 0; i < nFieldValues; i++) {
+    IFieldValue &fieldValue = currentRecord.getFieldValue(i);
+    copiedFieldValues.push_back(fieldValue.clone());
+  }
 
-	std::unique_ptr<IRecord> RecordSet::copyCurrentRecord() const
-	{
-		const IRecord& currentRecord = getCurrentRecord();
+  return std::unique_ptr<IRecord>(new Record(copiedFieldValues));
+}
 
-		std::vector< std::unique_ptr<IFieldValue> > copiedFieldValues;
-		unsigned int nFieldValues = currentRecord.getFieldValuesCount();
-		for (unsigned int i = 0; i < nFieldValues; i++)
-		{
-			IFieldValue& fieldValue = currentRecord.getFieldValue(i);
-			copiedFieldValues.push_back( fieldValue.clone() );
-		}
+bool RecordSet::isCurrentRecordValid() const {
+  return (m_iterator != m_records.end());
+}
 
-		return std::unique_ptr<IRecord>( new Record(copiedFieldValues) );
-	}
+void RecordSet::nextRecord() { m_iterator++; }
 
-	bool RecordSet::isCurrentRecordValid() const
-	{
-		return (m_iterator != m_records.end());
-	}
+void RecordSet::createFields(sqlite3_stmt *statement, bool allFieldsAsStrings) {
+  int nFields = sqlite3_column_count(statement);
+  for (int i = 0; i < nFields; i++) {
+    std::string fieldName(sqlite3_column_name(statement, i));
+    int sqliteFieldType =
+        allFieldsAsStrings ? SQLITE_TEXT : sqlite3_column_type(statement, i);
 
-	void RecordSet::nextRecord()
-	{
-		m_iterator++;
-	}
+    FieldTypes fieldType = getTypeFromSQLiteType(sqliteFieldType);
+    std::unique_ptr<IField> field(
+        new Field(i, fieldName, fieldType, "", false));
+    m_fields.push_back(std::move(field));
+  }
+}
 
-	void RecordSet::createFields(sqlite3_stmt* statement, bool allFieldsAsStrings)
-	{
-		int nFields = sqlite3_column_count(statement);
-		for( int i = 0; i < nFields; i++ )
-		{
-			std::string fieldName( sqlite3_column_name(statement, i) );
-			int sqliteFieldType = allFieldsAsStrings ? SQLITE_TEXT : sqlite3_column_type(statement, i);
+FieldTypes RecordSet::getTypeFromSQLiteType(int SQLiteType) {
+  switch (SQLiteType) {
+  case SQLITE_INTEGER:
+    return INT;
 
-			FieldTypes fieldType = getTypeFromSQLiteType(sqliteFieldType);
-			std::unique_ptr<IField> field( new Field(i, fieldName, fieldType, "", false) );
-			m_fields.push_back( std::move(field) );
-		}
-	}
+  case SQLITE_FLOAT:
+    return DOUBLE;
 
-	FieldTypes RecordSet::getTypeFromSQLiteType(int SQLiteType)
-	{
-		switch(SQLiteType)
-		{
-			case SQLITE_INTEGER:
-				return INT;
+  case SQLITE_NULL:
+  case SQLITE_TEXT:
+    return STRING;
 
-			case SQLITE_FLOAT:
-				return DOUBLE;
+  case SQLITE_BLOB:
+    return BINARY;
 
-			case SQLITE_NULL:
-			case SQLITE_TEXT:
-				return STRING;
+    // Not implemented
+    // return DATETIME;
 
-			case SQLITE_BLOB:
-				return BINARY;
+  default:
+    throw std::string("SQLite type unsupported: " + SQLiteType);
+  }
+}
 
-			// Not implemented 
-				//return DATETIME;
-
-			default:
-                throw std::string("SQLite type unsupported: " + SQLiteType );
-		}
-	}
-
-}}}
+} // namespace sqlite
+} // namespace db
+} // namespace systelab
