@@ -5,13 +5,16 @@
 #include "TableRecordSet.h"
 #include "Transaction.h"
 
+#include <fstream>
 #include <sqlite3.h>
+#include <streambuf>
+#include <string>
 
 namespace systelab {
 namespace db {
 namespace sqlite {
 
-Database::Database(sqlite3 *database) : m_database(database) {}
+Database::Database(sqlite3 *database) : m_database(database) { LoadDBSchema(); }
 
 Database::~Database() { sqlite3_close(m_database); }
 
@@ -132,6 +135,21 @@ std::unique_ptr<ITransaction> Database::startTransaction() {
   std::string operation = "BEGIN TRANSACTION";
   executeOperation(operation);
   return std::unique_ptr<ITransaction>(new Transaction(*this));
+}
+
+void Database::LoadDBSchema() {
+
+  std::unique_ptr<IRecordSet> temp =
+      executeQuery("SELECT name FROM sqlite_master WHERE type = 'table'");
+
+  if (temp->isCurrentRecordValid()) {
+    return;
+  }
+
+  std::ifstream t("../Resources/Database/schema.sql");
+  std::string schema((std::istreambuf_iterator<char>(t)),
+                     std::istreambuf_iterator<char>());
+  executeMultipleStatements(schema);
 }
 
 } // namespace sqlite

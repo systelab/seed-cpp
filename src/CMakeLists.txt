@@ -1,3 +1,15 @@
+function(copy_dir_tool input_file output_dir)
+    message("Copying directory ${input_file} to ${output_dir}")
+    get_filename_component(INPUTFILE ${input_file} ABSOLUTE)
+    get_filename_component(INPUTNAME ${input_file} NAME)
+    get_filename_component(OUTPUTDIR ${output_dir} ABSOLUTE)
+    add_custom_command(OUTPUT ${OUTPUTDIR}/${INPUTNAME}
+        COMMAND ${CMAKE_COMMAND} -E copy_directory ${INPUTFILE} ${OUTPUTDIR}/${INPUTNAME}
+        DEPENDS ${input_file}
+        COMMENT "Copying directory ${input_file}"
+    )
+endfunction()
+
 # configure cpp-sql-webserver-adapter as library
 include_directories(DbAdapterInterface)
 set(CPP_SQL_ADAPTER DbSQLiteAdapter)
@@ -18,6 +30,9 @@ file(GLOB_RECURSE CPP_BOOSTASIO_ADAPTER_SRC "${CPP_BOOSTASIO_ADAPTER}/*.cpp")
 file(GLOB_RECURSE CPP_BOOSTASIO_ADAPTER_HDR "${CPP_BOOSTASIO_ADAPTER}/*.h")
 add_library(${CPP_BOOSTASIO_ADAPTER} STATIC ${CPP_BOOSTASIO_ADAPTER_SRC} ${CPP_BOOSTASIO_ADAPTER_HDR})
 target_link_libraries(${CPP_BOOSTASIO_ADAPTER} ${CPP_WEBSERVER_INTERFACE} ${CONAN_LIBS})
+
+# Copy json schemas to build dir
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/SeedCppCore/Resources DESTINATION ${CMAKE_BINARY_DIR})
 
 # configure cpp-json-webserver-adapter as library
 include_directories(JSONAdapterInterface)
