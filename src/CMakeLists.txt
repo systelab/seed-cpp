@@ -1,15 +1,3 @@
-function(copy_dir_tool input_file output_dir)
-    message("Copying directory ${input_file} to ${output_dir}")
-    get_filename_component(INPUTFILE ${input_file} ABSOLUTE)
-    get_filename_component(INPUTNAME ${input_file} NAME)
-    get_filename_component(OUTPUTDIR ${output_dir} ABSOLUTE)
-    add_custom_command(OUTPUT ${OUTPUTDIR}/${INPUTNAME}
-        COMMAND ${CMAKE_COMMAND} -E copy_directory ${INPUTFILE} ${OUTPUTDIR}/${INPUTNAME}
-        DEPENDS ${input_file}
-        COMMENT "Copying directory ${input_file}"
-    )
-endfunction()
-
 # configure cpp-sql-webserver-adapter as library
 include_directories(DbAdapterInterface)
 set(CPP_SQL_ADAPTER DbSQLiteAdapter)
