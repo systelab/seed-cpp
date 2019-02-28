@@ -9,38 +9,40 @@
 namespace seed_cpp {
 namespace service {
 
-ResourceService::ResourceService() {}
+const std::string ResourceService::schemaPath = "../Resources/JSONSchemas/";
+const std::string ResourceService::schemaPatientPost =
+    "Endpoint/PatientsPostEndpoint.json";
+const std::string ResourceService::schemaPatientPut =
+    "Endpoint/PatientsPutEndpoint.json";
+const std::string ResourceService::schemaUserPost =
+    "Endpoint/UsersPostEndpoint.json";
+const std::string ResourceService::schemaUserPut =
+    "Endpoint/UsersPutEndpoint.json";
+const std::string ResourceService::schemaModelPatient = "Model/Patient.json";
+const std::string ResourceService::schemaModelAddress = "Model/Address.json";
+const std::string ResourceService::schemaModelUser = "Model/User.json";
+
+ResourceService::ResourceService() {
+
+  std::map<std::string, std::string> supportedJson = {
+      {"JSON_SCHEMA_ENDPOINT_PATIENTS_POST", schemaPatientPost},
+      {"JSON_SCHEMA_ENDPOINT_PATIENTS_PUT", schemaPatientPut},
+      {"JSON_SCHEMA_MODEL_PATIENT", schemaModelPatient},
+      {"JSON_SCHEMA_MODEL_ADDRESS", schemaModelAddress}};
+
+  for (auto i : supportedJson) {
+    std::ifstream t(schemaPath + i.second);
+    std::string schema((std::istreambuf_iterator<char>(t)),
+                       std::istreambuf_iterator<char>());
+    schemas_.insert(std::make_pair(i.first, schema));
+  }
+}
 
 ResourceService::~ResourceService() {}
 
 std::string
 ResourceService::loadResourceAsString(unsigned int resourceId,
                                       const std::string &resourceType) const {
-  //  size_t count = 0;
-  //  std::wstring resourceTypeWStr(resourceType.size(), L' ');
-  //  resourceTypeWStr.resize(std::mbstowcs(
-  //      &resourceTypeWStr[0], resourceType.c_str(), resourceType.size()));
-
-  //  HMODULE hndModule = GetModuleHandle(NULL);
-  //  HRSRC hndResource = FindResource(hndModule, MAKEINTRESOURCE(resourceId),
-  //                                   resourceTypeWStr.c_str());
-  //  if (!hndResource) {
-  //    throw std::runtime_error("Resource not found. Error: " +
-  //                             getSystemErrorMessage());
-  //  }
-
-  //  DWORD size = SizeofResource(NULL, hndResource);
-  //  HGLOBAL hndGlobal = LoadResource(NULL, hndResource);
-  //  if (!hndGlobal) {
-  //    throw std::runtime_error("Load resource " +
-  //                             std::to_string((long long)resourceId) +
-  //                             " failed. Error: " + getSystemErrorMessage());
-  //  }
-
-  //  LPVOID resource = LockResource(hndGlobal);
-  //  std::string resourceContent(reinterpret_cast<char *>(resource), size);
-
-  //  return resourceContent;
   (void)resourceId;
   return resourceType;
 }
@@ -48,46 +50,16 @@ ResourceService::loadResourceAsString(unsigned int resourceId,
 std::string
 ResourceService::loadResourceAsString(const std::string &resourceId,
                                       const std::string &resourceType) const {
-  //  std::wstring resourceIdWStr(resourceId.size(), L' ');
-  //  resourceIdWStr.resize(
-  //      std::mbstowcs(&resourceIdWStr[0], resourceId.c_str(),
-  //      resourceId.size()));
 
-  //  std::wstring resourceTypeWStr(resourceType.size(), L' ');
-  //  resourceTypeWStr.resize(std::mbstowcs(
-  //      &resourceTypeWStr[0], resourceType.c_str(), resourceType.size()));
+  if (resourceType != "JSON_SCHEMA") {
+    throw std::string("Not Supported resource type!.");
+  }
 
-  //  HMODULE hndModule = GetModuleHandle(NULL);
-  //  HRSRC hndResource =
-  //      FindResource(hndModule, resourceIdWStr.c_str(),
-  //      resourceTypeWStr.c_str());
-  //  if (!hndResource) {
-  //    throw std::runtime_error("Resource not found. Error: " +
-  //                             getSystemErrorMessage());
-  //  }
-
-  //  DWORD size = SizeofResource(NULL, hndResource);
-  //  HGLOBAL hndGlobal = LoadResource(NULL, hndResource);
-  //  if (!hndGlobal) {
-  //    throw std::runtime_error("Load resource " + resourceId +
-  //                             " failed. Error: " + getSystemErrorMessage());
-  //  }
-
-  //  LPVOID resource = LockResource(hndGlobal);
-  //  std::string resourceContent(reinterpret_cast<char *>(resource), size);
-
-  //  return resourceContent;
-  //}
-
-  // std::string ResourceService::getSystemErrorMessage() const {
-  //  WCHAR buffer[256];
-  //  FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, NULL, GetLastError(),
-  //                LANG_SYSTEM_DEFAULT, buffer, 256, NULL);
-
-  //  std::wstring bufferWstr(buffer);
-  //  return std::string(bufferWstr.begin(), bufferWstr.end());
-  (void)resourceId;
-  return resourceType;
+  if (schemas_.count(resourceId) == 1) {
+    return schemas_.find(resourceId)->second;
+  } else {
+    throw std::string("Schema not found!.");
+  }
 }
 
 } // namespace service
