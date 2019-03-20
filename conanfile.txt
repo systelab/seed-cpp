@@ -1,0 +1,18 @@
+[requires]
+boost/1.67.0@conan/stable
+rapidjson/1.1.0@bincrafters/stable
+sqlite3/3.27.2@bincrafters/stable
+OpenSSL/1.0.2n@conan/stable
+
+[generators]
+cmake
+
+[options]
+OpenSSL:shared=True
+sqlite3:shared=True
+boost:shared=True
+
+[imports]
+bin, *.dll -> ./bin
+lib, *.dylib* -> ./bin
+lib, *.so* -> ./bin
