@@ -8,24 +8,24 @@
 
 #include "WebServerAdapterInterface/Model/RequestHeaders.h"
 
+#include "JWTUtils/Services/ITokenParserService.h"
+
 #include <boost/date_time/posix_time/conversion.hpp>
 #include <vector>
 
 
 namespace seed_cpp { namespace service {
 
-	AuthorizationValidatorService::AuthorizationValidatorService(const IJWTValidatorService& jwtValidatorService,
-																 const IUserModelService& userModelService,
-																 const ITimeService& timeService)
-		:m_jwtValidatorService(jwtValidatorService)
-		,m_userModelService(userModelService)
+	AuthorizationValidatorService::AuthorizationValidatorService(const IUserModelService& userModelService,
+																 const ITimeService& timeService,
+																 const systelab::jwt::ITokenParserService& jwtParserService)
+		:m_userModelService(userModelService)
 		,m_timeService(timeService)
+		,m_jwtParserService(jwtParserService)
 	{
 	}
 
-	AuthorizationValidatorService::~AuthorizationValidatorService()
-	{
-	}
+	AuthorizationValidatorService::~AuthorizationValidatorService() = default;
 
 	bool AuthorizationValidatorService::validate(const systelab::web_server::RequestHeaders& headers) const
 	{
@@ -36,18 +36,24 @@ namespace seed_cpp { namespace service {
 		}
 
 		std::string jwtSecurityKey = "SeedCppRocks!";
-		std::map<std::string, std::string> claims;
-		if (!m_jwtValidatorService.validateJWT(authorizationToken, jwtSecurityKey, claims))
+		std::vector< std::pair<std::string, std::string> > claims;
+		if (!m_jwtParserService.validateJWT(authorizationToken, jwtSecurityKey, claims))
 		{
 			return false;
 		}
 
-		if (!validateIAT(claims))
+		std::map<std::string, std::string> claimsMap;
+		for (auto claim : claims)
+		{
+			claimsMap.insert(claim);
+		}
+
+		if (!validateIAT(claimsMap))
 		{
 			return false;
 		}
 
-		if (!validateSUB(claims))
+		if (!validateSUB(claimsMap))
 		{
 			return false;
 		}

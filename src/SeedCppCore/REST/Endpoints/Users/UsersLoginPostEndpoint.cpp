@@ -10,17 +10,19 @@
 
 #include "WebServerAdapterInterface/Model/Reply.h"
 
+#include "JWTUtils/Services/ITokenBuilderService.h"
+
 
 namespace seed_cpp { namespace rest {
 
 	UsersLoginPostEndpoint::UsersLoginPostEndpoint(const std::string& requestContent,
 												   const service::IUserModelService& userModelService,
-												   const service::IJWTBuilderService& jwtBuilderService,
-												   const service::ITimeService& timeService)
+												   const service::ITimeService& timeService,
+												   const systelab::jwt::ITokenBuilderService& jwtBuilderService)
 		:m_requestContent(requestContent)
 		,m_userModelService(userModelService)
-		,m_jwtBuilderService(jwtBuilderService)
 		,m_timeService(timeService)
+		,m_jwtBuilderService(jwtBuilderService)
 	{
 	}
 	
@@ -93,9 +95,11 @@ namespace seed_cpp { namespace rest {
 
 	std::string UsersLoginPostEndpoint::buildJWT(const std::string& login) const
 	{
-		std::map<std::string, std::string> claims;
-		claims.insert({"iat", std::to_string((long long) boost::posix_time::to_time_t(m_timeService.getCurrentLocalTime()))});
-		claims.insert({"sub", login});
+		std::string iat = std::to_string((long long)boost::posix_time::to_time_t(m_timeService.getCurrentLocalTime()));
+
+		std::vector< std::pair<std::string, std::string> > claims;
+		claims.push_back({"iat", iat});
+		claims.push_back({"sub", login});
 
 		std::string jwtSecurityKey = "SeedCppRocks!";
 		return m_jwtBuilderService.buildJWT(jwtSecurityKey, claims);

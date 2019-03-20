@@ -178,12 +178,11 @@ namespace seed_cpp { namespace rest {
 	std::unique_ptr<IEndpoint> EndpointsFactory::buildUsersLoginPostEndpoint(const EndpointRequestData &requestData)
 	{
 		const std::string& requestContent = requestData.getContent();
-		service::IUserModelService &userModelService = m_core.getServicesMgr().getUserModelService();
-		service::IJWTBuilderService &jwtBuilderService = m_core.getServicesMgr().getJWTBuilderService();
-		service::ITimeService &timeService = m_core.getServicesMgr().getTimeService();
+		service::IUserModelService& userModelService = m_core.getServicesMgr().getUserModelService();
+		service::ITimeService& timeService = m_core.getServicesMgr().getTimeService();
+		systelab::jwt::ITokenBuilderService& jwtBuilderService = m_core.getServicesMgr().getJWTTokenBuilderService();
 
-		return std::make_unique<UsersLoginPostEndpoint>(
-			requestContent, userModelService, jwtBuilderService, timeService);
+		return std::make_unique<UsersLoginPostEndpoint>(requestContent, userModelService, timeService, jwtBuilderService);
 	}
 
 }}

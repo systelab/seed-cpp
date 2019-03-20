@@ -5,12 +5,15 @@
 #include <string>
 
 
+namespace systelab { namespace jwt {
+	class ITokenBuilderService;
+}}
+
 namespace seed_cpp {
 	namespace model {
 		class User;
 	}
 	namespace service {
-		class IJWTBuilderService;
 		class ITimeService;
 		class IUserModelService;
 	}
@@ -23,8 +26,8 @@ namespace seed_cpp { namespace rest {
 	public:
 		UsersLoginPostEndpoint(const std::string& requestContent,
 							   const service::IUserModelService&,
-							   const service::IJWTBuilderService&,
-							   const service::ITimeService&);
+							   const service::ITimeService&,
+							   const systelab::jwt::ITokenBuilderService&);
 		virtual ~UsersLoginPostEndpoint();
 
 		bool hasAccess() const;
@@ -44,8 +47,8 @@ namespace seed_cpp { namespace rest {
 	private:
 		std::string m_requestContent;
 		const service::IUserModelService& m_userModelService;
-		const service::IJWTBuilderService& m_jwtBuilderService;
 		const service::ITimeService& m_timeService;
+		const systelab::jwt::ITokenBuilderService& m_jwtBuilderService;
 	};
 
 }}

@@ -3,8 +3,9 @@
 #include <memory>
 
 
-namespace systelab { namespace json_adapter {
-	class IJSONDocument;
+namespace systelab { namespace jwt {
+	class ITokenBuilderService;
+	class ITokenParserService;
 }}
 
 namespace seed_cpp { namespace service {
@@ -32,10 +33,8 @@ namespace seed_cpp { namespace service {
 
 		// Security services
 		virtual std::unique_ptr<IAuthorizationValidatorService> buildAuthorizationValidatorService() const = 0;
-		virtual std::unique_ptr<IJWTBuilderService> buildJWTBuilderService() const = 0;
-		virtual std::unique_ptr<IJWTValidatorService> buildJWTValidatorService() const = 0;
-		virtual std::unique_ptr<ISignatureService> buildSignatureService() const = 0;
-		virtual std::unique_ptr<IBase64EncodeService> buildBase64EncodeService() const = 0;
+		virtual std::unique_ptr<systelab::jwt::ITokenBuilderService> buildJWTTokenBuilderService() const = 0;
+		virtual std::unique_ptr<systelab::jwt::ITokenParserService> buildJWTTokenParserService() const = 0;
 
 		// Validator services
 		virtual std::unique_ptr<IJSONValidatorService> buildJSONValidatorService() const = 0;

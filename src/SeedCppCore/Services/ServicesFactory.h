@@ -21,8 +21,8 @@ namespace seed_cpp { namespace service {
 
 		// Security services
 		std::unique_ptr<IAuthorizationValidatorService> buildAuthorizationValidatorService() const;
-		std::unique_ptr<IJWTBuilderService> buildJWTBuilderService() const;
-		std::unique_ptr<IJWTValidatorService> buildJWTValidatorService() const;
+		std::unique_ptr<systelab::jwt::ITokenBuilderService> buildJWTTokenBuilderService() const;
+		std::unique_ptr<systelab::jwt::ITokenParserService> buildJWTTokenParserService() const;
 		std::unique_ptr<ISignatureService> buildSignatureService() const;
 		std::unique_ptr<IBase64EncodeService> buildBase64EncodeService() const;
 

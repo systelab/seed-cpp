@@ -14,6 +14,9 @@
 #include "Services/System/IUUIDGeneratorService.h"
 #include "Services/Validator/IJSONValidatorService.h"
 
+#include "JWTUtils/Services/ITokenBuilderService.h"
+#include "JWTUtils/Services/ITokenParserService.h"
+
 
 namespace seed_cpp { namespace service {
 
@@ -22,10 +25,8 @@ namespace seed_cpp { namespace service {
 		,m_patientModelService()
 		,m_userModelService()
 		,m_authorizationValidatorService()
-		,m_jwtBuilderService()
-		,m_jwtValidatorService()
-		,m_signatureService()
-		,m_base64EncodeService()
+		,m_jwtTokenBuilderService()
+		,m_jwtTokenParserService()
 		,m_jsonValidatorService()
 		,m_resourceService()
 		,m_timeService()
@@ -71,44 +72,24 @@ namespace seed_cpp { namespace service {
 		return *m_authorizationValidatorService;
 	}
 
-	IJWTBuilderService& ServicesMgr::getJWTBuilderService() const
+	systelab::jwt::ITokenBuilderService& ServicesMgr::getJWTTokenBuilderService() const
 	{
-		if (!m_jwtBuilderService.get())
+		if (!m_jwtTokenBuilderService.get())
 		{
-			m_jwtBuilderService = m_servicesFactory.buildJWTBuilderService();
+			m_jwtTokenBuilderService = m_servicesFactory.buildJWTTokenBuilderService();
 		}
 
-		return *m_jwtBuilderService;
+		return *m_jwtTokenBuilderService;
 	}
 
-	IJWTValidatorService& ServicesMgr::getJWTValidatorService() const
+	systelab::jwt::ITokenParserService& ServicesMgr::getJWTTokenParserService() const
 	{
-		if (!m_jwtValidatorService.get())
+		if (!m_jwtTokenParserService.get())
 		{
-			m_jwtValidatorService = m_servicesFactory.buildJWTValidatorService();
+			m_jwtTokenParserService = m_servicesFactory.buildJWTTokenParserService();
 		}
 
-		return *m_jwtValidatorService;
-	}
-
-	ISignatureService& ServicesMgr::getSignatureService() const
-	{
-		if (!m_signatureService.get())
-		{
-			m_signatureService = m_servicesFactory.buildSignatureService();
-		}
-
-		return *m_signatureService;
-	}
-
-	IBase64EncodeService& ServicesMgr::getBase64EncodeService() const
-	{
-		if (!m_base64EncodeService.get())
-		{
-			m_base64EncodeService = m_servicesFactory.buildBase64EncodeService();
-		}
-
-		return *m_base64EncodeService;
+		return *m_jwtTokenParserService;
 	}
 
 

@@ -10,7 +10,7 @@
 
 namespace seed_cpp { namespace service {
 
-	const std::string ResourceService::schemaPath = "../Resources/JSONSchemas/";
+	const std::string ResourceService::schemaPath = "JSONSchemas/";
 	const std::string ResourceService::schemaPatientPost = "Endpoint/PatientsPostEndpoint.json";
 	const std::string ResourceService::schemaPatientPut = "Endpoint/PatientsPutEndpoint.json";
 	const std::string ResourceService::schemaUserPost = "Endpoint/UsersPostEndpoint.json";

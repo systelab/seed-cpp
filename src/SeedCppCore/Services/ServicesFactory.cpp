@@ -8,14 +8,13 @@
 #include "Services/Model/PatientModelService.h"
 #include "Services/Model/UserModelService.h"
 #include "Services/Security/AuthorizationValidatorService.h"
-#include "Services/Security/Base64EncodeService.h"
-#include "Services/Security/JWTBuilderService.h"
-#include "Services/Security/JWTValidatorService.h"
-#include "Services/Security/SignatureService.h"
 #include "Services/System/ResourceService.h"
 #include "Services/System/TimeService.h"
 #include "Services/System/UUIDGeneratorService.h"
 #include "Services/Validator/JSONValidatorService.h"
+
+#include "JWTUtils/Services/TokenBuilderService.h"
+#include "JWTUtils/Services/TokenParserService.h"
 
 
 namespace seed_cpp { namespace service {
@@ -55,44 +54,23 @@ namespace seed_cpp { namespace service {
 	std::unique_ptr<IAuthorizationValidatorService> ServicesFactory::buildAuthorizationValidatorService() const
 	{
 		service::ServicesMgr& servicesMgr = m_core.getServicesMgr();
-		IJWTValidatorService& jwtValidatorService = servicesMgr.getJWTValidatorService();
-		IUserModelService& userModelService = servicesMgr.getUserModelService();
-		ITimeService& timeService = servicesMgr.getTimeService();
+		service::IUserModelService& userModelService = servicesMgr.getUserModelService();
+		service::ITimeService& timeService = servicesMgr.getTimeService();
+		systelab::jwt::ITokenParserService& jwtTokenParserService = servicesMgr.getJWTTokenParserService();
 
-		return std::make_unique<AuthorizationValidatorService>(jwtValidatorService, userModelService, timeService);
+		return std::make_unique<AuthorizationValidatorService>(userModelService, timeService, jwtTokenParserService);
 	}
 
-	std::unique_ptr<IJWTBuilderService> ServicesFactory::buildJWTBuilderService() const
+	std::unique_ptr<systelab::jwt::ITokenBuilderService> ServicesFactory::buildJWTTokenBuilderService() const
 	{
-		service::ServicesMgr& servicesMgr = m_core.getServicesMgr();
-		IBase64EncodeService& base64EncodeService = servicesMgr.getBase64EncodeService();
-		ISignatureService& signatureService = servicesMgr.getSignatureService();
-
 		systelab::json::IJSONAdapter& jsonAdapter = m_core.getJSONAdapter();
-
-		return std::make_unique<JWTBuilderService>(base64EncodeService, signatureService, jsonAdapter);
+		return std::make_unique<systelab::jwt::TokenBuilderService>(jsonAdapter);
 	}
 
-	std::unique_ptr<IJWTValidatorService> ServicesFactory::buildJWTValidatorService() const
+	std::unique_ptr<systelab::jwt::ITokenParserService> ServicesFactory::buildJWTTokenParserService() const
 	{
-		service::ServicesMgr& servicesMgr = m_core.getServicesMgr();
-		IBase64EncodeService& base64EncodeService = servicesMgr.getBase64EncodeService();
-		ISignatureService& signatureService = servicesMgr.getSignatureService();
-
 		systelab::json::IJSONAdapter& jsonAdapter = m_core.getJSONAdapter();
-
-		return std::make_unique<JWTValidatorService>(base64EncodeService, signatureService, jsonAdapter);
-	}
-
-	std::unique_ptr<ISignatureService> ServicesFactory::buildSignatureService() const
-	{
-		IBase64EncodeService& base64EncodeService = m_core.getServicesMgr().getBase64EncodeService();
-		return std::make_unique<SignatureService>(base64EncodeService);
-	}
-
-	std::unique_ptr<IBase64EncodeService> ServicesFactory::buildBase64EncodeService() const
-	{
-		return std::make_unique<Base64EncodeService>();
+		return std::make_unique<systelab::jwt::TokenParserService>(jsonAdapter);
 	}
 
 
