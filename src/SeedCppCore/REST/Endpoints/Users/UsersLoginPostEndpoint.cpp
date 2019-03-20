@@ -5,7 +5,6 @@
 #include "REST/Helpers/ReplyBuilderHelper.h"
 #include "REST/Helpers/RequestURLEncodedParserHelper.h"
 #include "Services/Model/IUserModelService.h"
-#include "Services/Security/IJWTBuilderService.h"
 #include "Services/System/ITimeService.h"
 
 #include "WebServerAdapterInterface/Model/Reply.h"

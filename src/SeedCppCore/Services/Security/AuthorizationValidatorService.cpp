@@ -3,7 +3,6 @@
 
 #include "Model/User.h"
 #include "Services/Model/IUserModelService.h"
-#include "Services/Security/IJWTValidatorService.h"
 #include "Services/System/ITimeService.h"
 
 #include "WebServerAdapterInterface/Model/RequestHeaders.h"
