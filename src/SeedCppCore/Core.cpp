@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "Core.h"
 
 #include "DAL/DAO/ILoadDAO.h"
@@ -14,16 +15,16 @@
 #include "Services/Model/IUserModelService.h"
 #include "Services/System/IUUIDGeneratorService.h"
 
-#include "IDatabase.h"
-#include "IJSONAdapter.h"
-#include "IWebServer.h"
+#include "DbAdapterInterface/IDatabase.h"
+#include "JSONAdapterInterface/IJSONAdapter.h"
+#include "WebServerAdapterInterface/IServer.h"
 
 
 namespace seed_cpp {
 
 	Core::Core(std::unique_ptr<systelab::db::IDatabase> database,
-			   std::unique_ptr<systelab::web_server::IWebServer> webServer,
-			   std::unique_ptr<systelab::json_adapter::IJSONAdapter> jsonAdapter)
+			   std::unique_ptr<systelab::web_server::IServer> webServer,
+			   std::unique_ptr<systelab::json::IJSONAdapter> jsonAdapter)
 		:m_database(std::move(database))
 		,m_webServer(std::move(webServer))
 		,m_jsonAdapter(std::move(jsonAdapter))
@@ -37,9 +38,7 @@ namespace seed_cpp {
 		m_endpointsFactory = std::make_unique<rest::EndpointsFactory>(*this);
 	}
 
-	Core::~Core()
-	{
-	}
+	Core::~Core() = default;
 
 	void Core::execute()
 	{
@@ -52,12 +51,12 @@ namespace seed_cpp {
 		return *m_database;
 	}
 
-	systelab::web_server::IWebServer& Core::getWebServer() const
+	systelab::web_server::IServer& Core::getWebServer() const
 	{
 		return *m_webServer;
 	}
 
-	systelab::json_adapter::IJSONAdapter& Core::getJSONAdapter() const
+	systelab::json::IJSONAdapter& Core::getJSONAdapter() const
 	{
 		return *m_jsonAdapter;
 	}
@@ -122,8 +121,7 @@ namespace seed_cpp {
 
 	void Core::initializeWebServer()
 	{
-		std::unique_ptr<systelab::web_server::IWebService> restWebService;
-		restWebService = std::make_unique<rest::RESTAPIWebService>(getEndpointsFactory());
+		auto restWebService = std::make_unique<rest::RESTAPIWebService>(getEndpointsFactory());
 		m_webServer->registerWebService(std::move(restWebService));
 
 		m_webServer->start();

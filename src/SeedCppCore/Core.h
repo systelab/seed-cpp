@@ -1,17 +1,14 @@
 #pragma once
 
-#include <memory>
-
-
 namespace systelab {
 	namespace db {
 		class IDatabase;
 	}
-	namespace json_adapter {
+	namespace json {
 		class IJSONAdapter;
 	}
 	namespace web_server {
-		class IWebServer;
+		class IServer;
 	}
 }
 
@@ -39,15 +36,15 @@ namespace seed_cpp {
 	{
 	public:
 		Core(std::unique_ptr<systelab::db::IDatabase>,
-			 std::unique_ptr<systelab::web_server::IWebServer>,
-			 std::unique_ptr<systelab::json_adapter::IJSONAdapter>);
+			 std::unique_ptr<systelab::web_server::IServer>,
+			 std::unique_ptr<systelab::json::IJSONAdapter>);
 		virtual ~Core();
 
 		void execute();
 
 		systelab::db::IDatabase& getDatabase() const;
-		systelab::web_server::IWebServer& getWebServer() const;
-		systelab::json_adapter::IJSONAdapter& getJSONAdapter() const;
+		systelab::web_server::IServer& getWebServer() const;
+		systelab::json::IJSONAdapter& getJSONAdapter() const;
 
 		model::Model& getModel() const;
 		dal::IDbTranslatorsFactory& getDbTranslatorsFactory() const;
@@ -63,8 +60,8 @@ namespace seed_cpp {
 
 	private:
 		std::unique_ptr<systelab::db::IDatabase> m_database;
-		std::unique_ptr<systelab::web_server::IWebServer> m_webServer;
-		std::unique_ptr<systelab::json_adapter::IJSONAdapter> m_jsonAdapter;
+		std::unique_ptr<systelab::web_server::IServer> m_webServer;
+		std::unique_ptr<systelab::json::IJSONAdapter> m_jsonAdapter;
 
 		std::unique_ptr<model::Model> m_model;
 		std::unique_ptr<dal::IDbTranslatorsFactory> m_dbTranslatorsFactory;
