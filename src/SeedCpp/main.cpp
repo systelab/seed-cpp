@@ -1,62 +1,113 @@
-#include "Core.h"
+#include "stdafx.h"
+#include "SeedCppCore/Core.h"
 
-#include "../DbSQLiteAdapter/Connection.h"
-#include "../DbSQLiteAdapter/ConnectionConfiguration.h"
+#include "DbSQLiteAdapter/Connection.h"
+#include "DbSQLiteAdapter/ConnectionConfiguration.h"
 
-#include "../RapidJSONAdapter/JSONAdapter.h"
+#include "RapidJSONAdapter/JSONAdapter.h"
 
-#include "../WebServer/WebServer.h"
-#include "../WebServerInterface/Model/CORSConfiguration.h"
-#include "../WebServerInterface/Model/Configuration.h"
+#include "BoostAsioWebServerAdapter/Server.h"
+#include "WebServerAdapterInterface/Model/CORSConfiguration.h"
+#include "WebServerAdapterInterface/Model/Configuration.h"
 
-int main() {
-  try {
-    // Database
-    systelab::db::sqlite::ConnectionConfiguration databaseConfiguration(
-        "./seed_cpp.db");
-    systelab::db::sqlite::Connection databaseConnection;
-    std::unique_ptr<systelab::db::IDatabase> database =
-        databaseConnection.loadDatabase(databaseConfiguration);
+#include <boost/filesystem.hpp>
 
-    // Web server
-    std::string hostAddress = "127.0.0.1";
-    unsigned int port = 8080;
-    unsigned int threadPoolSize = 5;
-    systelab::web_server::Configuration webServerConfiguration(
-        hostAddress, port, threadPoolSize);
 
-    systelab::web_server::CORSConfiguration &corsConfiguration =
-        webServerConfiguration.getCORSConfiguration();
-    corsConfiguration.setEnabled(true);
-    corsConfiguration.addAllowedOrigin("*");
-    corsConfiguration.setAllowedHeaders(
-        "origin, content-type, accept, authorization, Etag, if-none-match");
-    corsConfiguration.setAllowedCredentials(true);
-    corsConfiguration.setAllowedMethods(
-        "GET, POST, PUT, DELETE, OPTIONS, HEAD");
-    corsConfiguration.setMaxAge(1209600);
-    corsConfiguration.setExposedHeaders(
-        "origin, content-type, accept, authorization, ETag, if-none-match");
+void readFileToString(const std::string& filename, std::string& contents)
+{
+	std::ifstream ifs(filename);
+	if (ifs)
+	{
+		ifs.seekg(0, std::ios::end);
+		contents.resize(static_cast<unsigned int>(ifs.tellg()));
+		ifs.seekg(0, std::ios::beg);
+		ifs.read(&contents[0], contents.size());
+		ifs.close();
+	}
+	else
+	{
+		throw std::runtime_error("Unable to find SQL file");
+	}
+}
 
-    std::unique_ptr<systelab::web_server::IWebServer> webServer(
-        new systelab::web_server::WebServer(webServerConfiguration));
+std::unique_ptr<systelab::db::IDatabase> loadDatabase()
+{
+	bool existsBD = boost::filesystem::exists("./seed_cpp.db");
 
-    // JSON adapter
-    std::unique_ptr<systelab::json_adapter::IJSONAdapter> jsonAdapter =
-        std::make_unique<
-            systelab::json_adapter::rapidjson_adapter::JSONAdapter>();
+	systelab::db::sqlite::ConnectionConfiguration databaseConfiguration("./seed_cpp.db");
+	systelab::db::sqlite::Connection databaseConnection;
+	std::unique_ptr<systelab::db::IDatabase> database = databaseConnection.loadDatabase(databaseConfiguration);
 
-    // Seed Core
-    seed_cpp::Core core(std::move(database), std::move(webServer),
-                        std::move(jsonAdapter));
-    core.execute();
+	if (!existsBD && database)
+	{
+		std::string databaseSchemaSQL;
+		readFileToString("./Database/schema.sql", databaseSchemaSQL);
+		database->executeMultipleStatements(databaseSchemaSQL);
+	}
 
-    std::cout << "Seed core is now running..." << std::endl;
-    while (true) {
-    }
-  } catch (std::exception &e) {
-    std::cout << "Unable to start seed core:" << std::endl << e.what();
-  }
+	return database;
+}
 
-  return 0;
+std::unique_ptr<systelab::web_server::IServer> loadWebServer()
+{
+	std::string hostAddress = "127.0.0.1";
+	unsigned int port = 8080;
+	unsigned int threadPoolSize = 5;
+	systelab::web_server::Configuration webServerConfiguration(hostAddress, port, threadPoolSize);
+
+	systelab::web_server::CORSConfiguration &corsConfiguration = webServerConfiguration.getCORSConfiguration();
+	corsConfiguration.setEnabled(true);
+	corsConfiguration.addAllowedOrigin("*");
+	corsConfiguration.addAllowedHeader("origin");
+	corsConfiguration.addAllowedHeader("content-type");
+	corsConfiguration.addAllowedHeader("accept");
+	corsConfiguration.addAllowedHeader("authorization");
+	corsConfiguration.addAllowedHeader("Etag");
+	corsConfiguration.addAllowedHeader("if-none-match");
+	corsConfiguration.setAllowedCredentials(true);
+	corsConfiguration.addAllowedMethod("GET");
+	corsConfiguration.addAllowedMethod("POST");
+	corsConfiguration.addAllowedMethod("PUT");
+	corsConfiguration.addAllowedMethod("DELETE");
+	corsConfiguration.addAllowedMethod("OPTIONS");
+	corsConfiguration.addAllowedMethod("HEAD");
+	corsConfiguration.setMaxAge(1209600);
+	corsConfiguration.addExposedHeader("origin");
+	corsConfiguration.addExposedHeader("content-type");
+	corsConfiguration.addExposedHeader("accept");
+	corsConfiguration.addExposedHeader("authorization");
+	corsConfiguration.addExposedHeader("ETag");
+	corsConfiguration.addExposedHeader("if-none-match");
+
+	return std::make_unique<systelab::web_server::boostasio::Server>(webServerConfiguration);
+}
+
+std::unique_ptr<systelab::json::IJSONAdapter> loadJSONAdapter()
+{
+	return std::make_unique<systelab::json::rapidjson::JSONAdapter>();
+}
+
+
+int main()
+{
+	try
+	{
+		std::unique_ptr<systelab::db::IDatabase> database = loadDatabase();
+		std::unique_ptr<systelab::web_server::IServer> webServer = loadWebServer();
+		std::unique_ptr<systelab::json::IJSONAdapter> jsonAdapter = loadJSONAdapter();
+
+		seed_cpp::Core core(std::move(database), std::move(webServer), std::move(jsonAdapter));
+		core.execute();
+
+		std::cout << "Seed core is now running..." << std::endl;
+		while (true)
+		{
+		}
+	}
+	catch (std::exception &e)
+	{
+		std::cout << "Unable to start seed core:" << std::endl << e.what();
+	}
+
+	return 0;
 }
