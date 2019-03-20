@@ -9,6 +9,7 @@ set(SEED_CPP_CORE SeedCppCore)
 file(GLOB_RECURSE SEED_CPP_CORE_SRC "*.cpp")
 file(GLOB_RECURSE SEED_CPP_CORE_HDR "*.h")
 add_library(${SEED_CPP_CORE} STATIC ${SEED_CPP_CORE_SRC} ${SEED_CPP_CORE_HDR})
+target_link_libraries(${SEED_CPP_CORE} ${CONAN_LIBS})
 
 #Configure source groups
 foreach(FILE ${SEED_CPP_CORE_SRC} ${SEED_CPP_CORE_HDR}) 
