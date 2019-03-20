@@ -3,11 +3,11 @@
 #include "Model/EntityMgr.h"
 #include "REST/Endpoints/IEndpoint.h"
 
-#include "Model/RequestHeaders.h"
-#include "Model/RequestQueryStrings.h"
+#include "WebServerAdapterInterface/Model/RequestHeaders.h"
+#include "WebServerAdapterInterface/Model/RequestQueryStrings.h"
 
 
-namespace systelab { namespace json_adapter {
+namespace systelab { namespace json {
 	class IJSONAdapter;
 }}
 
@@ -34,7 +34,7 @@ namespace seed_cpp { namespace rest {
 							   const systelab::web_server::RequestQueryStrings&,
 							   model::EntityMgr<model::Patient>&,
 							   dal::IJSONTranslatorsFactory&,
-							   systelab::json_adapter::IJSONAdapter&,
+							   systelab::json::IJSONAdapter&,
 							   service::IAuthorizationValidatorService&);
 		virtual ~PatientsGetAllEndpoint();
 
@@ -61,7 +61,7 @@ namespace seed_cpp { namespace rest {
 		const systelab::web_server::RequestQueryStrings m_queryStrings;
 		model::EntityMgr<model::Patient>& m_patientMgr;
 		dal::IJSONTranslatorsFactory& m_jsonTranslatorsFactory;
-		systelab::json_adapter::IJSONAdapter& m_jsonAdapter;
+		systelab::json::IJSONAdapter& m_jsonAdapter;
 		service::IAuthorizationValidatorService& m_authorizationValidatorService;
 	};
 

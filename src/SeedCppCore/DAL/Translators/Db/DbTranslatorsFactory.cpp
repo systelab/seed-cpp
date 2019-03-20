@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "DbTranslatorsFactory.h"
 
 #include "DAL/Translators/Db/AddressDbTranslator.h"

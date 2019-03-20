@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "PatientsGetEndpoint.h"
 
 #include "DAL/Translators/JSON/IJSONSaveTranslator.h"
@@ -6,10 +7,10 @@
 #include "REST/Helpers/ReplyBuilderHelper.h"
 #include "Services/Security/IAuthorizationValidatorService.h"
 
-#include "IJSONAdapter.h"
-#include "IJSONDocument.h"
+#include "JSONAdapterInterface/IJSONAdapter.h"
+#include "JSONAdapterInterface/IJSONDocument.h"
 
-#include "Model/Reply.h"
+#include "WebServerAdapterInterface/Model/Reply.h"
 
 
 namespace seed_cpp { namespace rest {
@@ -18,7 +19,7 @@ namespace seed_cpp { namespace rest {
 											 const std::string& id,
 											 model::EntityMgr<model::Patient>& patientMgr,
 											 dal::IJSONTranslatorsFactory& jsonTranslatorsFactory,
-											 systelab::json_adapter::IJSONAdapter& jsonAdapter,
+											 systelab::json::IJSONAdapter& jsonAdapter,
 											 service::IAuthorizationValidatorService& authorizationValidatorService)
 		:m_headers(headers)
 		,m_id(id)
@@ -29,9 +30,7 @@ namespace seed_cpp { namespace rest {
 	{
 	}
 	
-	PatientsGetEndpoint::~PatientsGetEndpoint()
-	{
-	}
+	PatientsGetEndpoint::~PatientsGetEndpoint() = default;
 
 	bool PatientsGetEndpoint::hasAccess() const
 	{

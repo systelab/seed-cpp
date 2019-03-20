@@ -1,9 +1,5 @@
 #pragma once
 
-#include <string>
-#include <boost/optional.hpp>
-
-
 namespace seed_cpp { namespace model {
 
 	class Address

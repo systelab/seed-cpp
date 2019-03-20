@@ -1,22 +1,29 @@
+#include "stdafx.h"
 #include "Model.h"
 
 #include "Model/Patient.h"
 #include "Model/User.h"
 
-namespace seed_cpp {
-namespace model {
 
-Model::Model()
-    : m_userMgr(std::make_unique<EntityMgr<User>>()),
-      m_patientMgr(std::make_unique<EntityMgr<Patient>>()) {}
+namespace seed_cpp { namespace model {
 
-Model::~Model() {}
+	Model::Model()
+		:m_userMgr(std::make_unique<EntityMgr<User>>())
+		,m_patientMgr(std::make_unique<EntityMgr<Patient>>())
+	{
+	}
 
-model::EntityMgr<User> &Model::getUserMgr() const { return *m_userMgr; }
+	Model::~Model() = default;
 
-model::EntityMgr<Patient> &Model::getPatientMgr() const {
-  return *m_patientMgr;
-}
+	model::EntityMgr<User> &Model::getUserMgr() const
+	{
+		return *m_userMgr;
+	}
 
-} // namespace model
-} // namespace seed_cpp
+	model::EntityMgr<Patient> &Model::getPatientMgr() const
+	{
+		return *m_patientMgr;
+	}
+
+}}
+

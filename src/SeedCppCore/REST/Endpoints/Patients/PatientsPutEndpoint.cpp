@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "PatientsPutEndpoint.h"
 
 #include "DAL/Translators/JSON/IJSONLoadTranslator.h"
@@ -9,10 +10,10 @@
 #include "Services/Security/IAuthorizationValidatorService.h"
 #include "Services/Validator/IJSONValidatorService.h"
 
-#include "IJSONAdapter.h"
-#include "IJSONDocument.h"
+#include "JSONAdapterInterface/IJSONAdapter.h"
+#include "JSONAdapterInterface/IJSONDocument.h"
 
-#include "Model/Reply.h"
+#include "WebServerAdapterInterface/Model/Reply.h"
 
 
 namespace seed_cpp { namespace rest {
@@ -21,7 +22,7 @@ namespace seed_cpp { namespace rest {
 											 const std::string& patientId,
 											 const std::string& requestContent,
 											 dal::IJSONTranslatorsFactory& jsonTranslatorsFactory,
-											 systelab::json_adapter::IJSONAdapter& jsonAdapter,
+											 systelab::json::IJSONAdapter& jsonAdapter,
 											 service::IAuthorizationValidatorService& authorizationValidatorService,
 											 service::IJSONValidatorService& jsonValidatorService,
 											 service::IPatientModelService& patientModelService)
@@ -36,9 +37,7 @@ namespace seed_cpp { namespace rest {
 	{
 	}
 	
-	PatientsPutEndpoint::~PatientsPutEndpoint()
-	{
-	}
+	PatientsPutEndpoint::~PatientsPutEndpoint() = default;
 
 	bool PatientsPutEndpoint::hasAccess() const
 	{
@@ -47,7 +46,7 @@ namespace seed_cpp { namespace rest {
 
 	std::unique_ptr<systelab::web_server::Reply> PatientsPutEndpoint::execute()
 	{
-		std::unique_ptr<systelab::json_adapter::IJSONDocument> jsonRequest = m_jsonAdapter.buildDocumentFromString(m_requestContent);
+		std::unique_ptr<systelab::json::IJSONDocument> jsonRequest = m_jsonAdapter.buildDocumentFromString(m_requestContent);
 		if (!jsonRequest)
 		{
 			return ReplyBuilderHelper::build(systelab::web_server::Reply::BAD_REQUEST);
@@ -61,7 +60,7 @@ namespace seed_cpp { namespace rest {
 		{
 			auto jsonResponse = m_jsonAdapter.buildEmptyDocument();
 			auto& jsonRootValue = jsonResponse->getRootValue();
-			jsonRootValue.setType(systelab::json_adapter::OBJECT_TYPE);
+			jsonRootValue.setType(systelab::json::OBJECT_TYPE);
 			jsonRootValue.addMember("reason", exc.toString());
 			return ReplyBuilderHelper::build(systelab::web_server::Reply::BAD_REQUEST, jsonResponse->serialize());
 		}

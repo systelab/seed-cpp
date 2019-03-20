@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "BaseEntity.h"
 
 #include "Address.h"

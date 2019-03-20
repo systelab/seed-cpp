@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "RouteFragment.h"
 
 
@@ -9,9 +10,7 @@ namespace seed_cpp { namespace rest {
 		m_value = m_isParameter ? fragment.substr(1) : fragment;
 	}
 
-	RouteFragment::~RouteFragment()
-	{
-	}
+	RouteFragment::~RouteFragment() = default;
 
 	bool RouteFragment::isParameter() const
 	{

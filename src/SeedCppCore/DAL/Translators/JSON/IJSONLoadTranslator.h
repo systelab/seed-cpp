@@ -1,6 +1,6 @@
 #pragma once
 
-#include "IJSONValue.h"
+#include "JSONAdapterInterface/IJSONValue.h"
 
 
 namespace seed_cpp { namespace dal {
@@ -10,7 +10,7 @@ namespace seed_cpp { namespace dal {
 	public:
 		virtual ~IJSONLoadTranslator() {}
 
-		virtual void loadEntityFromJSON(const systelab::json_adapter::IJSONValue&) = 0;
+		virtual void loadEntityFromJSON(const systelab::json::IJSONValue&) = 0;
 	};
 
 }}

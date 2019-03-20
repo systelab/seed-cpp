@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "PatientJSONTranslator.h"
 
 #include "Model/Address.h"
@@ -11,13 +12,11 @@ namespace seed_cpp { namespace dal {
 	{
 	}
 
-	PatientJSONSaveTranslator::~PatientJSONSaveTranslator()
-	{
-	}
+	PatientJSONSaveTranslator::~PatientJSONSaveTranslator() = default;
 
-	void PatientJSONSaveTranslator::saveEntityToJSON(systelab::json_adapter::IJSONValue& jsonPatient) const
+	void PatientJSONSaveTranslator::saveEntityToJSON(systelab::json::IJSONValue& jsonPatient) const
 	{
-		jsonPatient.setType(systelab::json_adapter::OBJECT_TYPE);
+		jsonPatient.setType(systelab::json::OBJECT_TYPE);
 		jsonPatient.addMember("id", *m_patient.getId());
 		jsonPatient.addMember("surname", m_patient.getSurname());
 		jsonPatient.addMember("name", m_patient.getName());
@@ -25,7 +24,7 @@ namespace seed_cpp { namespace dal {
 		jsonPatient.addMember("dob", boost::posix_time::to_iso_string(m_patient.getDob()));
 
 		model::Address& address = m_patient.getAddress();
-		std::unique_ptr<systelab::json_adapter::IJSONValue> jsonAddress = jsonPatient.buildValue(systelab::json_adapter::OBJECT_TYPE);
+		std::unique_ptr<systelab::json::IJSONValue> jsonAddress = jsonPatient.buildValue(systelab::json::OBJECT_TYPE);
 		jsonAddress->addMember("coordinates", address.getCoordinates());
 		jsonAddress->addMember("street", address.getStreet());
 		jsonAddress->addMember("city", address.getCity());
@@ -39,11 +38,9 @@ namespace seed_cpp { namespace dal {
 	{
 	}
 
-	PatientJSONLoadTranslator::~PatientJSONLoadTranslator()
-	{
-	}
+	PatientJSONLoadTranslator::~PatientJSONLoadTranslator() = default;
 
-	void PatientJSONLoadTranslator::loadEntityFromJSON(const systelab::json_adapter::IJSONValue& jsonPatient)
+	void PatientJSONLoadTranslator::loadEntityFromJSON(const systelab::json::IJSONValue& jsonPatient)
 	{
 		if (jsonPatient.hasObjectMember("surname"))
 		{
@@ -71,7 +68,7 @@ namespace seed_cpp { namespace dal {
 
 		if (jsonPatient.hasObjectMember("address"))
 		{
-			const systelab::json_adapter::IJSONValue& jsonAddress = jsonPatient.getObjectMemberValue("address");
+			const systelab::json::IJSONValue& jsonAddress = jsonPatient.getObjectMemberValue("address");
 			std::string coordinates = jsonAddress.getObjectMemberValue("coordinates").getString();
 			std::string street = jsonAddress.getObjectMemberValue("street").getString();
 			std::string city = jsonAddress.getObjectMemberValue("city").getString();

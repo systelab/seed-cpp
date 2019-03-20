@@ -2,12 +2,8 @@
 
 #include "REST/Router/RouteParam.h"
 
-#include "Model/RequestHeaders.h"
-#include "Model/RequestQueryStrings.h"
-
-#include <memory>
-#include <string>
-#include <vector>
+#include "WebServerAdapterInterface/Model/RequestHeaders.h"
+#include "WebServerAdapterInterface/Model/RequestQueryStrings.h"
 
 
 namespace seed_cpp { namespace rest {

@@ -1,29 +1,26 @@
 #pragma once
 
 #include "IDatabaseEntityTranslator.h"
-#include <string>
 
-namespace seed_cpp {
-namespace model {
-class Address;
-}
-} // namespace seed_cpp
 
-namespace seed_cpp {
-namespace dal {
+namespace seed_cpp { namespace model {
+	class Address;
+}}
 
-class AddressDbTranslator : public IDatabaseEntityTranslator {
-public:
-  AddressDbTranslator(const std::string &patientId, model::Address &);
-  virtual ~AddressDbTranslator();
+namespace seed_cpp { namespace dal {
 
-  void fillEntityFromRecord(const systelab::db::ITableRecord &);
-  void fillRecordFromEntity(systelab::db::ITableRecord &) const;
+	class AddressDbTranslator : public IDatabaseEntityTranslator
+	{
+	public:
+		AddressDbTranslator(const std::string& patientId, model::Address&);
+		virtual ~AddressDbTranslator();
 
-private:
-  std::string m_patientId;
-  model::Address &m_address;
-};
+		void fillEntityFromRecord(const systelab::db::ITableRecord&);
+		void fillRecordFromEntity(systelab::db::ITableRecord &) const;
 
-} // namespace dal
-}; // namespace seed_cpp
+	private:
+		std::string m_patientId;
+		model::Address &m_address;
+	};
+
+}}

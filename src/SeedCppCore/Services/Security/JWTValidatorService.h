@@ -5,7 +5,7 @@
 #include <vector>
 
 
-namespace systelab { namespace json_adapter {
+namespace systelab { namespace json {
 	class IJSONAdapter;
 }}
 
@@ -19,7 +19,7 @@ namespace seed_cpp { namespace service {
 	public:
 		JWTValidatorService(const IBase64EncodeService&,
 							const ISignatureService&,
-							const systelab::json_adapter::IJSONAdapter&);
+							const systelab::json::IJSONAdapter&);
 		virtual ~JWTValidatorService();
 
 		bool validateJWT(const std::string& token, const std::string& key,
@@ -34,7 +34,7 @@ namespace seed_cpp { namespace service {
 	private:
 		const IBase64EncodeService& m_base64EncodeService;
 		const ISignatureService& m_signatureService;
-		const systelab::json_adapter::IJSONAdapter& m_jsonAdapter;
+		const systelab::json::IJSONAdapter& m_jsonAdapter;
 	};
 
 }}

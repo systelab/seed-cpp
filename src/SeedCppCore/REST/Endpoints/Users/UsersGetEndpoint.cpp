@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "UsersGetEndpoint.h"
 
 #include "DAL/Translators/JSON/IJSONSaveTranslator.h"
@@ -6,20 +7,20 @@
 #include "REST/Helpers/ReplyBuilderHelper.h"
 #include "Services/Security/IAuthorizationValidatorService.h"
 
-#include "IJSONAdapter.h"
-#include "IJSONDocument.h"
+#include "JSONAdapterInterface/IJSONAdapter.h"
+#include "JSONAdapterInterface/IJSONDocument.h"
 
-#include "Model/Reply.h"
+#include "WebServerAdapterInterface/Model/Reply.h"
 
 
 namespace seed_cpp { namespace rest {
 
 	UsersGetEndpoint::UsersGetEndpoint(const systelab::web_server::RequestHeaders& headers,
-											 const std::string& id,
-											 model::EntityMgr<model::User>& userMgr,
-											 dal::IJSONTranslatorsFactory& jsonTranslatorsFactory,
-											 systelab::json_adapter::IJSONAdapter& jsonAdapter,
-											 service::IAuthorizationValidatorService& authorizationValidatorService)
+									   const std::string& id,
+									   model::EntityMgr<model::User>& userMgr,
+									   dal::IJSONTranslatorsFactory& jsonTranslatorsFactory,
+									   systelab::json::IJSONAdapter& jsonAdapter,
+									   service::IAuthorizationValidatorService& authorizationValidatorService)
 		:m_headers(headers)
 		,m_id(id)
 		,m_userMgr(userMgr)
@@ -29,9 +30,7 @@ namespace seed_cpp { namespace rest {
 	{
 	}
 	
-	UsersGetEndpoint::~UsersGetEndpoint()
-	{
-	}
+	UsersGetEndpoint::~UsersGetEndpoint() = default;
 
 	bool UsersGetEndpoint::hasAccess() const
 	{

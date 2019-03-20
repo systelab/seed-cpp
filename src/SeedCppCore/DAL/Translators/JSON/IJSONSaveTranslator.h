@@ -1,7 +1,7 @@
 #pragma once
 
-#include "IJSONDocument.h"
-#include "IJSONValue.h"
+#include "JSONAdapterInterface/IJSONDocument.h"
+#include "JSONAdapterInterface/IJSONValue.h"
 
 
 namespace seed_cpp { namespace dal {
@@ -11,7 +11,7 @@ namespace seed_cpp { namespace dal {
 	public:
 		virtual ~IJSONSaveTranslator() {}
 
-		virtual void saveEntityToJSON(systelab::json_adapter::IJSONValue&) const = 0;
+		virtual void saveEntityToJSON(systelab::json::IJSONValue&) const = 0;
 	};
 
 }}

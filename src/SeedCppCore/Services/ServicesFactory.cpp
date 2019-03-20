@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "ServicesFactory.h"
 
 #include "Core.h"
@@ -67,7 +68,7 @@ namespace seed_cpp { namespace service {
 		IBase64EncodeService& base64EncodeService = servicesMgr.getBase64EncodeService();
 		ISignatureService& signatureService = servicesMgr.getSignatureService();
 
-		systelab::json_adapter::IJSONAdapter& jsonAdapter = m_core.getJSONAdapter();
+		systelab::json::IJSONAdapter& jsonAdapter = m_core.getJSONAdapter();
 
 		return std::make_unique<JWTBuilderService>(base64EncodeService, signatureService, jsonAdapter);
 	}
@@ -78,7 +79,7 @@ namespace seed_cpp { namespace service {
 		IBase64EncodeService& base64EncodeService = servicesMgr.getBase64EncodeService();
 		ISignatureService& signatureService = servicesMgr.getSignatureService();
 
-		systelab::json_adapter::IJSONAdapter& jsonAdapter = m_core.getJSONAdapter();
+		systelab::json::IJSONAdapter& jsonAdapter = m_core.getJSONAdapter();
 
 		return std::make_unique<JWTValidatorService>(base64EncodeService, signatureService, jsonAdapter);
 	}
@@ -99,7 +100,7 @@ namespace seed_cpp { namespace service {
 	std::unique_ptr<IJSONValidatorService> ServicesFactory::buildJSONValidatorService() const
 	{
 		service::IResourceService& resourceService = m_core.getServicesMgr().getResourceService();
-		systelab::json_adapter::IJSONAdapter& jsonAdapter = m_core.getJSONAdapter();
+		systelab::json::IJSONAdapter& jsonAdapter = m_core.getJSONAdapter();
 
 		return std::make_unique<JSONValidatorService>(resourceService, jsonAdapter);
 	}

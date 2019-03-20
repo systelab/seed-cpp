@@ -3,9 +3,6 @@
 #include "REST/Router/RouteFragment.h"
 
 #include <functional>
-#include <memory>
-#include <string>
-#include <vector>
 
 
 namespace systelab { namespace web_server {

@@ -1,9 +1,10 @@
+#include "stdafx.h"
 #include "DbTransactionDAO.h"
 
 #include "DAL/DAO/ITransactionDAOMgr.h"
 
-#include "IDatabase.h"
-#include "ITransaction.h"
+#include "DbAdapterInterface/IDatabase.h"
+#include "DbAdapterInterface/ITransaction.h"
 
 
 namespace seed_cpp { namespace dal {

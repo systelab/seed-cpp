@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "ServicesMgr.h"
 
 #include "Services/IServicesFactory.h"

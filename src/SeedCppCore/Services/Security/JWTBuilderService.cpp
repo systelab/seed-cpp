@@ -1,11 +1,12 @@
+#include "stdafx.h"
 #include "JWTBuilderService.h"
 
 #include "Services/Security/IBase64EncodeService.h"
 #include "Services/Security/ISignatureService.h"
 
-#include "IJSONAdapter.h"
-#include "IJSONDocument.h"
-#include "IJSONValue.h"
+#include "JSONAdapterInterface/IJSONAdapter.h"
+#include "JSONAdapterInterface/IJSONDocument.h"
+#include "JSONAdapterInterface/IJSONValue.h"
 
 #include <boost/date_time/posix_time/conversion.hpp>
 #include <vector>
@@ -15,16 +16,14 @@ namespace seed_cpp { namespace service {
 
 	JWTBuilderService::JWTBuilderService(const IBase64EncodeService& base64EncodeService,
 										 const ISignatureService& signatureService,
-										 const systelab::json_adapter::IJSONAdapter& jsonAdapter)
+										 const systelab::json::IJSONAdapter& jsonAdapter)
 		:m_base64EncodeService(base64EncodeService)
 		,m_signatureService(signatureService)
 		,m_jsonAdapter(jsonAdapter)
 	{
 	}
 
-	JWTBuilderService::~JWTBuilderService()
-	{
-	}
+	JWTBuilderService::~JWTBuilderService() = default;
 
 	std::string JWTBuilderService::buildJWT(const std::string& key,
 											const std::map<std::string, std::string>& claims) const
@@ -40,8 +39,8 @@ namespace seed_cpp { namespace service {
 	std::string JWTBuilderService::buildJWTHeader() const
 	{
 		auto jsonDocument = m_jsonAdapter.buildEmptyDocument();
-		systelab::json_adapter::IJSONValue& jsonRoot = jsonDocument->getRootValue();
-		jsonRoot.setType(systelab::json_adapter::OBJECT_TYPE);
+		systelab::json::IJSONValue& jsonRoot = jsonDocument->getRootValue();
+		jsonRoot.setType(systelab::json::OBJECT_TYPE);
 		jsonRoot.addMember("alg", "HS256");
 		jsonRoot.addMember("typ", "JWT");
 		std::string jwtHeader = jsonDocument->serialize();
@@ -53,8 +52,8 @@ namespace seed_cpp { namespace service {
 	{
 		auto jsonDocument = m_jsonAdapter.buildEmptyDocument();
 
-		systelab::json_adapter::IJSONValue& jsonRoot = jsonDocument->getRootValue();
-		jsonRoot.setType(systelab::json_adapter::OBJECT_TYPE);
+		systelab::json::IJSONValue& jsonRoot = jsonDocument->getRootValue();
+		jsonRoot.setType(systelab::json::OBJECT_TYPE);
 		for (auto claim : claims)
 		{
 			jsonRoot.addMember(claim.first, claim.second);

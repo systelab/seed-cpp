@@ -1,11 +1,12 @@
+#include "stdafx.h"
 #include "JWTValidatorService.h"
 
 #include "Services/Security/IBase64EncodeService.h"
 #include "Services/Security/ISignatureService.h"
 
-#include "IJSONAdapter.h"
-#include "IJSONDocument.h"
-#include "IJSONValue.h"
+#include "JSONAdapterInterface/IJSONAdapter.h"
+#include "JSONAdapterInterface/IJSONDocument.h"
+#include "JSONAdapterInterface/IJSONValue.h"
 
 #include <boost/date_time/posix_time/conversion.hpp>
 #include <vector>
@@ -15,7 +16,7 @@ namespace seed_cpp { namespace service {
 
 	JWTValidatorService::JWTValidatorService(const IBase64EncodeService& base64EncodeService,
 											 const ISignatureService& signatureService,
-											 const systelab::json_adapter::IJSONAdapter& jsonAdapter)
+											 const systelab::json::IJSONAdapter& jsonAdapter)
 		:m_base64EncodeService(base64EncodeService)
 		,m_signatureService(signatureService)
 		,m_jsonAdapter(jsonAdapter)
@@ -90,13 +91,13 @@ namespace seed_cpp { namespace service {
 			return claims;
 		}
 
-		systelab::json_adapter::IJSONValue& jsonPayloadRoot = jsonPayloadDocument->getRootValue();
+		systelab::json::IJSONValue& jsonPayloadRoot = jsonPayloadDocument->getRootValue();
 		auto memberNames = jsonPayloadRoot.getObjectMemberNames();
 		size_t nMembers = memberNames.size();
 		for (size_t i = 0; i < nMembers; i++)
 		{
 			std::string claimName = memberNames[i];
-			systelab::json_adapter::IJSONValue& jsonClaimValue = jsonPayloadRoot.getObjectMemberValue(claimName);
+			systelab::json::IJSONValue& jsonClaimValue = jsonPayloadRoot.getObjectMemberValue(claimName);
 			std::string claimValue = jsonClaimValue.getString();
 			claims.insert( {claimName, claimValue} );
 		}

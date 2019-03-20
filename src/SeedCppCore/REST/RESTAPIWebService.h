@@ -1,7 +1,6 @@
 #pragma once
 
-#include "IWebService.h"
-#include <memory>
+#include "WebServerAdapterInterface/IWebService.h"
 
 
 namespace seed_cpp { namespace rest {

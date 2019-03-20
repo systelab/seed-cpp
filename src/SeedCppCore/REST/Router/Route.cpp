@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "Route.h"
 
 #include "REST/Endpoints/IEndpoint.h"
@@ -5,8 +6,8 @@
 #include "REST/Helpers/ReplyBuilderHelper.h"
 #include "REST/Router/RouteParam.h"
 
-#include "Model/Request.h"
-#include "Model/Reply.h"
+#include "WebServerAdapterInterface/Model/Request.h"
+#include "WebServerAdapterInterface/Model/Reply.h"
 
 
 namespace seed_cpp { namespace rest {
@@ -20,9 +21,7 @@ namespace seed_cpp { namespace rest {
 	{
 	}
 
-	Route::~Route()
-	{
-	}
+	Route::~Route() = default;
 
 	std::unique_ptr<systelab::web_server::Reply> Route::execute(const systelab::web_server::Request& request) const
 	{

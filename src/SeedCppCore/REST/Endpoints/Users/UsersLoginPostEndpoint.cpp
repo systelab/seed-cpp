@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "UsersLoginPostEndpoint.h"
 
 #include "Model/User.h"
@@ -7,7 +8,7 @@
 #include "Services/Security/IJWTBuilderService.h"
 #include "Services/System/ITimeService.h"
 
-#include "Model/Reply.h"
+#include "WebServerAdapterInterface/Model/Reply.h"
 
 
 namespace seed_cpp { namespace rest {
@@ -23,9 +24,7 @@ namespace seed_cpp { namespace rest {
 	{
 	}
 	
-	UsersLoginPostEndpoint::~UsersLoginPostEndpoint()
-	{
-	}
+	UsersLoginPostEndpoint::~UsersLoginPostEndpoint() = default;
 
 	bool UsersLoginPostEndpoint::hasAccess() const
 	{

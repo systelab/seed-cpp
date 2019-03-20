@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "JSONTranslatorsFactory.h"
 
 #include "DAL/Translators/JSON/PatientJSONTranslator.h"

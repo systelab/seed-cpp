@@ -2,12 +2,10 @@
 
 #include "Services/Validator/IJSONValidatorService.h"
 
-#include "IJSONRemoteSchemaProvider.h"
-
-#include <memory>
+#include "JSONAdapterInterface/IJSONRemoteSchemaProvider.h"
 
 
-namespace systelab { namespace json_adapter {
+namespace systelab { namespace json {
 	class IJSONAdapter;
 }}
 
@@ -18,29 +16,29 @@ namespace seed_cpp { namespace service {
 	class JSONValidatorService : public IJSONValidatorService
 	{
 	private:
-		class RemoteSchemaDocumentProvider : public systelab::json_adapter::IJSONRemoteSchemaProvider
+		class RemoteSchemaDocumentProvider : public systelab::json::IJSONRemoteSchemaProvider
 		{
 		public:
 			RemoteSchemaDocumentProvider(const service::IResourceService&,
-										 const systelab::json_adapter::IJSONAdapter&);
+										 const systelab::json::IJSONAdapter&);
 			virtual ~RemoteSchemaDocumentProvider() = default;
 
-			std::unique_ptr<systelab::json_adapter::IJSONDocument> getRemoteSchemaDocument(const std::string& uri) const;
+			std::unique_ptr<systelab::json::IJSONDocument> getRemoteSchemaDocument(const std::string& uri) const;
 
 		private:
 			const service::IResourceService& m_resourceService;
-			const systelab::json_adapter::IJSONAdapter& m_jsonAdapter;
+			const systelab::json::IJSONAdapter& m_jsonAdapter;
 		};
 
 	public:
 		JSONValidatorService(const service::IResourceService&,
-							 const systelab::json_adapter::IJSONAdapter&);
+							 const systelab::json::IJSONAdapter&);
 		virtual ~JSONValidatorService() = default;
 
-		void validate(const systelab::json_adapter::IJSONDocument&, const std::string& schemaName) const;
+		void validate(const systelab::json::IJSONDocument&, const std::string& schemaName) const;
 
 	private:
-		const systelab::json_adapter::IJSONAdapter& m_jsonAdapter;
+		const systelab::json::IJSONAdapter& m_jsonAdapter;
 		std::unique_ptr<RemoteSchemaDocumentProvider> m_documentProvider;
 	};
 

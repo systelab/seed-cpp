@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "UsersGetAllEndpoint.h"
 
 #include "DAL/Translators/JSON/IJSONSaveTranslator.h"
@@ -6,10 +7,10 @@
 #include "REST/Helpers/ReplyBuilderHelper.h"
 #include "Services/Security/IAuthorizationValidatorService.h"
 
-#include "IJSONAdapter.h"
-#include "IJSONDocument.h"
+#include "JSONAdapterInterface/IJSONAdapter.h"
+#include "JSONAdapterInterface/IJSONDocument.h"
 
-#include "Model/Reply.h"
+#include "WebServerAdapterInterface/Model/Reply.h"
 
 #include <boost/lexical_cast.hpp>
 #include <math.h>
@@ -21,7 +22,7 @@ namespace seed_cpp { namespace rest {
 											 const systelab::web_server::RequestQueryStrings& queryStrings,
 											 model::EntityMgr<model::User>& userMgr,
 											 dal::IJSONTranslatorsFactory& jsonTranslatorsFactory,
-											 systelab::json_adapter::IJSONAdapter& jsonAdapter,
+											 systelab::json::IJSONAdapter& jsonAdapter,
 											 service::IAuthorizationValidatorService& authorizationValidatorService)
 		:m_headers(headers)
 		,m_queryStrings(queryStrings)
@@ -32,9 +33,7 @@ namespace seed_cpp { namespace rest {
 	{
 	}
 	
-	UsersGetAllEndpoint::~UsersGetAllEndpoint()
-	{
-	}
+	UsersGetAllEndpoint::~UsersGetAllEndpoint() = default;
 
 	bool UsersGetAllEndpoint::hasAccess() const
 	{
@@ -46,16 +45,16 @@ namespace seed_cpp { namespace rest {
 		auto paginationData = getPaginationData();
 
 		auto jsonResponse = m_jsonAdapter.buildEmptyDocument();
-		systelab::json_adapter::IJSONValue& jsonRoot = jsonResponse->getRootValue();
-		jsonRoot.setType(systelab::json_adapter::OBJECT_TYPE);
+		systelab::json::IJSONValue& jsonRoot = jsonResponse->getRootValue();
+		jsonRoot.setType(systelab::json::OBJECT_TYPE);
 
-		std::unique_ptr<systelab::json_adapter::IJSONValue> jsonContent = jsonRoot.buildValue(systelab::json_adapter::ARRAY_TYPE);
+		auto jsonContent = jsonRoot.buildValue(systelab::json::ARRAY_TYPE);
 		size_t nUsers = paginationData->m_content.size();
 		for (size_t i = 0; i < nUsers; i++)
 		{
 			const model::User& user = (paginationData->m_content)[i];
 
-			auto jsonUser = jsonRoot.buildValue(systelab::json_adapter::OBJECT_TYPE);
+			auto jsonUser = jsonRoot.buildValue(systelab::json::OBJECT_TYPE);
 			auto userTranslator = m_jsonTranslatorsFactory.buildUserSaveTranslator(user);
 			userTranslator->saveEntityToJSON(*jsonUser);
 

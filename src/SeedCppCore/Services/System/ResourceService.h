@@ -1,37 +1,36 @@
 #pragma once
 
 #include "IResourceService.h"
-#include <map>
 
-namespace seed_cpp {
-namespace service {
 
-class ResourceService : public IResourceService {
-public:
-  ResourceService();
-  virtual ~ResourceService();
+namespace seed_cpp { namespace service {
 
-  static const std::string schemaPath;
-  static const std::string schemaPatientPost;
-  static const std::string schemaPatientPut;
-  static const std::string schemaUserPost;
-  static const std::string schemaUserPut;
-  static const std::string schemaModelPatient;
-  static const std::string schemaModelAddress;
-  static const std::string schemaModelUser;
+	class ResourceService : public IResourceService
+	{
+	public:
+		ResourceService();
+		virtual ~ResourceService();
 
-  std::string loadResourceAsString(unsigned int resourceId,
-                                   const std::string &resourceType) const;
+		static const std::string schemaPath;
+		static const std::string schemaPatientPost;
+		static const std::string schemaPatientPut;
+		static const std::string schemaUserPost;
+		static const std::string schemaUserPut;
+		static const std::string schemaModelPatient;
+		static const std::string schemaModelAddress;
+		static const std::string schemaModelUser;
 
-  std::string loadResourceAsString(const std::string &resourceId,
-                                   const std::string &resourceType) const;
+		std::string loadResourceAsString(unsigned int resourceId,
+										 const std::string &resourceType) const;
 
-private:
-  bool LoadSchema(const std::string &file);
+		std::string loadResourceAsString(const std::string &resourceId,
+										 const std::string &resourceType) const;
 
-  std::map<const std::string, std::string> schemas_;
-  std::string getSystemErrorMessage() const;
-};
+	private:
+		bool LoadSchema(const std::string &file);
 
-} // namespace service
-} // namespace seed_cpp
+		std::map<const std::string, std::string> schemas_;
+		std::string getSystemErrorMessage() const;
+	};
+
+}}

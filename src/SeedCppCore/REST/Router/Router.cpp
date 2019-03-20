@@ -1,9 +1,10 @@
+#include "stdafx.h"
 #include "Router.h"
 
 #include "REST/Router/Route.h"
 
-#include "Model/Reply.h"
-#include "Model/Request.h"
+#include "WebServerAdapterInterface/Model/Reply.h"
+#include "WebServerAdapterInterface/Model/Request.h"
 
 
 namespace seed_cpp { namespace rest {
@@ -12,9 +13,7 @@ namespace seed_cpp { namespace rest {
 	{
 	}
 
-	Router::~Router()
-	{
-	}
+	Router::~Router() = default;
 
 	void Router::addRoute(const std::string& method,
 						  const std::string& uri,

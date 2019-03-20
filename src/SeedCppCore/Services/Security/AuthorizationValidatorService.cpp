@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "AuthorizationValidatorService.h"
 
 #include "Model/User.h"
@@ -5,7 +6,7 @@
 #include "Services/Security/IJWTValidatorService.h"
 #include "Services/System/ITimeService.h"
 
-#include "Model/RequestHeaders.h"
+#include "WebServerAdapterInterface/Model/RequestHeaders.h"
 
 #include <boost/date_time/posix_time/conversion.hpp>
 #include <vector>

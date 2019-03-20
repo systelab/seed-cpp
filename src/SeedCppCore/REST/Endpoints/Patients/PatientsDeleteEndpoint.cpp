@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "PatientsDeleteEndpoint.h"
 
 #include "Model/Patient.h"
@@ -5,8 +6,8 @@
 #include "Services/Model/IPatientModelService.h"
 #include "Services/Security/IAuthorizationValidatorService.h"
 
-#include "Model/Reply.h"
-#include "Model/RequestHeaders.h"
+#include "WebServerAdapterInterface/Model/Reply.h"
+#include "WebServerAdapterInterface/Model/RequestHeaders.h"
 
 
 namespace seed_cpp { namespace rest {
@@ -22,9 +23,7 @@ namespace seed_cpp { namespace rest {
 	{
 	}
 	
-	PatientsDeleteEndpoint::~PatientsDeleteEndpoint()
-	{
-	}
+	PatientsDeleteEndpoint::~PatientsDeleteEndpoint() = default;
 
 	bool PatientsDeleteEndpoint::hasAccess() const
 	{

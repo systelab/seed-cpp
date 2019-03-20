@@ -1,8 +1,5 @@
 #pragma once
 
-#include <vector>
-#include <memory>
-
 #include <boost/thread/recursive_mutex.hpp>
 
 

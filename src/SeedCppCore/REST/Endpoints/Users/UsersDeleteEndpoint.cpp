@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "UsersDeleteEndpoint.h"
 
 #include "Model/User.h"
@@ -5,8 +6,8 @@
 #include "Services/Model/IUserModelService.h"
 #include "Services/Security/IAuthorizationValidatorService.h"
 
-#include "Model/Reply.h"
-#include "Model/RequestHeaders.h"
+#include "WebServerAdapterInterface/Model/Reply.h"
+#include "WebServerAdapterInterface/Model/RequestHeaders.h"
 
 
 namespace seed_cpp { namespace rest {
@@ -22,9 +23,7 @@ namespace seed_cpp { namespace rest {
 	{
 	}
 	
-	UsersDeleteEndpoint::~UsersDeleteEndpoint()
-	{
-	}
+	UsersDeleteEndpoint::~UsersDeleteEndpoint() = default;
 
 	bool UsersDeleteEndpoint::hasAccess() const
 	{

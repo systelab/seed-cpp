@@ -1,11 +1,12 @@
+#include "stdafx.h"
 #include "RESTAPIWebService.h"
 
 #include "REST/Endpoints/IEndpoint.h"
 #include "REST/Endpoints/IEndpointsFactory.h"
 #include "REST/Router/Router.h"
 
-#include "Model/Reply.h"
-#include "Model/Request.h"
+#include "WebServerAdapterInterface/Model/Reply.h"
+#include "WebServerAdapterInterface/Model/Request.h"
 
 
 namespace seed_cpp { namespace rest {

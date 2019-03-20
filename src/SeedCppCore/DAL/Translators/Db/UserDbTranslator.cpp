@@ -1,9 +1,10 @@
+#include "stdafx.h"
 #include "UserDbTranslator.h"
 
 #include "Model/User.h"
 
-#include "ITableRecord.h"
-#include "IFieldValue.h"
+#include "DbAdapterInterface/ITableRecord.h"
+#include "DbAdapterInterface/IFieldValue.h"
 
 
 namespace seed_cpp { namespace dal {

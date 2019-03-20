@@ -1,9 +1,10 @@
+#include "stdafx.h"
 #include "PatientDbTranslator.h"
 
 #include "Model/Patient.h"
 
-#include "ITableRecord.h"
-#include "IFieldValue.h"
+#include "DbAdapterInterface/ITableRecord.h"
+#include "DbAdapterInterface/IFieldValue.h"
 
 
 namespace seed_cpp { namespace dal {

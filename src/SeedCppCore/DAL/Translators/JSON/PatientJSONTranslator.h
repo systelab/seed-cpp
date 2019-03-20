@@ -16,7 +16,7 @@ namespace seed_cpp { namespace dal {
 		PatientJSONSaveTranslator(const model::Patient&);
 		virtual ~PatientJSONSaveTranslator();
 
-		void saveEntityToJSON(systelab::json_adapter::IJSONValue&) const;
+		void saveEntityToJSON(systelab::json::IJSONValue&) const;
 
 	private:
 		const model::Patient& m_patient;
@@ -29,7 +29,7 @@ namespace seed_cpp { namespace dal {
 		PatientJSONLoadTranslator(model::Patient&);
 		virtual ~PatientJSONLoadTranslator();
 
-		void loadEntityFromJSON(const systelab::json_adapter::IJSONValue&);
+		void loadEntityFromJSON(const systelab::json::IJSONValue&);
 
 	protected:
 		model::Patient& m_patient;

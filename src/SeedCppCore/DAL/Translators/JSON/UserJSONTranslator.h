@@ -13,7 +13,7 @@ namespace seed_cpp { namespace dal {
 		UserJSONSaveTranslator(const model::User&);
 		virtual ~UserJSONSaveTranslator();
 
-		void saveEntityToJSON(systelab::json_adapter::IJSONValue&) const;
+		void saveEntityToJSON(systelab::json::IJSONValue&) const;
 
 	protected:
 		std::string translateRoleToString(model::User::Role) const;
@@ -29,7 +29,7 @@ namespace seed_cpp { namespace dal {
 		UserJSONLoadTranslator(model::User&);
 		virtual ~UserJSONLoadTranslator();
 
-		void loadEntityFromJSON(const systelab::json_adapter::IJSONValue&);
+		void loadEntityFromJSON(const systelab::json::IJSONValue&);
 
 	protected:
 		model::User::Role translateStringToRole(const std::string&) const;

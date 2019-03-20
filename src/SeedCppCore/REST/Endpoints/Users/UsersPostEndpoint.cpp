@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "UsersPostEndpoint.h"
 
 #include "Model/EntityMgr.h"
@@ -10,10 +11,10 @@
 #include "Services/Security/IAuthorizationValidatorService.h"
 #include "Services/Validator/IJSONValidatorService.h"
 
-#include "IJSONAdapter.h"
-#include "IJSONDocument.h"
+#include "JSONAdapterInterface/IJSONAdapter.h"
+#include "JSONAdapterInterface/IJSONDocument.h"
 
-#include "Model/Reply.h"
+#include "WebServerAdapterInterface/Model/Reply.h"
 
 
 namespace seed_cpp { namespace rest {
@@ -21,7 +22,7 @@ namespace seed_cpp { namespace rest {
 	UsersPostEndpoint::UsersPostEndpoint(const systelab::web_server::RequestHeaders& headers,
 										 const std::string& requestContent,
 										 dal::IJSONTranslatorsFactory& jsonTranslatorsFactory,
-										 systelab::json_adapter::IJSONAdapter& jsonAdapter,
+										 systelab::json::IJSONAdapter& jsonAdapter,
 										 service::IAuthorizationValidatorService& authorizationValidatorService,
 										 service::IJSONValidatorService& jsonValidatorService,
 										 service::IUserModelService& userModelService)
@@ -35,9 +36,7 @@ namespace seed_cpp { namespace rest {
 	{
 	}
 
-	UsersPostEndpoint::~UsersPostEndpoint()
-	{
-	}
+	UsersPostEndpoint::~UsersPostEndpoint() = default;
 
 	bool UsersPostEndpoint::hasAccess() const
 	{
@@ -46,7 +45,7 @@ namespace seed_cpp { namespace rest {
 
 	std::unique_ptr<systelab::web_server::Reply> UsersPostEndpoint::execute()
 	{
-		std::unique_ptr<systelab::json_adapter::IJSONDocument> jsonRequest = m_jsonAdapter.buildDocumentFromString(m_requestContent);
+		auto jsonRequest = m_jsonAdapter.buildDocumentFromString(m_requestContent);
 		if (!jsonRequest)
 		{
 			return ReplyBuilderHelper::build(systelab::web_server::Reply::BAD_REQUEST);
@@ -60,7 +59,7 @@ namespace seed_cpp { namespace rest {
 		{
 			auto jsonResponse = m_jsonAdapter.buildEmptyDocument();
 			auto& jsonRootValue = jsonResponse->getRootValue();
-			jsonRootValue.setType(systelab::json_adapter::OBJECT_TYPE);
+			jsonRootValue.setType(systelab::json::OBJECT_TYPE);
 			jsonRootValue.addMember("reason", exc.toString());
 			return ReplyBuilderHelper::build(systelab::web_server::Reply::BAD_REQUEST, jsonResponse->serialize());
 		}

@@ -2,8 +2,6 @@
 
 #include "DAL/DAO/ITransactionDAO.h"
 
-#include <memory>
-
 
 namespace systelab { namespace db {
 	class IDatabase;

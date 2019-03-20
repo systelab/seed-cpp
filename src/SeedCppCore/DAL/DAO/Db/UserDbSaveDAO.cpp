@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "UserDbSaveDAO.h"
 
 #include "DAL/DAO/Db/IDbDAOFactory.h"
@@ -7,90 +8,104 @@
 #include "DAL/Translators/Db/IDbTranslatorsFactory.h"
 #include "Model/User.h"
 
-#include "IDatabase.h"
-#include "ITable.h"
+#include "DbAdapterInterface/IDatabase.h"
+#include "DbAdapterInterface/ITable.h"
 
-namespace seed_cpp {
-namespace dal {
 
-UserDbSaveDAO::UserDbSaveDAO(systelab::db::IDatabase &db, model::User &item,
-                             dal::IDbDAOFactory &daoFactory,
-                             dal::IDbTranslatorsFactory &translatorsFactory)
-    : m_db(db), m_item(item), m_daoFactory(daoFactory),
-      m_translatorsFactory(translatorsFactory) {}
+namespace seed_cpp { namespace dal {
 
-void UserDbSaveDAO::addEntity() {
-  if (!m_item.getId().is_initialized()) {
-    throw std::string("Attempting to add a user without an ID to database.");
-  }
+	UserDbSaveDAO::UserDbSaveDAO(systelab::db::IDatabase& db,
+								 model::User& item,
+								 dal::IDbDAOFactory& daoFactory,
+								 dal::IDbTranslatorsFactory& translatorsFactory)
+		:m_db(db)
+		,m_item(item)
+		,m_daoFactory(daoFactory)
+		,m_translatorsFactory(translatorsFactory)
+	{
+	}
 
-  std::unique_ptr<dal::ITransactionDAO> transaction;
-  try {
-    transaction = m_daoFactory.startTransaction();
+	void UserDbSaveDAO::addEntity()
+	{
+		if (!m_item.getId().is_initialized())
+		{
+			throw std::string("Attempting to add a user without an ID to database.");
+		}
 
-    systelab::db::ITable &itemsTable = m_db.getTable("User");
-    std::unique_ptr<systelab::db::ITableRecord> itemRecord =
-        itemsTable.createRecord();
+		std::unique_ptr<dal::ITransactionDAO> transaction;
+		try
+		{
+			transaction = m_daoFactory.startTransaction();
 
-    std::unique_ptr<dal::IDatabaseEntityTranslator> itemTranslator =
-        m_translatorsFactory.buildUserTranslator(m_item);
-    itemTranslator->fillRecordFromEntity(*itemRecord);
-    itemsTable.insertRecord(*itemRecord);
+			systelab::db::ITable& itemsTable = m_db.getTable("User");
+			auto itemRecord = itemsTable.createRecord();
 
-    transaction->commit();
-  } catch (std::exception &exc) {
-    transaction->rollback();
-    throw exc;
-  }
-}
+			auto itemTranslator = m_translatorsFactory.buildUserTranslator(m_item);
+			itemTranslator->fillRecordFromEntity(*itemRecord);
+			itemsTable.insertRecord(*itemRecord);
 
-void UserDbSaveDAO::updateEntity() {
-  if (!m_item.getId().is_initialized()) {
-    throw std::string("Attempting to update a user without id in database.");
-  }
+			transaction->commit();
+		}
+		catch (std::exception &exc)
+		{
+			transaction->rollback();
+			throw exc;
+		}
+	}
 
-  std::unique_ptr<dal::ITransactionDAO> transaction;
-  try {
-    transaction = m_daoFactory.startTransaction();
+	void UserDbSaveDAO::updateEntity()
+	{
+		if (!m_item.getId().is_initialized())
+		{
+			throw std::string("Attempting to update a user without id in database.");
+		}
 
-    systelab::db::ITable &itemsTable = m_db.getTable("User");
-    std::unique_ptr<systelab::db::ITableRecord> itemRecord =
-        itemsTable.createRecord();
+		std::unique_ptr<dal::ITransactionDAO> transaction;
+		try
+		{
+			transaction = m_daoFactory.startTransaction();
 
-    std::unique_ptr<dal::IDatabaseEntityTranslator> itemTranslator =
-        m_translatorsFactory.buildUserTranslator(m_item);
-    itemTranslator->fillRecordFromEntity(*itemRecord);
-    itemsTable.updateRecord(*itemRecord);
+			systelab::db::ITable &itemsTable = m_db.getTable("User");
+			auto itemRecord = itemsTable.createRecord();
 
-    transaction->commit();
-  } catch (std::exception &exc) {
-    transaction->rollback();
-    throw exc;
-  }
-}
+			auto itemTranslator = m_translatorsFactory.buildUserTranslator(m_item);
+			itemTranslator->fillRecordFromEntity(*itemRecord);
+			itemsTable.updateRecord(*itemRecord);
 
-void UserDbSaveDAO::deleteEntity() {
-  if (!m_item.getId().is_initialized()) {
-    throw std::string("Attempting to delete a user without id in database.");
-  }
+			transaction->commit();
+		}
+		catch (std::exception &exc)
+		{
+			transaction->rollback();
+			throw exc;
+		}
+	}
 
-  std::unique_ptr<dal::ITransactionDAO> transaction;
-  try {
-    transaction = m_daoFactory.startTransaction();
+	void UserDbSaveDAO::deleteEntity()
+	{
+		if (!m_item.getId().is_initialized())
+		{
+			throw std::string("Attempting to delete a user without id in database.");
+		}
 
-    systelab::db::ITable &table = m_db.getTable("User");
-    auto record = table.createRecord();
-    std::unique_ptr<dal::IDatabaseEntityTranslator> itemTranslator =
-        m_translatorsFactory.buildUserTranslator(m_item);
-    itemTranslator->fillRecordFromEntity(*record);
-    table.deleteRecord(*record);
+		std::unique_ptr<dal::ITransactionDAO> transaction;
+		try
+		{
+			transaction = m_daoFactory.startTransaction();
 
-    transaction->commit();
-  } catch (std::exception &exc) {
-    transaction->rollback();
-    throw exc;
-  }
-}
+			systelab::db::ITable& table = m_db.getTable("User");
+			auto record = table.createRecord();
+			auto itemTranslator = m_translatorsFactory.buildUserTranslator(m_item);
+			itemTranslator->fillRecordFromEntity(*record);
+			table.deleteRecord(*record);
 
-} // namespace dal
-} // namespace seed_cpp
+			transaction->commit();
+		}
+		catch (std::exception &exc)
+		{
+			transaction->rollback();
+			throw exc;
+		}
+	}
+
+}}

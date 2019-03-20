@@ -1,7 +1,5 @@
 #pragma once
 
-#include <map>
-#include <string>
 
 
 namespace seed_cpp { namespace rest {
