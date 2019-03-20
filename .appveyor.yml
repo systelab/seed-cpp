@@ -18,19 +18,12 @@ install:
 before_build:
   - md build
   - cd build
+  - conan install ..
   - cmake .. -G "Visual Studio 15 2017 Win64"
 
 build:
-  project: $(APPVEYOR_BUILD_FOLDER)\build\seed-cpp.sln
+  project: $(APPVEYOR_BUILD_FOLDER)\build\SeedCpp.sln
 
 artifacts:
-  - path: 'build\lib\DbSQLiteAdapter.lib'
-    name: DbSQLiteAdapter.lib
-  - path: 'build\lib\WebServerInterface.lib'
-    name: WebServerInterface.lib
-  - path: 'build\lib\WebServer.lib'
-    name: WebServer.lib
-  - path: 'build\lib\RapidJSONAdapter.lib'
-    name: RapidJSONAdapter.lib
-  - path: 'build\lib\SeedCppCore.lib'
-    name: SeedCppCore.lib
+  - path: 'build\bin\SeedCppCore.exe'
+    name: SeedCppCore.exe
