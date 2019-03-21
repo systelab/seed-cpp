@@ -24,6 +24,9 @@ before_build:
 build:
   project: $(APPVEYOR_BUILD_FOLDER)\build\SeedCpp.sln
 
+after_build:
+  - ps: 7z a .\Dist\$env:deploy_name_installer".zip" $env:build_path_installer
+
 artifacts:
-  - path: 'build\bin\SeedCppCore.exe'
-    name: SeedCppCore.exe
+  - path: 'build\bin'
+    name: SeedCpp
