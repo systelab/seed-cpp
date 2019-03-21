@@ -13,6 +13,12 @@
 #include <boost/filesystem.hpp>
 
 
+bool fileExists(const std::string& filename)
+{
+	std::ifstream ifs(filename.c_str());
+	return ifs.good();
+}
+
 void readFileToString(const std::string& filename, std::string& contents)
 {
 	std::ifstream ifs(filename);
@@ -32,7 +38,7 @@ void readFileToString(const std::string& filename, std::string& contents)
 
 std::unique_ptr<systelab::db::IDatabase> loadDatabase()
 {
-	bool existsBD = boost::filesystem::exists("./seed_cpp.db");
+	bool existsBD = fileExists("./seed_cpp.db");
 
 	systelab::db::sqlite::ConnectionConfiguration databaseConfiguration("./seed_cpp.db");
 	systelab::db::sqlite::Connection databaseConnection;
