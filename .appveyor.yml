@@ -25,5 +25,5 @@ build:
   project: $(APPVEYOR_BUILD_FOLDER)\build\SeedCpp.sln
 
 artifacts:
-  - path: 'build\bin\SeedCppCore.exe'
-    name: SeedCppCore.exe
+  - path: 'build\bin\SeedCpp.exe'
+    name: SeedCpp.exe
