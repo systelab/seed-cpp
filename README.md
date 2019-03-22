@@ -16,7 +16,7 @@ The app doesn't do much, just shows how to use different C++ patterns and other 
 * CORS
 * Swagger `Not available yet`
 
-## Download binaries from bintray
+## Download from bintray
 
 Not available yet. Meanwhile, you can build it from sources.
 
@@ -60,9 +60,21 @@ To run the application, just launch the `SeedCpp` executable. It will set up an 
 
 ### Login
 
+Before any request, users must authenticate to the REST API by using the login endpoint:
+
+```
+POST http://127.0.0.1:8080/seed/v1/users/login
+Body: x-www-form-urlencoded 
+login:Systelab
+password:Systelab
+```
+
+
 After login (with username `Systelab` and password `Systelab`), copy the Token returned in the Authorization field before running any other REST endpoint.
 
+### Patients CRUD
 
+`TBD`
 
 
 
