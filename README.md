@@ -76,10 +76,27 @@ The response for this request should contain an authentication token (based on [
 TBD
 ```
 
+This token should be added as an `Authorization` header in further requests to the REST API.
+
 ### Patients CRUD
 
-`TBD`
+The following endpoints allow managing the patients of the system:
+
+```
+GET /seed/v1/patients
+GET /seed/v1/patients/:id
+POST /seed/v1/patients/patient
+PUT /seed/v1/patients/patient
+DELETE /seed/v1/patients/patient
+```
 
 ### Allergies CRUD
 
+The following endpoints allow managing the catalog of allergies of the system:
+
 `TBD`
+
+Additionally, the register of the allergies that each patient has had can be managed with:
+
+`TBD`
+
