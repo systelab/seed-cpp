@@ -6,77 +6,65 @@
 
 This project is an application skeleton for a typical C++ application. You can use it to quickly bootstrap your projects and dev environment.
 
-The seed contains a Patient Management sample Web API.
+The seed contains a Patient Management sample REST API.
 
 The app doesn't do much, just shows how to use different C++ patterns and other suggested tools together:
+* SQLite
+* JSON
+* HTTPS `Not available yet`
+* JWT
+* CORS
+* Swagger `Not available yet`
 
-* ...
-* ...
+## Download binaries from bintray
 
+Not available yet. Meanwhile, you can build it from sources.
 
-## Getting Started
+## Build from sources
 
-To get you started you can simply clone the `seed-cpp` repository, install the external libraries and build the application.
+Prerequisites:
+  - [Git](https://git-scm.com/)
+  - [Conan](https://conan.io/)
+  - [CMake](https://cmake.org/)
+  - [Visual Studio](https://visualstudio.microsoft.com/) (only on Windows)
+  - [GCC](https://gcc.gnu.org/) (only on Linux)
 
-### Clone `seed-cpp`
+Build the application with the following steps:
+  1. Clone this repository in a local drive
+  2. Make a build directory (i.e. `build/`)
+  3. Install `conan` dependencies in the build directory
+  4. Run `cmake` in the build directory to configure build targets
+  5. Use `Visual Studio` (on Windows) or `make` (on Linux) to build the library
 
-Clone the `seed-cpp` repository using git:
-
-```bash
-git clone https://github.com/systelab/seed-cpp.git
-cd seed-dotnet
+### Windows
+``` bash
+> git clone https://github.com/systelab/seed-cpp
+> md build && cd build
+> conan install .. -s arch=x86
+> cmake ..
+> devenv.exe SeedCpp.sln
 ```
 
-If you just want to start a new project without the seed-cpp commit history then you can do:
-
-```bash
-git clone --depth=1 https://github.com/systelab/seed-cpp.git <your-project-name>
+### Linux
+``` bash
+> git clone https://github.com/systelab/seed-cpp
+> mkdir build && cd build
+> conan install ..
+> cmake .. -DCMAKE_BUILD_TYPE=[Debug | Coverage | Release]
+> make
 ```
 
-The depth=1 tells git to only pull down one commit worth of historical data.
+## Usage
+
+To run the application, just launch the `SeedCpp` executable. It will set up an HTTP server on port `8080` which implements the patient management REST API.
+
+### Login
+
+After login (with username `Systelab` and password `Systelab`), copy the Token returned in the Authorization field before running any other REST endpoint.
 
 
-### Build external libraries
-
-Clone the `vcpkg` repository using git:
-
-```bash
-git clone https://github.com/Microsoft/vcpkg.git
-cd vcpkg
-```
-
-Then run vcpkg bootstrap batch file:
-
-```bash
-.\bootstrap-vcpkg.bat
-```
-
-Download and build the following packages (notice that this process may take some minutes):
-
-```bash
-.\vcpkg install sqlite3:x64-windows boost-asio:x64-windows boost-date-time:x64-windows boost-uuid:x64-windows rapidjson:x64-windows gtest:x64-windows
-```
-
-Pack the generated binaries and includes in a folder:
-
-```bash
-.\vcpkg export sqlite3:x64-windows boost-asio:x64-windows boost-date-time:x64-windows boost-uuid:x64-windows rapidjson:x64-windows gtest:x64-windows --raw
-```
-
-Move the packed folder generated on the previous step into the `seed-cpp` cloned repository.
-Moreover, copy the contents of the subfolder `vcpkg-export-XXXXXXXX-XXXXXX/installed/x64-windows` into `seed-cpp/vcpkg` folder.
 
 
-### Build the application
 
-TBD
 
-## Run the application
 
-To run the project, ...
-
-### How it works
-
-After login (with username **Systelab** and password **Systelab**), copy the Token returned in the Authorization field before running any other REST endpoint.
-
-[git]: https://git-scm.com/
