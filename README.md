@@ -60,23 +60,26 @@ To run the application, just launch the `SeedCpp` executable. It will set up an 
 
 ### Login
 
-Before any request, users must authenticate to the REST API by using the login endpoint:
+Before any request, users must authenticate to the REST API by using the login endpoint (with username `Systelab` and password `Systelab`):
 
 ```
-POST http://127.0.0.1:8080/seed/v1/users/login
-Body: x-www-form-urlencoded 
-login:Systelab
-password:Systelab
+POST /seed/v1/users/login HTTP/1.1
+Host: 127.0.0.1:8080
+Content-Type: application/x-www-form-urlencoded
+login=Systelab
+password=Systelab
 ```
 
+The response for this request should contain an authentication token (based on [JWT](https://jwt.io/)) in the `Authorization` header:
 
-After login (with username `Systelab` and password `Systelab`), copy the Token returned in the Authorization field before running any other REST endpoint.
+```
+TBD
+```
 
 ### Patients CRUD
 
 `TBD`
 
+### Allergies CRUD
 
-
-
-
+`TBD`
