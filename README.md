@@ -9,12 +9,12 @@ This project is an application skeleton for a typical C++ application. You can u
 The seed contains a Patient Management sample REST API.
 
 The app doesn't do much, just shows how to use different C++ patterns and other suggested tools together:
-* SQLite
-* JSON
-* HTTPS `Not available yet`
-* JWT
-* CORS
-* Swagger `Not available yet`
+* [SQLite](https://www.sqlite.org)
+* [JSON](https://www.json.org/)
+* [HTTPS](https://en.wikipedia.org/wiki/HTTPS) `Not available yet`
+* [JWT](https://jwt.io/)
+* [CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing)
+* [Swagger](https://swagger.io/) `Not available yet`
 
 ## Download from bintray
 
