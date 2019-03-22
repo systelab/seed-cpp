@@ -22,14 +22,24 @@ Not available yet. Meanwhile, you can build it from sources.
 
 ## Build from sources
 
-Prerequisites:
+To build the applciation, the following prerequisites are mandatory:
+
   - [Git](https://git-scm.com/)
   - [Conan](https://conan.io/)
   - [CMake](https://cmake.org/)
   - [Visual Studio](https://visualstudio.microsoft.com/) (only on Windows)
   - [GCC](https://gcc.gnu.org/) (only on Linux)
 
-Build the application with the following steps:
+On Linux, Homebrew (http://brew.sh/) is good alternative to install the prerequisites. If you have Homebrew installed, run the following commands:
+
+```bash
+brew install git
+brew install conan
+brew install cmake
+brew install gcc
+```
+
+To build the application, we will follow the next steps:
   1. Clone this repository in a local drive
   2. Make a build directory (i.e. `build/`)
   3. Install `conan` dependencies in the build directory
@@ -37,8 +47,12 @@ Build the application with the following steps:
   5. Use `Visual Studio` (on Windows) or `make` (on Linux) to build the library
 
 ### Windows
+
+In order to build the application on Windows, run the following commands:
+
 ``` bash
 > git clone https://github.com/systelab/seed-cpp
+> cd seed-cpp
 > md build && cd build
 > conan install .. -s arch=x86
 > cmake ..
@@ -46,8 +60,12 @@ Build the application with the following steps:
 ```
 
 ### Linux
+
+In order to build the application on Linux, run the following commands:
+
 ``` bash
 > git clone https://github.com/systelab/seed-cpp
+> cd seed-cpp
 > mkdir build && cd build
 > conan install ..
 > cmake .. -DCMAKE_BUILD_TYPE=[Debug | Coverage | Release]
