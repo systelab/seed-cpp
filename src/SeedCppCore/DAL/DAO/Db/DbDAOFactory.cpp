@@ -48,7 +48,8 @@ namespace seed_cpp { namespace dal {
 		auto& model = m_core.getModel().getUserMgr();
 		auto& dbTranslatorsFactory = m_core.getDbTranslatorsFactory();
 
-		return std::make_unique<UserDbLoadDAO>(database, model, dbTranslatorsFactory);
+		return std::make_unique<UserDbLoadDAO>("User", database, model, dbTranslatorsFactory,
+												std::bind(&IDbTranslatorsFactory::buildUserTranslator, &dbTranslatorsFactory, std::placeholders::_1));
 	}
 
 	// Save

@@ -2,6 +2,7 @@
 #include "ServicesFactory.h"
 
 #include "Core.h"
+#include "DAL/DAO/Db/IDbDAOFactory.h"
 #include "Model/Model.h"
 #include "Model/User.h"
 #include "Services/ServicesMgr.h"
@@ -31,22 +32,24 @@ namespace seed_cpp { namespace service {
 	// Model services
 	std::unique_ptr<IPatientModelService> ServicesFactory::buildPatientModelService() const
 	{
-		model::EntityMgr<model::Patient>& patientMgr = m_core.getModel().getPatientMgr();
+		model::PatientMgr& patientMgr = m_core.getModel().getPatientMgr();
 		dal::IDbDAOFactory& dbDAOFactory = m_core.getDbDAOFactory();
 		IUUIDGeneratorService& uuidGeneratorService = m_core.getServicesMgr().getUUIDGeneratorService();
 		ITimeService& timeService = m_core.getServicesMgr().getTimeService();
 
-		return std::make_unique<PatientModelService>(patientMgr, dbDAOFactory, uuidGeneratorService, timeService);
+		return std::make_unique<PatientModelService>(patientMgr, dbDAOFactory, std::bind(&dal::IDbDAOFactory::buildPatientSaveDAO, &dbDAOFactory, std::placeholders::_1),
+														uuidGeneratorService, timeService);
 	}
 
 	std::unique_ptr<IUserModelService> ServicesFactory::buildUserModelService() const
 	{
-		model::EntityMgr<model::User>& userMgr = m_core.getModel().getUserMgr();
-		dal::IDbDAOFactory& dbDAOFactory = m_core.getDbDAOFactory();
-		IUUIDGeneratorService& uuidGeneratorService = m_core.getServicesMgr().getUUIDGeneratorService();
-		ITimeService& timeService = m_core.getServicesMgr().getTimeService();
+		auto& userMgr = m_core.getModel().getUserMgr();
+		auto& dbDAOFactory = m_core.getDbDAOFactory();
+		auto& uuidGeneratorService = m_core.getServicesMgr().getUUIDGeneratorService();
+		auto& timeService = m_core.getServicesMgr().getTimeService();
 
-		return std::make_unique<UserModelService>(userMgr, dbDAOFactory, uuidGeneratorService, timeService);
+		return std::make_unique<UserModelService>(userMgr, dbDAOFactory, std::bind(&dal::IDbDAOFactory::buildUserSaveDAO, &dbDAOFactory, std::placeholders::_1),
+													uuidGeneratorService, timeService);
 	}
 
 

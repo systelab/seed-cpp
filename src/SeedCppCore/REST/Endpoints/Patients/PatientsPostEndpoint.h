@@ -15,6 +15,7 @@ namespace seed_cpp {
 	}
 	namespace model {
 		class Patient;
+		class PatientMgr;
 	}
 	namespace service {
 		class IAuthorizationValidatorService;

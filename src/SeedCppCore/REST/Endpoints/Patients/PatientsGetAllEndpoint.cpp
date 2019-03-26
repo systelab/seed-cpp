@@ -4,6 +4,7 @@
 #include "DAL/Translators/JSON/IJSONSaveTranslator.h"
 #include "DAL/Translators/JSON/IJSONTranslatorsFactory.h"
 #include "Model/Patient.h"
+#include "Model/PatientMgr.h"
 #include "REST/Helpers/ReplyBuilderHelper.h"
 #include "Services/Security/IAuthorizationValidatorService.h"
 
@@ -20,7 +21,7 @@ namespace seed_cpp { namespace rest {
 
 	PatientsGetAllEndpoint::PatientsGetAllEndpoint(const systelab::web_server::RequestHeaders& headers,
 												   const systelab::web_server::RequestQueryStrings& queryStrings,
-												   model::EntityMgr<model::Patient>& patientMgr,
+												   model::PatientMgr& patientMgr,
 												   dal::IJSONTranslatorsFactory& jsonTranslatorsFactory,
 												   systelab::json::IJSONAdapter& jsonAdapter,
 												   service::IAuthorizationValidatorService& authorizationValidatorService)
@@ -102,7 +103,7 @@ namespace seed_cpp { namespace rest {
 		}
 
 		std::vector<model::Patient> content;
-		model::EntityMgr<model::Patient>::SharedLock readLock(m_patientMgr);
+		model::PatientMgr::SharedLock readLock(m_patientMgr);
 		unsigned int totalElements = m_patientMgr.count();
 		unsigned int indexBegin = page * size;
 		unsigned int indexEnd = ((indexBegin + size) < totalElements) ? (indexBegin + size) : totalElements;

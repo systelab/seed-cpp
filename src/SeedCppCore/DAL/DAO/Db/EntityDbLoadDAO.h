@@ -12,7 +12,7 @@ namespace seed_cpp { namespace dal {
 	template<typename _Entity, typename _EntityMgr>
 	class EntityDbLoadDAO : public ILoadDAO
 	{
-	public:
+	private:
 		typedef std::function<std::unique_ptr<IDatabaseEntityTranslator>(_Entity&)> TranslatorFactoryMethod;
 	public:
 		EntityDbLoadDAO(const std::string& tableName,

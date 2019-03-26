@@ -25,9 +25,6 @@ namespace seed_cpp { namespace dal {
 		virtual std::unique_ptr<ILoadDAO> buildUserLoadDAO() = 0;
 
 		// ISaveDAO
-		template<typename _Entity>
-		std::unique_ptr<ISaveDAO> buildEntitySaveDAO(_Entity& entity);
-
 		virtual std::unique_ptr<ISaveDAO> buildPatientSaveDAO(model::Patient&) = 0;
 		virtual std::unique_ptr<ISaveDAO> buildUserSaveDAO(model::User&) = 0;
 

@@ -5,6 +5,7 @@
 #include "DAL/Translators/JSON/IJSONSaveTranslator.h"
 #include "DAL/Translators/JSON/IJSONTranslatorsFactory.h"
 #include "Model/Patient.h"
+#include "Model/PatientMgr.h"
 #include "REST/Helpers/ReplyBuilderHelper.h"
 #include "Services/Model/IPatientModelService.h"
 #include "Services/Security/IAuthorizationValidatorService.h"
@@ -67,7 +68,7 @@ namespace seed_cpp { namespace rest {
 
 		try
 		{
-			model::EntityMgr<model::Patient>::UniqueLock writeLock(m_patientModelService.getEntityMgr());
+			model::PatientMgr::UniqueLock writeLock(m_patientModelService.getEntityMgr());
 			const model::Patient* existingPatient = m_patientModelService.getEntityById(m_patientId, writeLock);
 			if (existingPatient)
 			{

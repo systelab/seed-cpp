@@ -4,6 +4,7 @@
 #include "Core.h"
 #include "Model/Model.h"
 #include "Model/Patient.h"
+#include "Model/UserMgr.h"
 #include "REST/Endpoints/EndpointRequestData.h"
 #include "REST/Endpoints/IEndpoint.h"
 #include "REST/Endpoints/Patients/PatientsDeleteEndpoint.h"
@@ -35,7 +36,7 @@ namespace seed_cpp { namespace rest {
 	{
 		systelab::web_server::RequestHeaders headers = requestData.getHeaders();
 		systelab::web_server::RequestQueryStrings queryStrings = requestData.getQueryStrings();
-		model::EntityMgr<model::Patient>& patientMgr = m_core.getModel().getPatientMgr();
+		model::PatientMgr& patientMgr = m_core.getModel().getPatientMgr();
 		dal::IJSONTranslatorsFactory& jsonTranslatorsFactory = m_core.getJSONTranslatorsFactory();
 		systelab::json::IJSONAdapter& jsonAdapter = m_core.getJSONAdapter();
 		service::IAuthorizationValidatorService& authorizationValidatorService = m_core.getServicesMgr().getAuthorizationValidatorService();
@@ -49,7 +50,7 @@ namespace seed_cpp { namespace rest {
 	{
 		systelab::web_server::RequestHeaders headers = requestData.getHeaders();
 		std::string patientId = requestData.getRouteParameters()[0].getValue<std::string>();
-		model::EntityMgr<model::Patient>& patientMgr = m_core.getModel().getPatientMgr();
+		model::PatientMgr& patientMgr = m_core.getModel().getPatientMgr();
 		dal::IJSONTranslatorsFactory& jsonTranslatorsFactory = m_core.getJSONTranslatorsFactory();
 		systelab::json::IJSONAdapter& jsonAdapter = m_core.getJSONAdapter();
 		service::IAuthorizationValidatorService& authorizationValidatorService = m_core.getServicesMgr().getAuthorizationValidatorService();
@@ -107,7 +108,7 @@ namespace seed_cpp { namespace rest {
 	{
 		systelab::web_server::RequestHeaders headers = requestData.getHeaders();
 		systelab::web_server::RequestQueryStrings queryStrings = requestData.getQueryStrings();
-		model::EntityMgr<model::User>& userMgr = m_core.getModel().getUserMgr();
+		model::UserMgr& userMgr = m_core.getModel().getUserMgr();
 		dal::IJSONTranslatorsFactory& jsonTranslatorsFactory = m_core.getJSONTranslatorsFactory();
 		systelab::json::IJSONAdapter& jsonAdapter = m_core.getJSONAdapter();
 		service::IAuthorizationValidatorService& authorizationValidatorService = m_core.getServicesMgr().getAuthorizationValidatorService();
@@ -121,7 +122,7 @@ namespace seed_cpp { namespace rest {
 	{
 		systelab::web_server::RequestHeaders headers = requestData.getHeaders();
 		std::string userId = requestData.getRouteParameters()[0].getValue<std::string>();
-		model::EntityMgr<model::User>& userMgr = m_core.getModel().getUserMgr();
+		model::UserMgr& userMgr = m_core.getModel().getUserMgr();
 		dal::IJSONTranslatorsFactory& jsonTranslatorsFactory = m_core.getJSONTranslatorsFactory();
 		systelab::json::IJSONAdapter& jsonAdapter = m_core.getJSONAdapter();
 		service::IAuthorizationValidatorService &authorizationValidatorService = m_core.getServicesMgr().getAuthorizationValidatorService();

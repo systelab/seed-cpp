@@ -3,6 +3,7 @@
 
 #include "Model/EntityMgr.h"
 #include "Model/Patient.h"
+#include "Model/PatientMgr.h"
 #include "DAL/Translators/JSON/IJSONLoadTranslator.h"
 #include "DAL/Translators/JSON/IJSONSaveTranslator.h"
 #include "DAL/Translators/JSON/IJSONTranslatorsFactory.h"
@@ -75,7 +76,7 @@ namespace seed_cpp { namespace rest {
 				patientToAdd->setDob(boost::posix_time::ptime({1970,01,01}));
 			}
 
-			model::EntityMgr<model::Patient>::UniqueLock writeLock(m_patientModelService.getEntityMgr());
+			model::PatientMgr::UniqueLock writeLock(m_patientModelService.getEntityMgr());
 			const model::Patient& addedPatient = m_patientModelService.addEntity(std::move(patientToAdd), writeLock);
 
 			auto jsonResponse = m_jsonAdapter.buildEmptyDocument();

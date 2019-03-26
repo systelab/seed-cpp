@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Model/EntityMgr.h"
 #include "REST/Endpoints/IEndpoint.h"
 
 #include "WebServerAdapterInterface/Model/RequestHeaders.h"

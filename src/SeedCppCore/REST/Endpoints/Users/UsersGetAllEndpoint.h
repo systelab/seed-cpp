@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Model/EntityMgr.h"
 #include "REST/Endpoints/IEndpoint.h"
 
 #include "WebServerAdapterInterface/Model/RequestHeaders.h"
@@ -17,6 +16,7 @@ namespace seed_cpp {
 	}
 	namespace model {
 		class User;
+		class UserMgr;
 	}
 	namespace service {
 		class IAuthorizationValidatorService;
@@ -32,7 +32,7 @@ namespace seed_cpp { namespace rest {
 	public:
 		UsersGetAllEndpoint(const systelab::web_server::RequestHeaders&,
 							const systelab::web_server::RequestQueryStrings&,
-							model::EntityMgr<model::User>&,
+							model::UserMgr&,
 							dal::IJSONTranslatorsFactory&,
 							systelab::json::IJSONAdapter&,
 							service::IAuthorizationValidatorService&);
@@ -59,7 +59,7 @@ namespace seed_cpp { namespace rest {
 	private:
 		const systelab::web_server::RequestHeaders m_headers;
 		const systelab::web_server::RequestQueryStrings m_queryStrings;
-		model::EntityMgr<model::User>& m_userMgr;
+		model::UserMgr& m_userMgr;
 		dal::IJSONTranslatorsFactory& m_jsonTranslatorsFactory;
 		systelab::json::IJSONAdapter& m_jsonAdapter;
 		service::IAuthorizationValidatorService& m_authorizationValidatorService;

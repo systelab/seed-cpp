@@ -2,6 +2,7 @@
 #include "PatientsDeleteEndpoint.h"
 
 #include "Model/Patient.h"
+#include "Model/PatientMgr.h"
 #include "REST/Helpers/ReplyBuilderHelper.h"
 #include "Services/Model/IPatientModelService.h"
 #include "Services/Security/IAuthorizationValidatorService.h"
@@ -32,7 +33,7 @@ namespace seed_cpp { namespace rest {
 
 	std::unique_ptr<systelab::web_server::Reply> PatientsDeleteEndpoint::execute()
 	{
-		model::EntityMgr<model::Patient>::UniqueLock writeLock(m_patientModelService.getEntityMgr());
+		model::PatientMgr::UniqueLock writeLock(m_patientModelService.getEntityMgr());
 		const model::Patient* existingPatient = m_patientModelService.getEntityById(m_id, writeLock);
 		if (!existingPatient)
 		{

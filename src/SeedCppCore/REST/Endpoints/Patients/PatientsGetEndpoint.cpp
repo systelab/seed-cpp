@@ -4,6 +4,7 @@
 #include "DAL/Translators/JSON/IJSONSaveTranslator.h"
 #include "DAL/Translators/JSON/IJSONTranslatorsFactory.h"
 #include "Model/Patient.h"
+#include "Model/PatientMgr.h"
 #include "REST/Helpers/ReplyBuilderHelper.h"
 #include "Services/Security/IAuthorizationValidatorService.h"
 
@@ -17,7 +18,7 @@ namespace seed_cpp { namespace rest {
 
 	PatientsGetEndpoint::PatientsGetEndpoint(const systelab::web_server::RequestHeaders& headers,
 											 const std::string& id,
-											 model::EntityMgr<model::Patient>& patientMgr,
+											 model::PatientMgr& patientMgr,
 											 dal::IJSONTranslatorsFactory& jsonTranslatorsFactory,
 											 systelab::json::IJSONAdapter& jsonAdapter,
 											 service::IAuthorizationValidatorService& authorizationValidatorService)
@@ -39,7 +40,7 @@ namespace seed_cpp { namespace rest {
 
 	std::unique_ptr<systelab::web_server::Reply> PatientsGetEndpoint::execute()
 	{
-		model::EntityMgr<model::Patient>::SharedLock readLock(m_patientMgr);
+		model::PatientMgr::SharedLock readLock(m_patientMgr);
 		const model::Patient* patient = m_patientMgr.getEntityById(m_id, readLock);
 		if (!patient)
 		{

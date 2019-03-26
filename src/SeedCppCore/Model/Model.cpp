@@ -2,8 +2,8 @@
 #include "Model.h"
 
 #include "Model/AllergyMgr.h"
-#include "Model/Patient.h"
-#include "Model/User.h"
+#include "Model/PatientMgr.h"
+#include "Model/UserMgr.h"
 
 
 namespace seed_cpp { namespace model {
@@ -19,12 +19,12 @@ namespace seed_cpp { namespace model {
 		return *m_allergyMgr;
 	}
 
-	EntityMgr<User>& Model::getUserMgr() const
+	UserMgr& Model::getUserMgr() const
 	{
 		return *m_userMgr;
 	}
 
-	EntityMgr<Patient>& Model::getPatientMgr() const
+	PatientMgr& Model::getPatientMgr() const
 	{
 		return *m_patientMgr;
 	}

@@ -6,16 +6,8 @@
 
 namespace seed_cpp { namespace service {
 
-	UserModelService::UserModelService(model::EntityMgr<model::User>& userMgr,
-									   dal::IDbDAOFactory& daoFactory,
-									   service::IUUIDGeneratorService& uuidGeneratorService,
-									   service::ITimeService& timeService)
-		:EntityModelService(userMgr, daoFactory, uuidGeneratorService, timeService)
-		,m_userMgr(userMgr)
-	{
-	}
 	
-	model::EntityMgr<model::User>& UserModelService::getEntityMgr() const
+	model::UserMgr& UserModelService::getEntityMgr() const
 	{
 		return EntityModelService::getEntityMgr();
 	}
@@ -47,10 +39,10 @@ namespace seed_cpp { namespace service {
 	const model::User* UserModelService::getUserByLogin(const std::string& login,
 														const model::LockableEntityMgrSubject::IReadLock& readLock) const
 	{
-		unsigned int nUsers = m_userMgr.count();
+		unsigned int nUsers = m_entityMgr.count();
 		for (unsigned int i = 0; i < nUsers; i++)
 		{
-			const model::User* user = m_userMgr.getEntity(i, readLock);
+			const model::User* user = m_entityMgr.getEntity(i, readLock);
 			if (user->getLogin() == login)
 			{
 				return user;

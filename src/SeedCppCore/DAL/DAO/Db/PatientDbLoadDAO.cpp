@@ -5,6 +5,7 @@
 #include "DAL/Translators/Db/IDbTranslatorsFactory.h"
 #include "Model/Address.h"
 #include "Model/Patient.h"
+#include "Model/PatientMgr.h"
 
 #include "DbAdapterInterface/IDatabase.h"
 #include "DbAdapterInterface/IFieldValue.h"
@@ -15,7 +16,7 @@
 namespace seed_cpp { namespace dal {
 
 	PatientDbLoadDAO::PatientDbLoadDAO(systelab::db::IDatabase& db,
-									   model::EntityMgr<model::Patient>& model,
+									   model::PatientMgr& model,
 									   dal::IDbTranslatorsFactory& translatorsFactory)
 		:m_db(db)
 		,m_model(model)
@@ -39,7 +40,7 @@ namespace seed_cpp { namespace dal {
 			itemsRecordset->nextRecord();
 		}
 
-		model::EntityMgr<model::Patient>::UniqueLock writeLock(m_model);
+		model::PatientMgr::UniqueLock writeLock(m_model);
 		m_model.setEntities(std::move(items), writeLock);
 	}
 

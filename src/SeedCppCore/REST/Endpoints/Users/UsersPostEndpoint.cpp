@@ -3,6 +3,7 @@
 
 #include "Model/EntityMgr.h"
 #include "Model/User.h"
+#include "Model/UserMgr.h"
 #include "DAL/Translators/JSON/IJSONLoadTranslator.h"
 #include "DAL/Translators/JSON/IJSONSaveTranslator.h"
 #include "DAL/Translators/JSON/IJSONTranslatorsFactory.h"
@@ -70,7 +71,7 @@ namespace seed_cpp { namespace rest {
 			auto userJSONLoadTranslator = m_jsonTranslatorsFactory.buildUserLoadTranslator(*userToAdd);
 			userJSONLoadTranslator->loadEntityFromJSON(jsonRequest->getRootValue());
 
-			model::EntityMgr<model::User>::UniqueLock writeLock(m_userModelService.getEntityMgr());
+			model::UserMgr::UniqueLock writeLock(m_userModelService.getEntityMgr());
 			const model::User& addedUser = m_userModelService.addEntity(std::move(userToAdd), writeLock);
 
 			auto jsonResponse = m_jsonAdapter.buildEmptyDocument();

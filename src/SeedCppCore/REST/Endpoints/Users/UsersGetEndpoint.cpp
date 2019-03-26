@@ -4,6 +4,7 @@
 #include "DAL/Translators/JSON/IJSONSaveTranslator.h"
 #include "DAL/Translators/JSON/IJSONTranslatorsFactory.h"
 #include "Model/User.h"
+#include "Model/UserMgr.h"
 #include "REST/Helpers/ReplyBuilderHelper.h"
 #include "Services/Security/IAuthorizationValidatorService.h"
 
@@ -17,7 +18,7 @@ namespace seed_cpp { namespace rest {
 
 	UsersGetEndpoint::UsersGetEndpoint(const systelab::web_server::RequestHeaders& headers,
 									   const std::string& id,
-									   model::EntityMgr<model::User>& userMgr,
+									   model::UserMgr& userMgr,
 									   dal::IJSONTranslatorsFactory& jsonTranslatorsFactory,
 									   systelab::json::IJSONAdapter& jsonAdapter,
 									   service::IAuthorizationValidatorService& authorizationValidatorService)
@@ -39,7 +40,7 @@ namespace seed_cpp { namespace rest {
 
 	std::unique_ptr<systelab::web_server::Reply> UsersGetEndpoint::execute()
 	{
-		model::EntityMgr<model::User>::SharedLock readLock(m_userMgr);
+		model::UserMgr::SharedLock readLock(m_userMgr);
 		const model::User* user = m_userMgr.getEntityById(m_id, readLock);
 		if (!user)
 		{

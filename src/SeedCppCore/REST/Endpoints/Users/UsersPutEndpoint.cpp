@@ -5,6 +5,7 @@
 #include "DAL/Translators/JSON/IJSONSaveTranslator.h"
 #include "DAL/Translators/JSON/IJSONTranslatorsFactory.h"
 #include "Model/User.h"
+#include "Model/UserMgr.h"
 #include "REST/Helpers/ReplyBuilderHelper.h"
 #include "Services/Model/IUserModelService.h"
 #include "Services/Security/IAuthorizationValidatorService.h"
@@ -67,7 +68,7 @@ namespace seed_cpp { namespace rest {
 
 		try
 		{
-			model::EntityMgr<model::User>::UniqueLock writeLock(m_userModelService.getEntityMgr());
+			model::UserMgr::UniqueLock writeLock(m_userModelService.getEntityMgr());
 			const model::User* existingUser = m_userModelService.getEntityById(m_userId, writeLock);
 			if (existingUser)
 			{

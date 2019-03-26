@@ -2,6 +2,7 @@
 #include "UsersLoginPostEndpoint.h"
 
 #include "Model/User.h"
+#include "Model/UserMgr.h"
 #include "REST/Helpers/ReplyBuilderHelper.h"
 #include "REST/Helpers/RequestURLEncodedParserHelper.h"
 #include "Services/Model/IUserModelService.h"
@@ -77,7 +78,7 @@ namespace seed_cpp { namespace rest {
 
 	const model::User* UsersLoginPostEndpoint::authenticate(const LoginData& loginData) const
 	{
-		model::EntityMgr<model::User>::SharedLock readLock(m_userModelService.getEntityMgr());
+		model::UserMgr::SharedLock readLock(m_userModelService.getEntityMgr());
 		const model::User* user = m_userModelService.getUserByLogin(loginData.m_login, readLock);
 		if (!user)
 		{

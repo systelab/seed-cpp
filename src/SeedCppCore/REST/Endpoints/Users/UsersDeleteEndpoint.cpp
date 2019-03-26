@@ -2,6 +2,7 @@
 #include "UsersDeleteEndpoint.h"
 
 #include "Model/User.h"
+#include "Model/UserMgr.h"
 #include "REST/Helpers/ReplyBuilderHelper.h"
 #include "Services/Model/IUserModelService.h"
 #include "Services/Security/IAuthorizationValidatorService.h"
@@ -32,7 +33,7 @@ namespace seed_cpp { namespace rest {
 
 	std::unique_ptr<systelab::web_server::Reply> UsersDeleteEndpoint::execute()
 	{
-		model::EntityMgr<model::User>::UniqueLock writeLock(m_userModelService.getEntityMgr());
+		model::UserMgr::UniqueLock writeLock(m_userModelService.getEntityMgr());
 		const model::User* existingUser = m_userModelService.getEntityById(m_id, writeLock);
 		if (!existingUser)
 		{

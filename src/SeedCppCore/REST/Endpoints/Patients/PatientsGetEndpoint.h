@@ -16,6 +16,7 @@ namespace seed_cpp {
 	}
 	namespace model {
 		class Patient;
+		class PatientMgr;
 	}
 	namespace service {
 		class IAuthorizationValidatorService;
@@ -31,7 +32,7 @@ namespace seed_cpp { namespace rest {
 	public:
 		PatientsGetEndpoint(const systelab::web_server::RequestHeaders&,
 							const std::string& id,
-							model::EntityMgr<model::Patient>&,
+							model::PatientMgr&,
 							dal::IJSONTranslatorsFactory&,
 							systelab::json::IJSONAdapter&,
 							service::IAuthorizationValidatorService&);
@@ -43,7 +44,7 @@ namespace seed_cpp { namespace rest {
 	private:
 		const systelab::web_server::RequestHeaders m_headers;
 		std::string m_id;
-		model::EntityMgr<model::Patient>& m_patientMgr;
+		model::PatientMgr& m_patientMgr;
 		dal::IJSONTranslatorsFactory& m_jsonTranslatorsFactory;
 		systelab::json::IJSONAdapter& m_jsonAdapter;
 		service::IAuthorizationValidatorService& m_authorizationValidatorService;
