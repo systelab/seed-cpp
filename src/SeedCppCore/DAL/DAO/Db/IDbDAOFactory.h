@@ -20,6 +20,7 @@ namespace seed_cpp { namespace dal {
 		virtual ~IDbDAOFactory() = default;
 
 		// ILoadDAO
+		virtual std::unique_ptr<ILoadDAO> buildAllergyLoadDAO() = 0;
 		virtual std::unique_ptr<ILoadDAO> buildPatientLoadDAO() = 0;
 		virtual std::unique_ptr<ILoadDAO> buildUserLoadDAO() = 0;
 
