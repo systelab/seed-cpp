@@ -6,7 +6,9 @@
 
 #include "RapidJSONAdapter/JSONAdapter.h"
 
-#include "BoostAsioWebServerAdapter/Server.h"
+#include "BoostAsioWebServerAdapter/ServerFactory.h"
+
+#include "WebServerAdapterInterface/IServer.h"
 #include "WebServerAdapterInterface/Model/CORSConfiguration.h"
 #include "WebServerAdapterInterface/Model/Configuration.h"
 
@@ -56,12 +58,12 @@ std::unique_ptr<systelab::db::IDatabase> loadDatabase()
 
 std::unique_ptr<systelab::web_server::IServer> loadWebServer()
 {
-	std::string hostAddress = "127.0.0.1";
-	unsigned int port = 8080;
-	unsigned int threadPoolSize = 5;
-	systelab::web_server::Configuration webServerConfiguration(hostAddress, port, threadPoolSize);
+	systelab::web_server::Configuration configuration;
+	configuration.setHostAddress("127.0.0.1");
+	configuration.setPort(8080);
+	configuration.setThreadPoolSize(5);
 
-	systelab::web_server::CORSConfiguration &corsConfiguration = webServerConfiguration.getCORSConfiguration();
+	systelab::web_server::CORSConfiguration &corsConfiguration = configuration.getCORSConfiguration();
 	corsConfiguration.setEnabled(true);
 	corsConfiguration.addAllowedOrigin("*");
 	corsConfiguration.addAllowedHeader("origin");
@@ -85,7 +87,8 @@ std::unique_ptr<systelab::web_server::IServer> loadWebServer()
 	corsConfiguration.addExposedHeader("ETag");
 	corsConfiguration.addExposedHeader("if-none-match");
 
-	return std::make_unique<systelab::web_server::boostasio::Server>(webServerConfiguration);
+	systelab::web_server::boostasio::ServerFactory serverFactory;
+	return serverFactory.buildServer(configuration);
 }
 
 std::unique_ptr<systelab::json::IJSONAdapter> loadJSONAdapter()
