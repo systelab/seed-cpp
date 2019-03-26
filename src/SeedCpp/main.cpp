@@ -8,6 +8,7 @@
 
 #include "BoostAsioWebServerAdapter/ServerFactory.h"
 
+#include "WebServerAdapterInterface/IServer.h"
 #include "WebServerAdapterInterface/Model/CORSConfiguration.h"
 #include "WebServerAdapterInterface/Model/Configuration.h"
 
