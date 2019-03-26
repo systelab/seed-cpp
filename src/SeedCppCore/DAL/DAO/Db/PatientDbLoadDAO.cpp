@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "PatientDbLoadDAO.h"
 
+#include "DAL/DbConstants.h"
 #include "DAL/Translators/Db/IDatabaseEntityTranslator.h"
 #include "DAL/Translators/Db/IDbTranslatorsFactory.h"
 #include "Model/Address.h"
@@ -27,7 +28,7 @@ namespace seed_cpp { namespace dal {
 	void PatientDbLoadDAO::loadAll() const
 	{
 		std::vector< std::unique_ptr<model::Patient> > items;
-		systelab::db::ITable& itemsTable = m_db.getTable("Patient");
+		systelab::db::ITable& itemsTable = m_db.getTable(db_table::PATIENT);
 		std::unique_ptr<systelab::db::ITableRecordSet> itemsRecordset = itemsTable.getAllRecords();
 		while (itemsRecordset->isCurrentRecordValid())
 		{
@@ -58,7 +59,7 @@ namespace seed_cpp { namespace dal {
 		namespace sdb = systelab::db;
 
 		std::string patientId = *patient.getId();
-		systelab::db::ITable& table = m_db.getTable("Address");
+		systelab::db::ITable& table = m_db.getTable(db_table::ADDRESS);
 		std::unique_ptr<sdb::IFieldValue> patientIdFieldValue = table.createFieldValue(table.getField("patientId"), patientId);
 		std::unique_ptr<sdb::ITableRecordSet> addressRecordset = table.filterRecordsByField(*patientIdFieldValue);
 		if (addressRecordset->isCurrentRecordValid())

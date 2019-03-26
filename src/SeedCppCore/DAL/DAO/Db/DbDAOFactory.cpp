@@ -2,6 +2,7 @@
 #include "DbDAOFactory.h"
 
 #include "Core.h"
+#include "DAL/DbConstants.h"
 #include "DAL/DAO/Db/AllergyDbLoadDAO.h"
 #include "DAL/DAO/Db/DbTransactionDAO.h"
 #include "DAL/DAO/Db/PatientDbLoadDAO.h"
@@ -29,7 +30,7 @@ namespace seed_cpp { namespace dal {
 		auto& model = m_core.getModel().getAllergyMgr();
 		auto& dbTranslatorsFactory = m_core.getDbTranslatorsFactory();
 
-		return std::make_unique<AllergyDbLoadDAO>("Allergy", database, model, dbTranslatorsFactory,
+		return std::make_unique<AllergyDbLoadDAO>(db_table::ALLERGY, database, model, dbTranslatorsFactory,
 													std::bind(&IDbTranslatorsFactory::buildAllergyTranslator, &dbTranslatorsFactory, std::placeholders::_1));
 	}
 
@@ -48,7 +49,7 @@ namespace seed_cpp { namespace dal {
 		auto& model = m_core.getModel().getUserMgr();
 		auto& dbTranslatorsFactory = m_core.getDbTranslatorsFactory();
 
-		return std::make_unique<UserDbLoadDAO>("User", database, model, dbTranslatorsFactory,
+		return std::make_unique<UserDbLoadDAO>(db_table::USER, database, model, dbTranslatorsFactory,
 												std::bind(&IDbTranslatorsFactory::buildUserTranslator, &dbTranslatorsFactory, std::placeholders::_1));
 	}
 
