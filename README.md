@@ -22,7 +22,7 @@ Not available yet. Meanwhile, you can build it from sources.
 
 ## Build from sources
 
-To build the applciation, the following prerequisites are mandatory:
+To build the application, the following *prerequisites* are mandatory:
 
   - [Git](https://git-scm.com/)
   - [Conan](https://conan.io/)
