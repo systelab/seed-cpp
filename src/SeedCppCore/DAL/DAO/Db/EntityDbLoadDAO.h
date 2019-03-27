@@ -46,7 +46,7 @@ namespace seed_cpp { namespace dal {
 				itemsRecordset->nextRecord();
 			}
 
-			_EntityMgr::UniqueLock writeLock(m_model);
+			typename _EntityMgr::UniqueLock writeLock(m_model);
 			m_model.setEntities(std::move(items), writeLock);
 		};
 
