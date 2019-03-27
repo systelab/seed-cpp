@@ -71,12 +71,13 @@ namespace seed_cpp { namespace dal {
 		return std::make_unique<PatientDbSaveDAO>(database, patient, *this, dbTranslatorsFactory);
 	}
 
-	std::unique_ptr<ISaveDAO> DbDAOFactory::buildUserSaveDAO(model::User& user)
+	std::unique_ptr<ISaveDAO> DbDAOFactory::buildUserSaveDAO(model::User& entity)
 	{
 		auto& database = m_core.getDatabase();
 		auto& dbTranslatorsFactory = m_core.getDbTranslatorsFactory();
 
-		return std::make_unique<UserDbSaveDAO>(database, user, *this, dbTranslatorsFactory);
+		return std::make_unique<UserDbSaveDAO>(db_table::USER, database, entity, *this,
+												   std::bind(&IDbTranslatorsFactory::buildUserTranslator, &dbTranslatorsFactory, std::placeholders::_1));
 	}
 
 	// Transaction
