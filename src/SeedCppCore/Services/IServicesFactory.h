@@ -10,6 +10,7 @@ namespace systelab { namespace jwt {
 
 namespace seed_cpp { namespace service {
 
+	class IAllergyModelService;
 	class IAuthorizationValidatorService;
 	class IBase64EncodeService;
 	class IJSONValidatorService;
@@ -28,6 +29,7 @@ namespace seed_cpp { namespace service {
 		virtual ~IServicesFactory() {};
 
 		// Model services
+		virtual std::unique_ptr<IAllergyModelService> buildAllergyModelService() const = 0;
 		virtual std::unique_ptr<IPatientModelService> buildPatientModelService() const = 0;
 		virtual std::unique_ptr<IUserModelService> buildUserModelService() const = 0;
 

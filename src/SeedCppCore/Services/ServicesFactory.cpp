@@ -6,6 +6,7 @@
 #include "Model/Model.h"
 #include "Model/User.h"
 #include "Services/ServicesMgr.h"
+#include "Services/Model/AllergyModelService.h"
 #include "Services/Model/PatientModelService.h"
 #include "Services/Model/UserModelService.h"
 #include "Services/Security/AuthorizationValidatorService.h"
@@ -25,11 +26,20 @@ namespace seed_cpp { namespace service {
 	{
 	}
 	
-	ServicesFactory::~ServicesFactory()
-	{
-	}
+	ServicesFactory::~ServicesFactory() = default;
 
 	// Model services
+	std::unique_ptr<IAllergyModelService> ServicesFactory::buildAllergyModelService() const
+	{
+		auto& entityMgr = m_core.getModel().getAllergyMgr();
+		auto& dbDAOFactory = m_core.getDbDAOFactory();
+		auto& uuidGeneratorService = m_core.getServicesMgr().getUUIDGeneratorService();
+		auto& timeService = m_core.getServicesMgr().getTimeService();
+
+		return std::make_unique<AllergyModelService>(entityMgr, dbDAOFactory, std::bind(&dal::IDbDAOFactory::buildAllergySaveDAO, &dbDAOFactory, std::placeholders::_1),
+													uuidGeneratorService, timeService);
+	}
+
 	std::unique_ptr<IPatientModelService> ServicesFactory::buildPatientModelService() const
 	{
 		model::PatientMgr& patientMgr = m_core.getModel().getPatientMgr();
