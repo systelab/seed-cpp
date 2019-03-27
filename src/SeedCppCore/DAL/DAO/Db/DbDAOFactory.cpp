@@ -4,6 +4,7 @@
 #include "Core.h"
 #include "DAL/DbConstants.h"
 #include "DAL/DAO/Db/AllergyDbLoadDAO.h"
+#include "DAL/DAO/Db/AllergyDbSaveDAO.h"
 #include "DAL/DAO/Db/DbTransactionDAO.h"
 #include "DAL/DAO/Db/PatientDbLoadDAO.h"
 #include "DAL/DAO/Db/PatientDbSaveDAO.h"
@@ -30,7 +31,7 @@ namespace seed_cpp { namespace dal {
 		auto& model = m_core.getModel().getAllergyMgr();
 		auto& dbTranslatorsFactory = m_core.getDbTranslatorsFactory();
 
-		return std::make_unique<AllergyDbLoadDAO>(db_table::ALLERGY, database, model, dbTranslatorsFactory,
+		return std::make_unique<AllergyDbLoadDAO>(db_table::ALLERGY, database, model,
 													std::bind(&IDbTranslatorsFactory::buildAllergyTranslator, &dbTranslatorsFactory, std::placeholders::_1));
 	}
 
@@ -49,11 +50,19 @@ namespace seed_cpp { namespace dal {
 		auto& model = m_core.getModel().getUserMgr();
 		auto& dbTranslatorsFactory = m_core.getDbTranslatorsFactory();
 
-		return std::make_unique<UserDbLoadDAO>(db_table::USER, database, model, dbTranslatorsFactory,
+		return std::make_unique<UserDbLoadDAO>(db_table::USER, database, model,
 												std::bind(&IDbTranslatorsFactory::buildUserTranslator, &dbTranslatorsFactory, std::placeholders::_1));
 	}
 
 	// Save
+	std::unique_ptr<ISaveDAO> DbDAOFactory::buildAllergySaveDAO(model::Allergy& entity)
+	{
+		auto& database = m_core.getDatabase();
+		auto& dbTranslatorsFactory = m_core.getDbTranslatorsFactory();
+
+		return std::make_unique<AllergyDbSaveDAO>(db_table::ALLERGY, database, entity, *this,
+												   std::bind(&IDbTranslatorsFactory::buildAllergyTranslator, &dbTranslatorsFactory, std::placeholders::_1));
+	}
 	std::unique_ptr<ISaveDAO> DbDAOFactory::buildPatientSaveDAO(model::Patient& patient)
 	{
 		auto& database = m_core.getDatabase();

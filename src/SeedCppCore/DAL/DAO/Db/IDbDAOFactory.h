@@ -2,8 +2,8 @@
 
 #include <memory>
 
-
 namespace seed_cpp { namespace model {
+	class Allergy;
 	class Patient;
 	class User;
 }}
@@ -25,6 +25,7 @@ namespace seed_cpp { namespace dal {
 		virtual std::unique_ptr<ILoadDAO> buildUserLoadDAO() = 0;
 
 		// ISaveDAO
+		virtual std::unique_ptr<ISaveDAO> buildAllergySaveDAO(model::Allergy&) = 0;
 		virtual std::unique_ptr<ISaveDAO> buildPatientSaveDAO(model::Patient&) = 0;
 		virtual std::unique_ptr<ISaveDAO> buildUserSaveDAO(model::User&) = 0;
 

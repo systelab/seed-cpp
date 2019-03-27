@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../ITransactionDAOMgr.h"
 #include "IDbDAOFactory.h"
+#include "DAL/DAO/ITransactionDAOMgr.h"
 
 namespace seed_cpp {
 	class Core;
@@ -21,6 +21,7 @@ namespace seed_cpp { namespace dal {
 		std::unique_ptr<ILoadDAO> buildUserLoadDAO() override;
 
 		// Save
+		std::unique_ptr<ISaveDAO> buildAllergySaveDAO(model::Allergy&) override;
 		std::unique_ptr<ISaveDAO> buildPatientSaveDAO(model::Patient&) override;
 		std::unique_ptr<ISaveDAO> buildUserSaveDAO(model::User&) override;
 
