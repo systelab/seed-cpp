@@ -6,6 +6,7 @@
 #include "DAL/DAO/ISaveDAO.h"
 #include "DAL/DAO/ITransactionDAO.h"
 #include "DAL/DAO/Db/IDbDAOFactory.h"
+#include "Model/LockableEntityMgrSubject.h"
 #include "Services/System/ITimeService.h"
 #include "Services/System/IUUIDGeneratorService.h"
 
@@ -128,12 +129,12 @@ namespace seed_cpp { namespace service {
 			}
 		}
 
-		std::unique_ptr<typename _EntityMgr::SharedLock> createReadLock()
+		std::unique_ptr<model::LockableEntityMgrSubject::IReadLock> createReadLock()
 		{
 			return std::make_unique<typename _EntityMgr::SharedLock>(m_entityMgr);
 		}
 
-		std::unique_ptr<typename _EntityMgr::UniqueLock> createWriteLock()
+		std::unique_ptr<model::LockableEntityMgrSubject::IWriteLock> createWriteLock()
 		{
 			return std::make_unique<typename _EntityMgr::UniqueLock>(m_entityMgr);
 		}
