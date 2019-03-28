@@ -9,6 +9,9 @@
 namespace seed_cpp { namespace model {
 
 	Model::Model()
+		:m_allergyMgr(std::make_unique<AllergyMgr>())
+		,m_patientMgr(std::make_unique<PatientMgr>())
+		,m_userMgr(std::make_unique<UserMgr>())
 	{
 	}
 
@@ -19,14 +22,14 @@ namespace seed_cpp { namespace model {
 		return *m_allergyMgr;
 	}
 
-	UserMgr& Model::getUserMgr() const
-	{
-		return *m_userMgr;
-	}
-
 	PatientMgr& Model::getPatientMgr() const
 	{
 		return *m_patientMgr;
+	}
+
+	UserMgr& Model::getUserMgr() const
+	{
+		return *m_userMgr;
 	}
 
 }}

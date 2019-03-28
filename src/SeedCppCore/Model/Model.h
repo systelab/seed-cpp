@@ -18,8 +18,8 @@ namespace seed_cpp { namespace model {
 
 	private:
 		std::unique_ptr<AllergyMgr> m_allergyMgr;
-		std::unique_ptr<UserMgr> m_userMgr;
 		std::unique_ptr<PatientMgr> m_patientMgr;
+		std::unique_ptr<UserMgr> m_userMgr;
 	};
 
 }}
