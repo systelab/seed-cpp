@@ -128,6 +128,16 @@ namespace seed_cpp { namespace service {
 			}
 		}
 
+		std::unique_ptr<typename _EntityMgr::SharedLock> createReadLock()
+		{
+			return std::make_unique<typename _EntityMgr::SharedLock>(m_entityMgr);
+		}
+
+		std::unique_ptr<typename _EntityMgr::UniqueLock> createWriteLock()
+		{
+			return std::make_unique<typename _EntityMgr::UniqueLock>(m_entityMgr);
+		}
+
 	protected:
 		_EntityMgr& m_entityMgr;
 		dal::IDbDAOFactory& m_daoFactory;

@@ -28,4 +28,14 @@ namespace seed_cpp { namespace service {
 		EntityModelService::deleteEntity(id, lock);
 	}
 
+	std::unique_ptr<model::LockableEntityMgrSubject::IReadLock> AllergyModelService::createReadLock()
+	{
+		return EntityModelService::createReadLock();
+	}
+
+	std::unique_ptr<model::LockableEntityMgrSubject::IWriteLock> AllergyModelService::createWriteLock()
+	{
+		return EntityModelService::createWriteLock();
+	}
+
 }}

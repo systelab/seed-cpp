@@ -19,6 +19,9 @@ namespace seed_cpp { namespace service {
 		virtual const model::Allergy& addEntity(std::unique_ptr<model::Allergy>, const model::LockableEntityMgrSubject::IWriteLock&) = 0;
 		virtual const model::Allergy& editEntity(std::unique_ptr<model::Allergy>, const model::LockableEntityMgrSubject::IWriteLock&) = 0;
 		virtual void deleteEntity(const std::string& id, const model::LockableEntityMgrSubject::IWriteLock&) = 0;
+
+		virtual std::unique_ptr<model::LockableEntityMgrSubject::IReadLock> createReadLock() = 0;
+		virtual std::unique_ptr<model::LockableEntityMgrSubject::IWriteLock> createWriteLock() = 0;
 	};
 
 }}
