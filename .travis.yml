@@ -1,24 +1,34 @@
-dist: xenial
 language: cpp
-compiler: gcc
 
-before_install:
-  - sudo add-apt-repository --yes ppa:ubuntu-toolchain-r/test
-  - sudo apt-get update -qq
+matrix:
+  include:
+  - os: linux
+    dist: xenial
+    compiler: gcc
+    addons:
+      apt:
+        sources:
+          - ubuntu-toolchain-r-test
+        packages:
+          - gcc-7
+          - g++-7
+    env:
+      - BUILD_TYPE=Release
+      - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
+
+  - os: osx
+    osx_image: xcode10.1
+    compiler: clang   
+    env:
+      - BUILD_TYPE=Release
 
 install: 
-  - sudo apt-get install -qq gcc-7
-  - sudo apt-get install -qq g++-7
-  - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 90
-  - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 90
-  - sudo apt-get install lcov
   - pip install conan --user
   - conan user
 
 script:
-  - g++ --version
   - mkdir -p build
   - cd build
   - conan install ..
-  - cmake -DCMAKE_BUILD_TYPE=Debug .. 
+  - cmake -DCMAKE_BUILD_TYPE=${BUILD_TYPE} .. 
   - make
