@@ -76,6 +76,8 @@ In order to build the application on Linux, run the following commands:
 
 To run the application, just launch the `SeedCpp` executable. It will set up an HTTP server on port `8080` which implements the patient management REST API.
 
+> In Linux and Mac OS X, If you have the error 'dyld: Library not loaded', please, copy the generated *.dyld libraries to /usr/local/lib
+
 ### Login
 
 Before any request, users must authenticate to the REST API by using the login endpoint (with username `Systelab` and password `Systelab`):
