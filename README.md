@@ -51,12 +51,12 @@ To build the application, we will follow the next steps:
 In order to build the application on Windows, run the following commands:
 
 ``` bash
-> git clone https://github.com/systelab/seed-cpp
-> cd seed-cpp
-> md build && cd build
-> conan install .. -s arch=x86
-> cmake ..
-> devenv.exe SeedCpp.sln
+git clone https://github.com/systelab/seed-cpp
+cd seed-cpp
+md build && cd build
+conan install .. -s arch=x86
+cmake ..
+devenv.exe SeedCpp.sln
 ```
 
 ### Linux
@@ -64,19 +64,19 @@ In order to build the application on Windows, run the following commands:
 In order to build the application on Linux, run the following commands:
 
 ``` bash
-> git clone https://github.com/systelab/seed-cpp
-> cd seed-cpp
-> mkdir build && cd build
-> conan install ..
-> cmake .. -DCMAKE_BUILD_TYPE=[Debug | Coverage | Release]
-> make
+git clone https://github.com/systelab/seed-cpp
+cd seed-cpp
+mkdir build && cd build
+conan install ..
+cmake .. -DCMAKE_BUILD_TYPE=[Debug | Coverage | Release]
+make
 ```
 
 ## Usage
 
 To run the application, just launch the `SeedCpp` executable. It will set up an HTTP server on port `8080` which implements the patient management REST API.
 
-> In Linux and Mac OS X, If you have the error 'dyld: Library not loaded', please, copy the generated *.dyld libraries to /usr/local/lib
+> In Linux and macOS, if you have the error 'dyld: Library not loaded', as a workaround, please copy the generated *.dyld libraries to /usr/local/lib
 
 ### Login
 
