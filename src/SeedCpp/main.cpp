@@ -13,7 +13,8 @@
 #include "WebServerAdapterInterface/Model/Configuration.h"
 
 #include <boost/filesystem.hpp>
-
+#include <boost/program_options.hpp>
+namespace po = boost::program_options;
 
 bool fileExists(const std::string& filename)
 {
@@ -102,38 +103,35 @@ std::unique_ptr<systelab::json::IJSONAdapter> loadJSONAdapter()
 	return std::make_unique<systelab::json::rapidjson::JSONAdapter>();
 }
 
-int main(int argc, char** argv)
+int main(int ac, char* av[])
 {
 	int port = 8080;
 	bool enableCors = false;
 
-	int opt; 
-	while((opt = getopt(argc, argv, ":p:cx")) != -1)  
-	{
-		switch(opt)  
-        	{
-			case 'p':
-				if (atoi(optarg)>0)
-				{  
-					port=atoi(optarg);
-					std::cout << "port is set to: " << port << std::endl; 
-				}
-                		break;  
-			case 'c':
-				std::cout << "CORS is enabled" << std::endl;  
-				enableCors = true;
-				break;
-			case ':':
-				std::cout << "Option -" << optopt << " needs a value" << std::endl;
-				break;
-			case '?':
-				std::cout << "Unknown option: -" << optopt << std::endl;
-				break;
-		}
-	}  
-
 	try
 	{
+		po::options_description desc("Allowed options");
+		desc.add_options()
+			("help", "produce help message")
+			("cors", "enable cors")
+			("port", po::value<int>(), "set port");
+		
+		po::variables_map vm;
+		po::store(po::parse_command_line(ac, av, desc), vm);
+		po::notify(vm);
+		
+		if (vm.count("help")) {
+			std::cout << desc << "\n";
+			return 0;
+		}
+		if (vm.count("port")) {
+			port = vm["port"].as<int>();
+			std::cout << "Port set to " << port << ".\n";
+		}
+		if (vm.count("cors")) {
+			enableCors = true;
+		}
+
 		std::unique_ptr<systelab::db::IDatabase> database = loadDatabase();
 		std::unique_ptr<systelab::web_server::IServer> webServer = loadWebServer(port,enableCors);
 		std::unique_ptr<systelab::json::IJSONAdapter> jsonAdapter = loadJSONAdapter();
