@@ -74,18 +74,18 @@ make
 
 ## Usage
 
-To run the application, just launch the `SeedCpp` executable. By default, it will set up an HTTP server on port `8080` which implements the patient management REST API.
+To run the application, just launch the `SeedCpp` executable.
 
-Use the following options:
+Use the following commmand line options:
 
--p to set a different port.
-
--c to enable CORS
+--help to produce help message
+--cors to enable cors (by default is disabled)
+--port arg to set an specific port (by default is 8080)
 
 For example:
 
 ```
-SeedCpp -p 80 -c
+SeedCpp --port 80 --cors
 ```
 
 > In Linux and macOS, if you have the error 'dyld: Library not loaded', as a workaround, please copy the generated *.dyld libraries to /usr/local/lib
