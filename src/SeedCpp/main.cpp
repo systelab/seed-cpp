@@ -130,6 +130,8 @@ int main(int ac, char* av[])
 		}
 		if (vm.count("cors")) {
 			enableCors = true;
+			std::cout << "CORS is enabled.\n";
+
 		}
 
 		std::unique_ptr<systelab::db::IDatabase> database = loadDatabase();
