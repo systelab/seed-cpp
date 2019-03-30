@@ -83,17 +83,30 @@ To run the application, just launch the `SeedCpp` executable. It will set up an 
 Before any request, users must authenticate to the REST API by using the login endpoint (with username `Systelab` and password `Systelab`):
 
 ```
-POST /seed/v1/users/login HTTP/1.1
-Host: 127.0.0.1:8080
-Content-Type: application/x-www-form-urlencoded
-login=Systelab
-password=Systelab
+curl -v -d "login=Systelab&password=Systelab" -H "Content-Type: application/x-www-form-urlencoded" http://127.0.0.1:8080/seed/v1/users/login
 ```
 
 The response for this request should contain an authentication token (based on [JWT](https://jwt.io/)) in the `Authorization` header:
 
 ```
-TBD
+* Trying 127.0.0.1...
+* TCP_NODELAY set
+* Connected to 127.0.0.1 (127.0.0.1) port 8080 (#0)
+> POST /seed/v1/users/login HTTP/1.1
+> Host: 127.0.0.1:8080
+> User-Agent: curl/7.54.0
+> Accept: */*
+> Content-Type: application/x-www-form-urlencoded
+> Content-Length: 32
+> 
+* upload completely sent off: 32 out of 32 bytes
+* HTTP 1.0, assume close after body
+< HTTP/1.0 200 OK
+< Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOiIxNTUzOTMxNTU3Iiwic3ViIjoiU3lzdGVsYWIifQ.AcpzW6QZMLZ39ST0tXBzz7ZAWDWyzATd3nJxZsMRxdQ
+< Content-Length: 0
+< Content-Type: application/json
+< 
+* Closing connection 0
 ```
 
 This token should be added as an `Authorization` header in further requests to the REST API.
