@@ -32,6 +32,6 @@ install:
 script:
   - mkdir -p build
   - cd build
-  - conan install ..
+  - conan install .. -s compiler.libcxx=libstdc++11
   - cmake -DCMAKE_BUILD_TYPE=${BUILD_TYPE} .. 
   - make
