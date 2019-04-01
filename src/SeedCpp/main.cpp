@@ -21,20 +21,23 @@ bool fileExists(const std::string& filename)
 	return ifs.good();
 }
 
-void readFileToString(const std::string& filename, std::string& contents)
+std::string getFileContents(const std::string& filename)
 {
 	std::ifstream ifs(filename);
 	if (ifs)
 	{
+		std::string fileContents;
 		ifs.seekg(0, std::ios::end);
-		contents.resize(static_cast<unsigned int>(ifs.tellg()));
+		fileContents.resize(static_cast<unsigned int>(ifs.tellg()));
 		ifs.seekg(0, std::ios::beg);
-		ifs.read(&contents[0], contents.size());
+		ifs.read(&fileContents[0], fileContents.size());
 		ifs.close();
+
+		return fileContents;
 	}
 	else
 	{
-		throw std::runtime_error("Unable to find SQL file");
+		throw std::runtime_error("Unable to find file " + filename);
 	}
 }
 
@@ -48,8 +51,7 @@ std::unique_ptr<systelab::db::IDatabase> loadDatabase()
 
 	if (!existsBD && database)
 	{
-		std::string databaseSchemaSQL;
-		readFileToString("./Database/schema.sql", databaseSchemaSQL);
+		std::string databaseSchemaSQL = getFileContents("./Database/schema.sql");
 		database->executeMultipleStatements(databaseSchemaSQL);
 	}
 
@@ -63,7 +65,7 @@ std::unique_ptr<systelab::web_server::IServer> loadWebServer()
 	configuration.setPort(8080);
 	configuration.setThreadPoolSize(5);
 
-	systelab::web_server::CORSConfiguration &corsConfiguration = configuration.getCORSConfiguration();
+	systelab::web_server::CORSConfiguration& corsConfiguration = configuration.getCORSConfiguration();
 	corsConfiguration.setEnabled(true);
 	corsConfiguration.addAllowedOrigin("*");
 	corsConfiguration.addAllowedHeader("origin");
@@ -87,6 +89,12 @@ std::unique_ptr<systelab::web_server::IServer> loadWebServer()
 	corsConfiguration.addExposedHeader("ETag");
 	corsConfiguration.addExposedHeader("if-none-match");
 
+	systelab::web_server::SecurityConfiguration& securityConfiguration = configuration.getSecurityConfiguration();
+	securityConfiguration.setHTTPSEnabled(true);
+	securityConfiguration.setServerCertificate(getFileContents("Certificates/server-cert.crt"));
+	securityConfiguration.setServerPrivateKey(getFileContents("Certificates/server-key.pem"));
+	securityConfiguration.setServerDHParam(getFileContents("Certificates/server-dhparam.pem"));
+
 	systelab::web_server::boostasio::ServerFactory serverFactory;
 	return serverFactory.buildServer(configuration);
 }
@@ -95,7 +103,6 @@ std::unique_ptr<systelab::json::IJSONAdapter> loadJSONAdapter()
 {
 	return std::make_unique<systelab::json::rapidjson::JSONAdapter>();
 }
-
 
 int main()
 {
