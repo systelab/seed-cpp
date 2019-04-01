@@ -51,12 +51,12 @@ To build the application, we will follow the next steps:
 In order to build the application on Windows, run the following commands:
 
 ``` bash
-> git clone https://github.com/systelab/seed-cpp
-> cd seed-cpp
-> md build && cd build
-> conan install .. -s arch=x86
-> cmake ..
-> devenv.exe SeedCpp.sln
+git clone https://github.com/systelab/seed-cpp
+cd seed-cpp
+md build && cd build
+conan install .. -s arch=x86
+cmake ..
+devenv.exe SeedCpp.sln
 ```
 
 ### Linux
@@ -64,34 +64,49 @@ In order to build the application on Windows, run the following commands:
 In order to build the application on Linux, run the following commands:
 
 ``` bash
-> git clone https://github.com/systelab/seed-cpp
-> cd seed-cpp
-> mkdir build && cd build
-> conan install ..
-> cmake .. -DCMAKE_BUILD_TYPE=[Debug | Coverage | Release]
-> make
+git clone https://github.com/systelab/seed-cpp
+cd seed-cpp
+mkdir build && cd build
+conan install ..
+cmake .. -DCMAKE_BUILD_TYPE=[Debug | Coverage | Release]
+make
 ```
 
 ## Usage
 
 To run the application, just launch the `SeedCpp` executable. It will set up an HTTP server on port `8080` which implements the patient management REST API.
 
+> In Linux and macOS, if you have the error 'dyld: Library not loaded', as a workaround, please copy the generated *.dyld libraries to /usr/local/lib
+
 ### Login
 
 Before any request, users must authenticate to the REST API by using the login endpoint (with username `Systelab` and password `Systelab`):
 
 ```
-POST /seed/v1/users/login HTTP/1.1
-Host: 127.0.0.1:8080
-Content-Type: application/x-www-form-urlencoded
-login=Systelab
-password=Systelab
+curl -v -d "login=Systelab&password=Systelab" -H "Content-Type: application/x-www-form-urlencoded" http://127.0.0.1:8080/seed/v1/users/login
 ```
 
 The response for this request should contain an authentication token (based on [JWT](https://jwt.io/)) in the `Authorization` header:
 
 ```
-TBD
+* Trying 127.0.0.1...
+* TCP_NODELAY set
+* Connected to 127.0.0.1 (127.0.0.1) port 8080 (#0)
+> POST /seed/v1/users/login HTTP/1.1
+> Host: 127.0.0.1:8080
+> User-Agent: curl/7.54.0
+> Accept: */*
+> Content-Type: application/x-www-form-urlencoded
+> Content-Length: 32
+> 
+* upload completely sent off: 32 out of 32 bytes
+* HTTP 1.0, assume close after body
+< HTTP/1.0 200 OK
+< Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOiIxNTUzOTMxNTU3Iiwic3ViIjoiU3lzdGVsYWIifQ.AcpzW6QZMLZ39ST0tXBzz7ZAWDWyzATd3nJxZsMRxdQ
+< Content-Length: 0
+< Content-Type: application/json
+< 
+* Closing connection 0
 ```
 
 This token should be added as an `Authorization` header in further requests to the REST API.
