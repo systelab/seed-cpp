@@ -90,6 +90,8 @@ SeedCpp --port 80 --cors
 
 > In Linux and macOS, if you have the error 'dyld: Library not loaded', as a workaround, please copy the generated *.dyld libraries to /usr/local/lib
 
+> In Linux and macOS, if you have the error 'dyld: Library not loaded', as a workaround, please copy the generated *.dyld libraries to /usr/local/lib
+
 ### Login
 
 Before any request, users must authenticate to the REST API by using the login endpoint (with username `Systelab` and password `Systelab`):
