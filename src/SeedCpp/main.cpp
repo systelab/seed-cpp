@@ -105,11 +105,11 @@ std::unique_ptr<systelab::json::IJSONAdapter> loadJSONAdapter()
 
 int main(int ac, char* av[])
 {
-	int port = 8080;
-	bool enableCors = false;
-
 	try
 	{
+		int port = 8080;
+		bool enableCors = false;
+		
 		po::options_description desc("Allowed options");
 		desc.add_options()
 			("help", "produce help message")
