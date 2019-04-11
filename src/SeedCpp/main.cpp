@@ -61,12 +61,21 @@ std::unique_ptr<systelab::db::IDatabase> loadDatabase()
 	return database;
 }
 
-std::unique_ptr<systelab::web_server::IServer> loadWebServer(int port, bool enableCors)
+std::unique_ptr<systelab::web_server::IServer> loadWebServer(int port, bool enableHttps, bool enableCors)
 {
 	systelab::web_server::Configuration configuration;
 	configuration.setHostAddress("127.0.0.1");
 	configuration.setPort(port);
 	configuration.setThreadPoolSize(5);
+
+	systelab::web_server::SecurityConfiguration& securityConfiguration = configuration.getSecurityConfiguration();
+	securityConfiguration.setHTTPSEnabled(enableHttps);
+	if (enableHttps)
+	{
+		securityConfiguration.setServerCertificate(getFileContents("Certificates/server-cert.crt"));
+		securityConfiguration.setServerPrivateKey(getFileContents("Certificates/server-key.pem"));
+		securityConfiguration.setServerDHParam(getFileContents("Certificates/server-dhparam.pem"));
+	}
 
 	systelab::web_server::CORSConfiguration &corsConfiguration = configuration.getCORSConfiguration();
 	if (enableCors) {
@@ -98,12 +107,6 @@ std::unique_ptr<systelab::web_server::IServer> loadWebServer(int port, bool enab
 		corsConfiguration.setEnabled(false);
 	}
 
-	systelab::web_server::SecurityConfiguration& securityConfiguration = configuration.getSecurityConfiguration();
-	securityConfiguration.setHTTPSEnabled(true);
-	securityConfiguration.setServerCertificate(getFileContents("Certificates/server-cert.crt"));
-	securityConfiguration.setServerPrivateKey(getFileContents("Certificates/server-key.pem"));
-	securityConfiguration.setServerDHParam(getFileContents("Certificates/server-dhparam.pem"));
-
 	systelab::web_server::boostasio::ServerFactory serverFactory;
 	return serverFactory.buildServer(configuration);
 }
@@ -124,6 +127,7 @@ int main(int ac, char* av[])
 		desc.add_options()
 			("help", "produce help message")
 			("cors", "enable cors")
+			("https", "enable https")
 			("port", po::value<int>(), "set port");
 		
 		po::variables_map vm;
@@ -141,11 +145,14 @@ int main(int ac, char* av[])
 		if (vm.count("cors")) {
 			enableCors = true;
 			std::cout << "CORS is enabled.\n";
-
+		}
+		if (vm.count("https")) {
+			enableHttps = true;
+			std::cout << "HTTPS is enabled.\n";
 		}
 
 		std::unique_ptr<systelab::db::IDatabase> database = loadDatabase();
-		std::unique_ptr<systelab::web_server::IServer> webServer = loadWebServer(port,enableCors);
+		std::unique_ptr<systelab::web_server::IServer> webServer = loadWebServer(port, enableHttps, enableCors);
 		std::unique_ptr<systelab::json::IJSONAdapter> jsonAdapter = loadJSONAdapter();
 
 		seed_cpp::Core core(std::move(database), std::move(webServer), std::move(jsonAdapter));
