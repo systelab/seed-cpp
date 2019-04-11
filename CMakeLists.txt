@@ -30,11 +30,13 @@ git_clone_repository(URL https://github.com/systelab/cpp-jwt-utils.git          
 include_directories(${CMAKE_SOURCE_DIR}/src)
 include_directories(${CMAKE_SOURCE_DIR}/test)
 include_directories(${CMAKE_SOURCE_DIR}/extern/DbSQLiteAdapter/src)
+include_directories(${CMAKE_SOURCE_DIR}/extern/DbSQLiteAdapter/src/sqleet-v0.27.2)
 include_directories(${CMAKE_SOURCE_DIR}/extern/RapidJSONAdapter/src)
 include_directories(${CMAKE_SOURCE_DIR}/extern/BoostAsioWebServerAdapter/src)
 include_directories(${CMAKE_SOURCE_DIR}/extern/JWTUtils/src)
 
 # Add subprojects
+add_subdirectory(${CMAKE_SOURCE_DIR}/extern/DbSQLiteAdapter/src/sqleet-v0.27.2)
 add_subdirectory(${CMAKE_SOURCE_DIR}/extern/DbSQLiteAdapter/src/DbSQLiteAdapter)
 add_subdirectory(${CMAKE_SOURCE_DIR}/extern/RapidJSONAdapter/src/RapidJSONAdapter)
 add_subdirectory(${CMAKE_SOURCE_DIR}/extern/BoostAsioWebServerAdapter/src/BoostAsioWebServerAdapter)
