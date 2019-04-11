@@ -14,6 +14,8 @@
 
 #include <boost/filesystem.hpp>
 #include <boost/program_options.hpp>
+
+
 namespace po = boost::program_options;
 
 bool fileExists(const std::string& filename)
@@ -22,20 +24,31 @@ bool fileExists(const std::string& filename)
 	return ifs.good();
 }
 
-void readFileToString(const std::string& filename, std::string& contents)
+std::string getFileContents(const std::string& filename)
 {
 	std::ifstream ifs(filename);
 	if (ifs)
 	{
 		ifs.seekg(0, std::ios::end);
-		contents.resize(static_cast<unsigned int>(ifs.tellg()));
+		int fileLength = static_cast<int>(ifs.tellg());
 		ifs.seekg(0, std::ios::beg);
-		ifs.read(&contents[0], contents.size());
+
+		std::string fileContents;
+		fileContents.resize(fileLength);
+		ifs.read(&fileContents[0], fileLength);
+		if (!ifs)
+		{
+			ifs.close();
+			throw std::runtime_error("Error while reading file " + filename);
+		}
+
 		ifs.close();
+
+		return fileContents;
 	}
 	else
 	{
-		throw std::runtime_error("Unable to find SQL file");
+		throw std::runtime_error("Unable to find file " + filename);
 	}
 }
 
@@ -49,20 +62,28 @@ std::unique_ptr<systelab::db::IDatabase> loadDatabase()
 
 	if (!existsBD && database)
 	{
-		std::string databaseSchemaSQL;
-		readFileToString("./Database/schema.sql", databaseSchemaSQL);
+		std::string databaseSchemaSQL = getFileContents("./Database/schema.sql");
 		database->executeMultipleStatements(databaseSchemaSQL);
 	}
 
 	return database;
 }
 
-std::unique_ptr<systelab::web_server::IServer> loadWebServer(int port, bool enableCors)
+std::unique_ptr<systelab::web_server::IServer> loadWebServer(int port, bool enableHttps, bool enableCors)
 {
 	systelab::web_server::Configuration configuration;
 	configuration.setHostAddress("127.0.0.1");
 	configuration.setPort(port);
 	configuration.setThreadPoolSize(5);
+
+	systelab::web_server::SecurityConfiguration& securityConfiguration = configuration.getSecurityConfiguration();
+	securityConfiguration.setHTTPSEnabled(enableHttps);
+	if (enableHttps)
+	{
+		securityConfiguration.setServerCertificate(getFileContents("Certificates/server-cert.crt"));
+		securityConfiguration.setServerPrivateKey(getFileContents("Certificates/server-key.pem"));
+		securityConfiguration.setServerDHParam(getFileContents("Certificates/server-dhparam.pem"));
+	}
 
 	systelab::web_server::CORSConfiguration &corsConfiguration = configuration.getCORSConfiguration();
 	if (enableCors) {
@@ -109,11 +130,13 @@ int main(int ac, char* av[])
 	{
 		int port = 8080;
 		bool enableCors = false;
-		
+		bool enableHttps = false;
+
 		po::options_description desc("Allowed options");
 		desc.add_options()
 			("help", "produce help message")
 			("cors", "enable cors")
+			("https", "enable https")
 			("port", po::value<int>(), "set port");
 		
 		po::variables_map vm;
@@ -131,11 +154,14 @@ int main(int ac, char* av[])
 		if (vm.count("cors")) {
 			enableCors = true;
 			std::cout << "CORS is enabled.\n";
-
+		}
+		if (vm.count("https")) {
+			enableHttps = true;
+			std::cout << "HTTPS is enabled.\n";
 		}
 
 		std::unique_ptr<systelab::db::IDatabase> database = loadDatabase();
-		std::unique_ptr<systelab::web_server::IServer> webServer = loadWebServer(port,enableCors);
+		std::unique_ptr<systelab::web_server::IServer> webServer = loadWebServer(port, enableHttps, enableCors);
 		std::unique_ptr<systelab::json::IJSONAdapter> jsonAdapter = loadJSONAdapter();
 
 		seed_cpp::Core core(std::move(database), std::move(webServer), std::move(jsonAdapter));
