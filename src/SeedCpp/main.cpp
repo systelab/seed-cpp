@@ -122,7 +122,8 @@ int main(int ac, char* av[])
 	{
 		int port = 8080;
 		bool enableCors = false;
-		
+		bool enableHttps = false;
+
 		po::options_description desc("Allowed options");
 		desc.add_options()
 			("help", "produce help message")
