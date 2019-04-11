@@ -33,11 +33,7 @@ std::string getFileContents(const std::string& filename)
 		ifs.seekg(0, std::ios::end);
 		fileContents.resize(static_cast<unsigned int>(ifs.tellg()));
 		ifs.seekg(0, std::ios::beg);
-		unsigned int ret = (unsigned int) ifs.read(&fileContents[0], fileContents.size());
-		if (ret == -1 || ret != sizeof len)
-		{
-			throw std::runtime_error("Error while reading file contents");
-		}
+		ifs.read(&fileContents[0], fileContents.size());
 		ifs.close();
 
 		return fileContents;
