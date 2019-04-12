@@ -11,7 +11,7 @@ The seed contains a Patient Management sample REST API.
 The app doesn't do much, just shows how to use different C++ patterns and other suggested tools together:
 * [SQLite](https://www.sqlite.org)
 * [JSON](https://www.json.org/)
-* [HTTPS](https://en.wikipedia.org/wiki/HTTPS) `Not available yet`
+* [HTTPS](https://en.wikipedia.org/wiki/HTTPS)
 * [JWT](https://jwt.io/)
 * [CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing)
 * [Swagger](https://swagger.io/) `Not available yet`
@@ -81,6 +81,7 @@ Use the following commmand line options:
 --help to produce help message
 --cors to enable cors (by default is disabled)
 --port arg to set an specific port (by default is 8080)
+--https to enable HTTPS support
 
 For example:
 
