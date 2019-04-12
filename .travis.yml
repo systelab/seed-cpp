@@ -15,12 +15,14 @@ matrix:
     env:
       - BUILD_TYPE=Release
       - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
+      - COMPILER_LIBCXX=libstdc++11
 
   - os: osx
     osx_image: xcode10.1
     compiler: clang   
     env:
       - BUILD_TYPE=Release
+      - COMPILER_LIBCXX=libc++
 
 install:
   - if [ $TRAVIS_OS_NAME == linux ]; then sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 90; fi
@@ -32,6 +34,6 @@ install:
 script:
   - mkdir -p build
   - cd build
-  - conan install ..
+  - conan install .. -s compiler.libcxx=${COMPILER_LIBCXX}
   - cmake -DCMAKE_BUILD_TYPE=${BUILD_TYPE} .. 
   - make
