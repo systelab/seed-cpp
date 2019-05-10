@@ -54,11 +54,11 @@ namespace seed_cpp {
 		service::ServicesMgr& getServicesMgr() const;
 		rest::IEndpointsFactory& getEndpointsFactory() const;
 
-	private:
+	protected:
 		void initializeModel();
 		void initializeWebServer();
 
-	private:
+	protected:
 		std::unique_ptr<systelab::db::IDatabase> m_database;
 		std::unique_ptr<systelab::web_server::IServer> m_webServer;
 		std::unique_ptr<systelab::json::IJSONAdapter> m_jsonAdapter;
