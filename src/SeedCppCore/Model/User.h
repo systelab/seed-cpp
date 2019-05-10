@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Model/BaseEntity.h"
+#include "SeedCppCore/Model/BaseEntity.h"
 
 #include <string>
 

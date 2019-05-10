@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Model/Address.h"
-#include "Model/BaseEntity.h"
+#include "SeedCppCore/Model/Address.h"
+#include "SeedCppCore/Model/BaseEntity.h"
 
 
 namespace seed_cpp { namespace model {
