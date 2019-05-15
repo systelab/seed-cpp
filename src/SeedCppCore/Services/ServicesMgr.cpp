@@ -1,135 +1,68 @@
 #include "stdafx.h"
 #include "ServicesMgr.h"
 
-#include "Services/IServicesFactory.h"
-#include "Services/Model/IPatientModelService.h"
-#include "Services/Model/IUserModelService.h"
-#include "Services/Security/IAuthorizationValidatorService.h"
-#include "Services/System/IResourceService.h"
-#include "Services/System/ITimeService.h"
-#include "Services/System/IUUIDGeneratorService.h"
-#include "Services/Validator/IJSONValidatorService.h"
-
-#include "JWTUtils/Services/ITokenBuilderService.h"
-#include "JWTUtils/Services/ITokenParserService.h"
+#include "Context.h"
+#include "Services/Model/ModelServicesMgr.h"
+#include "Services/Security/SecurityServicesMgr.h"
+#include "Services/System/SystemServicesMgr.h"
+#include "Services/Validator/ValidatorServicesMgr.h"
 
 
 namespace seed_cpp { namespace service {
 
-	ServicesMgr::ServicesMgr(service::IServicesFactory& factory)
-		:m_servicesFactory(factory)
-		,m_patientModelService()
-		,m_userModelService()
-		,m_authorizationValidatorService()
-		,m_jwtTokenBuilderService()
-		,m_jwtTokenParserService()
-		,m_jsonValidatorService()
-		,m_resourceService()
-		,m_timeService()
-		,m_uuidGeneratorService()
+	ServicesMgr::ServicesMgr(Context& context)
+		:m_context(context)
+		,m_modelServicesMgr()
+		,m_securityServicesMgr()
+		,m_systemServicesMgr()
+		,m_validatorServicesMgr()
 	{
 	}
 	
-	ServicesMgr::~ServicesMgr()
-	{
-	}
+	ServicesMgr::~ServicesMgr() = default;
 
-
-	// Model services
-	IPatientModelService& ServicesMgr::getPatientModelService() const
+	ModelServicesMgr& ServicesMgr::getModelServicesMgr() const
 	{
-		if (!m_patientModelService.get())
+		if (!m_modelServicesMgr.get())
 		{
-			m_patientModelService = m_servicesFactory.buildPatientModelService();
+			auto& factory = *m_context.getModelServicesFactory();
+			m_modelServicesMgr = std::make_unique<ModelServicesMgr>(factory);
 		}
 
-		return *m_patientModelService;
+		return *m_modelServicesMgr;
 	}
 
-	IUserModelService& ServicesMgr::getUserModelService() const
+	SecurityServicesMgr& ServicesMgr::getSecurityServicesMgr() const
 	{
-		if (!m_userModelService.get())
+		if (!m_securityServicesMgr.get())
 		{
-			m_userModelService = m_servicesFactory.buildUserModelService();
+			auto& factory = *m_context.getSecurityServicesFactory();
+			m_securityServicesMgr = std::make_unique<SecurityServicesMgr>(factory);
 		}
 
-		return *m_userModelService;
+		return *m_securityServicesMgr;
 	}
 
-
-	// Security services
-	IAuthorizationValidatorService& ServicesMgr::getAuthorizationValidatorService() const
+	SystemServicesMgr& ServicesMgr::getSystemServicesMgr() const
 	{
-		if (!m_authorizationValidatorService.get())
+		if (!m_systemServicesMgr.get())
 		{
-			m_authorizationValidatorService = m_servicesFactory.buildAuthorizationValidatorService();
+			auto& factory = *m_context.getSystemServicesFactory();
+			m_systemServicesMgr = std::make_unique<SystemServicesMgr>(factory);
 		}
 
-		return *m_authorizationValidatorService;
+		return *m_systemServicesMgr;
 	}
 
-	systelab::jwt::ITokenBuilderService& ServicesMgr::getJWTTokenBuilderService() const
+	ValidatorServicesMgr& ServicesMgr::getValidatorServicesMgr() const
 	{
-		if (!m_jwtTokenBuilderService.get())
+		if (!m_validatorServicesMgr.get())
 		{
-			m_jwtTokenBuilderService = m_servicesFactory.buildJWTTokenBuilderService();
+			auto& factory = *m_context.getValidatorServicesFactory();
+			m_validatorServicesMgr = std::make_unique<ValidatorServicesMgr>(factory);
 		}
 
-		return *m_jwtTokenBuilderService;
-	}
-
-	systelab::jwt::ITokenParserService& ServicesMgr::getJWTTokenParserService() const
-	{
-		if (!m_jwtTokenParserService.get())
-		{
-			m_jwtTokenParserService = m_servicesFactory.buildJWTTokenParserService();
-		}
-
-		return *m_jwtTokenParserService;
-	}
-
-
-	// Validator services
-	IJSONValidatorService& ServicesMgr::getJSONValidatorService() const
-	{
-		if (!m_jsonValidatorService.get())
-		{
-			m_jsonValidatorService = m_servicesFactory.buildJSONValidatorService();
-		}
-
-		return *m_jsonValidatorService;
-	}
-
-
-	// System services
-	IResourceService& ServicesMgr::getResourceService() const
-	{
-		if (!m_resourceService.get())
-		{
-			m_resourceService = m_servicesFactory.buildResourceService();
-		}
-
-		return *m_resourceService;
-	}
-
-	ITimeService& ServicesMgr::getTimeService() const
-	{
-		if (!m_timeService.get())
-		{
-			m_timeService = m_servicesFactory.buildTimeService();
-		}
-
-		return *m_timeService;
-	}
-
-	IUUIDGeneratorService& ServicesMgr::getUUIDGeneratorService() const
-	{
-		if (!m_uuidGeneratorService.get())
-		{
-			m_uuidGeneratorService = m_servicesFactory.buildUUIDGeneratorService();
-		}
-
-		return *m_uuidGeneratorService;
+		return *m_validatorServicesMgr;
 	}
 
 }}
