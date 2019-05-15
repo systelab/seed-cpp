@@ -15,7 +15,7 @@ namespace seed_cpp { namespace db_test {
 		DeleteUserCommand(const std::string&);
 		virtual ~DeleteUserCommand();
 
-		void execute(Context&) override;
+		void execute(Core&) override;
 
 	protected:
 		std::string m_userId;
