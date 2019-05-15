@@ -8,7 +8,7 @@ namespace seed_cpp { namespace db_test {
 
 	struct LoadEntityTestData
 	{
-		std::string m_sqlFilename;
+		std::vector<std::string> m_sqlScripts;
 		model::Model m_expectedModel;
 		systelab::test_utility::EntityComparatorConfiguration m_comparatorConfig;
 	};
