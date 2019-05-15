@@ -19,8 +19,8 @@ namespace seed_cpp { namespace model {
 		EntityMgr(const EntityMgr<Entity> &other)
 			:m_entities()
 		{
-			unsigned int nEntities = other.m_entities.size();
-			for (unsigned int i = 0; i < nEntities; i++)
+			size_t nEntities = other.m_entities.size();
+			for (size_t i = 0; i < nEntities; i++)
 			{
 				m_entities.push_back(std::make_unique<Entity>(*other.m_entities[i]));
 			}
