@@ -15,13 +15,13 @@ namespace systelab { namespace test_utility {
 		AssertionResult userResult = EntityComparator()(expected.getUserMgr(), toTest.getUserMgr());
 		if (!userResult)
 		{
-			return AssertionFailure() << userResult.message();
+			return AssertionFailure() << "Different data in user manager:" << userResult.message();
 		}
 
 		AssertionResult patientResult = EntityComparator()(expected.getPatientMgr(), toTest.getPatientMgr());
 		if (!patientResult)
 		{
-			return AssertionFailure() << patientResult.message();
+			return AssertionFailure() << "Different data in patient manager:" << patientResult.message();
 		}
 
 		return AssertionSuccess();
