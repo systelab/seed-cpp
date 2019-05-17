@@ -21,6 +21,14 @@ namespace seed_cpp { namespace db_test {
 			m_databaseFilepath = "./LoadEntityTest.db";
 			m_sqlExecutor = std::make_unique<SQLExecutor>(m_databaseFilepath);
 			m_core = std::make_unique<Core>(m_databaseFilepath);
+
+			m_sqlExecutor->removeDatabaseFile();
+			m_sqlExecutor->executeScript("./Database/schema.sql");
+		}
+
+		void TearDown()
+		{
+			m_sqlExecutor->removeDatabaseFile();
 		}
 
 	protected:
@@ -31,7 +39,6 @@ namespace seed_cpp { namespace db_test {
 
 	TEST_P(LoadEntityTest, testLoadEntities)
 	{
-		m_sqlExecutor->executeScript("./Database/schema.sql");
 		m_sqlExecutor->executeScripts(GetParam().m_sqlScripts);
 		m_core->initialize();
 		ASSERT_TRUE(EntityComparator()(GetParam().m_expectedModel, m_core->getModel()));
