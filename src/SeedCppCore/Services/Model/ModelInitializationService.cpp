@@ -7,8 +7,9 @@
 #include "DAL/Translators/Db/DbTranslatorsFactory.h"
 #include "Model/Model.h"
 #include "Services/ServicesMgr.h"
-#include "Services/Model/IUserModelService.h"
+#include "Services/Model/ModelLoaderService.h"
 #include "Services/Model/ModelServicesMgr.h"
+#include "Services/Model/IUserModelService.h"
 
 
 namespace seed_cpp { namespace service {
@@ -22,15 +23,18 @@ namespace seed_cpp { namespace service {
 
 	void ModelInitializationService::initialize()
 	{
-		loadUsers();
-		loadPatients();
+		loadModel();
+		createDefaultUsers();
 	}
 
-	void ModelInitializationService::loadUsers()
+	void ModelInitializationService::loadModel()
 	{
-		auto userLoadDAO = m_context.getDbDAOFactory()->buildUserLoadDAO();
-		userLoadDAO->loadAll();
+		ModelLoaderService loader(m_context);
+		loader.loadModel();
+	}
 
+	void ModelInitializationService::createDefaultUsers()
+	{
 		model::EntityMgr<model::User>& userMgr = m_context.getModel()->getUserMgr();
 		if (userMgr.count() == 0)
 		{
@@ -45,12 +49,6 @@ namespace seed_cpp { namespace service {
 			model::EntityMgr<model::User>::UniqueLock writeLock(userMgr);
 			userModelService.addEntity(std::move(defaultUser), writeLock);
 		}
-	}
-
-	void ModelInitializationService::loadPatients()
-	{
-		std::unique_ptr<dal::ILoadDAO> patientLoadDAO = m_context.getDbDAOFactory()->buildPatientLoadDAO();
-		patientLoadDAO->loadAll();
 	}
 
 }}

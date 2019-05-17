@@ -3,6 +3,10 @@
 #include "IModelInitializationService.h"
 
 
+namespace seed_cpp {
+	class Context;
+}
+
 namespace seed_cpp { namespace service {
 	
 	class ModelInitializationService : public IModelInitializationService
@@ -14,8 +18,8 @@ namespace seed_cpp { namespace service {
 		void initialize() override;
 
 	protected:
-		void loadUsers();
-		void loadPatients();
+		void loadModel();
+		void createDefaultUsers();
 
 	private:
 		Context& m_context;
