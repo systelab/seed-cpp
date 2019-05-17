@@ -10,57 +10,77 @@ namespace seed_cpp { namespace db_test {
 
 	std::vector<LoadEntityTestData> LoadUserScenariosBuilder::build()
 	{
-		// No users / Default user
-		LoadEntityTestData scenarioNoUsers;
-		scenarioNoUsers.m_sqlScripts = {};
-		scenarioNoUsers.m_expectedModel =
-			ModelBuilder().setUsers({
-				UserBuilder()
-					.setLogin("Systelab").setRole(model::User::ADMIN_ROLE)
-					.setName("Systelab").setSurname("Systelab")
-					.setPassword("5FD2C983136F30A54694079DD6D3105986CB51A7906C2F42C50932026595D737")
-					.getEntity(),
-			}).getEntity();
-
-		// Single user
-		LoadEntityTestData scenarioSingleUser;
-		scenarioSingleUser.m_sqlScripts = { "LoadSingleUser.sql" };
-		scenarioSingleUser.m_expectedModel = 
+		// Admin user
+		LoadEntityTestData scenarioAdminUser;
+		scenarioAdminUser.m_sqlScripts = { "Database/Users/AdminUser.sql" };
+		scenarioAdminUser.m_expectedModel =
 			ModelBuilder().setUsers({
 				UserBuilder()
 					.setId(std::string("73A800FC-621C-4D94-A1A4-0B39075458D4"))
-					.setLogin("pparker").setRole(model::User::ADMIN_ROLE)
-					.setName("Peter").setSurname("Parker")
-					.setPassword("5FD2C983136F30A54694079DD6D3105986CB51A7906C2F42C50932026595D737")
+					.setName("John").setSurname("Smith")
+					.setLogin("jsmith").setRole(model::User::ADMIN_ROLE)
+					.setPassword("P@assw0rd")
 					.setCreationTime(boost::posix_time::from_iso_string("20170212T093045"))
-					.setUpdateTime(boost::posix_time::from_iso_string("20170312T142500"))
+					.setUpdateTime(boost::posix_time::from_iso_string("20190115T152318"))
 					.getEntity(),
 			}).getEntity();
 
-		// Some users
-		LoadEntityTestData scenarioSomeUsers;
-		scenarioSomeUsers.m_sqlScripts = { "LoadSomeUsers.sql" };
-		scenarioSomeUsers.m_expectedModel =
+		// Basic users
+		LoadEntityTestData scenarioBasicUsers;
+		scenarioBasicUsers.m_sqlScripts = { "Database/Users/BasicUsers.sql" };
+		scenarioBasicUsers.m_expectedModel =
 			ModelBuilder().setUsers({
 				UserBuilder()
 					.setId(std::string("9055B141-3307-4868-9C81-D5722A5DC16C"))
-					.setLogin("Systelab").setRole(model::User::ADMIN_ROLE)
-					.setName("Default").setSurname("Corporative User")
-					.setPassword("68204CFFACDC5655EAF577C3749C6B17EAFE8DC3ED2DEA3DF2C675EA96B8BF40")
-					.setCreationTime(boost::posix_time::from_iso_string("20190101T012244"))
-					.setUpdateTime(boost::posix_time::from_iso_string("20190101T012244"))
+					.setName("Peter").setSurname("Parker")
+					.setLogin("pparker").setRole(model::User::USER_ROLE)
+					.setPassword("SuperSecret!")
+					.setCreationTime(boost::posix_time::from_iso_string("20180101T102030"))
+					.setUpdateTime(boost::posix_time::from_iso_string("20190115T152318"))
 					.getEntity(),
 				UserBuilder()
 					.setId(std::string("4DBF18D0-689B-4974-B727-5CA503709E8E"))
-					.setLogin("jsmith23").setRole(model::User::USER_ROLE)
-					.setName("John").setSurname("Smith")
-					.setPassword("B46FBEA201AA0D76D722CEA5708D3BAE3C4390BDED4BA23B7C4E34E36E536154")
-					.setCreationTime(boost::posix_time::from_iso_string("20190103T031532"))
-					.setUpdateTime(boost::posix_time::from_iso_string("20190101T012244"))
+					.setName("Kevin").setSurname("Robinson")
+					.setLogin("krobinson").setRole(model::User::USER_ROLE)
+					.setPassword("Ph2d3ghI7h")
+					.setCreationTime(boost::posix_time::from_iso_string("20180724T184500"))
+					.setUpdateTime(boost::posix_time::from_iso_string("20191213T235959"))
 					.getEntity(),
 			}).getEntity();
 
-		return { scenarioNoUsers, scenarioSingleUser, scenarioSomeUsers };
+		// Admin and basic users
+		LoadEntityTestData scenarioAdminAndBasicUsers;
+		scenarioAdminAndBasicUsers.m_sqlScripts = { "Database/Users/AdminUser.sql",
+													"Database/Users/BasicUsers.sql" };
+		scenarioAdminAndBasicUsers.m_expectedModel =
+			ModelBuilder().setUsers({
+				UserBuilder()
+					.setId(std::string("9055B141-3307-4868-9C81-D5722A5DC16C"))
+					.setName("Peter").setSurname("Parker")
+					.setLogin("pparker").setRole(model::User::USER_ROLE)
+					.setPassword("SuperSecret!")
+					.setCreationTime(boost::posix_time::from_iso_string("20180101T102030"))
+					.setUpdateTime(boost::posix_time::from_iso_string("20190115T152318"))
+					.getEntity(),
+				UserBuilder()
+					.setId(std::string("4DBF18D0-689B-4974-B727-5CA503709E8E"))
+					.setName("Kevin").setSurname("Robinson")
+					.setLogin("krobinson").setRole(model::User::USER_ROLE)
+					.setPassword("Ph2d3ghI7h")
+					.setCreationTime(boost::posix_time::from_iso_string("20180724T184500"))
+					.setUpdateTime(boost::posix_time::from_iso_string("20191213T235959"))
+					.getEntity(),
+				UserBuilder()
+					.setId(std::string("73A800FC-621C-4D94-A1A4-0B39075458D4"))
+					.setName("John").setSurname("Smith")
+					.setLogin("jsmith").setRole(model::User::ADMIN_ROLE)
+					.setPassword("P@assw0rd")
+					.setCreationTime(boost::posix_time::from_iso_string("20170212T093045"))
+					.setUpdateTime(boost::posix_time::from_iso_string("20190115T152318"))
+					.getEntity()
+			}).getEntity();
+
+		return { scenarioAdminUser, scenarioBasicUsers, scenarioAdminAndBasicUsers };
 	}
 
 }}
