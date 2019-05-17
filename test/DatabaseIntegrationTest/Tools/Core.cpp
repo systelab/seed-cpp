@@ -5,8 +5,8 @@
 #include "SeedCppCore/DAL/DAO/Db/DbDAOFactory.h"
 #include "SeedCppCore/DAL/Translators/Db/DbTranslatorsFactory.h"
 #include "SeedCppCore/Model/Model.h"
-#include "SeedCppCore/Services/Model/ModelInitializationService.h"
 #include "SeedCppCore/Services/ServicesMgr.h"
+#include "SeedCppCore/Services/Model/ModelLoaderService.h"
 #include "SeedCppCore/Services/Model/ModelServicesFactory.h"
 #include "SeedCppCore/Services/System/SystemServicesFactory.h"
 
@@ -83,8 +83,8 @@ namespace seed_cpp { namespace db_test {
 
 	void Core::initializeModel()
 	{
-		service::ModelInitializationService modelInitializationService(*m_context);
-		modelInitializationService.initialize();
+		service::ModelLoaderService loader(*m_context);
+		loader.loadModel();
 	}
 
 }}
