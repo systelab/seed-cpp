@@ -36,3 +36,8 @@ if (CMAKE_BUILD_TYPE STREQUAL "Coverage")
 	include(CodeCoverage)
 	setup_target_for_coverage(DatabaseIntegrationTestCoverage DatabaseIntegrationTest coverage)
 endif()
+
+# Copy resources to build dir
+add_custom_command(TARGET ${DATABASE_INTEGRATION_TEST_PROJECT} POST_BUILD
+                   COMMAND ${CMAKE_COMMAND} -E copy_directory
+                   ${CMAKE_SOURCE_DIR}/test/DatabaseIntegrationTest/Databases $<TARGET_FILE_DIR:${DATABASE_INTEGRATION_TEST_PROJECT}>/Database)
