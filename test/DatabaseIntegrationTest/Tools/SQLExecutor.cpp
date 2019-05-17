@@ -3,6 +3,7 @@
 
 #include <fstream>
 #include <sqlite3.h>
+#include <stdio.h>
 
 
 namespace seed_cpp { namespace db_test {
@@ -68,6 +69,21 @@ namespace seed_cpp { namespace db_test {
 		}
 
 		return true;
+	}
+
+	bool SQLExecutor::removeDatabaseFile()
+	{
+		std::ifstream ifs(m_dbFilepath.c_str());
+		bool dbFileExists = ifs.good();
+		ifs.close();
+
+		if (dbFileExists)
+		{
+			int status = remove(m_dbFilepath.c_str());
+			return (status == 0);
+		}
+
+		return false;
 	}
 
 }}

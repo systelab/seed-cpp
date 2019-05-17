@@ -19,6 +19,8 @@ namespace seed_cpp { namespace db_test {
 		bool executeScript(const std::string&);
 		bool executeStatements(const std::string&);
 
+		bool removeDatabaseFile();
+
 	private:
 		std::string m_dbFilepath;
 	};
