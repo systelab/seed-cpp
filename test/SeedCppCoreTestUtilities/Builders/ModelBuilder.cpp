@@ -13,7 +13,7 @@ namespace seed_cpp { namespace test_utility {
 
 	ModelBuilder& ModelBuilder::setUsers(const std::vector<model::User>& users)
 	{
-		auto userMgr = m_model.getUserMgr();
+		auto& userMgr = m_model.getUserMgr();
 		model::EntityMgr<model::User>::UniqueLock writeLock(userMgr);
 		for (auto& user : users)
 		{
@@ -25,7 +25,7 @@ namespace seed_cpp { namespace test_utility {
 
 	ModelBuilder& ModelBuilder::setPatients(const std::vector<model::Patient>& patients)
 	{
-		auto patientMgr = m_model.getPatientMgr();
+		auto& patientMgr = m_model.getPatientMgr();
 		model::EntityMgr<model::Patient>::UniqueLock writeLock(patientMgr);
 		for (auto& patient : patients)
 		{
