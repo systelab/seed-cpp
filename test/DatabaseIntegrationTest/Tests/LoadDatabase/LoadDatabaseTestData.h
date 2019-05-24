@@ -6,7 +6,7 @@
 
 namespace seed_cpp { namespace db_test {
 
-	struct LoadEntityTestData
+	struct LoadDatabaseTestData
 	{
 		std::vector<std::string> m_sqlScripts;
 		model::Model m_expectedModel;

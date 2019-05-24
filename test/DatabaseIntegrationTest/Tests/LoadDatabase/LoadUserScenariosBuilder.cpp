@@ -4,14 +4,15 @@
 #include "SeedCppCoreTestUtilities/Builders/ModelBuilder.h"
 #include "SeedCppCoreTestUtilities/Builders/UserBuilder.h"
 
+
 using namespace seed_cpp::test_utility;
 
 namespace seed_cpp { namespace db_test {
 
-	std::vector<LoadEntityTestData> LoadUserScenariosBuilder::build()
+	std::vector<LoadDatabaseTestData> LoadUserScenariosBuilder::build()
 	{
 		// Admin user
-		LoadEntityTestData scenarioAdminUser;
+		LoadDatabaseTestData scenarioAdminUser;
 		scenarioAdminUser.m_sqlScripts = { "Database/Users/AdminUser.sql" };
 		scenarioAdminUser.m_expectedModel =
 			ModelBuilder().setUsers({
@@ -26,7 +27,7 @@ namespace seed_cpp { namespace db_test {
 			}).getEntity();
 
 		// Basic users
-		LoadEntityTestData scenarioBasicUsers;
+		LoadDatabaseTestData scenarioBasicUsers;
 		scenarioBasicUsers.m_sqlScripts = { "Database/Users/BasicUsers.sql" };
 		scenarioBasicUsers.m_expectedModel =
 			ModelBuilder().setUsers({
@@ -49,7 +50,7 @@ namespace seed_cpp { namespace db_test {
 			}).getEntity();
 
 		// Admin and basic users
-		LoadEntityTestData scenarioAdminAndBasicUsers;
+		LoadDatabaseTestData scenarioAdminAndBasicUsers;
 		scenarioAdminAndBasicUsers.m_sqlScripts = { "Database/Users/AdminUser.sql",
 													"Database/Users/BasicUsers.sql" };
 		scenarioAdminAndBasicUsers.m_expectedModel =
