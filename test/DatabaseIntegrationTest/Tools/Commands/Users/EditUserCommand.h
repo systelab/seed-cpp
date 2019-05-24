@@ -16,6 +16,7 @@ namespace seed_cpp { namespace db_test {
 		virtual ~EditUserCommand();
 
 		void execute(Core&) override;
+		std::unique_ptr<ICommand> clone() override;
 
 	protected:
 		std::unique_ptr<model::User> m_user;

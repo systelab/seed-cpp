@@ -25,5 +25,10 @@ namespace seed_cpp { namespace db_test {
 		service.deleteEntity(m_userId, lock);
 	}
 
+	std::unique_ptr<ICommand> DeleteUserCommand::clone()
+	{
+		return std::make_unique<DeleteUserCommand>(m_userId);
+	}
+
 }}
 

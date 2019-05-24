@@ -25,4 +25,9 @@ namespace seed_cpp { namespace db_test {
 		service.addEntity(std::move(m_user), lock);
 	}
 
+	std::unique_ptr<ICommand> AddUserCommand::clone()
+	{
+		return std::make_unique<AddUserCommand>(*m_user);
+	}
+
 }}
