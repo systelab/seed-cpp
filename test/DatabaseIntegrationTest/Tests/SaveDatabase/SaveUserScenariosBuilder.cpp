@@ -25,7 +25,7 @@ namespace seed_cpp { namespace db_test {
 				.setLogin("pcollins").setRole(model::User::ADMIN_ROLE)
 				.setPassword("LeavingNewYorkNeverEasy")
 				.setCreationTime(boost::posix_time::from_iso_string("20150405T112133"))
-				.setUpdateTime(boost::posix_time::from_iso_string("20192305T220314"))
+				.setUpdateTime(boost::posix_time::from_iso_string("20190523T220314"))
 			.getEntity()
 		));
 		scenarioAddUsers.addCommand(std::make_unique<AddUserCommand>(
@@ -35,7 +35,7 @@ namespace seed_cpp { namespace db_test {
 			.setLogin("pperez").setRole(model::User::USER_ROLE)
 			.setPassword("PepeKiko99")
 			.setCreationTime(boost::posix_time::from_iso_string("20180923T130000"))
-			.setUpdateTime(boost::posix_time::from_iso_string("20192105T171400"))
+			.setUpdateTime(boost::posix_time::from_iso_string("20190521T171400"))
 			.getEntity()
 		));
 
