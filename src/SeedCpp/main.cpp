@@ -36,12 +36,6 @@ std::string getFileContents(const std::string& filename)
 		std::string fileContents;
 		fileContents.resize(fileLength);
 		ifs.read(&fileContents[0], fileLength);
-		if (!ifs)
-		{
-			ifs.close();
-			throw std::runtime_error("Error while reading file " + filename);
-		}
-
 		ifs.close();
 
 		return fileContents;
