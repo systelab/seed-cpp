@@ -48,15 +48,26 @@ To build the application, we will follow the next steps:
 
 ### Windows
 
-In order to build the application on Windows, run the following commands:
+In order to build the application on Windows for the `Release` configuration, run the following commands (`$VSINSTALLPATH` is the path where Visual Studio has been installed):
 
 ``` bash
 git clone https://github.com/systelab/seed-cpp
 cd seed-cpp
 md build && cd build
-conan install .. -s arch=x86
-cmake ..
-devenv.exe SeedCpp.sln
+conan install ..
+cmake .. -G "Visual Studio 15 2017 Win64"
+"$VSINSTALLPATH/devenv.com" SeedCpp.sln /build "Release" /PROJECT "SeedCpp"
+```
+
+However, if you want to `Debug` the source code, you will need these commands:
+
+``` bash
+git clone https://github.com/systelab/seed-cpp
+cd seed-cpp
+md build && cd build
+conan install .. -s build_type=Debug
+cmake .. -G "Visual Studio 15 2017 Win64"
+"$VSINSTALLPATH/devenv.com" SeedCpp.sln /build "Debug" /PROJECT "SeedCpp"
 ```
 
 ### Linux
