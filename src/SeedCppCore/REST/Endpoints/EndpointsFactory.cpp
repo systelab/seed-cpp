@@ -2,11 +2,13 @@
 #include "EndpointsFactory.h"
 
 #include "Core.h"
+#include "DAL/Translators/JSON/IJSONTranslatorsFactory.h"
 #include "Model/Model.h"
 #include "Model/Patient.h"
 #include "Model/UserMgr.h"
 #include "REST/Endpoints/EndpointRequestData.h"
 #include "REST/Endpoints/IEndpoint.h"
+//#include "REST/Endpoints/EntityGetEndpoint.h"
 #include "REST/Endpoints/Patients/PatientsDeleteEndpoint.h"
 #include "REST/Endpoints/Patients/PatientsGetAllEndpoint.h"
 #include "REST/Endpoints/Patients/PatientsGetEndpoint.h"
@@ -48,16 +50,16 @@ namespace seed_cpp { namespace rest {
 
 	std::unique_ptr<IEndpoint> EndpointsFactory::buildPatientsGetEndpoint(const EndpointRequestData &requestData)
 	{
-		systelab::web_server::RequestHeaders headers = requestData.getHeaders();
-		std::string patientId = requestData.getRouteParameters()[0].getValue<std::string>();
-		model::PatientMgr& patientMgr = m_core.getModel().getPatientMgr();
-		dal::IJSONTranslatorsFactory& jsonTranslatorsFactory = m_core.getJSONTranslatorsFactory();
-		systelab::json::IJSONAdapter& jsonAdapter = m_core.getJSONAdapter();
-		service::IAuthorizationValidatorService& authorizationValidatorService = m_core.getServicesMgr().getAuthorizationValidatorService();
+		const auto& headers = requestData.getHeaders();
+		auto entityId = requestData.getRouteParameters()[0].getValue<std::string>();
+		auto& entityMgr = m_core.getModel().getPatientMgr();
+		auto& jsonTranslatorsFactory = m_core.getJSONTranslatorsFactory();
+		auto& jsonAdapter = m_core.getJSONAdapter();
+		auto& authorizationValidatorService = m_core.getServicesMgr().getAuthorizationValidatorService();
 
-		return std::make_unique<PatientsGetEndpoint>(headers, patientId, patientMgr,
-													 jsonTranslatorsFactory, jsonAdapter,
-													 authorizationValidatorService);
+		return std::make_unique<PatientsGetEndpoint>(headers, entityId, entityMgr,
+												  std::bind(&dal::IJSONTranslatorsFactory::buildPatientSaveTranslator, &jsonTranslatorsFactory, std::placeholders::_1),
+												  jsonAdapter, authorizationValidatorService);
 	}
 
 	std::unique_ptr<IEndpoint> EndpointsFactory::buildPatientsPostEndpoint(const EndpointRequestData &requestData)
@@ -120,16 +122,16 @@ namespace seed_cpp { namespace rest {
 
 	std::unique_ptr<IEndpoint> EndpointsFactory::buildUsersGetEndpoint(const EndpointRequestData &requestData)
 	{
-		systelab::web_server::RequestHeaders headers = requestData.getHeaders();
-		std::string userId = requestData.getRouteParameters()[0].getValue<std::string>();
-		model::UserMgr& userMgr = m_core.getModel().getUserMgr();
-		dal::IJSONTranslatorsFactory& jsonTranslatorsFactory = m_core.getJSONTranslatorsFactory();
-		systelab::json::IJSONAdapter& jsonAdapter = m_core.getJSONAdapter();
-		service::IAuthorizationValidatorService &authorizationValidatorService = m_core.getServicesMgr().getAuthorizationValidatorService();
+		const auto& headers = requestData.getHeaders();
+		auto entityId = requestData.getRouteParameters()[0].getValue<std::string>();
+		auto& entityMgr = m_core.getModel().getUserMgr();
+		auto& jsonTranslatorsFactory = m_core.getJSONTranslatorsFactory();
+		auto& jsonAdapter = m_core.getJSONAdapter();
+		auto& authorizationValidatorService = m_core.getServicesMgr().getAuthorizationValidatorService();
 
-		return std::make_unique<UsersGetEndpoint>
-					(headers, userId, userMgr, jsonTranslatorsFactory, jsonAdapter,
-					 authorizationValidatorService);
+		return std::make_unique<UsersGetEndpoint>(headers, entityId, entityMgr,
+												  std::bind(&dal::IJSONTranslatorsFactory::buildUserSaveTranslator, &jsonTranslatorsFactory, std::placeholders::_1),
+												  jsonAdapter, authorizationValidatorService);
 	}
 
 	std::unique_ptr<IEndpoint> EndpointsFactory::buildUsersPostEndpoint(const EndpointRequestData &requestData)
