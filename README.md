@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.org/systelab/seed-cpp.svg?branch=master)](https://travis-ci.org/systelab/seed-cpp)
 [![Build status](https://ci.appveyor.com/api/projects/status/kiy6ugv134i7nbon?svg=true)](https://ci.appveyor.com/project/systelab/seed-cpp)
+[![codecov](https://codecov.io/gh/systelab/seed-cpp/branch/master/graph/badge.svg)](https://codecov.io/gh/systelab/seed-cpp)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/1da2b731322b4856a2f2f6b49bdfa729)](https://www.codacy.com/app/systelab/seed-cpp?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=systelab/seed-cpp&amp;utm_campaign=Badge_Grade)
 
 # seed-cpp — Seed for C++ Systelab projects
