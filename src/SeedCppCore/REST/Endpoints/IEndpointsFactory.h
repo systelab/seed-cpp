@@ -14,6 +14,7 @@ namespace seed_cpp { namespace rest {
 		virtual ~IEndpointsFactory() {};
 
 		// Allergies
+		virtual std::unique_ptr<IEndpoint> buildAllergiesGetAllEndpoint(const EndpointRequestData&) = 0;
 		virtual std::unique_ptr<IEndpoint> buildAllergiesGetEndpoint(const EndpointRequestData&) = 0;
 		virtual std::unique_ptr<IEndpoint> buildAllergiesDeleteEndpoint(const EndpointRequestData&) = 0;
 
