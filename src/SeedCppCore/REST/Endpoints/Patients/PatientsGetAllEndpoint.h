@@ -1,70 +1,12 @@
 #pragma once
 
-#include "Model/EntityMgr.h"
-#include "REST/Endpoints/IEndpoint.h"
-
-#include "WebServerAdapterInterface/Model/RequestHeaders.h"
-#include "WebServerAdapterInterface/Model/RequestQueryStrings.h"
-
-
-namespace systelab { namespace json {
-	class IJSONAdapter;
-}}
-
-namespace seed_cpp {
-	namespace dal {
-		class IJSONTranslatorsFactory;
-	}
-	namespace model {
-		class Patient;
-		class PatientMgr;
-	}
-	namespace service {
-		class IAuthorizationValidatorService;
-	}
-}
+#include "REST/Endpoints/EntityGetAllEndpoint.h"
+#include "Model/Patient.h"
+#include "Model/PatientMgr.h"
 
 namespace seed_cpp { namespace rest {
 
-	class IEndpoint;
-
-	class PatientsGetAllEndpoint : public IEndpoint
-	{
-	public:
-		PatientsGetAllEndpoint(const systelab::web_server::RequestHeaders&,
-							   const systelab::web_server::RequestQueryStrings&,
-							   model::PatientMgr&,
-							   dal::IJSONTranslatorsFactory&,
-							   systelab::json::IJSONAdapter&,
-							   service::IAuthorizationValidatorService&);
-		virtual ~PatientsGetAllEndpoint();
-
-		bool hasAccess() const;
-		std::unique_ptr<systelab::web_server::Reply> execute();
-
-	private:
-		struct PaginationData
-		{
-			std::vector<model::Patient> m_content;
-			unsigned int m_totalElements;
-			bool m_first;
-			bool m_last;
-			unsigned int m_number;
-			unsigned int m_numberOfElements;
-			unsigned int m_size;
-			unsigned int m_totalPages;
-		};
-
-		std::unique_ptr<PaginationData> getPaginationData() const;
-
-	private:
-		const systelab::web_server::RequestHeaders m_headers;
-		const systelab::web_server::RequestQueryStrings m_queryStrings;
-		model::PatientMgr& m_patientMgr;
-		dal::IJSONTranslatorsFactory& m_jsonTranslatorsFactory;
-		systelab::json::IJSONAdapter& m_jsonAdapter;
-		service::IAuthorizationValidatorService& m_authorizationValidatorService;
-	};
+	class PatientsGetAllEndpoint : public EntityGetAllEndpoint<model::Patient, model::PatientMgr> { using EntityGetAllEndpoint::EntityGetAllEndpoint; };
 
 }}
 
