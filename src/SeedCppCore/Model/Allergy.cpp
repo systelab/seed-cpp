@@ -19,17 +19,17 @@ namespace seed_cpp { namespace model {
 
 	Allergy::~Allergy() = default;
 
-	std::string Allergy::getName()
+	std::string Allergy::getName() const
 	{
 		return m_name;
 	}
 
-	std::string Allergy::getSigns()
+	std::string Allergy::getSigns() const
 	{
 		return m_signs;
 	}
 
-	std::string Allergy::getSymptoms()
+	std::string Allergy::getSymptoms() const
 	{
 		return m_symptoms;
 	}

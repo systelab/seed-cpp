@@ -8,6 +8,8 @@
 #include "Model/UserMgr.h"
 #include "REST/Endpoints/EndpointRequestData.h"
 #include "REST/Endpoints/IEndpoint.h"
+#include "REST/Endpoints/Allergies/AllergiesDeleteEndpoint.h"
+#include "REST/Endpoints/Allergies/AllergiesGetEndpoint.h"
 #include "REST/Endpoints/Patients/PatientsDeleteEndpoint.h"
 #include "REST/Endpoints/Patients/PatientsGetAllEndpoint.h"
 #include "REST/Endpoints/Patients/PatientsGetEndpoint.h"
@@ -30,6 +32,32 @@ namespace seed_cpp { namespace rest {
 	}
 
 	EndpointsFactory::~EndpointsFactory() = default;
+
+	// Allergies
+	std::unique_ptr<IEndpoint> EndpointsFactory::buildAllergiesGetEndpoint(const EndpointRequestData& requestData)
+	{
+		const auto& headers = requestData.getHeaders();
+		auto entityId = requestData.getRouteParameters()[0].getValue<std::string>();
+		auto& entityMgr = m_core.getModel().getAllergyMgr();
+		auto& jsonTranslatorsFactory = m_core.getJSONTranslatorsFactory();
+		auto& jsonAdapter = m_core.getJSONAdapter();
+		auto& authorizationValidatorService = m_core.getServicesMgr().getAuthorizationValidatorService();
+
+		return std::make_unique<AllergiesGetEndpoint>(headers, entityId, entityMgr,
+												  std::bind(&dal::IJSONTranslatorsFactory::buildAllergySaveTranslator, &jsonTranslatorsFactory, std::placeholders::_1),
+												  jsonAdapter, authorizationValidatorService);
+	}
+
+	std::unique_ptr<IEndpoint> EndpointsFactory::buildAllergiesDeleteEndpoint(const EndpointRequestData& requestData)
+	{
+		const auto& headers = requestData.getHeaders();
+		auto entityId = requestData.getRouteParameters()[0].getValue<std::string>();
+		auto& servicesMgr = m_core.getServicesMgr();
+		auto& entityModelService = servicesMgr.getAllergyModelService();
+		auto& authorizationValidatorService = servicesMgr.getAuthorizationValidatorService();
+
+		return std::make_unique<AllergiesDeleteEndpoint>(headers, entityId, entityModelService, authorizationValidatorService);
+	}
 
 
 	// Patients

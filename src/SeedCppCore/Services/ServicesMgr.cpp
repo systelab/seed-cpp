@@ -2,6 +2,7 @@
 #include "ServicesMgr.h"
 
 #include "Services/IServicesFactory.h"
+#include "Services/Model/IAllergyModelService.h"
 #include "Services/Model/IPatientModelService.h"
 #include "Services/Model/IUserModelService.h"
 #include "Services/Security/IAuthorizationValidatorService.h"
@@ -18,27 +19,26 @@ namespace seed_cpp { namespace service {
 
 	ServicesMgr::ServicesMgr(service::IServicesFactory& factory)
 		:m_servicesFactory(factory)
-		,m_patientModelService()
-		,m_userModelService()
-		,m_authorizationValidatorService()
-		,m_jwtTokenBuilderService()
-		,m_jwtTokenParserService()
-		,m_jsonValidatorService()
-		,m_resourceService()
-		,m_timeService()
-		,m_uuidGeneratorService()
 	{
 	}
 	
-	ServicesMgr::~ServicesMgr()
-	{
-	}
+	ServicesMgr::~ServicesMgr() = default;
 
 
 	// Model services
+	IAllergyModelService& ServicesMgr::getAllergyModelService() const
+	{
+		if (!m_allergyModelService)
+		{
+			m_allergyModelService = m_servicesFactory.buildAllergyModelService();
+		}
+
+		return *m_allergyModelService;
+	}
+
 	IPatientModelService& ServicesMgr::getPatientModelService() const
 	{
-		if (!m_patientModelService.get())
+		if (!m_patientModelService)
 		{
 			m_patientModelService = m_servicesFactory.buildPatientModelService();
 		}
@@ -48,7 +48,7 @@ namespace seed_cpp { namespace service {
 
 	IUserModelService& ServicesMgr::getUserModelService() const
 	{
-		if (!m_userModelService.get())
+		if (!m_userModelService)
 		{
 			m_userModelService = m_servicesFactory.buildUserModelService();
 		}
@@ -60,7 +60,7 @@ namespace seed_cpp { namespace service {
 	// Security services
 	IAuthorizationValidatorService& ServicesMgr::getAuthorizationValidatorService() const
 	{
-		if (!m_authorizationValidatorService.get())
+		if (!m_authorizationValidatorService)
 		{
 			m_authorizationValidatorService = m_servicesFactory.buildAuthorizationValidatorService();
 		}
@@ -70,7 +70,7 @@ namespace seed_cpp { namespace service {
 
 	systelab::jwt::ITokenBuilderService& ServicesMgr::getJWTTokenBuilderService() const
 	{
-		if (!m_jwtTokenBuilderService.get())
+		if (!m_jwtTokenBuilderService)
 		{
 			m_jwtTokenBuilderService = m_servicesFactory.buildJWTTokenBuilderService();
 		}
@@ -80,7 +80,7 @@ namespace seed_cpp { namespace service {
 
 	systelab::jwt::ITokenParserService& ServicesMgr::getJWTTokenParserService() const
 	{
-		if (!m_jwtTokenParserService.get())
+		if (!m_jwtTokenParserService)
 		{
 			m_jwtTokenParserService = m_servicesFactory.buildJWTTokenParserService();
 		}
@@ -92,7 +92,7 @@ namespace seed_cpp { namespace service {
 	// Validator services
 	IJSONValidatorService& ServicesMgr::getJSONValidatorService() const
 	{
-		if (!m_jsonValidatorService.get())
+		if (!m_jsonValidatorService)
 		{
 			m_jsonValidatorService = m_servicesFactory.buildJSONValidatorService();
 		}
@@ -104,7 +104,7 @@ namespace seed_cpp { namespace service {
 	// System services
 	IResourceService& ServicesMgr::getResourceService() const
 	{
-		if (!m_resourceService.get())
+		if (!m_resourceService)
 		{
 			m_resourceService = m_servicesFactory.buildResourceService();
 		}
@@ -114,7 +114,7 @@ namespace seed_cpp { namespace service {
 
 	ITimeService& ServicesMgr::getTimeService() const
 	{
-		if (!m_timeService.get())
+		if (!m_timeService)
 		{
 			m_timeService = m_servicesFactory.buildTimeService();
 		}
@@ -124,7 +124,7 @@ namespace seed_cpp { namespace service {
 
 	IUUIDGeneratorService& ServicesMgr::getUUIDGeneratorService() const
 	{
-		if (!m_uuidGeneratorService.get())
+		if (!m_uuidGeneratorService)
 		{
 			m_uuidGeneratorService = m_servicesFactory.buildUUIDGeneratorService();
 		}

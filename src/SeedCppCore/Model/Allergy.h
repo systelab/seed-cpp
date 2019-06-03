@@ -11,9 +11,9 @@ namespace seed_cpp { namespace model {
 		Allergy(const Allergy&);
 		virtual ~Allergy();
 
-		std::string getName();
-		std::string getSigns();
-		std::string getSymptoms();
+		std::string getName() const;
+		std::string getSigns() const;
+		std::string getSymptoms() const;
 
 		void setName(const std::string&);
 		void setSigns(const std::string&);
