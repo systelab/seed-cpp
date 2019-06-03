@@ -33,6 +33,7 @@ namespace seed_cpp { namespace db_test {
 		std::ifstream ifs(scriptFilepath);
 		if (!ifs)
 		{
+			std::cout << "SQLExecutor::executeScript() Unable to find script '" + scriptFilepath + "'." << std::endl;
 			return false;
 		}
 
