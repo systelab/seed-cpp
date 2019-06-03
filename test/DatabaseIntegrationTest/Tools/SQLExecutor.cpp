@@ -4,6 +4,7 @@
 #include <fstream>
 #include <sqlite3.h>
 #include <stdio.h>
+#include <boost/filesystem.hpp>
 
 
 namespace seed_cpp { namespace db_test {
@@ -33,7 +34,9 @@ namespace seed_cpp { namespace db_test {
 		std::ifstream ifs(scriptFilepath);
 		if (!ifs)
 		{
-			std::cout << "SQLExecutor::executeScript() Unable to find script '" + scriptFilepath + "'." << std::endl;
+			std::cout << "SQLExecutor::executeScript() Unable to find script '"
+					  << boost::filesystem::absolute(boost::filesystem::path(scriptFilepath))
+					  << std::endl;
 			return false;
 		}
 
