@@ -36,6 +36,16 @@ namespace seed_cpp { namespace service {
 		EntityModelService::deleteEntity(id, writeLock);
 	}
 
+	std::unique_ptr<model::LockableEntityMgrSubject::IReadLock> UserModelService::createReadLock()
+	{
+		return EntityModelService::createReadLock();
+	}
+
+	std::unique_ptr<model::LockableEntityMgrSubject::IWriteLock> UserModelService::createWriteLock()
+	{
+		return EntityModelService::createWriteLock();
+	}
+
 	const model::User* UserModelService::getUserByLogin(const std::string& login,
 														const model::LockableEntityMgrSubject::IReadLock& readLock) const
 	{

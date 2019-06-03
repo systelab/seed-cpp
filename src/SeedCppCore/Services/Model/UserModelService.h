@@ -19,13 +19,16 @@ namespace seed_cpp { namespace service {
 	public:
 		using EntityModelService::EntityModelService;
 
-		model::UserMgr& getEntityMgr() const;
-		const model::User* getEntityById(const std::string& id, const model::LockableEntityMgrSubject::IReadLock&) const;
-		const model::User& addEntity(std::unique_ptr<model::User>, const model::LockableEntityMgrSubject::IWriteLock&);
-		const model::User& editEntity(std::unique_ptr<model::User>, const model::LockableEntityMgrSubject::IWriteLock&);
-		void deleteEntity(const std::string& id, const model::LockableEntityMgrSubject::IWriteLock&);
+		model::UserMgr& getEntityMgr() const override;
+		const model::User* getEntityById(const std::string& id, const model::LockableEntityMgrSubject::IReadLock&) const override;
+		const model::User& addEntity(std::unique_ptr<model::User>, const model::LockableEntityMgrSubject::IWriteLock&) override;
+		const model::User& editEntity(std::unique_ptr<model::User>, const model::LockableEntityMgrSubject::IWriteLock&) override;
+		void deleteEntity(const std::string& id, const model::LockableEntityMgrSubject::IWriteLock&) override;
 
-		const model::User* getUserByLogin(const std::string&, const model::LockableEntityMgrSubject::IReadLock&) const;
+		std::unique_ptr<model::LockableEntityMgrSubject::IReadLock> createReadLock() override;
+		std::unique_ptr<model::LockableEntityMgrSubject::IWriteLock> createWriteLock() override;
+
+		const model::User* getUserByLogin(const std::string&, const model::LockableEntityMgrSubject::IReadLock&) const override;
 	};
 
 }}

@@ -8,7 +8,6 @@
 #include "Model/UserMgr.h"
 #include "REST/Endpoints/EndpointRequestData.h"
 #include "REST/Endpoints/IEndpoint.h"
-//#include "REST/Endpoints/EntityGetEndpoint.h"
 #include "REST/Endpoints/Patients/PatientsDeleteEndpoint.h"
 #include "REST/Endpoints/Patients/PatientsGetAllEndpoint.h"
 #include "REST/Endpoints/Patients/PatientsGetEndpoint.h"
@@ -95,14 +94,13 @@ namespace seed_cpp { namespace rest {
 
 	std::unique_ptr<IEndpoint> EndpointsFactory::buildPatientsDeleteEndpoint(const EndpointRequestData &requestData)
 	{
-		systelab::web_server::RequestHeaders headers = requestData.getHeaders();
-		std::string patientId = requestData.getRouteParameters()[0].getValue<std::string>();
-		service::ServicesMgr& servicesMgr = m_core.getServicesMgr();
-		service::IPatientModelService& patientModelService = servicesMgr.getPatientModelService();
-		service::IAuthorizationValidatorService& authorizationValidatorService = servicesMgr.getAuthorizationValidatorService();
+		const auto& headers = requestData.getHeaders();
+		auto entityId = requestData.getRouteParameters()[0].getValue<std::string>();
+		auto& servicesMgr = m_core.getServicesMgr();
+		auto& entityModelService = servicesMgr.getPatientModelService();
+		auto& authorizationValidatorService = servicesMgr.getAuthorizationValidatorService();
 
-		return std::make_unique<PatientsDeleteEndpoint>
-					(headers, patientId, patientModelService, authorizationValidatorService);
+		return std::make_unique<PatientsDeleteEndpoint>(headers, entityId, entityModelService, authorizationValidatorService);
 	}
 
 	// Users
@@ -167,15 +165,13 @@ namespace seed_cpp { namespace rest {
 
 	std::unique_ptr<IEndpoint> EndpointsFactory::buildUsersDeleteEndpoint(const EndpointRequestData &requestData)
 	{
-		systelab::web_server::RequestHeaders headers = requestData.getHeaders();
-		std::string userId = requestData.getRouteParameters()[0].getValue<std::string>();
-		service::ServicesMgr &servicesMgr = m_core.getServicesMgr();
-		service::IUserModelService &userModelService = servicesMgr.getUserModelService();
-		service::IAuthorizationValidatorService &authorizationValidatorService =
-			servicesMgr.getAuthorizationValidatorService();
+		const auto& headers = requestData.getHeaders();
+		auto entityId = requestData.getRouteParameters()[0].getValue<std::string>();
+		auto& servicesMgr = m_core.getServicesMgr();
+		auto& entityModelService = servicesMgr.getUserModelService();
+		auto& authorizationValidatorService = servicesMgr.getAuthorizationValidatorService();
 
-		return std::make_unique<UsersDeleteEndpoint>(
-			headers, userId, userModelService, authorizationValidatorService);
+		return std::make_unique<UsersDeleteEndpoint>(headers, entityId, entityModelService, authorizationValidatorService);
 	}
 
 	std::unique_ptr<IEndpoint> EndpointsFactory::buildUsersLoginPostEndpoint(const EndpointRequestData &requestData)
