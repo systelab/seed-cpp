@@ -31,29 +31,25 @@ endforeach()
 # Register tests
 add_test(NAME DatabaseIntegrationTest COMMAND ${DATABASE_INTEGRATION_TEST_PROJECT})
 
-# Additional target for code coverage analysis
-if (CMAKE_BUILD_TYPE STREQUAL "Coverage")
-	include(CodeCoverage)
-	setup_target_for_coverage(DatabaseIntegrationTestCoverage DatabaseIntegrationTest coverage)
-endif()
-
-
-# Copy test databases to build dir
-add_custom_command(TARGET ${DATABASE_INTEGRATION_TEST_PROJECT} POST_BUILD
-                   COMMAND ${CMAKE_COMMAND} -E copy_directory
-                   ${CMAKE_SOURCE_DIR}/test/DatabaseIntegrationTest/Databases $<TARGET_FILE_DIR:${DATABASE_INTEGRATION_TEST_PROJECT}>/Database)
-
-add_custom_command(TARGET ${DATABASE_INTEGRATION_TEST_PROJECT} POST_BUILD
-                   COMMAND ${CMAKE_COMMAND} -E copy_directory
-                   ${CMAKE_SOURCE_DIR}/test/DatabaseIntegrationTest/Databases ${CMAKE_BINARY_DIR}/test/DatabaseIntegrationTest/Database)
-
-
-# Copy db schema to build dir
+# Copy needed database resources to target dir
 add_custom_command(TARGET ${DATABASE_INTEGRATION_TEST_PROJECT} POST_BUILD
                    COMMAND ${CMAKE_COMMAND} -E copy_directory
                    ${CMAKE_SOURCE_DIR}/src/SeedCppCore/Resources/Database $<TARGET_FILE_DIR:${DATABASE_INTEGRATION_TEST_PROJECT}>/Database)
 
 add_custom_command(TARGET ${DATABASE_INTEGRATION_TEST_PROJECT} POST_BUILD
                    COMMAND ${CMAKE_COMMAND} -E copy_directory
-                   ${CMAKE_SOURCE_DIR}/src/SeedCppCore/Resources/Database ${CMAKE_BINARY_DIR}/test/DatabaseIntegrationTest/Database)
+                   ${CMAKE_SOURCE_DIR}/test/DatabaseIntegrationTest/Databases $<TARGET_FILE_DIR:${DATABASE_INTEGRATION_TEST_PROJECT}>/Database)
 
+# Additional target for code coverage analysis
+if (CMAKE_BUILD_TYPE STREQUAL "Coverage")
+	include(CodeCoverage)
+	setup_target_for_coverage(DatabaseIntegrationTestCoverage DatabaseIntegrationTest coverage)
+
+	add_custom_command(TARGET DatabaseIntegrationTestCoverage POST_BUILD
+					   COMMAND ${CMAKE_COMMAND} -E copy_directory
+					   ${CMAKE_SOURCE_DIR}/src/SeedCppCore/Resources/Database $<TARGET_FILE_DIR:DatabaseIntegrationTestCoverage>/Database)
+
+	add_custom_command(TARGET DatabaseIntegrationTestCoverage POST_BUILD
+					   COMMAND ${CMAKE_COMMAND} -E copy_directory
+					   ${CMAKE_SOURCE_DIR}/test/DatabaseIntegrationTest/Databases $<TARGET_FILE_DIR:DatabaseIntegrationTestCoverage>/Database)
+endif()
