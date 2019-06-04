@@ -21,7 +21,7 @@ namespace seed_cpp { namespace db_test {
 						.setId(std::string("9055B141-3307-4868-9C81-D5722A5DC16D"))
 						.setName("Ibai").setSurname("Parker")
 						.setDob(boost::posix_time::from_iso_string("20100101T102030")).
-						 setEmail("jvila2@werfen.com")
+						 setEmail("ibai@patata.com")
 						.setCreationTime(boost::posix_time::from_iso_string("20190115T152318"))
 						.setUpdateTime(boost::posix_time::from_iso_string("20190115T152318"))
 					.getEntity()
