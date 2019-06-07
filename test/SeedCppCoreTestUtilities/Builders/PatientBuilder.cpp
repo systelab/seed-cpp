@@ -53,9 +53,9 @@ namespace seed_cpp { namespace test_utility {
 		return *this;
 	}
 
-	PatientBuilder& PatientBuilder::setAddress(std::unique_ptr<model::Address> address)
+	PatientBuilder& PatientBuilder::setAddress(const model::Address& address)
 	{
-		m_patient.setAddress(std::move(address));
+		m_patient.setAddress(std::make_unique<model::Address>(address));
 		return *this;
 	}
 

@@ -17,7 +17,7 @@ namespace seed_cpp { namespace test_utility {
 		PatientBuilder& setName(const std::string&);
 		PatientBuilder& setEmail(const std::string&);
 		PatientBuilder& setDob(const boost::posix_time::ptime&);
-		PatientBuilder& setAddress(std::unique_ptr<model::Address>);
+		PatientBuilder& setAddress(const model::Address&);
 
 		model::Patient getEntity() const;
 
