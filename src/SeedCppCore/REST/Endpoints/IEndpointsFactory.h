@@ -11,7 +11,10 @@ namespace seed_cpp { namespace rest {
 	class IEndpointsFactory
 	{
 	public:
-		virtual ~IEndpointsFactory() {};
+		virtual ~IEndpointsFactory() = default;
+
+		// Health
+		virtual std::unique_ptr<IEndpoint> buildHealthGetEndpoint(const EndpointRequestData&) = 0;
 
 		// Patients
 		virtual std::unique_ptr<IEndpoint> buildPatientsGetAllEndpoint(const EndpointRequestData&) = 0;

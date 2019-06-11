@@ -6,6 +6,7 @@
 #include "Model/Patient.h"
 #include "REST/Endpoints/EndpointRequestData.h"
 #include "REST/Endpoints/IEndpoint.h"
+#include "REST/Endpoints/Health/HealthGetEndpoint.h"
 #include "REST/Endpoints/Patients/PatientsDeleteEndpoint.h"
 #include "REST/Endpoints/Patients/PatientsGetAllEndpoint.h"
 #include "REST/Endpoints/Patients/PatientsGetEndpoint.h"
@@ -32,6 +33,13 @@ namespace seed_cpp { namespace rest {
 	}
 
 	EndpointsFactory::~EndpointsFactory() = default;
+
+
+	// Health
+	std::unique_ptr<IEndpoint> EndpointsFactory::buildHealthGetEndpoint(const EndpointRequestData&)
+	{
+		return std::make_unique<HealthGetEndpoint>();
+	}
 
 
 	// Patients
