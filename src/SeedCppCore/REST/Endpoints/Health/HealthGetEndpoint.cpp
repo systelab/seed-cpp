@@ -19,7 +19,7 @@ namespace seed_cpp { namespace rest {
 
 	std::unique_ptr<systelab::web_server::Reply> HealthGetEndpoint::execute()
 	{
-		return ReplyBuilderHelper::build(systelab::web_server::Reply::OK, {});
+		return ReplyBuilderHelper::build(systelab::web_server::Reply::OK, "{}");
 	}
 
 }}
