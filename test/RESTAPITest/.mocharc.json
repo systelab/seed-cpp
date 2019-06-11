@@ -1,0 +1,10 @@
+{
+    "diff": true,
+    "extension": ["ts"],
+    "package": "./package.json",
+    "reporter": "spec",
+    "slow": 75,
+    "spec": "specs/**/*.spec.ts",
+    "timeout": 600000,
+    "ui": "bdd"
+  }
