@@ -48,7 +48,7 @@ namespace seed_cpp { namespace unit_test {
 		auto document = m_jsonAdapter.buildDocumentFromString(TypeParam::getJSONString());
 		ASSERT_TRUE(document != NULL);
 
-		m_translator->loadEntityFromJSON(*document);
+		m_translator->loadEntityFromJSON(document->getRootValue());
 
 		auto expectedModel = TypeParam::getEntity();
 		ASSERT_TRUE(EntityComparator()(expectedModel, m_model));
