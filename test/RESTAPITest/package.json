@@ -1,0 +1,16 @@
+{
+  "name": "restapitest",
+  "version": "1.0.0",
+  "description": "REST API test project for C++ seed",
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/.bin/mocha --reporter spec"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^6.1.4",
+    "request": "^2.88.0"
+  }
+}
