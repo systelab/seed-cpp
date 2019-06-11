@@ -39,6 +39,7 @@ include_directories(${CMAKE_SOURCE_DIR}/extern/JWTUtils/src)
 
 
 # Add extern projects
+add_subdirectory(${CMAKE_SOURCE_DIR}/extern/DbAdapter/DbAdapterTestUtilities)
 add_subdirectory(${CMAKE_SOURCE_DIR}/extern/DbSQLiteAdapter/src/sqleet-v0.27.2)
 add_subdirectory(${CMAKE_SOURCE_DIR}/extern/DbSQLiteAdapter/src/DbSQLiteAdapter)
 add_subdirectory(${CMAKE_SOURCE_DIR}/extern/RapidJSONAdapter/src/RapidJSONAdapter)
@@ -46,6 +47,7 @@ add_subdirectory(${CMAKE_SOURCE_DIR}/extern/BoostAsioWebServerAdapter/src/BoostA
 add_subdirectory(${CMAKE_SOURCE_DIR}/extern/JWTUtils/src/JWTUtils)
 
 set_target_properties (gmock_main PROPERTIES FOLDER Extern)
+set_target_properties (DbAdapterTestUtilities PROPERTIES FOLDER Extern)
 set_target_properties (sqlite3 PROPERTIES FOLDER Extern)
 set_target_properties (sqleet PROPERTIES FOLDER Extern)
 set_target_properties (DbSQLiteAdapter PROPERTIES FOLDER Extern)
