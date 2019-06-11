@@ -1,6 +1,6 @@
 #pragma once
 
-#include "DAL/Translators/Db/BaseEntityDbTranslator.h"
+#include "SeedCppCore/DAL/Translators/Db/BaseEntityDbTranslator.h"
 
 
 namespace seed_cpp { namespace model {
