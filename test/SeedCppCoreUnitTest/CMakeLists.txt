@@ -11,7 +11,7 @@ set(SEED_CPP_CORE_UNIT_TEST_PROJECT SeedCppCoreUnitTest)
 file(GLOB_RECURSE SEED_CPP_CORE_UNIT_TEST_PROJECT_SRC "*.cpp")
 file(GLOB_RECURSE SEED_CPP_CORE_UNIT_TEST_PROJECT_HDR "*.h")
 add_executable(${SEED_CPP_CORE_UNIT_TEST_PROJECT} ${SEED_CPP_CORE_UNIT_TEST_PROJECT_SRC} ${SEED_CPP_CORE_UNIT_TEST_PROJECT_HDR})
-target_link_libraries(${SEED_CPP_CORE_UNIT_TEST_PROJECT} gmock_main SeedCppCore RapidJSONAdapter SeedCppCoreTestUtilities DbAdapterTestUtilities JSONAdapterUtilities ${CONAN_LIBS})
+target_link_libraries(${SEED_CPP_CORE_UNIT_TEST_PROJECT} gmock_main SeedCppCore RapidJSONAdapter SeedCppCoreTestUtilities DbAdapterTestUtilities JSONAdapterTestUtilities ${CONAN_LIBS})
 
 #Configure source groups
 foreach(FILE ${SEED_CPP_CORE_UNIT_TEST_PROJECT_SRC} ${SEED_CPP_CORE_UNIT_TEST_PROJECT_HDR}) 
