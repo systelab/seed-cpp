@@ -15,6 +15,9 @@ namespace seed_cpp { namespace rest {
 		EndpointsFactory(Core&);
 		virtual ~EndpointsFactory();
 
+		// Health
+		std::unique_ptr<IEndpoint> buildHealthGetEndpoint(const EndpointRequestData&);
+
 		// Patients
 		std::unique_ptr<IEndpoint> buildPatientsGetAllEndpoint(const EndpointRequestData&);
 		std::unique_ptr<IEndpoint> buildPatientsGetEndpoint(const EndpointRequestData&);
