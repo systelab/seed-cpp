@@ -45,13 +45,13 @@ namespace seed_cpp { namespace unit_test {
 
 	TYPED_TEST_P(JSONTranslatorLoadTest, testLoadEntityFromJSON)
 	{
-		auto document = m_jsonAdapter.buildDocumentFromString(TypeParam::getJSONString());
+		auto document = this->m_jsonAdapter.buildDocumentFromString(TypeParam::getJSONString());
 		ASSERT_TRUE(document != NULL);
 
-		m_translator->loadEntityFromJSON(document->getRootValue());
+		this->m_translator->loadEntityFromJSON(document->getRootValue());
 
 		auto expectedModel = TypeParam::getEntity();
-		ASSERT_TRUE(EntityComparator()(expectedModel, m_model));
+		ASSERT_TRUE(EntityComparator()(expectedModel, this->m_model));
 	}
 
 	REGISTER_TYPED_TEST_CASE_P(JSONTranslatorLoadTest, testLoadEntityFromJSON);
@@ -82,13 +82,13 @@ namespace seed_cpp { namespace unit_test {
 
 	TYPED_TEST_P(JSONTranslatorSaveTest, testSaveEntityToJSON)
 	{
-		m_model = TypeParam::getEntity();
+		this->m_model = TypeParam::getEntity();
 
-		auto document = m_jsonAdapter.buildEmptyDocument();
+		auto document = this->m_jsonAdapter.buildEmptyDocument();
 		document->getRootValue().setType(systelab::json::OBJECT_TYPE);
-		m_translator->saveEntityToJSON(document->getRootValue());
+		this->m_translator->saveEntityToJSON(document->getRootValue());
 
-		auto expectedDocument = m_jsonAdapter.buildDocumentFromString(TypeParam::getJSONString());
+		auto expectedDocument = this->m_jsonAdapter.buildDocumentFromString(TypeParam::getJSONString());
 		ASSERT_TRUE(expectedDocument != NULL);
 		ASSERT_TRUE(EntityComparator()(*expectedDocument, *document));
 	}
