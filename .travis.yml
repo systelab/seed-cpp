@@ -76,8 +76,7 @@ script:
   - ./SeedCppCoreUnitTest
   - ./DatabaseIntegrationTest
   - cd ..
-  - if [[ $TRAVIS_OS_NAME == linux && $BUILD_TYPE == Coverage ]]; then make SeedCppCoreUnitTestCoverage; fi
-  - if [[ $TRAVIS_OS_NAME == linux && $BUILD_TYPE == Coverage ]]; then make DatabaseIntegrationTestCoverage; fi
+  - if [[ $TRAVIS_OS_NAME == linux && $BUILD_TYPE == Coverage ]]; then make AutomatedTestCoverage; fi
 
 after_success:
   - if [[ $TRAVIS_OS_NAME == linux && $BUILD_TYPE == Coverage ]]; then bash <(curl -s https://codecov.io/bash); fi
