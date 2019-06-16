@@ -78,14 +78,6 @@ set_target_properties (DatabaseIntegrationTest PROPERTIES FOLDER Test)
 
 # Add code coverage project
 if (CMAKE_BUILD_TYPE STREQUAL "Coverage")
-    add_custom_command(TARGET DatabaseIntegrationTest POST_BUILD
-                       COMMAND ${CMAKE_COMMAND} -E copy_directory
-                       ${CMAKE_SOURCE_DIR}/src/SeedCppCore/Resources/Database ${CMAKE_BINARY_DIR}/Database)
-
-    add_custom_command(TARGET DatabaseIntegrationTest POST_BUILD
-                       COMMAND ${CMAKE_COMMAND} -E copy_directory
-                       ${CMAKE_SOURCE_DIR}/test/DatabaseIntegrationTest/Databases ${CMAKE_BINARY_DIR}/Database)
-
     include(CodeCoverage)
     setup_target_for_coverage(AutomatedTestCoverage SeedCppCoreUnitTest DatabaseIntegrationTest coverage)
 endif()
