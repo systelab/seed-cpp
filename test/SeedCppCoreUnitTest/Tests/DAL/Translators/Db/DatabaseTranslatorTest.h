@@ -72,9 +72,9 @@ namespace seed_cpp { namespace unit_test {
 		m_model = TypeParam::getEntity();
 
 		std::vector<StubFieldValue> expectedFieldValues = TypeParam::getRecordData();
-		std::unique_ptr<StubTableRecord> expectedRecord = buildRecord(expectedFieldValues);
+		std::unique_ptr<StubTableRecord> expectedRecord = this->buildRecord(expectedFieldValues);
 
-		std::unique_ptr<StubTableRecord> recordToFill = buildNullRecord(expectedFieldValues);
+		std::unique_ptr<StubTableRecord> recordToFill = this->buildNullRecord(expectedFieldValues);
 		m_translator->fillRecordFromEntity(*recordToFill);
 
 		ASSERT_TRUE(EntityComparator()((ITableRecord&) *expectedRecord, (ITableRecord&) *recordToFill));
