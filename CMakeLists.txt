@@ -70,8 +70,8 @@ set_target_properties (SeedCpp PROPERTIES FOLDER Application)
 add_subdirectory(${CMAKE_SOURCE_DIR}/test/SeedCppCoreTestUtilities)
 add_subdirectory(${CMAKE_SOURCE_DIR}/test/SeedCppCoreUnitTest)
 add_subdirectory(${CMAKE_SOURCE_DIR}/test/DatabaseIntegrationTest)
+add_subdirectory(${CMAKE_SOURCE_DIR}/test)
 
 set_target_properties (SeedCppCoreTestUtilities PROPERTIES FOLDER Test)
 set_target_properties (SeedCppCoreUnitTest PROPERTIES FOLDER Test)
 set_target_properties (DatabaseIntegrationTest PROPERTIES FOLDER Test)
-
