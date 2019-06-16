@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Model/EntityMgr.h"
+#include "SeedCppCore/Model/EntityMgr.h"
 
 namespace seed_cpp { namespace model {
 	class Patient;
