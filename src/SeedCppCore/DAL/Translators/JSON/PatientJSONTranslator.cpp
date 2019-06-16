@@ -62,7 +62,7 @@ namespace seed_cpp { namespace dal {
 
 		if (jsonPatient.hasObjectMember("dob"))
 		{
-			boost::posix_time::ptime dob = boost::posix_time::from_iso_string(jsonPatient.getObjectMemberValue("dob").getString());
+			boost::posix_time::ptime dob = boost::posix_time::from_iso_extended_string(jsonPatient.getObjectMemberValue("dob").getString());
 			m_patient.setDob(dob);
 		}
 
