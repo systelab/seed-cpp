@@ -30,9 +30,3 @@ endforeach()
 
 # Register tests
 add_test(NAME SeedCppCoreUnitTest COMMAND ${SEED_CPP_CORE_UNIT_TEST_PROJECT})
-
-# Additional target for code coverage analysis
-if (CMAKE_BUILD_TYPE STREQUAL "Coverage")
-	include(CodeCoverage)
-	setup_target_for_coverage(SeedCppCoreUnitTestCoverage SeedCppCoreUnitTest coverage)
-endif()
