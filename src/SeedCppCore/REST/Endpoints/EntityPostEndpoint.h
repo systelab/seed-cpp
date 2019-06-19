@@ -80,7 +80,7 @@ namespace seed_cpp { namespace rest {
 				loadTranslator->loadEntityFromJSON(jsonRequest->getRootValue());
 
 				auto lock = m_entityModelService.createWriteLock();
-				const _Entity& addedEntity = m_patientModelService.addEntity(std::move(entityToAdd), *lock);
+				const _Entity& addedEntity = m_entityModelService.addEntity(std::move(entityToAdd), *lock);
 
 				auto jsonResponse = m_jsonAdapter.buildEmptyDocument();
 				auto saveTranslator = m_saveFactoryMethod(addedEntity);
@@ -103,6 +103,7 @@ namespace seed_cpp { namespace rest {
 		SaveTranslatorFactoryMethod m_saveFactoryMethod;
 		systelab::json::IJSONAdapter& m_jsonAdapter;
 		service::IAuthorizationValidatorService& m_authorizationValidatorService;
+		service::IJSONValidatorService& m_jsonValidatorService;
 	};
 
 }}

@@ -106,17 +106,19 @@ namespace seed_cpp { namespace rest {
 
 	std::unique_ptr<IEndpoint> EndpointsFactory::buildPatientsPostEndpoint(const EndpointRequestData& requestData)
 	{
-		systelab::web_server::RequestHeaders headers = requestData.getHeaders();
-		const std::string &requestContent = requestData.getContent();
-		dal::IJSONTranslatorsFactory &jsonTranslatorsFactory = m_core.getJSONTranslatorsFactory();
-		systelab::json::IJSONAdapter &jsonAdapter = m_core.getJSONAdapter();
-		service::IAuthorizationValidatorService &authorizationValidatorService = m_core.getServicesMgr().getAuthorizationValidatorService();
-		service::IJSONValidatorService& jsonValidatorService = m_core.getServicesMgr().getJSONValidatorService();
-		service::IPatientModelService& patientModelService = m_core.getServicesMgr().getPatientModelService();
+		const auto& headers = requestData.getHeaders();
+		const auto& requestContent = requestData.getContent();
+		std::string schema = "JSON_SCHEMA_ENDPOINT_PATIENTS_POST";
+		auto& entityModelService = m_core.getServicesMgr().getPatientModelService();
+		auto& jsonTranslatorsFactory = m_core.getJSONTranslatorsFactory();
+		auto& jsonAdapter = m_core.getJSONAdapter();
+		auto& authorizationValidatorService = m_core.getServicesMgr().getAuthorizationValidatorService();
+		auto& jsonValidatorService = m_core.getServicesMgr().getJSONValidatorService();
 
-		return std::make_unique<PatientsPostEndpoint>
-					(headers, requestContent, jsonTranslatorsFactory, jsonAdapter,
-					 authorizationValidatorService, jsonValidatorService, patientModelService);
+		return std::make_unique<PatientsPostEndpoint>(headers, requestContent, schema, entityModelService,
+													  std::bind(&dal::IJSONTranslatorsFactory::buildPatientLoadTranslator, &jsonTranslatorsFactory, std::placeholders::_1),
+													  std::bind(&dal::IJSONTranslatorsFactory::buildPatientSaveTranslator, &jsonTranslatorsFactory, std::placeholders::_1),
+													  jsonAdapter, authorizationValidatorService, jsonValidatorService);
 	}
 
 	std::unique_ptr<IEndpoint> EndpointsFactory::buildPatientsPutEndpoint(const EndpointRequestData& requestData)
@@ -177,17 +179,19 @@ namespace seed_cpp { namespace rest {
 
 	std::unique_ptr<IEndpoint> EndpointsFactory::buildUsersPostEndpoint(const EndpointRequestData& requestData)
 	{
-		systelab::web_server::RequestHeaders headers = requestData.getHeaders();
-		const std::string& requestContent = requestData.getContent();
-		dal::IJSONTranslatorsFactory& jsonTranslatorsFactory = m_core.getJSONTranslatorsFactory();
-		systelab::json::IJSONAdapter& jsonAdapter = m_core.getJSONAdapter();
-		service::IAuthorizationValidatorService& authorizationValidatorService = m_core.getServicesMgr().getAuthorizationValidatorService();
-		service::IJSONValidatorService &jsonValidatorService = m_core.getServicesMgr().getJSONValidatorService();
-		service::IUserModelService &userModelService = m_core.getServicesMgr().getUserModelService();
+		const auto& headers = requestData.getHeaders();
+		const auto& requestContent = requestData.getContent();
+		std::string schema = "JSON_SCHEMA_ENDPOINT_USERS_POST";
+		auto& entityModelService = m_core.getServicesMgr().getUserModelService();
+		auto& jsonTranslatorsFactory = m_core.getJSONTranslatorsFactory();
+		auto& jsonAdapter = m_core.getJSONAdapter();
+		auto& authorizationValidatorService = m_core.getServicesMgr().getAuthorizationValidatorService();
+		auto& jsonValidatorService = m_core.getServicesMgr().getJSONValidatorService();
 
-		return std::make_unique<UsersPostEndpoint>(
-			headers, requestContent, jsonTranslatorsFactory, jsonAdapter,
-			authorizationValidatorService, jsonValidatorService, userModelService);
+		return std::make_unique<UsersPostEndpoint>(headers, requestContent, schema, entityModelService,
+													  std::bind(&dal::IJSONTranslatorsFactory::buildUserLoadTranslator, &jsonTranslatorsFactory, std::placeholders::_1),
+													  std::bind(&dal::IJSONTranslatorsFactory::buildUserSaveTranslator, &jsonTranslatorsFactory, std::placeholders::_1),
+													  jsonAdapter, authorizationValidatorService, jsonValidatorService);
 	}
 
 	std::unique_ptr<IEndpoint> EndpointsFactory::buildUsersPutEndpoint(const EndpointRequestData& requestData)

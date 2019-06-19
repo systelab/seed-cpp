@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS 'Patient' (
   'id' TEXT NOT NULL,
   'name' TEXT NOT NULL,
   'surname' TEXT NOT NULL,
-  'dob' DATETIME NOT NULL,
+  'dob' DATETIME DEFAULT NULL,
   'email' TEXT NOT NULL,
   'creationTime' DATETIME NOT NULL,
   'updateTime' DATETIME NOT NULL,

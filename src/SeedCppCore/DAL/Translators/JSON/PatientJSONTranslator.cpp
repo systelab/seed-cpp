@@ -21,7 +21,12 @@ namespace seed_cpp { namespace dal {
 		jsonPatient.addMember("surname", m_patient.getSurname());
 		jsonPatient.addMember("name", m_patient.getName());
 		jsonPatient.addMember("email", m_patient.getEmail());
-		jsonPatient.addMember("dob", boost::posix_time::to_iso_string(m_patient.getDob()));
+		
+		auto dob = m_patient.getDob();
+		if (dob)
+		{
+			jsonPatient.addMember("dob", boost::posix_time::to_iso_string(*m_patient.getDob()));
+		}
 
 		model::Address& address = m_patient.getAddress();
 		std::unique_ptr<systelab::json::IJSONValue> jsonAddress = jsonPatient.buildValue(systelab::json::OBJECT_TYPE);
