@@ -71,7 +71,7 @@ cmake .. -G "Visual Studio 15 2017 Win64"
 "$VSINSTALLPATH/devenv.com" SeedCpp.sln /build "Debug" /PROJECT "SeedCpp"
 ```
 
-### Linux
+### Linux / MacOS
 
 In order to build the application on Linux, run the following commands:
 
@@ -138,25 +138,6 @@ The response for this request should contain an authentication token (based on [
 
 This token should be added as an `Authorization` header in further requests to the REST API.
 
-### Patients CRUD
+## Documentation
 
-The following endpoints allow managing the patients of the system:
-
-```
-GET /seed/v1/patients
-GET /seed/v1/patients/:id
-POST /seed/v1/patients/patient
-PUT /seed/v1/patients/patient
-DELETE /seed/v1/patients/patient
-```
-
-### Allergies CRUD
-
-The following endpoints allow managing the catalog of allergies of the system:
-
-`TBD`
-
-Additionally, the register of the allergies that each patient has had can be managed with:
-
-`TBD`
-
+See [Documentation](doc/README.md) section for further details about available endpoints as well as other technical specifications.
