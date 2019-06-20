@@ -11,6 +11,7 @@
 #include "REST/Endpoints/Allergies/AllergiesDeleteEndpoint.h"
 #include "REST/Endpoints/Allergies/AllergiesGetEndpoint.h"
 #include "REST/Endpoints/Allergies/AllergiesGetAllEndpoint.h"
+#include "REST/Endpoints/Allergies/AllergiesPostEndpoint.h"
 #include "REST/Endpoints/Patients/PatientsDeleteEndpoint.h"
 #include "REST/Endpoints/Patients/PatientsGetEndpoint.h"
 #include "REST/Endpoints/Patients/PatientsGetAllEndpoint.h"
@@ -63,6 +64,23 @@ namespace seed_cpp { namespace rest {
 												  jsonAdapter, authorizationValidatorService);
 	}
 
+	std::unique_ptr<IEndpoint> EndpointsFactory::buildAllergiesPostEndpoint(const EndpointRequestData& requestData)
+	{
+		const auto& headers = requestData.getHeaders();
+		const auto& requestContent = requestData.getContent();
+		std::string schema = "JSON_SCHEMA_ENDPOINT_ALLERGIES_POST";
+		auto& entityModelService = m_core.getServicesMgr().getAllergyModelService();
+		auto& jsonTranslatorsFactory = m_core.getJSONTranslatorsFactory();
+		auto& jsonAdapter = m_core.getJSONAdapter();
+		auto& authorizationValidatorService = m_core.getServicesMgr().getAuthorizationValidatorService();
+		auto& jsonValidatorService = m_core.getServicesMgr().getJSONValidatorService();
+
+		return std::make_unique<AllergiesPostEndpoint>(headers, requestContent, schema, entityModelService,
+													   std::bind(&dal::IJSONTranslatorsFactory::buildAllergyLoadTranslator, &jsonTranslatorsFactory, std::placeholders::_1),
+													   std::bind(&dal::IJSONTranslatorsFactory::buildAllergySaveTranslator, &jsonTranslatorsFactory, std::placeholders::_1),
+													   jsonAdapter, authorizationValidatorService, jsonValidatorService);
+	}
+
 	std::unique_ptr<IEndpoint> EndpointsFactory::buildAllergiesDeleteEndpoint(const EndpointRequestData& requestData)
 	{
 		const auto& headers = requestData.getHeaders();
@@ -100,8 +118,8 @@ namespace seed_cpp { namespace rest {
 		auto& authorizationValidatorService = m_core.getServicesMgr().getAuthorizationValidatorService();
 
 		return std::make_unique<PatientsGetEndpoint>(headers, entityId, entityMgr,
-												  std::bind(&dal::IJSONTranslatorsFactory::buildPatientSaveTranslator, &jsonTranslatorsFactory, std::placeholders::_1),
-												  jsonAdapter, authorizationValidatorService);
+													 std::bind(&dal::IJSONTranslatorsFactory::buildPatientSaveTranslator, &jsonTranslatorsFactory, std::placeholders::_1),
+													 jsonAdapter, authorizationValidatorService);
 	}
 
 	std::unique_ptr<IEndpoint> EndpointsFactory::buildPatientsPostEndpoint(const EndpointRequestData& requestData)

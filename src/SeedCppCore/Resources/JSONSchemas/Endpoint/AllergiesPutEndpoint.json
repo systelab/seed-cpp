@@ -1,0 +1,28 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "id": "Endpoint/AllergiesPutEndpoint.json",
+
+    "definitions":
+    {
+        "allergiesPutEndpoint":
+        {
+            "description": "Update an existing allergy",
+            "href": "/seed/v1/allergies/:id",
+            "method": "PUT",
+            "schema":
+            {
+                "type": "object",
+                "properties": 
+                {
+					"name": { "type": "string" },
+					"signs": { "type": "string" },
+					"symptoms": { "type": "string" }				
+				},
+				"required": ["name", "signs", "symptoms"]
+            },
+            "additionalProperties": false
+        }
+    },
+
+    "$ref": "#/definitions/allergiesPutEndpoint/schema"
+}
