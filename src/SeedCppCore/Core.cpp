@@ -99,7 +99,7 @@ namespace seed_cpp {
 
 	void Core::initializeModel()
 	{
-		std::unique_ptr<dal::ILoadDAO> userLoadDAO = m_dbDAOFactory->buildUserLoadDAO();
+		auto userLoadDAO = m_dbDAOFactory->buildUserLoadDAO();
 		userLoadDAO->loadAll();
 
 		model::UserMgr& userMgr = getModel().getUserMgr();
@@ -116,8 +116,11 @@ namespace seed_cpp {
 			m_servicesMgr->getUserModelService().addEntity(std::move(defaultUser), writeLock);
 		}
 
-		std::unique_ptr<dal::ILoadDAO> patientLoadDAO = m_dbDAOFactory->buildPatientLoadDAO();
+		auto patientLoadDAO = m_dbDAOFactory->buildPatientLoadDAO();
 		patientLoadDAO->loadAll();
+
+		auto allergyLoadDAO = m_dbDAOFactory->buildAllergyLoadDAO();
+		allergyLoadDAO->loadAll();
 	}
 
 	void Core::initializeWebServer()
