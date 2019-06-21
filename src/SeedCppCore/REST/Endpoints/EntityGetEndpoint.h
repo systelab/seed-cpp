@@ -26,9 +26,9 @@ namespace seed_cpp { namespace rest {
 		EntityGetEndpoint(	const systelab::web_server::RequestHeaders& headers,
 							const std::string& entityId,
 							_EntityMgr& entityMgr,
-							TranslatorFactoryMethod factoryMethod,
-							systelab::json::IJSONAdapter& jsonAdapter,
-							service::IAuthorizationValidatorService& authorizationValidatorService)
+							const TranslatorFactoryMethod& factoryMethod,
+							const systelab::json::IJSONAdapter& jsonAdapter,
+							const service::IAuthorizationValidatorService& authorizationValidatorService)
 			:m_headers(headers)
 			,m_entityId(entityId)
 			,m_entityMgr(entityMgr)
@@ -62,11 +62,11 @@ namespace seed_cpp { namespace rest {
 
 	private:
 		const systelab::web_server::RequestHeaders m_headers;
-		std::string m_entityId;
+		const std::string m_entityId;
 		_EntityMgr& m_entityMgr;
-		TranslatorFactoryMethod m_factoryMethod;
-		systelab::json::IJSONAdapter& m_jsonAdapter;
-		service::IAuthorizationValidatorService& m_authorizationValidatorService;
+		const TranslatorFactoryMethod m_factoryMethod;
+		const systelab::json::IJSONAdapter& m_jsonAdapter;
+		const service::IAuthorizationValidatorService& m_authorizationValidatorService;
 	};
 
 }}

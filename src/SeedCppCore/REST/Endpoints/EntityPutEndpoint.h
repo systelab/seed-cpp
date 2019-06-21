@@ -29,11 +29,11 @@ namespace seed_cpp { namespace rest {
 						  const std::string& requestContent,
 						  const std::string& schema,
 						  _EntityModelService& entityModelService,
-						  LoadTranslatorFactoryMethod loadFactoryMethod,
-						  SaveTranslatorFactoryMethod saveFactoryMethod,
-						  systelab::json::IJSONAdapter& jsonAdapter,
-						  service::IAuthorizationValidatorService& authorizationValidatorService,
-						  service::IJSONValidatorService& jsonValidatorService)
+						  const LoadTranslatorFactoryMethod& loadFactoryMethod,
+						  const SaveTranslatorFactoryMethod& saveFactoryMethod,
+						  const systelab::json::IJSONAdapter& jsonAdapter,
+						  const service::IAuthorizationValidatorService& authorizationValidatorService,
+						  const service::IJSONValidatorService& jsonValidatorService)
 			:m_headers(headers)
 			,m_entityId(entityId)
 			,m_requestContent(requestContent)
@@ -117,15 +117,15 @@ namespace seed_cpp { namespace rest {
 
 	private:
 		const systelab::web_server::RequestHeaders m_headers;
-		std::string m_entityId;
-		std::string m_requestContent;
-		std::string m_schema;
+		const std::string m_entityId;
+		const std::string m_requestContent;
+		const std::string m_schema;
 		_EntityModelService& m_entityModelService;
-		LoadTranslatorFactoryMethod m_loadFactoryMethod;
-		SaveTranslatorFactoryMethod m_saveFactoryMethod;
-		systelab::json::IJSONAdapter& m_jsonAdapter;
-		service::IAuthorizationValidatorService& m_authorizationValidatorService;
-		service::IJSONValidatorService& m_jsonValidatorService;
+		const LoadTranslatorFactoryMethod m_loadFactoryMethod;
+		const SaveTranslatorFactoryMethod m_saveFactoryMethod;
+		const systelab::json::IJSONAdapter& m_jsonAdapter;
+		const service::IAuthorizationValidatorService& m_authorizationValidatorService;
+		const service::IJSONValidatorService& m_jsonValidatorService;
 	};
 
 }}

@@ -17,10 +17,10 @@ namespace seed_cpp { namespace dal {
 
 	public:
 		EntityDbSaveDAO(const std::string& tableName,
-											systelab::db::IDatabase& db,
-											_Entity& entity,
-											IDbDAOFactory& daoFactory,
-											TranslatorFactoryMethod factoryMethod)
+						systelab::db::IDatabase& db,
+						_Entity& entity,
+						IDbDAOFactory& daoFactory,
+						const TranslatorFactoryMethod& factoryMethod)
 			:m_tableName(tableName)
 			,m_db(db)
 			,m_entity(entity)
@@ -113,11 +113,11 @@ namespace seed_cpp { namespace dal {
 		}
 
 	private:
-		std::string m_tableName;
+		const std::string m_tableName;
 		systelab::db::IDatabase& m_db;
 		_Entity& m_entity;
 		IDbDAOFactory& m_daoFactory;
-		TranslatorFactoryMethod m_factoryMethod;
+		const TranslatorFactoryMethod m_factoryMethod;
 	};
 
 }}

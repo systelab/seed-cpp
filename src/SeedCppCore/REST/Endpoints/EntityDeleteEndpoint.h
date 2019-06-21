@@ -17,7 +17,7 @@ namespace seed_cpp { namespace rest {
 		EntityDeleteEndpoint(const systelab::web_server::RequestHeaders& headers,
 							 const std::string& entityId,
 							 _EntityModelService& entityModelService,
-							 service::IAuthorizationValidatorService& authorizationValidatorService)
+							 const service::IAuthorizationValidatorService& authorizationValidatorService)
 			:m_headers(headers)
 			,m_entityId(entityId)
 			,m_entityModelService(entityModelService)
@@ -54,9 +54,9 @@ namespace seed_cpp { namespace rest {
 
 	private:
 		const systelab::web_server::RequestHeaders m_headers;
-		std::string m_entityId;
+		const std::string m_entityId;
 		_EntityModelService& m_entityModelService;
-		service::IAuthorizationValidatorService& m_authorizationValidatorService;
+		const service::IAuthorizationValidatorService& m_authorizationValidatorService;
 	};
 
 }}

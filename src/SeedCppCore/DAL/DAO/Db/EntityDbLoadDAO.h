@@ -18,7 +18,7 @@ namespace seed_cpp { namespace dal {
 		EntityDbLoadDAO(const std::string& tableName,
 						systelab::db::IDatabase& db,
 						_EntityMgr& model,
-						TranslatorFactoryMethod factoryMethod)
+						const TranslatorFactoryMethod& factoryMethod)
 			:m_tableName(tableName)
 			,m_db(db)
 			,m_model(model)
@@ -56,10 +56,10 @@ namespace seed_cpp { namespace dal {
 		}
 
 	private:
-		std::string m_tableName;
+		const std::string m_tableName;
 		systelab::db::IDatabase& m_db;
 		_EntityMgr& m_model;
-		TranslatorFactoryMethod m_factoryMethod;
+		const TranslatorFactoryMethod m_factoryMethod;
 	};
 
 }}
