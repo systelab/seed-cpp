@@ -11,12 +11,13 @@ namespace seed_cpp { namespace rest {
 	class IEndpointsFactory
 	{
 	public:
-		virtual ~IEndpointsFactory() {};
+		virtual ~IEndpointsFactory() = default;
 
 		// Allergies
 		virtual std::unique_ptr<IEndpoint> buildAllergiesGetAllEndpoint(const EndpointRequestData&) = 0;
 		virtual std::unique_ptr<IEndpoint> buildAllergiesGetEndpoint(const EndpointRequestData&) = 0;
 		virtual std::unique_ptr<IEndpoint> buildAllergiesPostEndpoint(const EndpointRequestData&) = 0;
+		virtual std::unique_ptr<IEndpoint> buildAllergiesPutEndpoint(const EndpointRequestData&) = 0;
 		virtual std::unique_ptr<IEndpoint> buildAllergiesDeleteEndpoint(const EndpointRequestData&) = 0;
 
 		// Patients

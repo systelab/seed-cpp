@@ -19,6 +19,7 @@ namespace seed_cpp { namespace rest {
 		std::unique_ptr<IEndpoint> buildAllergiesGetAllEndpoint(const EndpointRequestData&) override;
 		std::unique_ptr<IEndpoint> buildAllergiesGetEndpoint(const EndpointRequestData&) override;
 		std::unique_ptr<IEndpoint> buildAllergiesPostEndpoint(const EndpointRequestData&) override;
+		std::unique_ptr<IEndpoint> buildAllergiesPutEndpoint(const EndpointRequestData&) override;
 		std::unique_ptr<IEndpoint> buildAllergiesDeleteEndpoint(const EndpointRequestData&) override;
 
 		// Patients
