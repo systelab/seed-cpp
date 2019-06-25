@@ -48,15 +48,26 @@ To build the application, we will follow the next steps:
 
 ### Windows
 
-In order to build the application on Windows, run the following commands:
+In order to build the application on Windows for the `Release` configuration, run the following commands (`$VSINSTALLPATH` is the path where Visual Studio has been installed):
 
 ``` bash
 git clone https://github.com/systelab/seed-cpp
 cd seed-cpp
 md build && cd build
-conan install .. -s arch=x86
-cmake ..
-devenv.exe SeedCpp.sln
+conan install ..
+cmake .. -G "Visual Studio 15 2017 Win64"
+"$VSINSTALLPATH/devenv.com" SeedCpp.sln /build "Release" /PROJECT "SeedCpp"
+```
+
+However, if you want to `Debug` the source code, you will need these commands:
+
+``` bash
+git clone https://github.com/systelab/seed-cpp
+cd seed-cpp
+md build && cd build
+conan install .. -s build_type=Debug
+cmake .. -G "Visual Studio 15 2017 Win64"
+"$VSINSTALLPATH/devenv.com" SeedCpp.sln /build "Debug" /PROJECT "SeedCpp"
 ```
 
 ### Linux
@@ -67,7 +78,7 @@ In order to build the application on Linux, run the following commands:
 git clone https://github.com/systelab/seed-cpp
 cd seed-cpp
 mkdir build && cd build
-conan install ..
+conan install .. -s compiler.libcxx=libstdc++11
 cmake .. -DCMAKE_BUILD_TYPE=[Debug | Coverage | Release]
 make
 ```
@@ -78,18 +89,18 @@ To run the application, just launch the `SeedCpp` executable.
 
 Use the following commmand line options:
 
---help to produce help message
---cors to enable cors (by default is disabled)
---port arg to set an specific port (by default is 8080)
---https to enable HTTPS support
+```
+--help     to produce help message
+--cors     to enable cors (by default is disabled)
+--port     arg to set an specific port (by default is 8080)
+--https    to enable HTTPS support
+```
 
 For example:
 
 ```
-SeedCpp --port 80 --cors
+SeedCpp --port 80 --https
 ```
-
-> In Linux and macOS, if you have the error 'dyld: Library not loaded', as a workaround, please copy the generated *.dyld libraries to /usr/local/lib
 
 > In Linux and macOS, if you have the error 'dyld: Library not loaded', as a workaround, please copy the generated *.dyld libraries to /usr/local/lib
 

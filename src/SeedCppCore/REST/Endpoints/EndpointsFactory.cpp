@@ -13,6 +13,7 @@
 #include "REST/Endpoints/Allergies/AllergiesGetAllEndpoint.h"
 #include "REST/Endpoints/Allergies/AllergiesPostEndpoint.h"
 #include "REST/Endpoints/Allergies/AllergiesPutEndpoint.h"
+#include "REST/Endpoints/Health/HealthGetEndpoint.h"
 #include "REST/Endpoints/Patients/PatientsDeleteEndpoint.h"
 #include "REST/Endpoints/Patients/PatientsGetEndpoint.h"
 #include "REST/Endpoints/Patients/PatientsGetAllEndpoint.h"
@@ -109,6 +110,13 @@ namespace seed_cpp { namespace rest {
 		auto& authorizationValidatorService = servicesMgr.getAuthorizationValidatorService();
 
 		return std::make_unique<AllergiesDeleteEndpoint>(headers, entityId, entityModelService, authorizationValidatorService);
+	}
+
+
+	// Health
+	std::unique_ptr<IEndpoint> EndpointsFactory::buildHealthGetEndpoint(const EndpointRequestData&)
+	{
+		return std::make_unique<HealthGetEndpoint>();
 	}
 
 

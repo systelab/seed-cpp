@@ -25,6 +25,9 @@ namespace seed_cpp { namespace rest {
 		m_router->addRoute("PUT",    "seed/v1/allergies/:id",     std::bind(&IEndpointsFactory::buildAllergiesPutEndpoint,    std::ref(m_endpointsFactory), _1));
 		m_router->addRoute("DELETE", "seed/v1/allergies/:id",     std::bind(&IEndpointsFactory::buildAllergiesDeleteEndpoint, std::ref(m_endpointsFactory), _1));
 
+		// Health
+		m_router->addRoute("GET",    "seed/v1/health",            std::bind(&IEndpointsFactory::buildHealthGetEndpoint,      std::ref(m_endpointsFactory), _1));
+
 		// Patients
 		m_router->addRoute("GET",    "seed/v1/patients",         std::bind(&IEndpointsFactory::buildPatientsGetAllEndpoint, std::ref(m_endpointsFactory), _1));
 		m_router->addRoute("GET",    "seed/v1/patients/:id",     std::bind(&IEndpointsFactory::buildPatientsGetEndpoint,    std::ref(m_endpointsFactory), _1));
