@@ -25,7 +25,7 @@ namespace seed_cpp { namespace dal {
 		auto dob = m_patient.getDob();
 		if (dob)
 		{
-			jsonPatient.addMember("dob", boost::posix_time::to_iso_string(*m_patient.getDob()));
+			jsonPatient.addMember("dob", boost::posix_time::to_iso_extended_string(*m_patient.getDob()));
 		}
 
 		model::Address& address = m_patient.getAddress();
@@ -67,7 +67,7 @@ namespace seed_cpp { namespace dal {
 
 		if (jsonPatient.hasObjectMember("dob"))
 		{
-			boost::posix_time::ptime dob = boost::posix_time::from_iso_string(jsonPatient.getObjectMemberValue("dob").getString());
+			boost::posix_time::ptime dob = boost::posix_time::from_iso_extended_string(jsonPatient.getObjectMemberValue("dob").getString());
 			m_patient.setDob(dob);
 		}
 

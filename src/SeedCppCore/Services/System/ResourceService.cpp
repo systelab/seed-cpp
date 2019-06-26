@@ -18,7 +18,7 @@ namespace seed_cpp { namespace service {
 	const std::string ResourceService::schemaUserPost		= "Endpoint/UsersPostEndpoint.json";
 	const std::string ResourceService::schemaUserPut		= "Endpoint/UsersPutEndpoint.json";
 	const std::string ResourceService::schemaAllergyPost	= "Endpoint/AllergiesPostEndpoint.json";
-	const std::string ResourceService::schemaAllergyPut		= "Endpoint/UsersPutEndpoint.json";
+	const std::string ResourceService::schemaAllergyPut		= "Endpoint/AllergiesPutEndpoint.json";
 
 	// Model schemas
 	const std::string ResourceService::schemaModelPatient	= "Model/Patient.json";
