@@ -4,15 +4,7 @@
 
 namespace seed_cpp { namespace service {
 
-	PatientModelService::PatientModelService(model::EntityMgr<model::Patient>& entityMgr,
-											 dal::IDbDAOFactory& daoFactory,
-											 service::IUUIDGeneratorService& uuidGeneratorService,
-											 service::ITimeService& timeService)
-		:EntityModelService(entityMgr, daoFactory, uuidGeneratorService, timeService)
-	{
-	}
-
-	model::EntityMgr<model::Patient>& PatientModelService::getEntityMgr() const
+	model::PatientMgr& PatientModelService::getEntityMgr() const
 	{
 		return EntityModelService::getEntityMgr();
 	}
@@ -39,6 +31,16 @@ namespace seed_cpp { namespace service {
 										   const model::LockableEntityMgrSubject::IWriteLock& writeLock)
 	{
 		EntityModelService::deleteEntity(id, writeLock);
+	}
+
+	std::unique_ptr<model::LockableEntityMgrSubject::IReadLock> PatientModelService::createReadLock()
+	{
+		return EntityModelService::createReadLock();
+	}
+
+	std::unique_ptr<model::LockableEntityMgrSubject::IWriteLock> PatientModelService::createWriteLock()
+	{
+		return EntityModelService::createWriteLock();
 	}
 
 }}
