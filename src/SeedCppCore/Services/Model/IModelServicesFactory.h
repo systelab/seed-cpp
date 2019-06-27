@@ -4,6 +4,7 @@
 
 namespace seed_cpp { namespace service {
 
+	class IAllergyModelService;
 	class IPatientModelService;
 	class IUserModelService;
 
@@ -12,6 +13,7 @@ namespace seed_cpp { namespace service {
 	public:
 		virtual ~IModelServicesFactory() {};
 
+		virtual std::unique_ptr<IAllergyModelService> buildAllergyModelService() const = 0;
 		virtual std::unique_ptr<IPatientModelService> buildPatientModelService() const = 0;
 		virtual std::unique_ptr<IUserModelService> buildUserModelService() const = 0;
 	};

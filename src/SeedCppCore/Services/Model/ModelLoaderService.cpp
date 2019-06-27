@@ -19,6 +19,7 @@ namespace seed_cpp { namespace service {
 	void ModelLoaderService::loadModel()
 	{
 		loadUsers();
+		loadAllergies();
 		loadPatients();
 	}
 
@@ -26,6 +27,12 @@ namespace seed_cpp { namespace service {
 	{
 		auto userLoadDAO = m_context.getDbDAOFactory()->buildUserLoadDAO();
 		userLoadDAO->loadAll();
+	}
+
+	void ModelLoaderService::loadAllergies()
+	{
+		auto allergyLoadDAO = m_context.getDbDAOFactory()->buildAllergyLoadDAO();
+		allergyLoadDAO->loadAll();
 	}
 
 	void ModelLoaderService::loadPatients()

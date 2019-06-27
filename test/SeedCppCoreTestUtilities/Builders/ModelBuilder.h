@@ -1,6 +1,9 @@
 #include "stdafx.h"
 
+#include "SeedCppCore/Model/Allergy.h"
 #include "SeedCppCore/Model/Model.h"
+#include "SeedCppCore/Model/Patient.h"
+#include "SeedCppCore/Model/User.h"
 
 
 namespace seed_cpp { namespace test_utility {
@@ -11,8 +14,9 @@ namespace seed_cpp { namespace test_utility {
 		ModelBuilder();
 		virtual ~ModelBuilder();
 
-		ModelBuilder& setUsers(const std::vector<model::User>&);
+		ModelBuilder& setAllergies(const std::vector<model::Allergy>&);
 		ModelBuilder& setPatients(const std::vector<model::Patient>&);
+		ModelBuilder& setUsers(const std::vector<model::User>&);
 
 		model::Model getEntity() const;
 

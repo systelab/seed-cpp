@@ -1,6 +1,6 @@
 #include "stdafx.h"
-#include "SeedCppCore/Model/EntityMgr.h"
 #include "SeedCppCore/Model/User.h"
+#include "SeedCppCore/Model/UserMgr.h"
 
 #include "TestUtilitiesInterface/EntityComparator.h"
 
@@ -11,12 +11,12 @@ using namespace seed_cpp::model;
 namespace systelab { namespace test_utility {
 
 	template<>
-	AssertionResult EntityComparator::operator() (const EntityMgr<User>& expected, const EntityMgr<User>& toTest) const
+	AssertionResult EntityComparator::operator() (const UserMgr& expected, const UserMgr& toTest) const
 	{
 		COMPARATOR_ASSERT_EQUAL(expected, toTest, count());
 
-		EntityMgr<User>::SharedLock expectedLock(const_cast<EntityMgr<User>&>(expected));
-		EntityMgr<User>::SharedLock toTestLock(const_cast<EntityMgr<User>&>(toTest));
+		UserMgr::SharedLock expectedLock(const_cast<UserMgr&>(expected));
+		UserMgr::SharedLock toTestLock(const_cast<UserMgr&>(toTest));
 
 		unsigned int nUsers = expected.count();
 		for (unsigned int i = 0; i < nUsers; i++)

@@ -15,6 +15,7 @@ namespace seed_cpp { namespace service {
 		ModelServicesFactory(Context&);
 		virtual ~ModelServicesFactory();
 
+		std::unique_ptr<IAllergyModelService> buildAllergyModelService() const;
 		std::unique_ptr<IPatientModelService> buildPatientModelService() const;
 		std::unique_ptr<IUserModelService> buildUserModelService() const;
 
