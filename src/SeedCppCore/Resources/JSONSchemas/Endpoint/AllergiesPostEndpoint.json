@@ -1,0 +1,28 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "id": "Endpoint/AllergiesPostEndpoint.json",
+
+    "definitions":
+    {
+        "allergiesPostEndpoint":
+        {
+            "description": "Create a new allergy",
+            "href": "/seed/v1/allergies",
+            "method": "POST",
+            "schema":
+            {
+                "type": "object",
+                "properties": 
+                {
+					"name": { "type": "string" },
+					"signs": { "type": "string" },
+					"symptoms": { "type": "string" }				
+				},
+				"required": ["name", "signs", "symptoms"]
+            },
+            "additionalProperties": false
+        }
+    },
+
+    "$ref": "#/definitions/allergiesPostEndpoint/schema"
+}

@@ -1,0 +1,22 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "id": "Model/Allergy.json",
+
+    "definitions":
+    {
+        "allergy":
+        {
+            "type": "object",
+            "properties": 
+            {
+                "id": { "type": "string" },
+                "name": { "type": "string" },
+                "signs": { "type": "string" },
+                "symptoms": { "type": "string" }
+            },
+            "required": ["id", "name", "signs", "symptoms"]
+        }
+    },
+
+    "$ref": "#/definitions/allergy"
+}

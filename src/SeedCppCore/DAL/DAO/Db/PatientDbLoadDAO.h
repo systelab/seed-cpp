@@ -1,7 +1,6 @@
 #pragma once
 
 #include "DAL/DAO/ILoadDAO.h"
-#include "Model/EntityMgr.h"
 
 
 namespace systelab { namespace db {
@@ -11,6 +10,7 @@ namespace systelab { namespace db {
 
 namespace seed_cpp { namespace model {
 	class Patient;
+	class PatientMgr;
 }}
 
 namespace seed_cpp { namespace dal {
@@ -22,7 +22,7 @@ namespace seed_cpp { namespace dal {
 	{
 	public:
 		PatientDbLoadDAO(systelab::db::IDatabase&,
-						 model::EntityMgr<model::Patient>&,
+						 model::PatientMgr&,
 						 dal::IDbTranslatorsFactory&);
 
 		void loadAll() const;
@@ -32,7 +32,7 @@ namespace seed_cpp { namespace dal {
 
 	private:
 		systelab::db::IDatabase& m_db;
-		model::EntityMgr<model::Patient>& m_model;
+		model::PatientMgr& m_model;
 		dal::IDbTranslatorsFactory& m_translatorsFactory;
 
 		void loadAddress(model::Patient&) const;

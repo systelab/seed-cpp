@@ -11,11 +11,17 @@ namespace seed_cpp { namespace dal {
 		JSONTranslatorsFactory();
 		virtual ~JSONTranslatorsFactory();
 
-		std::unique_ptr<IJSONLoadTranslator> buildPatientLoadTranslator(model::Patient&) const;
-		std::unique_ptr<IJSONSaveTranslator> buildPatientSaveTranslator(const model::Patient&) const;
+		// Allergies
+		std::unique_ptr<IJSONLoadTranslator> buildAllergyLoadTranslator(model::Allergy&) const override;
+		std::unique_ptr<IJSONSaveTranslator> buildAllergySaveTranslator(const model::Allergy&) const override;
 
-		std::unique_ptr<IJSONLoadTranslator> buildUserLoadTranslator(model::User&) const;
-		std::unique_ptr<IJSONSaveTranslator> buildUserSaveTranslator(const model::User&) const;
+		// Patients
+		std::unique_ptr<IJSONLoadTranslator> buildPatientLoadTranslator(model::Patient&) const override;
+		std::unique_ptr<IJSONSaveTranslator> buildPatientSaveTranslator(const model::Patient&) const override;
+
+		// Users
+		std::unique_ptr<IJSONLoadTranslator> buildUserLoadTranslator(model::User&) const override;
+		std::unique_ptr<IJSONSaveTranslator> buildUserSaveTranslator(const model::User&) const override;
 	};
 
 }}

@@ -1,11 +1,10 @@
 #pragma once
 
-#include "SeedCppCore/Model/EntityMgr.h"
-#include "SeedCppCore/Model/Patient.h"
-#include "SeedCppCore/Model/User.h"
-
-
 namespace seed_cpp { namespace model {
+
+	class AllergyMgr;
+	class PatientMgr;
+	class UserMgr;
 
 	class Model
 	{
@@ -14,14 +13,16 @@ namespace seed_cpp { namespace model {
 		Model(const Model&);
 		virtual ~Model();
 
-		EntityMgr<User>& getUserMgr() const;
-		EntityMgr<Patient>& getPatientMgr() const;
+		AllergyMgr& getAllergyMgr() const;
+		PatientMgr& getPatientMgr() const;
+		UserMgr& getUserMgr() const;
 
 		Model& operator= (const Model&);
 
 	private:
-		std::unique_ptr<EntityMgr<User>> m_userMgr;
-		std::unique_ptr<EntityMgr<Patient>> m_patientMgr;
+		std::unique_ptr<AllergyMgr> m_allergyMgr;
+		std::unique_ptr<PatientMgr> m_patientMgr;
+		std::unique_ptr<UserMgr> m_userMgr;
 	};
 
 }}
