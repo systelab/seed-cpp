@@ -11,7 +11,7 @@ namespace seed_cpp { namespace model {
 		,m_surname("")
 		,m_name("")
 		,m_email("")
-		,m_dob()
+		,m_dob(boost::none)
 		,m_address(std::make_unique<Address>())
 	{
 	}
@@ -41,7 +41,7 @@ namespace seed_cpp { namespace model {
 		return m_email;
 	}
 
-	boost::posix_time::ptime Patient::getDob() const
+	boost::optional<boost::posix_time::ptime> Patient::getDob() const
 	{
 		return m_dob;
 	}
@@ -66,7 +66,7 @@ namespace seed_cpp { namespace model {
 		m_email = email;
 	}
 
-	void Patient::setDob(const boost::posix_time::ptime& dob)
+	void Patient::setDob(const boost::optional<boost::posix_time::ptime>& dob)
 	{
 		m_dob = dob;
 	}

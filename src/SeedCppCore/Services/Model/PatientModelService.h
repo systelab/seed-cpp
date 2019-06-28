@@ -1,28 +1,27 @@
 #pragma once
 
-#include "Model/Address.h"
-#include "Model/Patient.h"
-#include "Services/Model/EntityModelService.h"
-#include "Services/Model/IPatientModelService.h"
+#include "IPatientModelService.h"
 
+#include "Model/Patient.h"
+#include "Model/PatientMgr.h"
+#include "Services/Model/EntityModelService.h"
 
 namespace seed_cpp { namespace service {
 
 	class PatientModelService : public IPatientModelService,
-								public EntityModelService<model::Patient>
+								public EntityModelService<model::Patient, model::PatientMgr>
 	{
 	public:
-		PatientModelService(model::EntityMgr<model::Patient>&,
-							dal::IDbDAOFactory&,
-							service::IUUIDGeneratorService&,
-							service::ITimeService&);
-		virtual ~PatientModelService() = default;
+		using EntityModelService::EntityModelService;
 
-		model::EntityMgr<model::Patient>& getEntityMgr() const;
-		const model::Patient* getEntityById(const std::string& id, const model::LockableEntityMgrSubject::IReadLock&) const;
-		const model::Patient& addEntity(std::unique_ptr<model::Patient>, const model::LockableEntityMgrSubject::IWriteLock&);
-		const model::Patient& editEntity(std::unique_ptr<model::Patient>, const model::LockableEntityMgrSubject::IWriteLock&);
-		void deleteEntity(const std::string& id, const model::LockableEntityMgrSubject::IWriteLock&);
+		model::PatientMgr& getEntityMgr() const override;
+		const model::Patient* getEntityById(const std::string& id, const model::LockableEntityMgrSubject::IReadLock&) const override;
+		const model::Patient& addEntity(std::unique_ptr<model::Patient>, const model::LockableEntityMgrSubject::IWriteLock&) override;
+		const model::Patient& editEntity(std::unique_ptr<model::Patient>, const model::LockableEntityMgrSubject::IWriteLock&) override;
+		void deleteEntity(const std::string& id, const model::LockableEntityMgrSubject::IWriteLock&) override;
+
+		std::unique_ptr<model::LockableEntityMgrSubject::IReadLock> createReadLock() override;
+		std::unique_ptr<model::LockableEntityMgrSubject::IWriteLock> createWriteLock() override;
 	};
 
 }}

@@ -29,13 +29,9 @@ std::string getFileContents(const std::string& filename)
 	std::ifstream ifs(filename);
 	if (ifs)
 	{
-		ifs.seekg(0, std::ios::end);
-		int fileLength = static_cast<int>(ifs.tellg());
-		ifs.seekg(0, std::ios::beg);
-
-		std::string fileContents;
-		fileContents.resize(fileLength);
-		ifs.read(&fileContents[0], fileLength);
+		std::stringstream ss;
+		ss << ifs.rdbuf();
+		std::string fileContents = ss.str();
 		ifs.close();
 
 		return fileContents;

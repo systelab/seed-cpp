@@ -9,6 +9,7 @@ namespace seed_cpp { namespace service {
 
 	class IServicesFactory;
 
+	class IAllergyModelService;
 	class IAuthorizationValidatorService;
 	class IJSONValidatorService;
 	class IPatientModelService;
@@ -24,6 +25,7 @@ namespace seed_cpp { namespace service {
 		virtual ~ServicesMgr();
 
 		// Model services
+		IAllergyModelService& getAllergyModelService() const;
 		IPatientModelService& getPatientModelService() const;
 		IUserModelService& getUserModelService() const;
 
@@ -43,6 +45,7 @@ namespace seed_cpp { namespace service {
 	private:
 		IServicesFactory& m_servicesFactory;
 
+		mutable std::unique_ptr<IAllergyModelService> m_allergyModelService;
 		mutable std::unique_ptr<IPatientModelService> m_patientModelService;
 		mutable std::unique_ptr<IUserModelService> m_userModelService;
 

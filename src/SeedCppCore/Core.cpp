@@ -8,6 +8,7 @@
 #include "DAL/Translators/JSON/JSONTranslatorsFactory.h"
 #include "Model/Model.h"
 #include "Model/User.h"
+#include "Model/UserMgr.h"
 #include "REST/RESTAPIWebService.h"
 #include "REST/Endpoints/EndpointsFactory.h"
 #include "Services/ServicesFactory.h"
@@ -98,10 +99,10 @@ namespace seed_cpp {
 
 	void Core::initializeModel()
 	{
-		std::unique_ptr<dal::ILoadDAO> userLoadDAO = m_dbDAOFactory->buildUserLoadDAO();
+		auto userLoadDAO = m_dbDAOFactory->buildUserLoadDAO();
 		userLoadDAO->loadAll();
 
-		model::EntityMgr<model::User>& userMgr = getModel().getUserMgr();
+		model::UserMgr& userMgr = getModel().getUserMgr();
 		if (userMgr.count() == 0)
 		{
 			auto defaultUser = std::make_unique<model::User>();
@@ -111,12 +112,15 @@ namespace seed_cpp {
 			defaultUser->setPassword("Systelab");
 			defaultUser->setRole(model::User::ADMIN_ROLE);
 
-			model::EntityMgr<model::User>::UniqueLock writeLock(userMgr);
+			model::UserMgr::UniqueLock writeLock(userMgr);
 			m_servicesMgr->getUserModelService().addEntity(std::move(defaultUser), writeLock);
 		}
 
-		std::unique_ptr<dal::ILoadDAO> patientLoadDAO = m_dbDAOFactory->buildPatientLoadDAO();
+		auto patientLoadDAO = m_dbDAOFactory->buildPatientLoadDAO();
 		patientLoadDAO->loadAll();
+
+		auto allergyLoadDAO = m_dbDAOFactory->buildAllergyLoadDAO();
+		allergyLoadDAO->loadAll();
 	}
 
 	void Core::initializeWebServer()

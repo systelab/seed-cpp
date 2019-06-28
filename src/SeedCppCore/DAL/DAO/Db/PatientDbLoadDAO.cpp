@@ -1,10 +1,12 @@
 #include "stdafx.h"
 #include "PatientDbLoadDAO.h"
 
+#include "DAL/DbConstants.h"
 #include "DAL/Translators/Db/IDatabaseEntityTranslator.h"
 #include "DAL/Translators/Db/IDbTranslatorsFactory.h"
 #include "Model/Address.h"
 #include "Model/Patient.h"
+#include "Model/PatientMgr.h"
 
 #include "DbAdapterInterface/IDatabase.h"
 #include "DbAdapterInterface/IFieldValue.h"
@@ -15,7 +17,7 @@
 namespace seed_cpp { namespace dal {
 
 	PatientDbLoadDAO::PatientDbLoadDAO(systelab::db::IDatabase& db,
-									   model::EntityMgr<model::Patient>& model,
+									   model::PatientMgr& model,
 									   dal::IDbTranslatorsFactory& translatorsFactory)
 		:m_db(db)
 		,m_model(model)
@@ -26,7 +28,7 @@ namespace seed_cpp { namespace dal {
 	void PatientDbLoadDAO::loadAll() const
 	{
 		std::vector< std::unique_ptr<model::Patient> > items;
-		systelab::db::ITable& itemsTable = m_db.getTable("Patient");
+		systelab::db::ITable& itemsTable = m_db.getTable(db_table::PATIENT);
 		std::unique_ptr<systelab::db::ITableRecordSet> itemsRecordset = itemsTable.getAllRecords();
 		while (itemsRecordset->isCurrentRecordValid())
 		{
@@ -39,7 +41,7 @@ namespace seed_cpp { namespace dal {
 			itemsRecordset->nextRecord();
 		}
 
-		model::EntityMgr<model::Patient>::UniqueLock writeLock(m_model);
+		model::PatientMgr::UniqueLock writeLock(m_model);
 		m_model.setEntities(std::move(items), writeLock);
 	}
 
@@ -57,7 +59,7 @@ namespace seed_cpp { namespace dal {
 		namespace sdb = systelab::db;
 
 		std::string patientId = *patient.getId();
-		systelab::db::ITable& table = m_db.getTable("Address");
+		systelab::db::ITable& table = m_db.getTable(db_table::ADDRESS);
 		std::unique_ptr<sdb::IFieldValue> patientIdFieldValue = table.createFieldValue(table.getField("patientId"), patientId);
 		std::unique_ptr<sdb::ITableRecordSet> addressRecordset = table.filterRecordsByField(*patientIdFieldValue);
 		if (addressRecordset->isCurrentRecordValid())
