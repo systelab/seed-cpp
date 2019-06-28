@@ -16,15 +16,18 @@ namespace seed_cpp { namespace dal {
 		DbDAOFactory(Context&);
 		virtual ~DbDAOFactory();
 
-		std::unique_ptr<ILoadDAO> buildPatientLoadDAO();
-		std::unique_ptr<ISaveDAO> buildPatientSaveDAO(model::Patient &);
+		// Load
+		std::unique_ptr<ILoadDAO> buildAllergyLoadDAO() override;
+		std::unique_ptr<ILoadDAO> buildPatientLoadDAO() override;
+		std::unique_ptr<ILoadDAO> buildUserLoadDAO() override;
 
-		// Users
-		std::unique_ptr<ILoadDAO> buildUserLoadDAO();
-		std::unique_ptr<ISaveDAO> buildUserSaveDAO(model::User &);
+		// Save
+		std::unique_ptr<ISaveDAO> buildAllergySaveDAO(model::Allergy&) override;
+		std::unique_ptr<ISaveDAO> buildPatientSaveDAO(model::Patient&) override;
+		std::unique_ptr<ISaveDAO> buildUserSaveDAO(model::User&) override;
 
 		// Transactions
-		std::unique_ptr<ITransactionDAO> startTransaction();
+		std::unique_ptr<ITransactionDAO> startTransaction() override;
 
 		void releaseTransactionInProgress();
 

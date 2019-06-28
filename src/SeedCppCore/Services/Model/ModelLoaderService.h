@@ -18,6 +18,7 @@ namespace seed_cpp { namespace service {
 
 	protected:
 		void loadUsers();
+		void loadAllergies();
 		void loadPatients();
 
 	private:

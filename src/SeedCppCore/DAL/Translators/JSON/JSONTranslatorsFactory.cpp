@@ -1,20 +1,27 @@
 #include "stdafx.h"
 #include "JSONTranslatorsFactory.h"
 
+#include "DAL/Translators/JSON/AllergyJSONTranslator.h"
 #include "DAL/Translators/JSON/PatientJSONTranslator.h"
 #include "DAL/Translators/JSON/UserJSONTranslator.h"
 
 
 namespace seed_cpp { namespace dal {
 
-	JSONTranslatorsFactory::JSONTranslatorsFactory()
-	{
-	}
+	JSONTranslatorsFactory::JSONTranslatorsFactory() = default;
 	
-	JSONTranslatorsFactory::~JSONTranslatorsFactory()
+	JSONTranslatorsFactory::~JSONTranslatorsFactory() = default;
+
+	// Allergies
+	std::unique_ptr<IJSONLoadTranslator> JSONTranslatorsFactory::buildAllergyLoadTranslator(model::Allergy& entity) const
 	{
+		return std::make_unique<dal::AllergyJSONLoadTranslator>(entity);
 	}
 
+	std::unique_ptr<IJSONSaveTranslator> JSONTranslatorsFactory::buildAllergySaveTranslator(const model::Allergy& entity) const
+	{
+		return std::make_unique<dal::AllergyJSONSaveTranslator>(entity);
+	}
 
 	// Patient
 	std::unique_ptr<IJSONLoadTranslator> JSONTranslatorsFactory::buildPatientLoadTranslator(model::Patient& patient) const

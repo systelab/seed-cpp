@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "ModelServicesMgr.h"
 
+#include "Services/Model/IAllergyModelService.h"
 #include "Services/Model/IModelServicesFactory.h"
 #include "Services/Model/IPatientModelService.h"
 #include "Services/Model/IUserModelService.h"
@@ -16,6 +17,16 @@ namespace seed_cpp { namespace service {
 	}
 	
 	ModelServicesMgr::~ModelServicesMgr() = default;
+
+	IAllergyModelService& ModelServicesMgr::getAllergyModelService() const
+	{
+		if (!m_allergyModelService.get())
+		{
+			m_allergyModelService = m_factory.buildAllergyModelService();
+		}
+
+		return *m_allergyModelService;
+	}
 
 	IPatientModelService& ModelServicesMgr::getPatientModelService() const
 	{

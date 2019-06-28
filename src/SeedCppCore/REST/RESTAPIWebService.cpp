@@ -18,8 +18,15 @@ namespace seed_cpp { namespace rest {
 
 		m_router = std::make_unique<Router>();
 
+		// Allergies
+		m_router->addRoute("GET",    "seed/v1/allergies",         std::bind(&IEndpointsFactory::buildAllergiesGetAllEndpoint, std::ref(m_endpointsFactory), _1));
+		m_router->addRoute("GET",    "seed/v1/allergies/:id",     std::bind(&IEndpointsFactory::buildAllergiesGetEndpoint,    std::ref(m_endpointsFactory), _1));
+		m_router->addRoute("POST",   "seed/v1/allergies/allergy", std::bind(&IEndpointsFactory::buildAllergiesPostEndpoint,   std::ref(m_endpointsFactory), _1));
+		m_router->addRoute("PUT",    "seed/v1/allergies/:id",     std::bind(&IEndpointsFactory::buildAllergiesPutEndpoint,    std::ref(m_endpointsFactory), _1));
+		m_router->addRoute("DELETE", "seed/v1/allergies/:id",     std::bind(&IEndpointsFactory::buildAllergiesDeleteEndpoint, std::ref(m_endpointsFactory), _1));
+
 		// Health
-		m_router->addRoute("GET",    "seed/v1/health",           std::bind(&IEndpointsFactory::buildHealthGetEndpoint,      std::ref(m_endpointsFactory), _1));
+		m_router->addRoute("GET",    "seed/v1/health",            std::bind(&IEndpointsFactory::buildHealthGetEndpoint,      std::ref(m_endpointsFactory), _1));
 
 		// Patients
 		m_router->addRoute("GET",    "seed/v1/patients",         std::bind(&IEndpointsFactory::buildPatientsGetAllEndpoint, std::ref(m_endpointsFactory), _1));
@@ -37,9 +44,7 @@ namespace seed_cpp { namespace rest {
 		m_router->addRoute("POST",   "seed/v1/users/login",      std::bind(&IEndpointsFactory::buildUsersLoginPostEndpoint, std::ref(m_endpointsFactory), _1));
 	}
 
-	RESTAPIWebService::~RESTAPIWebService()
-	{
-	}
+	RESTAPIWebService::~RESTAPIWebService() = default;
 
 	std::unique_ptr<systelab::web_server::Reply> RESTAPIWebService::process(const systelab::web_server::Request& request) const
 	{

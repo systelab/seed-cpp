@@ -6,6 +6,9 @@
 #include "DAL/DAO/ILoadDAO.h"
 #include "DAL/Translators/Db/DbTranslatorsFactory.h"
 #include "Model/Model.h"
+#include "Model/AllergyMgr.h"
+#include "Model/PatientMgr.h"
+#include "Model/UserMgr.h"
 #include "Services/ServicesMgr.h"
 #include "Services/Model/ModelLoaderService.h"
 #include "Services/Model/ModelServicesMgr.h"
@@ -35,7 +38,7 @@ namespace seed_cpp { namespace service {
 
 	void ModelInitializationService::createDefaultUsers()
 	{
-		model::EntityMgr<model::User>& userMgr = m_context.getModel()->getUserMgr();
+		model::UserMgr& userMgr = m_context.getModel()->getUserMgr();
 		if (userMgr.count() == 0)
 		{
 			auto defaultUser = std::make_unique<model::User>();

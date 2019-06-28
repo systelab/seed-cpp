@@ -2,11 +2,15 @@
 #include "DbDAOFactory.h"
 
 #include "Context.h"
+#include "DAL/DbConstants.h"
+#include "DAL/DAO/Db/AllergyDbLoadDAO.h"
+#include "DAL/DAO/Db/AllergyDbSaveDAO.h"
 #include "DAL/DAO/Db/DbTransactionDAO.h"
 #include "DAL/DAO/Db/PatientDbLoadDAO.h"
 #include "DAL/DAO/Db/PatientDbSaveDAO.h"
 #include "DAL/DAO/Db/UserDbLoadDAO.h"
 #include "DAL/DAO/Db/UserDbSaveDAO.h"
+#include "DAL/Translators/Db/IDbTranslatorsFactory.h"
 #include "Model/Model.h"
 
 
@@ -20,47 +24,74 @@ namespace seed_cpp { namespace dal {
 
 	DbDAOFactory::~DbDAOFactory() = default;
 
-	std::unique_ptr<ILoadDAO> DbDAOFactory::buildPatientLoadDAO()
+	// Load
+	std::unique_ptr<ILoadDAO> DbDAOFactory::buildAllergyLoadDAO()
 	{
-		systelab::db::IDatabase& database = m_context.getDatabase();
-		model::EntityMgr<model::Patient>& model = m_context.getModel()->getPatientMgr();
-		dal::IDbTranslatorsFactory& dbTranslatorsFactory = *m_context.getDbTranslatorsFactory();
-		return std::unique_ptr<ILoadDAO>(new PatientDbLoadDAO(database, model, dbTranslatorsFactory));
+		auto& database = m_context.getDatabase();
+		auto& model = m_context.getModel()->getAllergyMgr();
+		auto& dbTranslatorsFactory = *m_context.getDbTranslatorsFactory();
+
+		return std::make_unique<AllergyDbLoadDAO>(db_table::ALLERGY, database, model,
+													std::bind(&IDbTranslatorsFactory::buildAllergyTranslator, &dbTranslatorsFactory, std::placeholders::_1));
 	}
 
-	std::unique_ptr<ISaveDAO> DbDAOFactory::buildPatientSaveDAO(model::Patient& patient)
+	std::unique_ptr<ILoadDAO> DbDAOFactory::buildPatientLoadDAO()
 	{
-		systelab::db::IDatabase& database = m_context.getDatabase();
-		dal::IDbTranslatorsFactory& dbTranslatorsFactory = *m_context.getDbTranslatorsFactory();
-		return std::unique_ptr<ISaveDAO>(new PatientDbSaveDAO(database, patient, *this, dbTranslatorsFactory));
+		auto& database = m_context.getDatabase();
+		auto& model = m_context.getModel()->getPatientMgr();
+		auto& dbTranslatorsFactory = *m_context.getDbTranslatorsFactory();
+
+		return std::make_unique<PatientDbLoadDAO>(database, model, dbTranslatorsFactory);
 	}
 
 	std::unique_ptr<ILoadDAO> DbDAOFactory::buildUserLoadDAO()
 	{
-		systelab::db::IDatabase& database = m_context.getDatabase();
-		model::EntityMgr<model::User>& model = m_context.getModel()->getUserMgr();
-		dal::IDbTranslatorsFactory& dbTranslatorsFactory = *m_context.getDbTranslatorsFactory();
-		return std::unique_ptr<ILoadDAO>(new UserDbLoadDAO(database, model, dbTranslatorsFactory));
+		auto& database = m_context.getDatabase();
+		auto& model = m_context.getModel()->getUserMgr();
+		auto& dbTranslatorsFactory = *m_context.getDbTranslatorsFactory();
+
+		return std::make_unique<UserDbLoadDAO>(db_table::USER, database, model,
+												std::bind(&IDbTranslatorsFactory::buildUserTranslator, &dbTranslatorsFactory, std::placeholders::_1));
 	}
 
-	std::unique_ptr<ISaveDAO> DbDAOFactory::buildUserSaveDAO(model::User& user)
+	// Save
+	std::unique_ptr<ISaveDAO> DbDAOFactory::buildAllergySaveDAO(model::Allergy& entity)
 	{
-		systelab::db::IDatabase& database = m_context.getDatabase();
-		dal::IDbTranslatorsFactory& dbTranslatorsFactory = *m_context.getDbTranslatorsFactory();
-		return std::unique_ptr<ISaveDAO>(new UserDbSaveDAO(database, user, *this, dbTranslatorsFactory));
+		auto& database = m_context.getDatabase();
+		auto& dbTranslatorsFactory = *m_context.getDbTranslatorsFactory();
+
+		return std::make_unique<AllergyDbSaveDAO>(db_table::ALLERGY, database, entity, *this,
+												  std::bind(&IDbTranslatorsFactory::buildAllergyTranslator, &dbTranslatorsFactory, std::placeholders::_1));
+	}
+	std::unique_ptr<ISaveDAO> DbDAOFactory::buildPatientSaveDAO(model::Patient& patient)
+	{
+		auto& database = m_context.getDatabase();
+		auto& dbTranslatorsFactory = *m_context.getDbTranslatorsFactory();
+
+		return std::make_unique<PatientDbSaveDAO>(database, patient, *this, dbTranslatorsFactory);
 	}
 
+	std::unique_ptr<ISaveDAO> DbDAOFactory::buildUserSaveDAO(model::User& entity)
+	{
+		auto& database = m_context.getDatabase();
+		auto& dbTranslatorsFactory = *m_context.getDbTranslatorsFactory();
+
+		return std::make_unique<UserDbSaveDAO>(db_table::USER, database, entity, *this,
+											   std::bind(&IDbTranslatorsFactory::buildUserTranslator, &dbTranslatorsFactory, std::placeholders::_1));
+	}
+
+	// Transaction
 	std::unique_ptr<ITransactionDAO> DbDAOFactory::startTransaction()
 	{
 		if (!m_transactionInProgress)
 		{
-			systelab::db::IDatabase& database = m_context.getDatabase();
+			auto& database = m_context.getDatabase();
 			m_transactionInProgress = true;
-			return std::unique_ptr<ITransactionDAO>(new DbTransactionDAO(database, *this));
+			return std::make_unique<DbTransactionDAO>(database, *this);
 		}
 		else
 		{
-			return std::unique_ptr<ITransactionDAO>(new DbTransactionDAO());
+			return std::make_unique<DbTransactionDAO>();
 		}
 	}
 

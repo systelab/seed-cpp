@@ -12,16 +12,22 @@ namespace systelab { namespace test_utility {
 	template<>
 	AssertionResult EntityComparator::operator() (const Model& expected, const Model& toTest) const
 	{
-		AssertionResult userResult = EntityComparator()(expected.getUserMgr(), toTest.getUserMgr());
-		if (!userResult)
+		AssertionResult allergyResult = EntityComparator()(expected.getAllergyMgr(), toTest.getAllergyMgr());
+		if (!allergyResult)
 		{
-			return AssertionFailure() << "Different data in user manager: " << userResult.message();
+			return AssertionFailure() << "Different data in allergy manager: " << allergyResult.message();
 		}
 
 		AssertionResult patientResult = EntityComparator()(expected.getPatientMgr(), toTest.getPatientMgr());
 		if (!patientResult)
 		{
 			return AssertionFailure() << "Different data in patient manager: " << patientResult.message();
+		}
+
+		AssertionResult userResult = EntityComparator()(expected.getUserMgr(), toTest.getUserMgr());
+		if (!userResult)
+		{
+			return AssertionFailure() << "Different data in user manager: " << userResult.message();
 		}
 
 		return AssertionSuccess();
