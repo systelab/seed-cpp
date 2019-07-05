@@ -46,13 +46,13 @@ namespace seed_cpp {
 
 	std::unique_ptr<systelab::db::IDatabase> Core::loadDatabase()
 	{
-		bool existsBD = fileExists("./seed_cpp.db");
+		bool existsDB = fileExists("./seed_cpp.db");
 
 		systelab::db::sqlite::ConnectionConfiguration databaseConfiguration("./seed_cpp.db");
 		systelab::db::sqlite::Connection databaseConnection;
 		std::unique_ptr<systelab::db::IDatabase> database = databaseConnection.loadDatabase(databaseConfiguration);
 
-		if (!existsBD && database)
+		if (!existsDB && database)
 		{
 			std::string databaseSchemaSQL = getFileContents("./Database/schema.sql");
 			database->executeMultipleStatements(databaseSchemaSQL);
