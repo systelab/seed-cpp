@@ -37,7 +37,7 @@ namespace seed_cpp { namespace service {
 
 	void ModelLoaderService::loadPatients()
 	{
-		std::unique_ptr<dal::ILoadDAO> patientLoadDAO = m_context.getDbDAOFactory()->buildPatientLoadDAO();
+		auto patientLoadDAO = m_context.getDbDAOFactory()->buildPatientLoadDAO();
 		patientLoadDAO->loadAll();
 	}
 
