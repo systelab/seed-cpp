@@ -9,7 +9,7 @@ namespace seed_cpp { namespace service {
 	class IValidatorServicesFactory
 	{
 	public:
-		virtual ~IValidatorServicesFactory() {};
+		virtual ~IValidatorServicesFactory() = default;
 
 		virtual std::unique_ptr<IJSONValidatorService> buildJSONValidatorService() const = 0;
 	};

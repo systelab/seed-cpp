@@ -11,7 +11,7 @@ namespace seed_cpp { namespace service {
 	class ISystemServicesFactory
 	{
 	public:
-		virtual ~ISystemServicesFactory() {};
+		virtual ~ISystemServicesFactory() = default;
 
 		virtual std::unique_ptr<IResourceService> buildResourceService() const = 0;
 		virtual std::unique_ptr<ITimeService> buildTimeService() const = 0;
