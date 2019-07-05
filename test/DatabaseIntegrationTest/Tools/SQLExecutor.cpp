@@ -40,11 +40,9 @@ namespace seed_cpp { namespace db_test {
 			return false;
 		}
 
-		std::string scriptContents;
-		ifs.seekg(0, std::ios::end);
-		scriptContents.resize(static_cast<unsigned int>(ifs.tellg()));
-		ifs.seekg(0, std::ios::beg);
-		ifs.read(&scriptContents[0], scriptContents.size());
+		std::stringstream ss;
+		ss << ifs.rdbuf();
+		std::string scriptContents = ss.str();
 		ifs.close();
 
 		return executeStatements(scriptContents);
