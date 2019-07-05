@@ -11,9 +11,6 @@ namespace seed_cpp { namespace service {
 
 	SystemServicesMgr::SystemServicesMgr(service::ISystemServicesFactory& factory)
 		:m_factory(factory)
-		,m_resourceService()
-		,m_timeService()
-		,m_uuidGeneratorService()
 	{
 	}
 	

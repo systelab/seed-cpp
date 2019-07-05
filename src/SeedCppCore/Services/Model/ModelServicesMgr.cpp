@@ -11,8 +11,6 @@ namespace seed_cpp { namespace service {
 
 	ModelServicesMgr::ModelServicesMgr(service::IModelServicesFactory& factory)
 		:m_factory(factory)
-		,m_patientModelService()
-		,m_userModelService()
 	{
 	}
 	

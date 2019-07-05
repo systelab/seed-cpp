@@ -12,9 +12,6 @@ namespace seed_cpp { namespace service {
 
 	SecurityServicesMgr::SecurityServicesMgr(service::ISecurityServicesFactory& factory)
 		:m_factory(factory)
-		,m_authorizationValidatorService()
-		,m_jwtTokenBuilderService()
-		,m_jwtTokenParserService()
 	{
 	}
 	

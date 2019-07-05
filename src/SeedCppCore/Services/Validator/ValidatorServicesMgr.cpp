@@ -9,7 +9,6 @@ namespace seed_cpp { namespace service {
 
 	ValidatorServicesMgr::ValidatorServicesMgr(service::IValidatorServicesFactory& factory)
 		:m_factory(factory)
-		,m_jsonValidatorService()
 	{
 	}
 	
