@@ -3,10 +3,6 @@
 #include "Commands/ICommand.h"
 
 
-namespace seed_cpp { namespace model {
-	class User;
-}}
-
 namespace seed_cpp { namespace db_test {
 
 	class SQLExecutor
