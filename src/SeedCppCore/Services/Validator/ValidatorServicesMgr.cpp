@@ -17,7 +17,7 @@ namespace seed_cpp { namespace service {
 
 	IJSONValidatorService& ValidatorServicesMgr::getJSONValidatorService() const
 	{
-		if (!m_jsonValidatorService.get())
+		if (!m_jsonValidatorService)
 		{
 			m_jsonValidatorService = m_factory.buildJSONValidatorService();
 		}

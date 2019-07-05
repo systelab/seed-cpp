@@ -21,7 +21,7 @@ namespace seed_cpp { namespace service {
 
 	IResourceService& SystemServicesMgr::getResourceService() const
 	{
-		if (!m_resourceService.get())
+		if (!m_resourceService)
 		{
 			m_resourceService = m_factory.buildResourceService();
 		}
@@ -31,7 +31,7 @@ namespace seed_cpp { namespace service {
 
 	ITimeService& SystemServicesMgr::getTimeService() const
 	{
-		if (!m_timeService.get())
+		if (!m_timeService)
 		{
 			m_timeService = m_factory.buildTimeService();
 		}
@@ -41,7 +41,7 @@ namespace seed_cpp { namespace service {
 
 	IUUIDGeneratorService& SystemServicesMgr::getUUIDGeneratorService() const
 	{
-		if (!m_uuidGeneratorService.get())
+		if (!m_uuidGeneratorService)
 		{
 			m_uuidGeneratorService = m_factory.buildUUIDGeneratorService();
 		}

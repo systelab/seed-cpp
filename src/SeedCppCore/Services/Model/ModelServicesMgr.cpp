@@ -20,7 +20,7 @@ namespace seed_cpp { namespace service {
 
 	IAllergyModelService& ModelServicesMgr::getAllergyModelService() const
 	{
-		if (!m_allergyModelService.get())
+		if (!m_allergyModelService)
 		{
 			m_allergyModelService = m_factory.buildAllergyModelService();
 		}
@@ -30,7 +30,7 @@ namespace seed_cpp { namespace service {
 
 	IPatientModelService& ModelServicesMgr::getPatientModelService() const
 	{
-		if (!m_patientModelService.get())
+		if (!m_patientModelService)
 		{
 			m_patientModelService = m_factory.buildPatientModelService();
 		}
@@ -40,7 +40,7 @@ namespace seed_cpp { namespace service {
 
 	IUserModelService& ModelServicesMgr::getUserModelService() const
 	{
-		if (!m_userModelService.get())
+		if (!m_userModelService)
 		{
 			m_userModelService = m_factory.buildUserModelService();
 		}
