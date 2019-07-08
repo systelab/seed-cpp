@@ -1,6 +1,7 @@
 #pragma once
 
-#include "Model/LockableEntityMgrSubject.h"
+#include "SeedCppCore/Model/LockableEntityMgrSubject.h"
+
 
 namespace seed_cpp { namespace model {
 	class User;

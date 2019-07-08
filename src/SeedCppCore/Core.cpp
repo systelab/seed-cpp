@@ -1,134 +1,167 @@
 #include "stdafx.h"
 #include "Core.h"
 
-#include "DAL/DAO/ILoadDAO.h"
-#include "DAL/DAO/ISaveDAO.h"
-#include "DAL/DAO/Db/DbDAOFactory.h"
-#include "DAL/Translators/Db/DbTranslatorsFactory.h"
-#include "DAL/Translators/JSON/JSONTranslatorsFactory.h"
-#include "Model/Model.h"
-#include "Model/User.h"
-#include "Model/UserMgr.h"
+#include "Context.h"
 #include "REST/RESTAPIWebService.h"
-#include "REST/Endpoints/EndpointsFactory.h"
-#include "Services/ServicesFactory.h"
-#include "Services/ServicesMgr.h"
-#include "Services/Model/IUserModelService.h"
-#include "Services/System/IUUIDGeneratorService.h"
+#include "Services/Model/ModelInitializationService.h"
+#include "Services/System/ContextBuilderService.h"
 
-#include "DbAdapterInterface/IDatabase.h"
-#include "JSONAdapterInterface/IJSONAdapter.h"
+#include "DbSQLiteAdapter/Connection.h"
+#include "DbSQLiteAdapter/ConnectionConfiguration.h"
+
+#include "BoostAsioWebServerAdapter/ServerFactory.h"
 #include "WebServerAdapterInterface/IServer.h"
+#include "WebServerAdapterInterface/Model/CORSConfiguration.h"
+#include "WebServerAdapterInterface/Model/Configuration.h"
+
+#include "RapidJSONAdapter/JSONAdapter.h"
 
 
 namespace seed_cpp {
 
-	Core::Core(std::unique_ptr<systelab::db::IDatabase> database,
-			   std::unique_ptr<systelab::web_server::IServer> webServer,
-			   std::unique_ptr<systelab::json::IJSONAdapter> jsonAdapter)
-		:m_database(std::move(database))
-		,m_webServer(std::move(webServer))
-		,m_jsonAdapter(std::move(jsonAdapter))
+	Core::Core()
+		:m_context()
 	{
-		m_model = std::make_unique<model::Model>();
-		m_dbTranslatorsFactory = std::make_unique<dal::DbTranslatorsFactory>();
-		m_dbDAOFactory = std::make_unique<dal::DbDAOFactory>(*this);
-		m_jsonTranslatorsFactory = std::make_unique<dal::JSONTranslatorsFactory>();
-		m_servicesFactory = std::make_unique<service::ServicesFactory>(*this);
-		m_servicesMgr = std::make_unique<service::ServicesMgr>(*m_servicesFactory);
-		m_endpointsFactory = std::make_unique<rest::EndpointsFactory>(*this);
 	}
 
 	Core::~Core() = default;
 
-	void Core::execute()
+	void Core::execute(unsigned int port, bool enableHttps, bool enableCors)
 	{
+		std::unique_ptr<systelab::db::IDatabase> database = loadDatabase();
+		std::unique_ptr<systelab::web_server::IServer> webServer = loadWebServer(port, enableHttps, enableCors);
+		std::unique_ptr<systelab::json::IJSONAdapter> jsonAdapter = loadJSONAdapter();
+
+		m_context = std::make_unique<Context>(std::move(database), std::move(webServer), std::move(jsonAdapter));
+
+		initializeContext();
 		initializeModel();
 		initializeWebServer();
+
+		std::cout << "Seed core is now running at " << port << " ..." << std::endl;
+		while (true)
+		{
+		}
 	}
 
-	systelab::db::IDatabase& Core::getDatabase() const
+	std::unique_ptr<systelab::db::IDatabase> Core::loadDatabase()
 	{
-		return *m_database;
+		bool existsDB = fileExists("./seed_cpp.db");
+
+		systelab::db::sqlite::ConnectionConfiguration databaseConfiguration("./seed_cpp.db");
+		systelab::db::sqlite::Connection databaseConnection;
+		std::unique_ptr<systelab::db::IDatabase> database = databaseConnection.loadDatabase(databaseConfiguration);
+
+		if (!existsDB && database)
+		{
+			std::string databaseSchemaSQL = getFileContents("./Database/schema.sql");
+			database->executeMultipleStatements(databaseSchemaSQL);
+		}
+
+		return database;
 	}
 
-	systelab::web_server::IServer& Core::getWebServer() const
+	std::unique_ptr<systelab::web_server::IServer> Core::loadWebServer(int port, bool enableHttps, bool enableCors)
 	{
-		return *m_webServer;
+		systelab::web_server::Configuration configuration;
+		configuration.setHostAddress("127.0.0.1");
+		configuration.setPort(port);
+		configuration.setThreadPoolSize(5);
+
+		systelab::web_server::SecurityConfiguration& securityConfiguration = configuration.getSecurityConfiguration();
+		securityConfiguration.setHTTPSEnabled(enableHttps);
+		if (enableHttps)
+		{
+			securityConfiguration.setServerCertificate(getFileContents("Certificates/server-cert.crt"));
+			securityConfiguration.setServerPrivateKey(getFileContents("Certificates/server-key.pem"));
+			securityConfiguration.setServerDHParam(getFileContents("Certificates/server-dhparam.pem"));
+		}
+
+		systelab::web_server::CORSConfiguration &corsConfiguration = configuration.getCORSConfiguration();
+		if (enableCors) {
+			corsConfiguration.setEnabled(true);
+			corsConfiguration.addAllowedOrigin("*");
+			corsConfiguration.addAllowedHeader("origin");
+			corsConfiguration.addAllowedHeader("content-type");
+			corsConfiguration.addAllowedHeader("accept");
+			corsConfiguration.addAllowedHeader("authorization");
+			corsConfiguration.addAllowedHeader("Etag");
+			corsConfiguration.addAllowedHeader("if-none-match");
+			corsConfiguration.setAllowedCredentials(true);
+			corsConfiguration.addAllowedMethod("GET");
+			corsConfiguration.addAllowedMethod("POST");
+			corsConfiguration.addAllowedMethod("PUT");
+			corsConfiguration.addAllowedMethod("DELETE");
+			corsConfiguration.addAllowedMethod("OPTIONS");
+			corsConfiguration.addAllowedMethod("HEAD");
+			corsConfiguration.setMaxAge(1209600);
+			corsConfiguration.addExposedHeader("origin");
+			corsConfiguration.addExposedHeader("content-type");
+			corsConfiguration.addExposedHeader("accept");
+			corsConfiguration.addExposedHeader("authorization");
+			corsConfiguration.addExposedHeader("ETag");
+			corsConfiguration.addExposedHeader("if-none-match");
+		}
+		else
+		{
+			corsConfiguration.setEnabled(false);
+		}
+
+		systelab::web_server::boostasio::ServerFactory serverFactory;
+		return serverFactory.buildServer(configuration);
 	}
 
-	systelab::json::IJSONAdapter& Core::getJSONAdapter() const
+	std::unique_ptr<systelab::json::IJSONAdapter> Core::loadJSONAdapter()
 	{
-		return *m_jsonAdapter;
+		return std::make_unique<systelab::json::rapidjson::JSONAdapter>();
 	}
 
-	model::Model& Core::getModel() const
+	void Core::initializeContext()
 	{
-		return *m_model;
-	}
-
-	dal::IDbTranslatorsFactory& Core::getDbTranslatorsFactory() const
-	{
-		return *m_dbTranslatorsFactory;
-	}
-
-	dal::IDbDAOFactory& Core::getDbDAOFactory() const
-	{
-		return *m_dbDAOFactory;
-	}
-
-	dal::IJSONTranslatorsFactory& Core::getJSONTranslatorsFactory() const
-	{
-		return *m_jsonTranslatorsFactory;
-	}
-
-	service::IServicesFactory& Core::getServicesFactory() const
-	{
-		return *m_servicesFactory;
-	}
-
-	service::ServicesMgr& Core::getServicesMgr() const
-	{
-		return *m_servicesMgr;
-	}
-
-	rest::IEndpointsFactory& Core::getEndpointsFactory() const
-	{
-		return *m_endpointsFactory;
+		service::ContextBuilderService contextBuilderService(*m_context);
+		contextBuilderService.buildFactories();
+		contextBuilderService.buildModel();
+		contextBuilderService.buildServices();
 	}
 
 	void Core::initializeModel()
 	{
-		auto userLoadDAO = m_dbDAOFactory->buildUserLoadDAO();
-		userLoadDAO->loadAll();
-
-		model::UserMgr& userMgr = getModel().getUserMgr();
-		if (userMgr.count() == 0)
-		{
-			auto defaultUser = std::make_unique<model::User>();
-			defaultUser->setSurname("Systelab");
-			defaultUser->setName("Systelab");
-			defaultUser->setLogin("Systelab");
-			defaultUser->setPassword("Systelab");
-			defaultUser->setRole(model::User::ADMIN_ROLE);
-
-			model::UserMgr::UniqueLock writeLock(userMgr);
-			m_servicesMgr->getUserModelService().addEntity(std::move(defaultUser), writeLock);
-		}
-
-		auto patientLoadDAO = m_dbDAOFactory->buildPatientLoadDAO();
-		patientLoadDAO->loadAll();
-
-		auto allergyLoadDAO = m_dbDAOFactory->buildAllergyLoadDAO();
-		allergyLoadDAO->loadAll();
+		service::ModelInitializationService modelInitializationService(*m_context);
+		modelInitializationService.initialize();
 	}
 
 	void Core::initializeWebServer()
 	{
-		auto restWebService = std::make_unique<rest::RESTAPIWebService>(getEndpointsFactory());
-		m_webServer->registerWebService(std::move(restWebService));
+		auto& webServer = m_context->getWebServer();
+		auto& endpointsFactory = *m_context->getEndpointsFactory();
+		auto restWebService = std::make_unique<rest::RESTAPIWebService>(endpointsFactory);
+		
+		webServer.registerWebService(std::move(restWebService));
+		webServer.start();
+	}
 
-		m_webServer->start();
+	bool Core::fileExists(const std::string& filename)
+	{
+		std::ifstream ifs(filename.c_str());
+		return ifs.good();
+	}
+
+	std::string Core::getFileContents(const std::string& filename)
+	{
+		std::ifstream ifs(filename);
+		if (ifs)
+		{
+			std::stringstream ss;
+			ss << ifs.rdbuf();
+			std::string fileContents = ss.str();
+			ifs.close();
+
+			return fileContents;
+		}
+		else
+		{
+			throw std::runtime_error("Unable to find file " + filename);
+		}
 	}
 
 }
