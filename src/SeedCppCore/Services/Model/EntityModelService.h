@@ -52,8 +52,11 @@ namespace seed_cpp { namespace service {
 
 			try
 			{
-				std::string uuid = m_uuidGeneratorService.generateUUID();
-				entityToAdd->setId(uuid);
+				if (!entityToAdd->getId())
+				{
+					std::string uuid = m_uuidGeneratorService.generateUUID();
+					entityToAdd->setId(uuid);
+				}
 
 				boost::posix_time::ptime currentTime = m_timeService.getCurrentLocalTime();
 				entityToAdd->setCreationTime(currentTime);
