@@ -22,8 +22,8 @@ namespace seed_cpp { namespace db_test {
 	void AddUserCommand::execute(Core& core)
 	{
 		auto& service = core.getServicesMgr().getModelServicesMgr().getUserModelService();
-		model::UserMgr::UniqueLock lock(service.getEntityMgr());
-		service.addEntity(std::move(m_user), lock);
+		auto writeLock = service.createWriteLock();
+		service.addEntity(std::move(m_user), *writeLock);
 	}
 
 	std::unique_ptr<ICommand> AddUserCommand::clone()

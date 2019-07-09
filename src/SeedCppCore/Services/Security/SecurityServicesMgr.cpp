@@ -12,9 +12,6 @@ namespace seed_cpp { namespace service {
 
 	SecurityServicesMgr::SecurityServicesMgr(service::ISecurityServicesFactory& factory)
 		:m_factory(factory)
-		,m_authorizationValidatorService()
-		,m_jwtTokenBuilderService()
-		,m_jwtTokenParserService()
 	{
 	}
 	
@@ -22,7 +19,7 @@ namespace seed_cpp { namespace service {
 
 	IAuthorizationValidatorService& SecurityServicesMgr::getAuthorizationValidatorService() const
 	{
-		if (!m_authorizationValidatorService.get())
+		if (!m_authorizationValidatorService)
 		{
 			m_authorizationValidatorService = m_factory.buildAuthorizationValidatorService();
 		}
@@ -32,7 +29,7 @@ namespace seed_cpp { namespace service {
 
 	systelab::jwt::ITokenBuilderService& SecurityServicesMgr::getJWTTokenBuilderService() const
 	{
-		if (!m_jwtTokenBuilderService.get())
+		if (!m_jwtTokenBuilderService)
 		{
 			m_jwtTokenBuilderService = m_factory.buildJWTTokenBuilderService();
 		}
@@ -42,7 +39,7 @@ namespace seed_cpp { namespace service {
 
 	systelab::jwt::ITokenParserService& SecurityServicesMgr::getJWTTokenParserService() const
 	{
-		if (!m_jwtTokenParserService.get())
+		if (!m_jwtTokenParserService)
 		{
 			m_jwtTokenParserService = m_factory.buildJWTTokenParserService();
 		}

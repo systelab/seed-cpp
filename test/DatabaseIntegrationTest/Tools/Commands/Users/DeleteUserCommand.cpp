@@ -21,8 +21,8 @@ namespace seed_cpp { namespace db_test {
 	void DeleteUserCommand::execute(Core& core)
 	{
 		auto& service = core.getServicesMgr().getModelServicesMgr().getUserModelService();
-		model::UserMgr::UniqueLock lock(service.getEntityMgr());
-		service.deleteEntity(m_userId, lock);
+		auto writeLock = service.createWriteLock();
+		service.deleteEntity(m_userId, *writeLock);
 	}
 
 	std::unique_ptr<ICommand> DeleteUserCommand::clone()

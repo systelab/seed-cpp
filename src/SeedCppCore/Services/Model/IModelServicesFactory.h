@@ -11,7 +11,7 @@ namespace seed_cpp { namespace service {
 	class IModelServicesFactory
 	{
 	public:
-		virtual ~IModelServicesFactory() {};
+		virtual ~IModelServicesFactory() = default;
 
 		virtual std::unique_ptr<IAllergyModelService> buildAllergyModelService() const = 0;
 		virtual std::unique_ptr<IPatientModelService> buildPatientModelService() const = 0;
