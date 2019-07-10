@@ -3,6 +3,7 @@
 #include "SeedCppCore/Services/Model/IUserModelService.h"
 
 #include "SeedCppCore/Model/User.h"
+#include "SeedCppCore/Model/UserMgr.h"
 
 
 namespace seed_cpp { namespace test_utility {
@@ -13,7 +14,7 @@ namespace seed_cpp { namespace test_utility {
 		MockUserModelService();
 		virtual ~MockUserModelService();
 
-		MOCK_CONST_METHOD0(getEntityMgr, model::EntityMgr<model::User>&());
+		MOCK_CONST_METHOD0(getEntityMgr, model::UserMgr&());
 		MOCK_CONST_METHOD2(getEntityById, const model::User*(const std::string&, const model::LockableEntityMgrSubject::IReadLock&));
 
 		MOCK_CONST_METHOD2(addEntityProxy, const model::User&(model::User*, const model::LockableEntityMgrSubject::IWriteLock&));

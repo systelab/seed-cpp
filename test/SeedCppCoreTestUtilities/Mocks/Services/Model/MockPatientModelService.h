@@ -3,6 +3,7 @@
 #include "SeedCppCore/Services/Model/IPatientModelService.h"
 
 #include "SeedCppCore/Model/Patient.h"
+#include "SeedCppCore/Model/PatientMgr.h"
 
 
 namespace seed_cpp { namespace test_utility {
@@ -13,7 +14,7 @@ namespace seed_cpp { namespace test_utility {
 		MockPatientModelService();
 		virtual ~MockPatientModelService();
 
-		MOCK_CONST_METHOD0(getEntityMgr, model::EntityMgr<model::Patient>&());
+		MOCK_CONST_METHOD0(getEntityMgr, model::PatientMgr&());
 		MOCK_CONST_METHOD2(getEntityById, const model::Patient*(const std::string&, const model::LockableEntityMgrSubject::IReadLock&));
 
 		MOCK_CONST_METHOD2(addEntityProxy, const model::Patient&(model::Patient*, const model::LockableEntityMgrSubject::IWriteLock&));
