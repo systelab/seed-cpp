@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "DbDAOFactory.h"
 
-#include "Core.h"
+#include "Context.h"
 #include "DAL/DbConstants.h"
 #include "DAL/DAO/Db/AllergyDbLoadDAO.h"
 #include "DAL/DAO/Db/AllergyDbSaveDAO.h"
@@ -16,8 +16,8 @@
 
 namespace seed_cpp { namespace dal {
 
-	DbDAOFactory::DbDAOFactory(Core& core)
-		:m_core(core)
+	DbDAOFactory::DbDAOFactory(Context& context)
+		:m_context(context)
 		,m_transactionInProgress(false)
 	{
 	}
@@ -27,9 +27,9 @@ namespace seed_cpp { namespace dal {
 	// Load
 	std::unique_ptr<ILoadDAO> DbDAOFactory::buildAllergyLoadDAO()
 	{
-		auto& database = m_core.getDatabase();
-		auto& model = m_core.getModel().getAllergyMgr();
-		auto& dbTranslatorsFactory = m_core.getDbTranslatorsFactory();
+		auto& database = m_context.getDatabase();
+		auto& model = m_context.getModel()->getAllergyMgr();
+		auto& dbTranslatorsFactory = *m_context.getDbTranslatorsFactory();
 
 		return std::make_unique<AllergyDbLoadDAO>(db_table::ALLERGY, database, model,
 													std::bind(&IDbTranslatorsFactory::buildAllergyTranslator, &dbTranslatorsFactory, std::placeholders::_1));
@@ -37,18 +37,18 @@ namespace seed_cpp { namespace dal {
 
 	std::unique_ptr<ILoadDAO> DbDAOFactory::buildPatientLoadDAO()
 	{
-		auto& database = m_core.getDatabase();
-		auto& model = m_core.getModel().getPatientMgr();
-		auto& dbTranslatorsFactory = m_core.getDbTranslatorsFactory();
+		auto& database = m_context.getDatabase();
+		auto& model = m_context.getModel()->getPatientMgr();
+		auto& dbTranslatorsFactory = *m_context.getDbTranslatorsFactory();
 
 		return std::make_unique<PatientDbLoadDAO>(database, model, dbTranslatorsFactory);
 	}
 
 	std::unique_ptr<ILoadDAO> DbDAOFactory::buildUserLoadDAO()
 	{
-		auto& database = m_core.getDatabase();
-		auto& model = m_core.getModel().getUserMgr();
-		auto& dbTranslatorsFactory = m_core.getDbTranslatorsFactory();
+		auto& database = m_context.getDatabase();
+		auto& model = m_context.getModel()->getUserMgr();
+		auto& dbTranslatorsFactory = *m_context.getDbTranslatorsFactory();
 
 		return std::make_unique<UserDbLoadDAO>(db_table::USER, database, model,
 												std::bind(&IDbTranslatorsFactory::buildUserTranslator, &dbTranslatorsFactory, std::placeholders::_1));
@@ -57,27 +57,27 @@ namespace seed_cpp { namespace dal {
 	// Save
 	std::unique_ptr<ISaveDAO> DbDAOFactory::buildAllergySaveDAO(model::Allergy& entity)
 	{
-		auto& database = m_core.getDatabase();
-		auto& dbTranslatorsFactory = m_core.getDbTranslatorsFactory();
+		auto& database = m_context.getDatabase();
+		auto& dbTranslatorsFactory = *m_context.getDbTranslatorsFactory();
 
 		return std::make_unique<AllergyDbSaveDAO>(db_table::ALLERGY, database, entity, *this,
-												   std::bind(&IDbTranslatorsFactory::buildAllergyTranslator, &dbTranslatorsFactory, std::placeholders::_1));
+												  std::bind(&IDbTranslatorsFactory::buildAllergyTranslator, &dbTranslatorsFactory, std::placeholders::_1));
 	}
 	std::unique_ptr<ISaveDAO> DbDAOFactory::buildPatientSaveDAO(model::Patient& patient)
 	{
-		auto& database = m_core.getDatabase();
-		auto& dbTranslatorsFactory = m_core.getDbTranslatorsFactory();
+		auto& database = m_context.getDatabase();
+		auto& dbTranslatorsFactory = *m_context.getDbTranslatorsFactory();
 
 		return std::make_unique<PatientDbSaveDAO>(database, patient, *this, dbTranslatorsFactory);
 	}
 
 	std::unique_ptr<ISaveDAO> DbDAOFactory::buildUserSaveDAO(model::User& entity)
 	{
-		auto& database = m_core.getDatabase();
-		auto& dbTranslatorsFactory = m_core.getDbTranslatorsFactory();
+		auto& database = m_context.getDatabase();
+		auto& dbTranslatorsFactory = *m_context.getDbTranslatorsFactory();
 
 		return std::make_unique<UserDbSaveDAO>(db_table::USER, database, entity, *this,
-												   std::bind(&IDbTranslatorsFactory::buildUserTranslator, &dbTranslatorsFactory, std::placeholders::_1));
+											   std::bind(&IDbTranslatorsFactory::buildUserTranslator, &dbTranslatorsFactory, std::placeholders::_1));
 	}
 
 	// Transaction
@@ -85,7 +85,7 @@ namespace seed_cpp { namespace dal {
 	{
 		if (!m_transactionInProgress)
 		{
-			auto& database = m_core.getDatabase();
+			auto& database = m_context.getDatabase();
 			m_transactionInProgress = true;
 			return std::make_unique<DbTransactionDAO>(database, *this);
 		}

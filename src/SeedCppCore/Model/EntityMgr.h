@@ -17,8 +17,12 @@ namespace seed_cpp { namespace model {
 		}
 
 		EntityMgr(const EntityMgr<Entity> &other)
-			:m_entities(other.m_entities)
+			:m_entities()
 		{
+			for (const auto& otherEntity : other.m_entities)
+			{
+				m_entities.push_back(std::make_unique<Entity>(*otherEntity));
+			}
 		}
 
 		virtual ~EntityMgr<Entity>()

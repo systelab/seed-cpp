@@ -1,10 +1,11 @@
 #pragma once
 
-#include "IDbDAOFactory.h"
-#include "DAL/DAO/ITransactionDAOMgr.h"
+#include "SeedCppCore/DAL/DAO/ITransactionDAOMgr.h"
+#include "SeedCppCore/DAL/DAO/Db/IDbDAOFactory.h"
+
 
 namespace seed_cpp {
-	class Core;
+	class Context;
 }
 
 namespace seed_cpp { namespace dal {
@@ -12,7 +13,7 @@ namespace seed_cpp { namespace dal {
 	class DbDAOFactory : public IDbDAOFactory, public ITransactionDAOMgr
 	{
 	public:
-		DbDAOFactory(Core&);
+		DbDAOFactory(Context&);
 		virtual ~DbDAOFactory();
 
 		// Load
@@ -31,7 +32,7 @@ namespace seed_cpp { namespace dal {
 		void releaseTransactionInProgress();
 
 	protected:
-		Core& m_core;
+		Context& m_context;
 		bool m_transactionInProgress;
 	};
 

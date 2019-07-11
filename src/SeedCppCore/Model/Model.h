@@ -10,11 +10,14 @@ namespace seed_cpp { namespace model {
 	{
 	public:
 		Model();
+		Model(const Model&);
 		virtual ~Model();
 
 		AllergyMgr& getAllergyMgr() const;
 		PatientMgr& getPatientMgr() const;
 		UserMgr& getUserMgr() const;
+
+		Model& operator= (const Model&);
 
 	private:
 		std::unique_ptr<AllergyMgr> m_allergyMgr;

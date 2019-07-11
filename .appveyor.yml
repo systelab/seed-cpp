@@ -27,6 +27,13 @@ build:
 after_build:
   - ps: 7z a .\Dist\$env:deploy_name_installer".zip" $env:build_path_installer
 
+test_script:
+  - ps: cd bin
+  - DatabaseIntegrationTest.exe --gtest_output=xml:DatabaseIntegrationTest.xml
+
+after_test:
+  - ps: (new-object net.webclient).UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\DatabaseIntegrationTest.xml))
+
 artifacts:
   - path: 'build\bin'
     name: SeedCpp

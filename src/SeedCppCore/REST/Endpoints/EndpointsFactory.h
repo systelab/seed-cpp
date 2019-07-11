@@ -4,7 +4,7 @@
 
 
 namespace seed_cpp {
-	class Core;
+	class Context;
 }
 
 namespace seed_cpp { namespace rest {
@@ -12,7 +12,7 @@ namespace seed_cpp { namespace rest {
 	class EndpointsFactory : public IEndpointsFactory
 	{
 	public:
-		EndpointsFactory(Core&);
+		EndpointsFactory(Context&);
 		virtual ~EndpointsFactory();
 
 		// Allergies
@@ -41,7 +41,7 @@ namespace seed_cpp { namespace rest {
 		std::unique_ptr<IEndpoint> buildUsersLoginPostEndpoint(const EndpointRequestData&) override;
 
 	private:
-		Core& m_core;
+		Context& m_context;
 	};
 
 }}
