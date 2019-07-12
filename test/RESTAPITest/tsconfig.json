@@ -1,0 +1,9 @@
+{
+    "compilerOptions": 
+    {
+        "module": "commonjs",
+        "lib": [ "es2015", "dom" ],
+        "types": ["node", "module", "mocha"]
+    }
+}
+
