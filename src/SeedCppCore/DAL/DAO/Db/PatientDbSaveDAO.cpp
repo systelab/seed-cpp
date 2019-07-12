@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "PatientDbSaveDAO.h"
 
+#include "DAL/DbConstants.h"
 #include "DAL/DAO/Db/IDbDAOFactory.h"
 #include "DAL/DAO/ISaveDAO.h"
 #include "DAL/DAO/ITransactionDAO.h"
@@ -38,7 +39,7 @@ namespace seed_cpp { namespace dal {
 		{
 			transaction = m_daoFactory.startTransaction();
 
-			systelab::db::ITable& itemsTable = m_db.getTable("Patient");
+			systelab::db::ITable& itemsTable = m_db.getTable(db_table::PATIENT);
 			auto itemRecord = itemsTable.createRecord();
 
 			auto itemTranslator = m_translatorsFactory.buildPatientTranslator(m_item);
@@ -68,7 +69,7 @@ namespace seed_cpp { namespace dal {
 		{
 			transaction = m_daoFactory.startTransaction();
 
-			auto& itemsTable = m_db.getTable("Patient");
+			auto& itemsTable = m_db.getTable(db_table::PATIENT);
 			auto itemRecord = itemsTable.createRecord();
 
 			auto itemTranslator = m_translatorsFactory.buildPatientTranslator(m_item);
@@ -98,7 +99,7 @@ namespace seed_cpp { namespace dal {
 		{
 			transaction = m_daoFactory.startTransaction();
 
-			systelab::db::ITable& table = m_db.getTable("Patient");
+			systelab::db::ITable& table = m_db.getTable(db_table::PATIENT);
 			auto record = table.createRecord();
 			auto itemTranslator = m_translatorsFactory.buildPatientTranslator(m_item);
 			itemTranslator->fillRecordFromEntity(*record);
@@ -115,7 +116,7 @@ namespace seed_cpp { namespace dal {
 
 	void PatientDbSaveDAO::addAddress()
 	{
-		systelab::db::ITable& addressTable = m_db.getTable("Address");
+		systelab::db::ITable& addressTable = m_db.getTable(db_table::ADDRESS);
 		auto addressRecord = addressTable.createRecord();
 
 		std::string patientId = *m_item.getId();
@@ -129,7 +130,7 @@ namespace seed_cpp { namespace dal {
 
 	void PatientDbSaveDAO::updateAddress()
 	{
-		systelab::db::ITable& addressTable = m_db.getTable("Address");
+		systelab::db::ITable& addressTable = m_db.getTable(db_table::ADDRESS);
 		auto addressRecord = addressTable.createRecord();
 
 		std::string patientId = *m_item.getId();

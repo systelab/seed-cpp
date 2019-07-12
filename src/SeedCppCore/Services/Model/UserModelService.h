@@ -1,11 +1,10 @@
 #pragma once
 
 #include "IUserModelService.h"
-#include "Model/EntityMgr.h"
 
 #include "Model/User.h"
+#include "Model/UserMgr.h"
 #include "Services/Model/EntityModelService.h"
-#include "Services/Model/IUserModelService.h"
 
 
 namespace seed_cpp { namespace model {
@@ -15,25 +14,21 @@ namespace seed_cpp { namespace model {
 namespace seed_cpp { namespace service {
 
 	class UserModelService : public IUserModelService,
-							 public EntityModelService<model::User>
+							 public EntityModelService<model::User, model::UserMgr>
 	{
 	public:
-		UserModelService(model::EntityMgr<model::User>&,
-						 dal::IDbDAOFactory&,
-						 service::IUUIDGeneratorService&,
-						 service::ITimeService&);
-		virtual ~UserModelService() = default;
+		using EntityModelService::EntityModelService;
 
-		model::EntityMgr<model::User>& getEntityMgr() const;
-		const model::User* getEntityById(const std::string& id, const model::LockableEntityMgrSubject::IReadLock&) const;
-		const model::User& addEntity(std::unique_ptr<model::User>, const model::LockableEntityMgrSubject::IWriteLock&);
-		const model::User& editEntity(std::unique_ptr<model::User>, const model::LockableEntityMgrSubject::IWriteLock&);
-		void deleteEntity(const std::string& id, const model::LockableEntityMgrSubject::IWriteLock&);
+		model::UserMgr& getEntityMgr() const override;
+		const model::User* getEntityById(const std::string& id, const model::LockableEntityMgrSubject::IReadLock&) const override;
+		const model::User& addEntity(std::unique_ptr<model::User>, const model::LockableEntityMgrSubject::IWriteLock&) override;
+		const model::User& editEntity(std::unique_ptr<model::User>, const model::LockableEntityMgrSubject::IWriteLock&) override;
+		void deleteEntity(const std::string& id, const model::LockableEntityMgrSubject::IWriteLock&) override;
 
-		const model::User* getUserByLogin(const std::string&, const model::LockableEntityMgrSubject::IReadLock&) const;
+		std::unique_ptr<model::LockableEntityMgrSubject::IReadLock> createReadLock() override;
+		std::unique_ptr<model::LockableEntityMgrSubject::IWriteLock> createWriteLock() override;
 
-	private:
-		model::EntityMgr<model::User>& m_userMgr;
+		const model::User* getUserByLogin(const std::string&, const model::LockableEntityMgrSubject::IReadLock&) const override;
 	};
 
 }}

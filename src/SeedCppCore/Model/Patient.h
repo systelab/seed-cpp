@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Model/Address.h"
-#include "Model/BaseEntity.h"
+#include "SeedCppCore/Model/Address.h"
+#include "SeedCppCore/Model/BaseEntity.h"
 
 
 namespace seed_cpp { namespace model {
@@ -16,13 +16,13 @@ namespace seed_cpp { namespace model {
 		std::string getSurname() const;
 		std::string getName() const;
 		std::string getEmail() const;
-		boost::posix_time::ptime getDob() const;
+		boost::optional<boost::posix_time::ptime> getDob() const;
 		Address& getAddress() const;
 
 		void setSurname(const std::string&);
 		void setName(const std::string&);
 		void setEmail(const std::string&);
-		void setDob(const boost::posix_time::ptime&);
+		void setDob(const boost::optional<boost::posix_time::ptime>&);
 		void setAddress(std::unique_ptr<Address>);
 
 		Patient &operator=(const Patient&);
@@ -33,7 +33,7 @@ namespace seed_cpp { namespace model {
 		std::string m_surname;
 		std::string m_name;
 		std::string m_email;
-		boost::posix_time::ptime m_dob;
+		boost::optional<boost::posix_time::ptime> m_dob;
 		std::unique_ptr<Address> m_address;
 	};
 
