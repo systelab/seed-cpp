@@ -30,7 +30,7 @@ namespace seed_cpp { namespace unit_test {
 			std::vector<std::unique_ptr<StubFieldValue> > fieldValues;
 			for (auto cit = data.begin(); cit != data.end(); ++cit)
 			{
-				fieldValues.push_back(std::unique_ptr<StubFieldValue>(new StubFieldValue(*cit)));
+				fieldValues.push_back(std::make_unique<StubFieldValue>(*cit));
 			}
 
 			return std::make_unique<StubTableRecord>(fieldValues);
@@ -41,12 +41,12 @@ namespace seed_cpp { namespace unit_test {
 			std::vector<std::unique_ptr<StubFieldValue> > fieldValues;
 			for (auto cit = data.begin(); cit != data.end(); cit++)
 			{
-				std::unique_ptr<StubFieldValue> fieldValue(new StubFieldValue(*cit));
+				auto fieldValue = std::make_unique<StubFieldValue>(*cit);
 				fieldValue->setNull();
 				fieldValues.push_back(std::move(fieldValue));
 			}
 
-			return std::unique_ptr<StubTableRecord>(new StubTableRecord(fieldValues));
+			return std::make_unique<StubTableRecord>(fieldValues);
 		}
 
 	protected:
