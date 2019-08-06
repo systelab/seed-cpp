@@ -5,6 +5,7 @@
 #include "SeedCppCore/Model/Patient.h"
 
 
+using namespace std::string_literals;
 using namespace systelab::db::test_utility;
 
 namespace seed_cpp { namespace unit_test {
@@ -16,7 +17,7 @@ namespace seed_cpp { namespace unit_test {
 		static model::Patient getEntity()
 		{
 			model::Patient patient;
-			patient.setId(std::string("28D5A393-00EF-4F44-94C5-BCE453E209B8"));
+			patient.setId("28D5A393-00EF-4F44-94C5-BCE453E209B8"s);
 			patient.setName("George");
 			patient.setSurname("Orwell");
 			patient.setDob(boost::posix_time::ptime({1984, 12, 13}));
@@ -31,11 +32,11 @@ namespace seed_cpp { namespace unit_test {
 
 		static std::vector<StubFieldValue> getRecordData()
 		{
-			return	{ StubFieldValue("id", std::string("28D5A393-00EF-4F44-94C5-BCE453E209B8")),
-					  StubFieldValue("name", std::string("George")),
-					  StubFieldValue("surname", std::string("Orwell")),
+			return	{ StubFieldValue("id", "28D5A393-00EF-4F44-94C5-BCE453E209B8"s),
+					  StubFieldValue("name", "George"s),
+					  StubFieldValue("surname", "Orwell"s),
 					  StubFieldValue("dob", boost::posix_time::from_iso_string("19841213T000000")),
-					  StubFieldValue("email", std::string("gorwell@gmail.com")),
+					  StubFieldValue("email", "gorwell@gmail.com"s),
 					  StubFieldValue("creationTime", boost::posix_time::from_iso_string("19900707T101500")),
 					  StubFieldValue("updateTime", boost::posix_time::from_iso_string("20190102T153000")),
 					};

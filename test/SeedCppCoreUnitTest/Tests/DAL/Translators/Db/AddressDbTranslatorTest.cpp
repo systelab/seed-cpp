@@ -5,6 +5,7 @@
 #include "SeedCppCore/Model/Address.h"
 
 
+using namespace std::string_literals;
 using namespace systelab::db::test_utility;
 
 namespace seed_cpp { namespace unit_test {
@@ -28,11 +29,11 @@ namespace seed_cpp { namespace unit_test {
 		static std::vector<StubFieldValue> getRecordData()
 		{
 			return	{ StubFieldValue("id", 123),
-					  StubFieldValue("patientId", std::string("1A4390F4-C0F6-4827-BC2E-1619BBF56AF6")),
-					  StubFieldValue("coordinates", std::string("N 123.123, E 245,245")),
-					  StubFieldValue("street", std::string("C/Major, 17 2n 3a")),
-					  StubFieldValue("city", std::string("Granollers")),
-					  StubFieldValue("zip", std::string("17246")),
+					  StubFieldValue("patientId", "1A4390F4-C0F6-4827-BC2E-1619BBF56AF6"s),
+					  StubFieldValue("coordinates", "N 123.123, E 245,245"s),
+					  StubFieldValue("street", "C/Major, 17 2n 3a"s),
+					  StubFieldValue("city", "Granollers"s),
+					  StubFieldValue("zip", "17246"s),
 					};
 		}
 
@@ -62,11 +63,11 @@ namespace seed_cpp { namespace unit_test {
 		static std::vector<StubFieldValue> getRecordData()
 		{
 			return	{ StubFieldValue("id", 456),
-					  StubFieldValue("patientId", std::string("DD4DDA02-9652-48DF-93F6-3461950770F1")),
-					  StubFieldValue("coordinates", std::string("S 432.324, W 6529.721")),
-					  StubFieldValue("street", std::string("Avda. Can Moncau, 7")),
-					  StubFieldValue("city", std::string("Lliça d'Amunt")),
-					  StubFieldValue("zip", std::string("08080")),
+					  StubFieldValue("patientId", "DD4DDA02-9652-48DF-93F6-3461950770F1"s),
+					  StubFieldValue("coordinates", "S 432.324, W 6529.721"s),
+					  StubFieldValue("street", "Avda. Can Moncau, 7"s),
+					  StubFieldValue("city", "Lliça d'Amunt"s),
+					  StubFieldValue("zip", "08080"s),
 			};
 		}
 

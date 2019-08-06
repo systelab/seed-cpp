@@ -5,6 +5,7 @@
 #include "SeedCppCore/Model/User.h"
 
 
+using namespace std::string_literals;
 using namespace systelab::db::test_utility;
 
 namespace seed_cpp { namespace unit_test {
@@ -16,7 +17,7 @@ namespace seed_cpp { namespace unit_test {
 		static model::User getEntity()
 		{
 			model::User user;
-			user.setId(std::string("28D5A393-00EF-4F44-94C5-BCE453E209B8"));
+			user.setId("28D5A393-00EF-4F44-94C5-BCE453E209B8"s);
 			user.setLogin("jsmith");
 			user.setPassword("p@ssw0rd");
 			user.setName("John");
@@ -32,11 +33,11 @@ namespace seed_cpp { namespace unit_test {
 
 		static std::vector<StubFieldValue> getRecordData()
 		{
-			return	{ StubFieldValue("id", std::string("28D5A393-00EF-4F44-94C5-BCE453E209B8")),
-					  StubFieldValue("login", std::string("jsmith")),
-					  StubFieldValue("password", std::string("p@ssw0rd")),
-					  StubFieldValue("name", std::string("John")),
-					  StubFieldValue("surname", std::string("Smith")),
+			return	{ StubFieldValue("id", "28D5A393-00EF-4F44-94C5-BCE453E209B8"s),
+					  StubFieldValue("login", "jsmith"s),
+					  StubFieldValue("password", "p@ssw0rd"s),
+					  StubFieldValue("name", "John"s),
+					  StubFieldValue("surname", "Smith"s),
 					  StubFieldValue("role", static_cast<int>(model::User::ADMIN_ROLE)),
 					  StubFieldValue("creationTime", boost::posix_time::from_iso_string("20170415T205955.000123")),
 					  StubFieldValue("updateTime", boost::posix_time::from_iso_string("20190620T000000")),
@@ -56,7 +57,7 @@ namespace seed_cpp { namespace unit_test {
 		static model::User getEntity()
 		{
 			model::User user;
-			user.setId(std::string("BB65526F-3110-400F-98E8-77AD289C2175"));
+			user.setId("BB65526F-3110-400F-98E8-77AD289C2175"s);
 			user.setLogin("agarcia");
 			user.setPassword("M123456p");
 			user.setName("Alex");
@@ -72,11 +73,11 @@ namespace seed_cpp { namespace unit_test {
 
 		static std::vector<StubFieldValue> getRecordData()
 		{
-			return	{ StubFieldValue("id", std::string("BB65526F-3110-400F-98E8-77AD289C2175")),
-					  StubFieldValue("login", std::string("agarcia")),
-					  StubFieldValue("password", std::string("M123456p")),
-					  StubFieldValue("name", std::string("Alex")),
-					  StubFieldValue("surname", std::string("Garcia")),
+			return	{ StubFieldValue("id", "BB65526F-3110-400F-98E8-77AD289C2175"s),
+					  StubFieldValue("login", "agarcia"s),
+					  StubFieldValue("password", "M123456p"s),
+					  StubFieldValue("name", "Alex"s),
+					  StubFieldValue("surname", "Garcia"s),
 					  StubFieldValue("role", static_cast<int>(model::User::USER_ROLE)),
 					  StubFieldValue("creationTime", boost::posix_time::from_iso_string("20150314T080102.000345")),
 					  StubFieldValue("updateTime", boost::posix_time::from_iso_string("20180519T010203")),

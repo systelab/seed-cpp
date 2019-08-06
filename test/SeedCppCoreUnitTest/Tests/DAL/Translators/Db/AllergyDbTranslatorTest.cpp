@@ -5,6 +5,7 @@
 #include "SeedCppCore/Model/Allergy.h"
 
 
+using namespace std::string_literals;
 using namespace systelab::db::test_utility;
 
 namespace seed_cpp { namespace unit_test {
@@ -16,7 +17,7 @@ namespace seed_cpp { namespace unit_test {
 		static model::Allergy getEntity()
 		{
 			model::Allergy allergy;
-			allergy.setId(std::string("49D8385E-4E41-49B1-9C55-B200879AEE4C"));
+			allergy.setId("49D8385E-4E41-49B1-9C55-B200879AEE4C"s);
 			allergy.setName("Tree Nuts");
 			allergy.setSigns("Raised red bumps of skin");
 			allergy.setSymptoms("Abdominal pain, cramps, nausea and vomiting");
@@ -30,10 +31,10 @@ namespace seed_cpp { namespace unit_test {
 
 		static std::vector<StubFieldValue> getRecordData()
 		{
-			return	{ StubFieldValue("id", std::string("49D8385E-4E41-49B1-9C55-B200879AEE4C")),
-					  StubFieldValue("name", std::string("Tree Nuts")),
-					  StubFieldValue("signs", std::string("Raised red bumps of skin")),
-					  StubFieldValue("symptoms", std::string("Abdominal pain, cramps, nausea and vomiting")),
+			return	{ StubFieldValue("id", "49D8385E-4E41-49B1-9C55-B200879AEE4C"s),
+					  StubFieldValue("name", "Tree Nuts"s),
+					  StubFieldValue("signs", "Raised red bumps of skin"s),
+					  StubFieldValue("symptoms", "Abdominal pain, cramps, nausea and vomiting"s),
 					  StubFieldValue("creationTime", boost::posix_time::from_iso_string("20140319T091502.000321")),
 					  StubFieldValue("updateTime", boost::posix_time::from_iso_string("20190710T140543")),
 					};
