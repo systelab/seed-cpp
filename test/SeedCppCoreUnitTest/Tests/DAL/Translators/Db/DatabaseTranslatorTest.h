@@ -28,7 +28,7 @@ namespace seed_cpp { namespace unit_test {
 		std::unique_ptr<StubTableRecord> buildRecord(const std::vector<StubFieldValue>& data)
 		{
 			std::vector<std::unique_ptr<StubFieldValue> > fieldValues;
-			for (auto cit = data.begin(); cit != data.end(); cit++)
+			for (auto cit = data.begin(); cit != data.end(); ++cit)
 			{
 				fieldValues.push_back(std::unique_ptr<StubFieldValue>(new StubFieldValue(*cit)));
 			}
