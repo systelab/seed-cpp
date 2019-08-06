@@ -10,10 +10,18 @@ using namespace systelab::db::test_utility;
 
 namespace seed_cpp { namespace unit_test {
 
-	struct AdminUserWrapper
+	struct UserBaseWrapper
 	{
 		typedef model::User ModelEntity;
 
+		static std::unique_ptr<dal::UserDbTranslator> buildDbTranslator(model::User& entity)
+		{
+			return std::make_unique<dal::UserDbTranslator>(entity);
+		}
+	};
+
+	struct AdminUserWrapper : public UserBaseWrapper
+	{
 		static model::User getEntity()
 		{
 			model::User user;
@@ -43,17 +51,10 @@ namespace seed_cpp { namespace unit_test {
 					  StubFieldValue("updateTime", boost::posix_time::from_iso_string("20190620T000000")),
 					};
 		}
-
-		static std::unique_ptr<dal::UserDbTranslator> buildDbTranslator(model::User& entity)
-		{
-			return std::make_unique<dal::UserDbTranslator>(entity);
-		}
 	};
 
-	struct BasicUserWrapper
+	struct BasicUserWrapper : public UserBaseWrapper
 	{
-		typedef model::User ModelEntity;
-
 		static model::User getEntity()
 		{
 			model::User user;
@@ -82,11 +83,6 @@ namespace seed_cpp { namespace unit_test {
 					  StubFieldValue("creationTime", boost::posix_time::from_iso_string("20150314T080102.000345")),
 					  StubFieldValue("updateTime", boost::posix_time::from_iso_string("20180519T010203")),
 			};
-		}
-
-		static std::unique_ptr<dal::UserDbTranslator> buildDbTranslator(model::User& entity)
-		{
-			return std::make_unique<dal::UserDbTranslator>(entity);
 		}
 	};
 
