@@ -39,16 +39,20 @@ include_directories(${CMAKE_SOURCE_DIR}/extern/JWTUtils/src)
 
 
 # Add extern projects
+add_subdirectory(${CMAKE_SOURCE_DIR}/extern/DbAdapter/DbAdapterTestUtilities)
 add_subdirectory(${CMAKE_SOURCE_DIR}/extern/DbSQLiteAdapter/src/sqleet-v0.27.2)
 add_subdirectory(${CMAKE_SOURCE_DIR}/extern/DbSQLiteAdapter/src/DbSQLiteAdapter)
+add_subdirectory(${CMAKE_SOURCE_DIR}/extern/JSONAdapter/JSONAdapterTestUtilities)
 add_subdirectory(${CMAKE_SOURCE_DIR}/extern/RapidJSONAdapter/src/RapidJSONAdapter)
 add_subdirectory(${CMAKE_SOURCE_DIR}/extern/BoostAsioWebServerAdapter/src/BoostAsioWebServerAdapter)
 add_subdirectory(${CMAKE_SOURCE_DIR}/extern/JWTUtils/src/JWTUtils)
 
 set_target_properties (gmock_main PROPERTIES FOLDER Extern)
+set_target_properties (DbAdapterTestUtilities PROPERTIES FOLDER Extern)
 set_target_properties (sqlite3 PROPERTIES FOLDER Extern)
 set_target_properties (sqleet PROPERTIES FOLDER Extern)
 set_target_properties (DbSQLiteAdapter PROPERTIES FOLDER Extern)
+set_target_properties (JSONAdapterTestUtilities PROPERTIES FOLDER Extern)
 set_target_properties (RapidJSONAdapter PROPERTIES FOLDER Extern)
 set_target_properties (BoostAsioWebServerAdapter PROPERTIES FOLDER Extern)
 set_target_properties (JWTUtils PROPERTIES FOLDER Extern)
@@ -71,3 +75,9 @@ set_target_properties (SeedCppCoreTestUtilities PROPERTIES FOLDER Test)
 set_target_properties (SeedCppCoreUnitTest PROPERTIES FOLDER Test)
 set_target_properties (DatabaseIntegrationTest PROPERTIES FOLDER Test)
 
+
+# Add code coverage project
+if (CMAKE_BUILD_TYPE STREQUAL "Coverage")
+    include(CodeCoverage)
+    setup_target_for_coverage(AutomatedTestCoverage SeedCppCoreUnitTest DatabaseIntegrationTest coverage)
+endif()

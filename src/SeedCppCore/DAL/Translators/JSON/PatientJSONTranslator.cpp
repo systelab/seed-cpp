@@ -21,7 +21,7 @@ namespace seed_cpp { namespace dal {
 		jsonPatient.addMember("surname", m_patient.getSurname());
 		jsonPatient.addMember("name", m_patient.getName());
 		jsonPatient.addMember("email", m_patient.getEmail());
-		
+
 		auto dob = m_patient.getDob();
 		if (dob)
 		{

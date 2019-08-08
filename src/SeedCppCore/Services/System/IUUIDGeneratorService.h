@@ -10,7 +10,7 @@ namespace seed_cpp { namespace service {
 	public:
 		virtual ~IUUIDGeneratorService() = default;
 
-		virtual std::string generateUUID() = 0;
+		virtual std::string generateUUID() const = 0;
 	};
 
 }}
