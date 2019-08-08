@@ -12,7 +12,7 @@ namespace seed_cpp { namespace service {
 	{
 	}
 
-	std::string UUIDGeneratorService::generateUUID()
+	std::string UUIDGeneratorService::generateUUID() const
 	{
 		boost::uuids::uuid newUUID = m_generator();
 		return boost::uuids::to_string(newUUID);

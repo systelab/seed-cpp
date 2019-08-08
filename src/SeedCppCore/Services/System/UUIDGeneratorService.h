@@ -15,10 +15,10 @@ namespace seed_cpp { namespace service {
 		UUIDGeneratorService();
 		virtual ~UUIDGeneratorService();
 
-		std::string generateUUID();
+		std::string generateUUID() const;
 
 	private:
-		boost::uuids::random_generator m_generator;
+		mutable boost::uuids::random_generator m_generator;
 	};
 
 }}
