@@ -4,7 +4,6 @@
 #include "Tools/Commands/ICommand.h"
 
 #include "DatabaseIntegrationTest/Tests/SaveDatabase/SaveUserScenariosBuilder.h"
-#include "DatabaseIntegrationTest/Tests/SaveDatabase/SavePatientScenariosBuilder.h"
 #include "DatabaseIntegrationTest/Tools/Core.h"
 #include "DatabaseIntegrationTest/Tools/SQLExecutor.h"
 
@@ -62,6 +61,5 @@ namespace seed_cpp { namespace db_test {
 	}
 
 	INSTANTIATE_TEST_CASE_P(SaveUsers, SaveDatabaseTest, ValuesIn(SaveUserScenariosBuilder::build()));
-	INSTANTIATE_TEST_CASE_P(SavePatients, SaveDatabaseTest, ValuesIn(SavePatientScenariosBuilder::build()));
 
 }}

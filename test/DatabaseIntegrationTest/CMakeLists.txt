@@ -43,16 +43,14 @@ add_custom_command(TARGET ${DATABASE_INTEGRATION_TEST_PROJECT} POST_BUILD
                    COMMAND ${CMAKE_COMMAND} -E copy_directory
                    ${CMAKE_SOURCE_DIR}/test/DatabaseIntegrationTest/Databases $<TARGET_FILE_DIR:${DATABASE_INTEGRATION_TEST_PROJECT}>/Database)
 
-# Additional target for code coverage analysis
+
+# Copy needed database resources to target dir for code coverage
 if (CMAKE_BUILD_TYPE STREQUAL "Coverage")
-    add_custom_command(TARGET ${DATABASE_INTEGRATION_TEST_PROJECT} POST_BUILD
+    add_custom_command(TARGET DatabaseIntegrationTest POST_BUILD
                        COMMAND ${CMAKE_COMMAND} -E copy_directory
                        ${CMAKE_SOURCE_DIR}/src/SeedCppCore/Resources/Database ${CMAKE_BINARY_DIR}/Database)
 
-    add_custom_command(TARGET ${DATABASE_INTEGRATION_TEST_PROJECT} POST_BUILD
+    add_custom_command(TARGET DatabaseIntegrationTest POST_BUILD
                        COMMAND ${CMAKE_COMMAND} -E copy_directory
                        ${CMAKE_SOURCE_DIR}/test/DatabaseIntegrationTest/Databases ${CMAKE_BINARY_DIR}/Database)
-
-    include(CodeCoverage)
-    setup_target_for_coverage(DatabaseIntegrationTestCoverage DatabaseIntegrationTest coverage)
 endif()

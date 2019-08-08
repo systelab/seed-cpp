@@ -30,62 +30,75 @@ namespace seed_cpp { namespace db_test {
 		));
 		scenarioAddUsers.addCommand(std::make_unique<AddUserCommand>(
 			UserBuilder()
-				.setId(std::string("8294FCCD-4532-4DE5-9DEB-BF81C48378BC"))
-				.setName("Paco").setSurname("Perez Garcia")
-				.setLogin("pperez").setRole(model::User::USER_ROLE)
-				.setPassword("PepeKiko99")
-				.setCreationTime(boost::posix_time::from_iso_string("20180923T130000"))
-				.setUpdateTime(boost::posix_time::from_iso_string("20190521T171400"))
+			.setId(std::string("8294FCCD-4532-4DE5-9DEB-BF81C48378BC"))
+			.setName("Paco").setSurname("Perez Garcia")
+			.setLogin("pperez").setRole(model::User::USER_ROLE)
+			.setPassword("PepeKiko99")
+			.setCreationTime(boost::posix_time::from_iso_string("20180923T130000"))
+			.setUpdateTime(boost::posix_time::from_iso_string("20190521T171400"))
 			.getEntity()
 		));
 
-		// Edit an existing user
-		SaveDatabaseTestData scenarioEditUser;
-		scenarioEditUser.setSQLScripts({ "Database/Users/AdminUser.sql" });
-		scenarioEditUser.addCommand(std::make_unique<EditUserCommand>(
-			UserBuilder()
-				.setId(std::string("73A800FC-621C-4D94-A1A4-0B39075458D4"))
-				.setName("Peter").setSurname("Collins")
-				.setLogin("pcollins").setRole(model::User::ADMIN_ROLE)
-				.setPassword("PasswordHasBeenChanged")
-				.setCreationTime(boost::posix_time::from_iso_string("20170212T093045"))
-				.setUpdateTime(boost::posix_time::from_iso_string("20200212T093045"))
-			.getEntity()
-		));
-
-		// Delete existing users
-		SaveDatabaseTestData scenarioDeleteUsers;
-		scenarioDeleteUsers.setSQLScripts({ "Database/Users/AdminUser.sql", "Database/Users/BasicUsers.sql" });
-		scenarioDeleteUsers.addCommand(std::make_unique<DeleteUserCommand>("73A800FC-621C-4D94-A1A4-0B39075458D4"));
-		scenarioDeleteUsers.addCommand(std::make_unique<DeleteUserCommand>("9055B141-3307-4868-9C81-D5722A5DC16C"));
-
-		// Complex scenario
-		SaveDatabaseTestData scenarioComplex;
-		scenarioComplex.setSQLScripts({ "Database/Users/AdminUser.sql", "Database/Users/BasicUsers.sql" });
-		scenarioComplex.addCommand(std::make_unique<DeleteUserCommand>("73A800FC-621C-4D94-A1A4-0B39075458D4"));
-		scenarioComplex.addCommand(std::make_unique<AddUserCommand>(
-			UserBuilder()
-				.setId(std::string("BD064A6D-45A6-43CE-9C15-5CBDC8DA9C4C"))
-				.setName("Jaime").setSurname("Duckworth")
-				.setLogin("jduckworth").setRole(model::User::USER_ROLE)
-				.setPassword("PasswordDuckworth")
-				.setCreationTime(boost::posix_time::from_iso_string("20180101T010100"))
-				.setUpdateTime(boost::posix_time::from_iso_string("20180101T010100"))
-			.getEntity()
-		));
-		scenarioComplex.addCommand(std::make_unique<EditUserCommand>(
-			UserBuilder()
-				.setId(std::string("4DBF18D0-689B-4974-B727-5CA503709E8E"))
-				.setName("Peter").setSurname("Collins")
-				.setLogin("pcollins").setRole(model::User::ADMIN_ROLE)
-				.setPassword("PasswordHasBeenChanged")
-				.setCreationTime(boost::posix_time::from_iso_string("20170212T093045"))
-				.setUpdateTime(boost::posix_time::from_iso_string("20200212T093045"))
-			.getEntity()
-		));
-
-		return { scenarioAddUsers, scenarioEditUser, scenarioDeleteUsers, scenarioComplex };
+		return { scenarioAddUsers };
 	}
 
 }}
 
+		// Edit users
+//		ModifyDatabaseData
+//		(
+//			std::string(""),
+//			{
+//				// Lock password
+//				new EditUserCommand(UserDescription(
+//					sut::UserBuilder()
+//					.setRecordId(7)
+//					.setUserName("operator")
+//					.setPassword("731628e87e20ed27fc8f1a770bd6c6ed5e7d940f8e4cdba7d8a8568d839fafc5")
+//					.setRole(model::User::Role::OPERATOR)
+//					.setCreationTime(bp::from_iso_string("20190101T013044")) // Can't be null
+//					.setUpdateTime(bp::second_clock().local_time())
+//					.getEntity()
+//				)),
+//
+//				// Change password and set expiration
+//				new EditUserCommand(UserDescription(
+//					sut::UserBuilder()
+//					.setRecordId(6)
+//					.setUserName("manager")
+//					.setPassword("40B7475492F07F9E03312E27132CD39546BCFA667E3808C013AFF7EC651830D9")
+//					.setRole(model::User::Role::MANAGER)
+//					.setCreationTime(bp::from_iso_string("20190101T013044")) // Can't be null
+//					.setExpirationIntervalDays(30)
+//					.setPasswordExpirationDate(bg::day_clock().local_day() + bg::days(30))
+//					.setUpdateTime(bp::second_clock().local_time())
+//					.getEntity()
+//				)),
+//
+//				// User logged
+//				new EditUserCommand(UserDescription(
+//					sut::UserBuilder()
+//					.setRecordId(2)
+//					.setUserName("developer")
+//					.setPassword("a69a9b7615fd87c3c50df6a857466fd337fefd0215238fd9e44aeaaa85fbb8cd")
+//					.setRole(model::User::Role::DEVELOPER)
+//					.setCreationTime(bp::from_iso_string("20190101T013044")) // Can't be null
+//					.setUpdateTime(bp::second_clock().local_time())
+//					.setLastLoginTime(bp::second_clock().local_time())
+//					.getEntity()
+//				))
+//			}
+//		),
+//
+//		// Delete users
+//		ModifyDatabaseData
+//		(
+//			std::string(""),
+//			{
+//				new DeleteUserCommand(5),
+//				new DeleteUserCommand(2)
+//			}
+//		)
+//	};
+//
+//}}
