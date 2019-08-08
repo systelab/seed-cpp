@@ -4,14 +4,16 @@
 namespace seed_cpp { namespace model {
 
 	Allergy::Allergy()
-		:m_name("")
+		:BaseEntity()
+		,m_name("")
 		,m_signs("")
 		,m_symptoms("")
 	{
 	}
 
 	Allergy::Allergy(const Allergy& other)
-		:m_name(other.m_name)
+		:BaseEntity(other)
+		,m_name(other.m_name)
 		,m_signs(other.m_signs)
 		,m_symptoms(other.m_symptoms)
 	{

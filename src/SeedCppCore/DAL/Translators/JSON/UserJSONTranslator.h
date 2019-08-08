@@ -1,8 +1,8 @@
 #pragma once
 
-#include "IJSONSaveTranslator.h"
-#include "IJSONLoadTranslator.h"
-#include "Model/User.h"
+#include "SeedCppCore/DAL/Translators/JSON/IJSONSaveTranslator.h"
+#include "SeedCppCore/DAL/Translators/JSON/IJSONLoadTranslator.h"
+#include "SeedCppCore/Model/User.h"
 
 
 namespace seed_cpp { namespace dal {

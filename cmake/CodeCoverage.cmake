@@ -113,14 +113,17 @@ ENDIF() # NOT CMAKE_BUILD_TYPE STREQUAL "Debug"
 
 
 # Param _targetname     The name of new the custom make target
-# Param _testrunner     The name of the target which runs the tests.
+# Param _testrunner1    The name of the first target which runs the tests.
+#						MUST return ZERO always, even on errors.
+#						If not, no coverage report will be created!
+# Param _testrunner2    The name of the second target which runs the tests.
 #						MUST return ZERO always, even on errors.
 #						If not, no coverage report will be created!
 # Param _outputname     lcov output is generated as _outputname.info
 #                       HTML report is generated in _outputname/index.html
-# Optional fourth parameter is passed as arguments to _testrunner
+# Optional fourth parameter is passed as arguments to _testrunners
 #   Pass them in list form, e.g.: "-j;2" for -j 2
-FUNCTION(SETUP_TARGET_FOR_COVERAGE _targetname _testrunner _outputname)
+FUNCTION(SETUP_TARGET_FOR_COVERAGE _targetname _testrunner1 _testrunner2 _outputname)
 
 	IF(NOT LCOV_PATH)
 		MESSAGE(FATAL_ERROR "lcov not found! Aborting...")
@@ -133,7 +136,8 @@ FUNCTION(SETUP_TARGET_FOR_COVERAGE _targetname _testrunner _outputname)
 	SET(coverage_info "${CMAKE_BINARY_DIR}/${_outputname}.info")
 	SET(coverage_cleaned "${coverage_info}.cleaned")
 
-	SEPARATE_ARGUMENTS(test_command UNIX_COMMAND "${_testrunner}")
+	SEPARATE_ARGUMENTS(test_command1 UNIX_COMMAND "${_testrunner1}")
+	SEPARATE_ARGUMENTS(test_command2 UNIX_COMMAND "${_testrunner2}")
 
 	# Setup target
 	ADD_CUSTOM_TARGET(${_targetname}
@@ -142,7 +146,8 @@ FUNCTION(SETUP_TARGET_FOR_COVERAGE _targetname _testrunner _outputname)
 		${LCOV_PATH} --directory . --zerocounters
 
 		# Run tests
-		COMMAND ${test_command} ${ARGV3}
+		COMMAND ${test_command1} ${ARGV3}
+		COMMAND ${test_command2} ${ARGV3}
 
 		COMMAND lcov --version
 		COMMAND gcov --version
