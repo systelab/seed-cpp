@@ -42,14 +42,14 @@ namespace seed_cpp { namespace rest {
 
 
 	// Health
-	std::unique_ptr<IEndpoint> EndpointsFactory::buildHealthGetEndpoint()
+	std::unique_ptr<IEndpoint> EndpointsFactory::buildHealthGetEndpoint() const
 	{
 		return std::make_unique<HealthGetEndpoint>();
 	}
 
 
 	// Allergies
-	std::unique_ptr<IEndpoint> EndpointsFactory::buildAllergiesGetAllEndpoint()
+	std::unique_ptr<IEndpoint> EndpointsFactory::buildAllergiesGetAllEndpoint() const
 	{
 		auto& allergyMgr = m_context.getModel()->getAllergyMgr();
 		auto& jsonTranslatorsFactory = *m_context.getJSONTranslatorsFactory();
@@ -58,7 +58,7 @@ namespace seed_cpp { namespace rest {
 		return std::make_unique<AllergiesGetAllEndpoint>(allergyMgr, jsonTranslatorsFactory, jsonAdapter);
 	}
 
-	std::unique_ptr<IEndpoint> EndpointsFactory::buildAllergiesGetEndpoint()
+	std::unique_ptr<IEndpoint> EndpointsFactory::buildAllergiesGetEndpoint() const
 	{
 		auto& allergyMgr = m_context.getModel()->getAllergyMgr();
 		auto& jsonTranslatorsFactory = *m_context.getJSONTranslatorsFactory();
@@ -67,7 +67,7 @@ namespace seed_cpp { namespace rest {
 		return std::make_unique<AllergiesGetEndpoint>(allergyMgr, jsonTranslatorsFactory, jsonAdapter);
 	}
 
-	std::unique_ptr<IEndpoint> EndpointsFactory::buildAllergiesPostEndpoint()
+	std::unique_ptr<IEndpoint> EndpointsFactory::buildAllergiesPostEndpoint() const
 	{
 		auto& allergyModelService = m_context.getServicesMgr()->getModelServicesMgr().getAllergyModelService();
 		auto& jsonTranslatorsFactory = *m_context.getJSONTranslatorsFactory();
@@ -78,7 +78,7 @@ namespace seed_cpp { namespace rest {
 													   jsonValidatorService, jsonAdapter);
 	}
 
-	std::unique_ptr<IEndpoint> EndpointsFactory::buildAllergiesPutEndpoint()
+	std::unique_ptr<IEndpoint> EndpointsFactory::buildAllergiesPutEndpoint() const
 	{
 		auto& allergyModelService = m_context.getServicesMgr()->getModelServicesMgr().getAllergyModelService();
 		auto& jsonTranslatorsFactory = *m_context.getJSONTranslatorsFactory();
@@ -89,7 +89,7 @@ namespace seed_cpp { namespace rest {
 													  jsonValidatorService, jsonAdapter);
 	}
 
-	std::unique_ptr<IEndpoint> EndpointsFactory::buildAllergiesDeleteEndpoint()
+	std::unique_ptr<IEndpoint> EndpointsFactory::buildAllergiesDeleteEndpoint() const
 	{
 		auto& allergyModelService = m_context.getServicesMgr()->getModelServicesMgr().getAllergyModelService();
 		return std::make_unique<AllergiesDeleteEndpoint>(allergyModelService);
@@ -97,7 +97,7 @@ namespace seed_cpp { namespace rest {
 
 
 	// Patients
-	std::unique_ptr<IEndpoint> EndpointsFactory::buildPatientsGetAllEndpoint()
+	std::unique_ptr<IEndpoint> EndpointsFactory::buildPatientsGetAllEndpoint() const
 	{
 		auto& patientMgr = m_context.getModel()->getPatientMgr();
 		auto& jsonTranslatorsFactory = *m_context.getJSONTranslatorsFactory();
@@ -106,7 +106,7 @@ namespace seed_cpp { namespace rest {
 		return std::make_unique<PatientsGetAllEndpoint>(patientMgr, jsonTranslatorsFactory, jsonAdapter);
 	}
 
-	std::unique_ptr<IEndpoint> EndpointsFactory::buildPatientsGetEndpoint()
+	std::unique_ptr<IEndpoint> EndpointsFactory::buildPatientsGetEndpoint() const
 	{
 		auto& patientMgr = m_context.getModel()->getPatientMgr();
 		auto& jsonTranslatorsFactory = *m_context.getJSONTranslatorsFactory();
@@ -115,7 +115,7 @@ namespace seed_cpp { namespace rest {
 		return std::make_unique<PatientsGetEndpoint>(patientMgr, jsonTranslatorsFactory, jsonAdapter);
 	}
 
-	std::unique_ptr<IEndpoint> EndpointsFactory::buildPatientsPostEndpoint()
+	std::unique_ptr<IEndpoint> EndpointsFactory::buildPatientsPostEndpoint() const
 	{
 		auto& patientModelService = m_context.getServicesMgr()->getModelServicesMgr().getPatientModelService();
 		auto& jsonTranslatorsFactory = *m_context.getJSONTranslatorsFactory();
@@ -126,7 +126,7 @@ namespace seed_cpp { namespace rest {
 													  jsonValidatorService, jsonAdapter);
 	}
 
-	std::unique_ptr<IEndpoint> EndpointsFactory::buildPatientsPutEndpoint()
+	std::unique_ptr<IEndpoint> EndpointsFactory::buildPatientsPutEndpoint() const
 	{
 		auto& patientModelService = m_context.getServicesMgr()->getModelServicesMgr().getPatientModelService();
 		auto& jsonTranslatorsFactory = *m_context.getJSONTranslatorsFactory();
@@ -137,7 +137,7 @@ namespace seed_cpp { namespace rest {
 													 jsonValidatorService, jsonAdapter);
 	}
 
-	std::unique_ptr<IEndpoint> EndpointsFactory::buildPatientsDeleteEndpoint()
+	std::unique_ptr<IEndpoint> EndpointsFactory::buildPatientsDeleteEndpoint() const
 	{
 		auto& patientModelService = m_context.getServicesMgr()->getModelServicesMgr().getPatientModelService();
 		return std::make_unique<PatientsDeleteEndpoint>(patientModelService);
@@ -145,7 +145,7 @@ namespace seed_cpp { namespace rest {
 
 
 	// Users
-	std::unique_ptr<IEndpoint> EndpointsFactory::buildUsersGetAllEndpoint()
+	std::unique_ptr<IEndpoint> EndpointsFactory::buildUsersGetAllEndpoint() const
 	{
 		auto& userMgr = m_context.getModel()->getUserMgr();
 		auto& jsonTranslatorsFactory = *m_context.getJSONTranslatorsFactory();
@@ -154,7 +154,7 @@ namespace seed_cpp { namespace rest {
 		return std::make_unique<UsersGetAllEndpoint>(userMgr, jsonTranslatorsFactory, jsonAdapter);
 	}
 
-	std::unique_ptr<IEndpoint> EndpointsFactory::buildUsersGetEndpoint()
+	std::unique_ptr<IEndpoint> EndpointsFactory::buildUsersGetEndpoint() const
 	{
 		auto& userMgr = m_context.getModel()->getUserMgr();
 		auto& jsonTranslatorsFactory = *m_context.getJSONTranslatorsFactory();
@@ -163,7 +163,7 @@ namespace seed_cpp { namespace rest {
 		return std::make_unique<UsersGetEndpoint>(userMgr, jsonTranslatorsFactory, jsonAdapter);
 	}
 
-	std::unique_ptr<IEndpoint> EndpointsFactory::buildUsersPostEndpoint()
+	std::unique_ptr<IEndpoint> EndpointsFactory::buildUsersPostEndpoint() const
 	{
 		auto& userModelService = m_context.getServicesMgr()->getModelServicesMgr().getUserModelService();
 		auto& jsonTranslatorsFactory = *m_context.getJSONTranslatorsFactory();
@@ -174,7 +174,7 @@ namespace seed_cpp { namespace rest {
 												   jsonValidatorService, jsonAdapter);
 	}
 
-	std::unique_ptr<IEndpoint> EndpointsFactory::buildUsersPutEndpoint()
+	std::unique_ptr<IEndpoint> EndpointsFactory::buildUsersPutEndpoint() const
 	{
 		auto& userModelService = m_context.getServicesMgr()->getModelServicesMgr().getUserModelService();
 		auto& jsonTranslatorsFactory = *m_context.getJSONTranslatorsFactory();
@@ -185,13 +185,13 @@ namespace seed_cpp { namespace rest {
 												  jsonValidatorService, jsonAdapter);
 	}
 
-	std::unique_ptr<IEndpoint> EndpointsFactory::buildUsersDeleteEndpoint()
+	std::unique_ptr<IEndpoint> EndpointsFactory::buildUsersDeleteEndpoint() const
 	{
 		auto& userModelService = m_context.getServicesMgr()->getModelServicesMgr().getUserModelService();
 		return std::make_unique<UsersDeleteEndpoint>(userModelService);
 	}
 
-	std::unique_ptr<IEndpoint> EndpointsFactory::buildUsersLoginPostEndpoint()
+	std::unique_ptr<IEndpoint> EndpointsFactory::buildUsersLoginPostEndpoint() const
 	{
 		service::IUserModelService& userModelService = m_context.getServicesMgr()->getModelServicesMgr().getUserModelService();
 		service::ITimeService& timeService = m_context.getServicesMgr()->getSystemServicesMgr().getTimeService();

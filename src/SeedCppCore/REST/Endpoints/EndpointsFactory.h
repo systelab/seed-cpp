@@ -18,29 +18,29 @@ namespace seed_cpp { namespace rest {
 		virtual ~EndpointsFactory();
 
 		// Allergies
-		std::unique_ptr<IEndpoint> buildAllergiesGetAllEndpoint() override;
-		std::unique_ptr<IEndpoint> buildAllergiesGetEndpoint() override;
-		std::unique_ptr<IEndpoint> buildAllergiesPostEndpoint() override;
-		std::unique_ptr<IEndpoint> buildAllergiesPutEndpoint() override;
-		std::unique_ptr<IEndpoint> buildAllergiesDeleteEndpoint() override;
+		std::unique_ptr<IEndpoint> buildAllergiesGetAllEndpoint() const override;
+		std::unique_ptr<IEndpoint> buildAllergiesGetEndpoint() const override;
+		std::unique_ptr<IEndpoint> buildAllergiesPostEndpoint() const override;
+		std::unique_ptr<IEndpoint> buildAllergiesPutEndpoint() const override;
+		std::unique_ptr<IEndpoint> buildAllergiesDeleteEndpoint() const override;
 
 		// Health
-		std::unique_ptr<IEndpoint> buildHealthGetEndpoint() override;
+		std::unique_ptr<IEndpoint> buildHealthGetEndpoint() const override;
 
 		// Patients
-		std::unique_ptr<IEndpoint> buildPatientsGetAllEndpoint() override;
-		std::unique_ptr<IEndpoint> buildPatientsGetEndpoint() override;
-		std::unique_ptr<IEndpoint> buildPatientsPostEndpoint() override;
-		std::unique_ptr<IEndpoint> buildPatientsPutEndpoint() override;
-		std::unique_ptr<IEndpoint> buildPatientsDeleteEndpoint() override;
+		std::unique_ptr<IEndpoint> buildPatientsGetAllEndpoint() const override;
+		std::unique_ptr<IEndpoint> buildPatientsGetEndpoint() const override;
+		std::unique_ptr<IEndpoint> buildPatientsPostEndpoint() const override;
+		std::unique_ptr<IEndpoint> buildPatientsPutEndpoint() const override;
+		std::unique_ptr<IEndpoint> buildPatientsDeleteEndpoint() const override;
 
 		// Users
-		std::unique_ptr<IEndpoint> buildUsersGetAllEndpoint() override;
-		std::unique_ptr<IEndpoint> buildUsersGetEndpoint() override;
-		std::unique_ptr<IEndpoint> buildUsersPostEndpoint() override;
-		std::unique_ptr<IEndpoint> buildUsersPutEndpoint() override;
-		std::unique_ptr<IEndpoint> buildUsersDeleteEndpoint() override;
-		std::unique_ptr<IEndpoint> buildUsersLoginPostEndpoint() override;
+		std::unique_ptr<IEndpoint> buildUsersGetAllEndpoint() const override;
+		std::unique_ptr<IEndpoint> buildUsersGetEndpoint() const override;
+		std::unique_ptr<IEndpoint> buildUsersPostEndpoint() const override;
+		std::unique_ptr<IEndpoint> buildUsersPutEndpoint() const override;
+		std::unique_ptr<IEndpoint> buildUsersDeleteEndpoint() const override;
+		std::unique_ptr<IEndpoint> buildUsersLoginPostEndpoint() const override;
 
 	private:
 		Context& m_context;
