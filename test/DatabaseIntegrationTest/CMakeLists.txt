@@ -35,6 +35,11 @@ endforeach()
 # Register tests
 add_test(NAME DatabaseIntegrationTest COMMAND ${DATABASE_INTEGRATION_TEST_PROJECT})
 
+# Copy extern dynamic libraries to build dir
+add_custom_command(TARGET ${DATABASE_INTEGRATION_TEST_PROJECT} POST_BUILD
+                   COMMAND ${CMAKE_COMMAND} -E copy_directory
+                   ${CMAKE_BINARY_DIR}/lib/extern $<TARGET_FILE_DIR:${DATABASE_INTEGRATION_TEST_PROJECT}>)
+
 # Copy needed database resources to target dir
 add_custom_command(TARGET ${DATABASE_INTEGRATION_TEST_PROJECT} POST_BUILD
                    COMMAND ${CMAKE_COMMAND} -E copy_directory

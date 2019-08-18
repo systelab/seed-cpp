@@ -26,6 +26,11 @@ foreach(FILE ${SEED_CPP_PROJECT_SRC} ${SEED_CPP_PROJECT_HDR})
     source_group("${GROUP}" FILES "${FILE}")
 endforeach()
 
+# Copy extern dynamic libraries to build dir
+add_custom_command(TARGET ${SEED_CPP_PROJECT} POST_BUILD
+                   COMMAND ${CMAKE_COMMAND} -E copy_directory
+                   ${CMAKE_BINARY_DIR}/lib/extern $<TARGET_FILE_DIR:${SEED_CPP_PROJECT}>)
+
 # Copy resources to build dir
 add_custom_command(TARGET ${SEED_CPP_PROJECT} POST_BUILD
                    COMMAND ${CMAKE_COMMAND} -E copy_directory

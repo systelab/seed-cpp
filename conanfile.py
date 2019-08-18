@@ -19,15 +19,9 @@ class SeedCppConan(ConanFile):
         self.requires("RESTAPICore/1.0.0@systelab/stable")
 
     def imports(self):
-        self.copy("*.dll", dst=("bin/SeedCpp/%s" % self.settings.build_type), src="bin")
-        self.copy("*.dylib*", dst=("bin/SeedCpp/%s" % self.settings.build_type), src="lib")
-        self.copy("*.so*", dst=("bin/SeedCpp/%s" % self.settings.build_type), src="lib")
-        self.copy("*.dll", dst=("bin/SeedCppCoreUnitTest/%s" % self.settings.build_type), src="bin")
-        self.copy("*.dylib*", dst=("bin/SeedCppCoreUnitTest/%s" % self.settings.build_type), src="lib")
-        self.copy("*.so*", dst=("bin/SeedCppCoreUnitTest/%s" % self.settings.build_type), src="lib")
-        self.copy("*.dll", dst=("bin/DatabaseIntegrationTest/%s" % self.settings.build_type), src="bin")
-        self.copy("*.dylib*", dst=("bin/DatabaseIntegrationTest/%s" % self.settings.build_type), src="lib")
-        self.copy("*.so*", dst=("bin/DatabaseIntegrationTest/%s" % self.settings.build_type), src="lib")
+        self.copy("*.dll", dst=("lib/extern"), src="bin")
+        self.copy("*.dylib*", dst=("lib/extern"), src="lib")
+        self.copy("*.so*", dst=("lib/extern"), src="lib")
 
     def package(self):
         self.copy("*.exe", dst="bin", src="bin/SeedCpp")
