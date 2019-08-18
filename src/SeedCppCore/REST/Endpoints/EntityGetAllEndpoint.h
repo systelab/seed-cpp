@@ -1,11 +1,12 @@
 #pragma once
 
-#include "IEndpoint.h"
-#include "PaginationData.h"
 
 #include "DAL/Translators/JSON/IJSONSaveTranslator.h"
+#include "REST/Endpoints/PaginationData.h"
 #include "REST/Helpers/ReplyBuilderHelper.h"
-#include "Services/Security/IAuthorizationValidatorService.h"
+
+#include "RESTAPICore/Endpoint/IEndpoint.h"
+#include "RESTAPICore/Endpoint/EndpointRequestData.h"
 
 #include "JSONAdapterInterface/IJSONAdapter.h"
 #include "JSONAdapterInterface/IJSONDocument.h"
@@ -20,37 +21,25 @@
 namespace seed_cpp { namespace rest {
 
 	template <typename _Entity, typename _EntityMgr>
-	class EntityGetAllEndpoint : public IEndpoint
+	class EntityGetAllEndpoint : public systelab::rest_api_core::IEndpoint
 	{
-	private:
-		typedef std::function<std::unique_ptr<dal::IJSONSaveTranslator>(const _Entity&)> TranslatorFactoryMethod;
-
 	public:
-		EntityGetAllEndpoint(const systelab::web_server::RequestHeaders& headers,
-							 const systelab::web_server::RequestQueryStrings& queryStrings,
-							 _EntityMgr& entityMgr,
-							 const TranslatorFactoryMethod& factoryMethod,
-							 const systelab::json::IJSONAdapter& jsonAdapter,
-							 const service::IAuthorizationValidatorService& authorizationValidatorService)
-			:m_headers(headers)
-			,m_queryStrings(queryStrings)
-			,m_entityMgr(entityMgr)
-			,m_factoryMethod(factoryMethod)
+		typedef std::function<std::unique_ptr<dal::IJSONSaveTranslator>(const _Entity&)> SaveTranslatorFactoryMethod;
+
+		EntityGetAllEndpoint(_EntityMgr& entityMgr,
+							 const SaveTranslatorFactoryMethod& saveTranslatorFactoryMethod,
+							 const systelab::json::IJSONAdapter& jsonAdapter)
+			:m_entityMgr(entityMgr)
+			,m_saveTranslatorFactoryMethod(saveTranslatorFactoryMethod)
 			,m_jsonAdapter(jsonAdapter)
-			,m_authorizationValidatorService(authorizationValidatorService)
 		{
 		}
 
 		virtual ~EntityGetAllEndpoint() = default;
 
-		bool hasAccess() const override
+		std::unique_ptr<systelab::web_server::Reply> execute(const systelab::rest_api_core::EndpointRequestData& requestData) override
 		{
-			return m_authorizationValidatorService.validate(m_headers);
-		}
-
-		std::unique_ptr<systelab::web_server::Reply> execute() override
-		{
-			auto paginationData = getPaginationData();
+			auto paginationData = getPaginationData(requestData.getQueryStrings());
 
 			auto jsonResponse = m_jsonAdapter.buildEmptyDocument();
 			auto& jsonRoot = jsonResponse->getRootValue();
@@ -63,7 +52,7 @@ namespace seed_cpp { namespace rest {
 				const _Entity& entity = paginationData->m_content.at(i);
 
 				auto jsonEntity = jsonRoot.buildValue(systelab::json::OBJECT_TYPE);
-				auto translator = m_factoryMethod(entity);
+				auto translator = m_saveTranslatorFactoryMethod(entity);
 				translator->saveEntityToJSON(*jsonEntity);
 
 				jsonContent->addArrayValue(std::move(jsonEntity));
@@ -82,28 +71,28 @@ namespace seed_cpp { namespace rest {
 		}
 
 	private:
-		std::unique_ptr<PaginationData<_Entity>> getPaginationData() const
+		std::unique_ptr<PaginationData<_Entity>> getPaginationData(const systelab::web_server::RequestQueryStrings& queryStrings) const
 		{
 			unsigned int page = 0;
-			if (m_queryStrings.hasItem("page"))
+			if (queryStrings.hasItem("page"))
 			{
 				try
 				{
-					page = boost::lexical_cast<unsigned int>(m_queryStrings.getItem("page"));
+					page = boost::lexical_cast<unsigned int>(queryStrings.getItem("page"));
 				}
-				catch (std::exception &)
+				catch (std::exception&)
 				{
 				}
 			}
 
 			unsigned int size = 20;
-			if (m_queryStrings.hasItem("size"))
+			if (queryStrings.hasItem("size"))
 			{
 				try
 				{
-					size = boost::lexical_cast<unsigned int>(m_queryStrings.getItem("size"));
+					size = boost::lexical_cast<unsigned int>(queryStrings.getItem("size"));
 				}
-				catch (std::exception &)
+				catch (std::exception&)
 				{
 				}
 			}
@@ -132,12 +121,9 @@ namespace seed_cpp { namespace rest {
 		}
 
 	private:
-		const systelab::web_server::RequestHeaders m_headers;
-		const systelab::web_server::RequestQueryStrings m_queryStrings;
 		_EntityMgr& m_entityMgr;
-		const TranslatorFactoryMethod m_factoryMethod;
+		const SaveTranslatorFactoryMethod m_saveTranslatorFactoryMethod;
 		const systelab::json::IJSONAdapter& m_jsonAdapter;
-		const service::IAuthorizationValidatorService& m_authorizationValidatorService;
 	};
 
 }}
