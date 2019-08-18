@@ -26,7 +26,7 @@ build:
   project: $(APPVEYOR_BUILD_FOLDER)\build\SeedCpp.sln
 
 after_build:
-  - ps: 7z a .\Dist\$env:deploy_name_installer".zip" $env:build_path_installer"\SeedCpp"
+  - ps: 7z a .\Dist\$env:deploy_name_installer".zip" $env:build_path_installer
 
 test_script:
   - ps: cd bin
