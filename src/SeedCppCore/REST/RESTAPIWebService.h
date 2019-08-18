@@ -2,11 +2,13 @@
 
 #include "WebServerAdapterInterface/IWebService.h"
 
+namespace systelab { namespace rest_api_core {
+	class Router;
+}}
 
 namespace seed_cpp { namespace rest {
 
 	class IEndpointsFactory;
-	class Router;
 
 	class RESTAPIWebService : public systelab::web_server::IWebService
 	{
@@ -18,7 +20,7 @@ namespace seed_cpp { namespace rest {
 
 	private:
 		IEndpointsFactory& m_endpointsFactory;
-		std::unique_ptr<Router> m_router;
+		std::unique_ptr<systelab::rest_api_core::Router> m_router;
 	};
 
 }}
