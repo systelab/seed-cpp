@@ -5,7 +5,11 @@
 
 namespace seed_cpp { namespace rest {
 
-	class UsersDeleteEndpoint : public EntityDeleteEndpoint<service::IUserModelService> { using EntityDeleteEndpoint::EntityDeleteEndpoint; };
+	class UsersDeleteEndpoint : public EntityDeleteEndpoint<service::IUserModelService>
+	{
+	public:
+		UsersDeleteEndpoint(service::IUserModelService&);
+	};
 
 }}
 
