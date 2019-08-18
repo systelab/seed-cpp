@@ -73,8 +73,12 @@ script:
   - make
   - if [ $TRAVIS_OS_NAME == osx ]; then cp -f lib/extern/*.dylib /usr/local/lib; fi
   - cd bin
-  - ./SeedCppCoreUnitTest/SeedCppCoreUnitTest
-  - ./DatabaseIntegrationTest/DatabaseIntegrationTest
+  - cd SeedCppCoreUnitTest
+  - ./SeedCppCoreUnitTest
+  - cd ..
+  - cd DatabaseIntegrationTest 
+  - ./DatabaseIntegrationTest
+  - cd ..
   - cd ..
   - if [[ $TRAVIS_OS_NAME == linux && $BUILD_TYPE == Coverage ]]; then make AutomatedTestCoverage; fi
 
