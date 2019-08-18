@@ -1,6 +1,6 @@
 #pragma once
 
-#include "REST/Endpoints/IEndpoint.h"
+#include "RESTAPICore/Endpoint/IEndpoint.h"
 
 #include <string>
 
@@ -21,17 +21,15 @@ namespace seed_cpp {
 
 namespace seed_cpp { namespace rest {
 
-	class UsersLoginPostEndpoint : public IEndpoint
+	class UsersLoginPostEndpoint : public systelab::rest_api_core::IEndpoint
 	{
 	public:
-		UsersLoginPostEndpoint(const std::string& requestContent,
-							   const service::IUserModelService&,
+		UsersLoginPostEndpoint(const service::IUserModelService&,
 							   const service::ITimeService&,
 							   const systelab::jwt::ITokenBuilderService&);
 		virtual ~UsersLoginPostEndpoint();
 
-		bool hasAccess() const;
-		std::unique_ptr<systelab::web_server::Reply> execute();
+		std::unique_ptr<systelab::web_server::Reply> execute(const systelab::rest_api_core::EndpointRequestData& requestData) override;
 
 	private:
 		struct LoginData
@@ -40,12 +38,11 @@ namespace seed_cpp { namespace rest {
 			std::string m_password;
 		};
 
-		std::unique_ptr<LoginData> getLoginDataFromRequestContent() const;
+		std::unique_ptr<LoginData> getLoginDataFromRequestContent(const std::string&) const;
 		const model::User* authenticate(const LoginData&) const;
 		std::string buildJWT(const std::string& login) const;
 
 	private:
-		std::string m_requestContent;
 		const service::IUserModelService& m_userModelService;
 		const service::ITimeService& m_timeService;
 		const systelab::jwt::ITokenBuilderService& m_jwtBuilderService;
