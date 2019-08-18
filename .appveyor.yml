@@ -40,8 +40,12 @@ test_script:
   - DatabaseIntegrationTest.exe --gtest_output=xml:DatabaseIntegrationTest.xml
 
 after_test:
-  - ps: (new-object net.webclient).UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\SeedCppCoreUnitTest.xml))
   - ps: (new-object net.webclient).UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\DatabaseIntegrationTest.xml))
+  - ps: cd ..
+  - ps: cd ..
+  - ps: cd SeedCppCoreUnitTest
+  - ps: cd $env:CONFIGURATION
+  - ps: (new-object net.webclient).UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\SeedCppCoreUnitTest.xml))
 
 artifacts:
   - path: 'build\bin'
