@@ -15,10 +15,6 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 include(ConfigureGoogleTest)
 configure_google_test()
 
-# Setup 3rd party libraries through conan
-include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
-conan_basic_setup()	
-
 # Setup extern repositories
 include(GitCloneRepository)
 git_clone_repository(URL https://github.com/systelab/cpp-test-utilities.git                DIR extern/TestUtilities               BRANCH v1.0.0)
@@ -40,6 +36,7 @@ include_directories(${CMAKE_SOURCE_DIR}/extern/DbSQLiteAdapter/src/sqleet-v0.27.
 include_directories(${CMAKE_SOURCE_DIR}/extern/RapidJSONAdapter/src)
 include_directories(${CMAKE_SOURCE_DIR}/extern/BoostAsioWebServerAdapter/src)
 include_directories(${CMAKE_SOURCE_DIR}/extern/JWTUtils/src)
+include_directories(${CMAKE_SOURCE_DIR}/extern/RESTAPICore/src)
 
 
 # Add extern projects
