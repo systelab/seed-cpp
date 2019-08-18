@@ -71,10 +71,10 @@ script:
   - conan install .. -s build_type=${CONAN_BUILD_TYPE} -s compiler.libcxx=${COMPILER_LIBCXX}
   - cmake -DCMAKE_BUILD_TYPE=${BUILD_TYPE} .. 
   - make
+  - if [ $TRAVIS_OS_NAME == osx ]; then cp -f lib/extern/*.dylib /usr/local/lib; fi
   - cd bin
-  - if [ $TRAVIS_OS_NAME == osx ]; then cp -f *.dylib /usr/local/lib; fi
-  - ./SeedCppCoreUnitTest
-  - ./DatabaseIntegrationTest
+  - ./SeedCppCoreUnitTest/SeedCppCoreUnitTest
+  - ./DatabaseIntegrationTest/DatabaseIntegrationTest
   - cd ..
   - if [[ $TRAVIS_OS_NAME == linux && $BUILD_TYPE == Coverage ]]; then make AutomatedTestCoverage; fi
 

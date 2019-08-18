@@ -25,11 +25,17 @@ build:
   project: $(APPVEYOR_BUILD_FOLDER)\build\SeedCpp.sln
 
 after_build:
-  - ps: 7z a .\Dist\$env:deploy_name_installer".zip" $env:build_path_installer
+  - ps: 7z a .\Dist\$env:deploy_name_installer".zip" $env:build_path_installer"\SeedCpp"
 
 test_script:
   - ps: cd bin
+  - ps: cd SeedCppCoreUnitTest
+  - ps: cd $env:CONFIGURATION
   - SeedCppCoreUnitTest.exe --gtest_output=xml:SeedCppCoreUnitTest.xml
+  - ps: cd ..
+  - ps: cd ..
+  - ps: cd DatabaseIntegrationTest
+  - ps: cd $env:CONFIGURATION
   - DatabaseIntegrationTest.exe --gtest_output=xml:DatabaseIntegrationTest.xml
 
 after_test:
