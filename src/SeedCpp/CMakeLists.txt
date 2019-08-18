@@ -8,7 +8,7 @@ set(SEED_CPP_PROJECT SeedCpp)
 file(GLOB_RECURSE SEED_CPP_PROJECT_SRC "*.cpp")
 file(GLOB_RECURSE SEED_CPP_PROJECT_HDR "*.h")
 add_executable(${SEED_CPP_PROJECT} ${SEED_CPP_PROJECT_SRC} ${SEED_CPP_PROJECT_HDR})
-target_link_libraries(${SEED_CPP_PROJECT} ${CONAN_LIBS} SeedCppCore JWTUtils RapidJSONAdapter DbSQLiteAdapter BoostAsioWebServerAdapter RESTAPICore)
+target_link_libraries(${SEED_CPP_PROJECT} SeedCppCore)
 
 #Configure source groups
 foreach(FILE ${SEED_CPP_PROJECT_SRC} ${SEED_CPP_PROJECT_HDR}) 
