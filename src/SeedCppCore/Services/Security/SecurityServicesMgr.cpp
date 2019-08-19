@@ -2,7 +2,6 @@
 #include "SecurityServicesMgr.h"
 
 #include "Services/Security/ISecurityServicesFactory.h"
-#include "Services/Security/IAuthorizationValidatorService.h"
 
 #include "JWTUtils/Services/ITokenBuilderService.h"
 #include "JWTUtils/Services/ITokenParserService.h"
@@ -16,16 +15,6 @@ namespace seed_cpp { namespace service {
 	}
 	
 	SecurityServicesMgr::~SecurityServicesMgr() = default;
-
-	IAuthorizationValidatorService& SecurityServicesMgr::getAuthorizationValidatorService() const
-	{
-		if (!m_authorizationValidatorService)
-		{
-			m_authorizationValidatorService = m_factory.buildAuthorizationValidatorService();
-		}
-
-		return *m_authorizationValidatorService;
-	}
 
 	systelab::jwt::ITokenBuilderService& SecurityServicesMgr::getJWTTokenBuilderService() const
 	{
