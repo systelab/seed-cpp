@@ -36,10 +36,8 @@ namespace seed_cpp { namespace rest {
 			ADMIN = 2
 		};
 
-		void addRoute(const std::string& method,
-					  const std::string& uri,
-					  const EndpointFactoryMethod endpointFactoryMethod,
-					  RouteAccess access) const;
+		void addRoute(const std::string& method, const std::string& uri, const EndpointFactoryMethod, RouteAccess) const;
+		std::vector<RouteAccessValidatorFactoryMethod> getRouteAccessValidators(RouteAccess) const;
 
 	private:
 		IEndpointsFactory& m_endpointsFactory;

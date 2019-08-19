@@ -79,14 +79,28 @@ namespace seed_cpp { namespace rest {
 									 const EndpointFactoryMethod endpointFactoryMethod,
 									 RouteAccess access) const
 	{
-		std::vector<RouteAccessValidatorFactoryMethod> routeAccessValidatorFactoryMethods;
-		if (access != RouteAccess::ANONYMOUS)
-		{
-			routeAccessValidatorFactoryMethods.push_back(std::bind(&IRouteAccessValidatorsFactory::buildTokenExpirationRouteAccessValidator, std::ref(m_routeAccessValidatorsFactory)));
-		}
-
-		auto route = m_routesFactory->buildRoute(method, uri, routeAccessValidatorFactoryMethods, endpointFactoryMethod);
+		auto routeAccessValidators = getRouteAccessValidators(access);
+		auto route = m_routesFactory->buildRoute(method, uri, routeAccessValidators, endpointFactoryMethod);
 		m_router->addRoute(std::move(route));
+	}
+
+	std::vector<RESTAPIWebService::RouteAccessValidatorFactoryMethod>
+	RESTAPIWebService::getRouteAccessValidators(RouteAccess access) const
+	{
+		switch (access)
+		{
+			case RouteAccess::ADMIN:
+				return { std::bind(&IRouteAccessValidatorsFactory::buildAdminRoleRouteAccessValidator, std::ref(m_routeAccessValidatorsFactory)),
+						 std::bind(&IRouteAccessValidatorsFactory::buildTokenExpirationRouteAccessValidator, std::ref(m_routeAccessValidatorsFactory)) };
+
+			case RouteAccess::BASIC:
+				return { std::bind(&IRouteAccessValidatorsFactory::buildBasicRoleRouteAccessValidator, std::ref(m_routeAccessValidatorsFactory)),
+						 std::bind(&IRouteAccessValidatorsFactory::buildTokenExpirationRouteAccessValidator, std::ref(m_routeAccessValidatorsFactory)) };
+
+			case RouteAccess::ANONYMOUS:
+			default:
+				return {};
+		}
 	}
 
 }}
