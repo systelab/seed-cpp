@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "RESTAPIWebService.h"
 
+#include "Model/Settings.h"
 #include "REST/Endpoints/IEndpointsFactory.h"
 
 #include "RESTAPICore/Router/IRoute.h"
@@ -21,8 +22,8 @@ namespace seed_cpp { namespace rest {
 		,m_router(std::make_unique<systelab::rest_api_core::Router>())
 		,m_routesFactory()
 	{
-		std::string jwtKey = "JWTKey";
-		m_routesFactory = std::make_unique<systelab::rest_api_core::RoutesFactory>(jwtKey);
+		std::string jwtSecretKey = model::setting::JWT_SECRET_KEY;
+		m_routesFactory = std::make_unique<systelab::rest_api_core::RoutesFactory>(jwtSecretKey);
 
 		// Health
 		addRoute("GET",    "seed/v1/health",            std::bind(&IEndpointsFactory::buildHealthGetEndpoint,       std::ref(m_endpointsFactory)), RouteAccess::ANONYMOUS);

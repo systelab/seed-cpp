@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "UsersLoginPostEndpoint.h"
 
+#include "Model/Settings.h"
 #include "Model/User.h"
 #include "Model/UserMgr.h"
 #include "REST/Helpers/ReplyBuilderHelper.h"
@@ -98,8 +99,8 @@ namespace seed_cpp { namespace rest {
 		claims.push_back({"iat", iat});
 		claims.push_back({"sub", login});
 
-		std::string jwtSecurityKey = "SeedCppRocks!";
-		return m_jwtBuilderService.buildJWT(jwtSecurityKey, claims);
+		std::string jwtSecretKey = model::setting::JWT_SECRET_KEY;
+		return m_jwtBuilderService.buildJWT(jwtSecretKey, claims);
 	}
 
 }}
