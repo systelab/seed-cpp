@@ -26,15 +26,13 @@ namespace seed_cpp { namespace service {
 	// Model entity services
 	std::unique_ptr<IAllergyModelService> ModelServicesFactory::buildAllergyModelService() const
 	{
-		auto& entityMgr = m_context.getModel()->getAllergyMgr();
+		auto& allergyMgr = m_context.getModel()->getAllergyMgr();
 		auto& dbDAOFactory = *m_context.getDbDAOFactory();
 		auto& systemServicesMgr = m_context.getServicesMgr()->getSystemServicesMgr();
 		auto& uuidGeneratorService = systemServicesMgr.getUUIDGeneratorService();
 		auto& timeService = systemServicesMgr.getTimeService();
 
-		return std::make_unique<AllergyModelService>
-					(entityMgr, dbDAOFactory, std::bind(&dal::IDbDAOFactory::buildAllergySaveDAO, &dbDAOFactory, std::placeholders::_1),
-					 uuidGeneratorService, timeService);
+		return std::make_unique<AllergyModelService>(allergyMgr, dbDAOFactory, uuidGeneratorService, timeService);
 	}
 
 	std::unique_ptr<IPatientModelService> ModelServicesFactory::buildPatientModelService() const
@@ -45,8 +43,7 @@ namespace seed_cpp { namespace service {
 		auto& uuidGeneratorService = systemServicesMgr.getUUIDGeneratorService();
 		auto& timeService = systemServicesMgr.getTimeService();
 
-		return std::make_unique<PatientModelService>(patientMgr, dbDAOFactory, std::bind(&dal::IDbDAOFactory::buildPatientSaveDAO, &dbDAOFactory, std::placeholders::_1),
-													 uuidGeneratorService, timeService);
+		return std::make_unique<PatientModelService>(patientMgr, dbDAOFactory, uuidGeneratorService, timeService);
 	}
 
 	std::unique_ptr<IUserModelService> ModelServicesFactory::buildUserModelService() const
@@ -57,8 +54,7 @@ namespace seed_cpp { namespace service {
 		auto& uuidGeneratorService = systemServicesMgr.getUUIDGeneratorService();
 		auto& timeService = systemServicesMgr.getTimeService();
 
-		return std::make_unique<UserModelService>(userMgr, dbDAOFactory, std::bind(&dal::IDbDAOFactory::buildUserSaveDAO, &dbDAOFactory, std::placeholders::_1),
-												  uuidGeneratorService, timeService);
+		return std::make_unique<UserModelService>(userMgr, dbDAOFactory, uuidGeneratorService, timeService);
 	}
 
 

@@ -3,6 +3,16 @@
 
 namespace seed_cpp { namespace service {
 
+	AllergyModelService::AllergyModelService(model::AllergyMgr& allergyMgr,
+											 dal::IDbDAOFactory& dbDAOFactory,
+											 service::IUUIDGeneratorService& uuidGeneratorService,
+											 service::ITimeService& timeService)
+		:EntityModelService(allergyMgr, dbDAOFactory,
+							std::bind(&dal::IDbDAOFactory::buildAllergySaveDAO, &dbDAOFactory, std::placeholders::_1),
+							uuidGeneratorService, timeService)
+	{
+	}
+
 	model::AllergyMgr& AllergyModelService::getEntityMgr() const
 	{
 		return EntityModelService::getEntityMgr();

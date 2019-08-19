@@ -7,11 +7,14 @@
 
 namespace seed_cpp { namespace service {
 
-	class AllergyModelService	: public IAllergyModelService
-								, public EntityModelService<model::Allergy, model::AllergyMgr>
+	class AllergyModelService : public IAllergyModelService
+							  , public EntityModelService<model::Allergy, model::AllergyMgr>
 	{
 	public:
-		using EntityModelService::EntityModelService;
+		AllergyModelService(model::AllergyMgr&,
+							dal::IDbDAOFactory&,
+							service::IUUIDGeneratorService&,
+							service::ITimeService&);
 
 		model::AllergyMgr& getEntityMgr() const override;
 		const model::Allergy* getEntityById(const std::string& id, const model::LockableEntityMgrSubject::IReadLock&) const override;
