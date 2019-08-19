@@ -6,6 +6,8 @@
 #include "Services/Model/IPatientModelService.h"
 #include "Services/Model/IUserModelService.h"
 
+#include "RESTAPICore/RouteAccess/IUserRoleService.h"
+
 
 namespace seed_cpp { namespace service {
 
@@ -16,6 +18,8 @@ namespace seed_cpp { namespace service {
 	
 	ModelServicesMgr::~ModelServicesMgr() = default;
 
+
+	// Model entity services
 	IAllergyModelService& ModelServicesMgr::getAllergyModelService() const
 	{
 		if (!m_allergyModelService)
@@ -44,6 +48,18 @@ namespace seed_cpp { namespace service {
 		}
 
 		return *m_userModelService;
+	}
+
+
+	// Login services
+	systelab::rest_api_core::IUserRoleService& ModelServicesMgr::getUserRoleModelService() const
+	{
+		if (!m_userRoleModelService)
+		{
+			m_userRoleModelService = m_factory.buildUserRoleModelService();
+		}
+
+		return *m_userRoleModelService;
 	}
 
 }}
