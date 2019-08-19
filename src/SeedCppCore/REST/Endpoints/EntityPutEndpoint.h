@@ -3,7 +3,6 @@
 #include "DAL/Translators/JSON/IJSONLoadTranslator.h"
 #include "DAL/Translators/JSON/IJSONSaveTranslator.h"
 #include "REST/Helpers/ReplyBuilderHelper.h"
-#include "Services/Security/IAuthorizationValidatorService.h"
 #include "Services/Validator/IJSONValidatorService.h"
 
 #include "JSONAdapterInterface/IJSONAdapter.h"
