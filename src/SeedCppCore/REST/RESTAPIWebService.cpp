@@ -3,11 +3,14 @@
 
 #include "Model/Settings.h"
 #include "REST/Endpoints/IEndpointsFactory.h"
+#include "REST/RouteAccess/IRouteAccessValidatorsFactory.h"
 
+#include "RESTAPICore/Endpoint/IEndpoint.h"
+#include "RESTAPICore/RouteAccess/IRouteAccessValidator.h"
 #include "RESTAPICore/Router/IRoute.h"
 #include "RESTAPICore/Router/Router.h"
 #include "RESTAPICore/Router/RoutesFactory.h"
-#include "RESTAPICore/Endpoint/IEndpoint.h"
+
 
 #include "WebServerAdapterInterface/Model/Reply.h"
 #include "WebServerAdapterInterface/Model/Request.h"
@@ -17,8 +20,10 @@ using namespace systelab::rest_api_core;
 
 namespace seed_cpp { namespace rest {
 
-	RESTAPIWebService::RESTAPIWebService(IEndpointsFactory& endpointsFactory)
+	RESTAPIWebService::RESTAPIWebService(IEndpointsFactory& endpointsFactory,
+										 IRouteAccessValidatorsFactory& routeAccessValidatorsFactory)
 		:m_endpointsFactory(endpointsFactory)
+		,m_routeAccessValidatorsFactory(routeAccessValidatorsFactory)
 		,m_router(std::make_unique<systelab::rest_api_core::Router>())
 		,m_routesFactory()
 	{
@@ -71,10 +76,16 @@ namespace seed_cpp { namespace rest {
 
 	void RESTAPIWebService::addRoute(const std::string& method,
 									 const std::string& uri,
-									 const std::function<std::unique_ptr<IEndpoint>()> endpointFactoryMethod,
-									 RouteAccess /*access*/) const
+									 const EndpointFactoryMethod endpointFactoryMethod,
+									 RouteAccess access) const
 	{
-		auto route = m_routesFactory->buildRoute(method, uri, {}, endpointFactoryMethod);
+		std::vector<RouteAccessValidatorFactoryMethod> routeAccessValidatorFactoryMethods;
+		if (access != RouteAccess::ANONYMOUS)
+		{
+			routeAccessValidatorFactoryMethods.push_back(std::bind(&IRouteAccessValidatorsFactory::buildTokenExpirationRouteAccessValidator, std::ref(m_routeAccessValidatorsFactory)));
+		}
+
+		auto route = m_routesFactory->buildRoute(method, uri, routeAccessValidatorFactoryMethods, endpointFactoryMethod);
 		m_router->addRoute(std::move(route));
 	}
 
