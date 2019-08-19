@@ -53,7 +53,7 @@ namespace seed_cpp { namespace rest {
 		addRoute("POST",   "seed/v1/users/user",        std::bind(&IEndpointsFactory::buildUsersPostEndpoint,       std::ref(m_endpointsFactory)), RouteAccess::ADMIN);
 		addRoute("PUT",    "seed/v1/users/:id",         std::bind(&IEndpointsFactory::buildUsersPutEndpoint,        std::ref(m_endpointsFactory)), RouteAccess::ADMIN);
 		addRoute("DELETE", "seed/v1/users/:id",         std::bind(&IEndpointsFactory::buildUsersDeleteEndpoint,     std::ref(m_endpointsFactory)), RouteAccess::ADMIN);
-		addRoute("POST",   "seed/v1/users/login",       std::bind(&IEndpointsFactory::buildUsersLoginPostEndpoint,  std::ref(m_endpointsFactory)), RouteAccess::ADMIN);
+		addRoute("POST",   "seed/v1/users/login",       std::bind(&IEndpointsFactory::buildUsersLoginPostEndpoint,  std::ref(m_endpointsFactory)), RouteAccess::ANONYMOUS);
 	}
 
 	RESTAPIWebService::~RESTAPIWebService() = default;
