@@ -2,6 +2,7 @@
 #include "RouteAccessValidatorsFactory.h"
 
 #include "Context.h"
+#include "Model/UserRoleNames.h"
 #include "Services/ServicesMgr.h"
 #include "Services/Model/ModelServicesMgr.h"
 #include "Services/System/SystemServicesMgr.h"
@@ -30,7 +31,7 @@ namespace seed_cpp { namespace rest {
 	std::unique_ptr<IRouteAccessValidator> RouteAccessValidatorsFactory::buildAdminRoleRouteAccessValidator() const
 	{
 		auto& roleModelService = m_context.getServicesMgr()->getModelServicesMgr().getUserRoleModelService();
-		std::vector<std::string> allowedRoles = { "Admin" };
+		std::vector<std::string> allowedRoles = { model::user_role::ADMIN_ROLE_NAME };
 
 		return std::make_unique<systelab::rest_api_core::UserRoleRouteAccessValidator>(allowedRoles, roleModelService);
 	}
@@ -38,7 +39,7 @@ namespace seed_cpp { namespace rest {
 	std::unique_ptr<IRouteAccessValidator> RouteAccessValidatorsFactory::buildBasicRoleRouteAccessValidator() const
 	{
 		auto& roleModelService = m_context.getServicesMgr()->getModelServicesMgr().getUserRoleModelService();
-		std::vector<std::string> allowedRoles = { "Basic" };
+		std::vector<std::string> allowedRoles = { model::user_role::BASIC_ROLE_NAME };
 
 		return std::make_unique<systelab::rest_api_core::UserRoleRouteAccessValidator>(allowedRoles, roleModelService);
 	}
