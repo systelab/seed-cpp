@@ -23,6 +23,7 @@ namespace seed_cpp {
 	}
 	namespace rest {
 		class IEndpointsFactory;
+		class IRouteAccessValidatorsFactory;
 	}
 	namespace service {
 		class IModelServicesFactory;
@@ -61,6 +62,7 @@ namespace seed_cpp {
 		service::ISystemServicesFactory* getSystemServicesFactory() const;
 		service::IValidatorServicesFactory* getValidatorServicesFactory() const;
 		rest::IEndpointsFactory* getEndpointsFactory() const;
+		rest::IRouteAccessValidatorsFactory* getRouteAccessValidatorsFactory() const;
 
 		void setDbTranslatorsFactory(std::unique_ptr<dal::IDbTranslatorsFactory>);
 		void setDbDAOFactory(std::unique_ptr<dal::IDbDAOFactory>);
@@ -70,6 +72,7 @@ namespace seed_cpp {
 		void setSystemServicesFactory(std::unique_ptr<service::ISystemServicesFactory>);
 		void setValidatorServicesFactory(std::unique_ptr<service::IValidatorServicesFactory>);
 		void setEndpointsFactory(std::unique_ptr<rest::IEndpointsFactory>);
+		void setRouteAccessValidatorsFactory(std::unique_ptr<rest::IRouteAccessValidatorsFactory>);
 
 		// Services
 		service::ServicesMgr* getServicesMgr() const;
@@ -90,6 +93,7 @@ namespace seed_cpp {
 		std::unique_ptr<service::ISystemServicesFactory> m_systemServicesFactory;
 		std::unique_ptr<service::IValidatorServicesFactory> m_validatorServicesFactory;
 		std::unique_ptr<rest::IEndpointsFactory> m_endpointsFactory;
+		std::unique_ptr<rest::IRouteAccessValidatorsFactory> m_routeAccessValidatorsFactory;
 
 		std::unique_ptr<service::ServicesMgr> m_servicesMgr;
 	};
