@@ -6,6 +6,8 @@
 #include "Services/System/ITimeService.h"
 #include "Services/System/IUUIDGeneratorService.h"
 
+#include "RESTAPICore/RouteAccess/IEpochTimeService.h"
+
 
 namespace seed_cpp { namespace service {
 
@@ -34,6 +36,16 @@ namespace seed_cpp { namespace service {
 		}
 
 		return *m_timeService;
+	}
+
+	systelab::rest_api_core::IEpochTimeService& SystemServicesMgr::getEpochTimeService() const
+	{
+		if (!m_epochTimeService)
+		{
+			m_epochTimeService = m_factory.buildEpochTimeService();
+		}
+
+		return *m_epochTimeService;
 	}
 
 	IUUIDGeneratorService& SystemServicesMgr::getUUIDGeneratorService() const
