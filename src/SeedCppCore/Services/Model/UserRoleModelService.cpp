@@ -2,6 +2,7 @@
 #include "UserRoleModelService.h"
 
 #include "Model/User.h"
+#include "Model/UserRoleNames.h"
 #include "Services/Model/IUserModelService.h"
 
 
@@ -27,9 +28,9 @@ namespace seed_cpp { namespace service {
 		switch (userRole)
 		{
 			case model::User::ADMIN_ROLE:
-				return { "Admin", "Basic" };
-			case model::User::BASIC_ROLE:
-				return { "Basic" };
+				return { model::user_role::ADMIN_ROLE_NAME, model::user_role::BASIC_ROLE_NAME };
+			case model::User::USER_ROLE:
+				return { model::user_role::BASIC_ROLE_NAME };
 			default:
 				return {};
 		}
