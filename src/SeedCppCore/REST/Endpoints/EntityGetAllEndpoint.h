@@ -1,9 +1,8 @@
 #pragma once
 
-
-#include "DAL/Translators/JSON/IJSONSaveTranslator.h"
-#include "REST/Endpoints/PaginationData.h"
-#include "REST/Helpers/ReplyBuilderHelper.h"
+#include "SeedCppCore/DAL/Translators/JSON/IJSONSaveTranslator.h"
+#include "SeedCppCore/REST/Endpoints/PaginationData.h"
+#include "SeedCppCore/REST/Helpers/ReplyBuilderHelper.h"
 
 #include "RESTAPICore/Endpoint/IEndpoint.h"
 #include "RESTAPICore/Endpoint/EndpointRequestData.h"
