@@ -36,11 +36,11 @@ namespace seed_cpp { namespace unit_test {
 
 		void setUpEntityMgr()
 		{
-			_Wrapper::ModelManager::UniqueLock writeLock(m_entityMgr);
-			std::vector< _Wrapper::ModelEntity> entities = _Wrapper::getEntities();
+			typename _Wrapper::ModelManager::UniqueLock writeLock(m_entityMgr);
+			std::vector<typename _Wrapper::ModelEntity> entities = _Wrapper::getEntities();
 			for (auto entity : entities)
 			{
-				m_entityMgr.addEntity(std::make_unique<_Wrapper::ModelEntity>(entity), writeLock);
+				m_entityMgr.addEntity(std::make_unique<typename _Wrapper::ModelEntity>(entity), writeLock);
 			}
 		}
 
