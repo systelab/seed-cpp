@@ -2,6 +2,7 @@
 
 #include "RESTAPICore/Endpoint/IEndpoint.h"
 #include "RapidJSONAdapter/JSONAdapter.h"
+#include "WebServerAdapterInterface/Model/Reply.h"
 
 #include "SeedCppCoreTestUtilities/Mocks/DAL/Translators/JSON/MockJSONTranslatorsFactory.h"
 #include "JSONAdapterTestUtilities/JSONAdapterUtilities.h"
@@ -26,7 +27,7 @@ namespace seed_cpp { namespace unit_test {
 			setUpEntityMgr();
 			_Wrapper::setUpJSONTranslatorsFactory(m_jsonTranslatorsFactory);
 
-			m_endpoint = std::make_unique<_Wrapper::Endpoint>(m_entityMgr, m_jsonTranslatorsFactory, m_jsonAdapter);
+			m_endpoint = std::make_unique<typename _Wrapper::Endpoint>(m_entityMgr, m_jsonTranslatorsFactory, m_jsonAdapter);
 		}
 
 		void TearDown()
@@ -56,13 +57,13 @@ namespace seed_cpp { namespace unit_test {
 	TYPED_TEST_P(EntityGetAllEndpointTest, testExecuteGetAllReturnsStatusOKAndExpectedContent)
 	{
 		systelab::rest_api_core::EndpointRequestData requestData;
-		std::unique_ptr<systelab::web_server::Reply> reply = m_endpoint->execute(requestData);
+		std::unique_ptr<systelab::web_server::Reply> reply = this->m_endpoint->execute(requestData);
 
 		ASSERT_TRUE(reply != NULL);
 		EXPECT_EQ(systelab::web_server::Reply::OK, reply->getStatus());
 
 		std::string expectedContent = TypeParam::getExpectedReplyContent();
-		EXPECT_TRUE(compareJSONs(expectedContent, reply->getContent(), m_jsonAdapter));
+		EXPECT_TRUE(compareJSONs(expectedContent, reply->getContent(), this->m_jsonAdapter));
 	}
 
 	REGISTER_TYPED_TEST_CASE_P(EntityGetAllEndpointTest, testExecuteGetAllReturnsStatusOKAndExpectedContent);
