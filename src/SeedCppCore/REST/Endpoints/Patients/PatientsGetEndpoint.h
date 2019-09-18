@@ -1,8 +1,8 @@
 #pragma once
 
-#include "REST/Endpoints/EntityGetEndpoint.h"
-#include "Model/Patient.h"
-#include "Model/PatientMgr.h"
+#include "SeedCppCore/REST/Endpoints/EntityGetEndpoint.h"
+#include "SeedCppCore/Model/Patient.h"
+#include "SeedCppCore/Model/PatientMgr.h"
 
 
 namespace seed_cpp { namespace dal {
