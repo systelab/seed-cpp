@@ -1,8 +1,8 @@
 #pragma once
 
-#include "REST/Endpoints/EntityGetAllEndpoint.h"
-#include "Model/Allergy.h"
-#include "Model/AllergyMgr.h"
+#include "SeedCppCore/REST/Endpoints/EntityGetAllEndpoint.h"
+#include "SeedCppCore/Model/Allergy.h"
+#include "SeedCppCore/Model/AllergyMgr.h"
 
 
 namespace seed_cpp { namespace dal {
