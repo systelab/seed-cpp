@@ -1,7 +1,7 @@
 #pragma once
 
-#include "DAL/Translators/JSON/IJSONSaveTranslator.h"
-#include "REST/Helpers/ReplyBuilderHelper.h"
+#include "SeedCppCore/DAL/Translators/JSON/IJSONSaveTranslator.h"
+#include "SeedCppCore/REST/Helpers/ReplyBuilderHelper.h"
 
 #include "JSONAdapterInterface/IJSONAdapter.h"
 #include "JSONAdapterInterface/IJSONDocument.h"
@@ -40,12 +40,15 @@ namespace seed_cpp { namespace rest {
 			const _Entity* entity = m_entityMgr.getEntityById(entityId, lock);
 			if (!entity)
 			{
-				return ReplyBuilderHelper::build(systelab::web_server::Reply::NOT_FOUND);
+				return ReplyBuilderHelper::build(systelab::web_server::Reply::NOT_FOUND, "{}");
 			}
 
 			auto jsonResponse = m_jsonAdapter.buildEmptyDocument();
+			auto& jsonRoot = jsonResponse->getRootValue();
+			jsonRoot.setType(systelab::json::OBJECT_TYPE);
+
 			auto translator = m_saveTranslatorFactoryMethod(*entity);
-			translator->saveEntityToJSON(jsonResponse->getRootValue());
+			translator->saveEntityToJSON(jsonRoot);
 
 			return ReplyBuilderHelper::build(systelab::web_server::Reply::OK, jsonResponse->serialize());
 		}
