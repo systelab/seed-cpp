@@ -1,8 +1,8 @@
 #pragma once
 
-#include "REST/Endpoints/EntityGetEndpoint.h"
-#include "Model/User.h"
-#include "Model/UserMgr.h"
+#include "SeedCppCore/REST/Endpoints/EntityGetEndpoint.h"
+#include "SeedCppCore/Model/User.h"
+#include "SeedCppCore/Model/UserMgr.h"
 
 
 namespace seed_cpp { namespace dal {
