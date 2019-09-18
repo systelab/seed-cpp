@@ -332,6 +332,22 @@ namespace seed_cpp { namespace unit_test {
 		}
 	};
 
+	struct PatientsGetAllEndpointInvalidPageQueryStringWrapper : public PatientsGetAllEndpointFirstPageWrapper
+	{
+		static std::map<std::string, std::string> getQueryStrings()
+		{
+			return { {"page", "invalid"} };
+		}
+	};
+
+	struct PatientsGetAllEndpointInvalidSizeQueryStringWrapper : public PatientsGetAllEndpointFirstPageWrapper
+	{
+		static std::map<std::string, std::string> getQueryStrings()
+		{
+			return { {"size", "invalid"} };
+		}
+	};
+
 
 	typedef ::testing::Types<
 		PatientsGetAllEndpointEmptyWrapper,
@@ -340,7 +356,9 @@ namespace seed_cpp { namespace unit_test {
 		PatientsGetAllEndpointFirstPageWrapper,
 		PatientsGetAllEndpointMidPageWrapper,
 		PatientsGetAllEndpointLastPageWrapper,
-		PatientsGetAllEndpointCustomPageSizeWrapper
+		PatientsGetAllEndpointCustomPageSizeWrapper,
+		PatientsGetAllEndpointInvalidPageQueryStringWrapper,
+		PatientsGetAllEndpointInvalidSizeQueryStringWrapper
 	> PatientsGetAllEndpointWrappers;
 
 	INSTANTIATE_TYPED_TEST_CASE_P(PatientsGetAllEndpointTest, EntityGetAllEndpointTest, PatientsGetAllEndpointWrappers);
