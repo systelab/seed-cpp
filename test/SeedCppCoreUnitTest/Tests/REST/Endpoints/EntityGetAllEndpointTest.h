@@ -58,6 +58,8 @@ namespace seed_cpp { namespace unit_test {
 	TYPED_TEST_P(EntityGetAllEndpointTest, testExecuteGetAllReturnsStatusOKAndExpectedContent)
 	{
 		systelab::rest_api_core::EndpointRequestData requestData;
+		requestData.setQueryStrings(systelab::web_server::RequestQueryStrings(TypeParam::getQueryStrings()));
+
 		std::unique_ptr<systelab::web_server::Reply> reply = this->m_endpoint->execute(requestData);
 
 		ASSERT_TRUE(reply != NULL);
