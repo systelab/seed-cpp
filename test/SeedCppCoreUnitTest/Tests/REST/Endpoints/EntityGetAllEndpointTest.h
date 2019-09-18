@@ -65,6 +65,9 @@ namespace seed_cpp { namespace unit_test {
 		ASSERT_TRUE(reply != NULL);
 		EXPECT_EQ(systelab::web_server::Reply::OK, reply->getStatus());
 
+		ASSERT_TRUE(reply->hasHeader("Content-Type"));
+		EXPECT_EQ("application/json", reply->getHeader("Content-Type"));
+
 		std::string expectedContent = TypeParam::getExpectedReplyContent();
 		EXPECT_TRUE(compareJSONs(expectedContent, reply->getContent(), this->m_jsonAdapter));
 	}
