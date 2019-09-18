@@ -5,6 +5,7 @@
 #include "SeedCppCore/Model/PatientMgr.h"
 #include "SeedCppCore/REST/Endpoints/Patients/PatientsGetAllEndpoint.h"
 
+#include "SeedCppCoreTestUtilities/Builders/PatientBuilder.h"
 #include "SeedCppCoreTestUtilities/Mocks/DAL/Translators/JSON/MockJSONSaveTranslator.h"
 
 
@@ -67,9 +68,39 @@ namespace seed_cpp { namespace unit_test {
 		}
 	};
 
+	struct PatientsGetAllEndpointSingleEntityWrapper : public PatientsGetAllEndpointBaseWrapper
+	{
+		static std::vector<model::Patient> getEntities()
+		{
+			return { PatientBuilder().setId("Patient1").getEntity() };
+		}
+
+		static std::string getExpectedReplyContent()
+		{
+			std::stringstream ss;
+			ss << "{" << std::endl;
+			ss << "   \"content\": " << std::endl;
+			ss << "   [" << std::endl;
+			ss << "      { \"id\": \"Patient1\" }" << std::endl;
+			ss << "   ]," << std::endl;
+			ss << "   \"totalElements\": 1," << std::endl;
+			ss << "   \"first\": true," << std::endl;
+			ss << "   \"last\": true," << std::endl;
+			ss << "   \"number\": 0," << std::endl;
+			ss << "   \"numberOfElements\": 1," << std::endl;
+			ss << "   \"size\": 20," << std::endl;
+			ss << "   \"totalPages\": 1" << std::endl;
+			ss << "}" << std::endl;
+
+			return ss.str();
+		}
+	};
+
+
 
 	typedef ::testing::Types<
-		PatientsGetAllEndpointEmptyWrapper
+		PatientsGetAllEndpointEmptyWrapper,
+		PatientsGetAllEndpointSingleEntityWrapper
 	> PatientsGetAllEndpointWrappers;
 
 	INSTANTIATE_TYPED_TEST_CASE_P(PatientsGetAllEndpointTest, EntityGetAllEndpointTest, PatientsGetAllEndpointWrappers);
