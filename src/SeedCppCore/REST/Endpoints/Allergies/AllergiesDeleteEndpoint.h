@@ -1,7 +1,7 @@
 #pragma once
 
-#include "REST/Endpoints/EntityDeleteEndpoint.h"
-#include "Services/Model/IAllergyModelService.h"
+#include "SeedCppCore/REST/Endpoints/EntityDeleteEndpoint.h"
+#include "SeedCppCore/Services/Model/IAllergyModelService.h"
 
 
 namespace seed_cpp { namespace rest {
