@@ -26,7 +26,7 @@ namespace seed_cpp { namespace unit_test {
 			return false;
 		}
 
-		static bool getExpectedReplyContent()
+		static std::string getExpectedReplyContent()
 		{
 			return "{}";
 		}
@@ -139,9 +139,9 @@ namespace seed_cpp { namespace unit_test {
 			return systelab::web_server::Reply::INTERNAL_SERVER_ERROR;
 		}
 
-		static bool getExpectedReplyContent()
+		static std::string getExpectedReplyContent()
 		{
-			return "{}";
+			return "{ \"exception\": \"Internal error\" }";
 		}
 
 		static bool getExpectedEntityDeletion()
