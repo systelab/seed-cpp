@@ -59,6 +59,11 @@ namespace seed_cpp { namespace unit_test {
 					return m_entityMgr.getEntityById(id, readLock);
 				}
 			));
+
+			if (_Wrapper::getExceptionOnDeletion())
+			{
+				ON_CALL(m_entityModelService, deleteEntity(_, _)).WillByDefault(Throw(std::exception("Internal error")));
+			}
 		}
 
 	protected:
@@ -88,7 +93,7 @@ namespace seed_cpp { namespace unit_test {
 		ASSERT_TRUE(reply->hasHeader("Content-Type"));
 		EXPECT_EQ("application/json", reply->getHeader("Content-Type"));
 
-		std::string expectedContent = "{}";
+		std::string expectedContent = TypeParam::getExpectedReplyContent();
 		EXPECT_TRUE(compareJSONs(expectedContent, reply->getContent(), this->m_jsonAdapter));
 	}
 
