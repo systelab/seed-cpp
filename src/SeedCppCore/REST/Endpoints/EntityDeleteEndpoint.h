@@ -8,6 +8,8 @@
 #include "WebServerAdapterInterface/Model/Reply.h"
 
 
+using namespace std::string_literals;
+
 namespace seed_cpp { namespace rest {
 	
 	template <typename _EntityModelService>
@@ -28,17 +30,18 @@ namespace seed_cpp { namespace rest {
 			const auto entity = m_entityModelService.getEntityById(entityId, *lock);
 			if (!entity)
 			{
-				return ReplyBuilderHelper::build(systelab::web_server::Reply::NOT_FOUND);
+				return ReplyBuilderHelper::build(systelab::web_server::Reply::NOT_FOUND, "{}");
 			}
 
 			try
 			{
 				m_entityModelService.deleteEntity(entityId, *lock);
-				return ReplyBuilderHelper::build(systelab::web_server::Reply::NO_CONTENT);
+				return ReplyBuilderHelper::build(systelab::web_server::Reply::NO_CONTENT, "{}");
 			}
 			catch (std::exception& exc)
 			{
-				return ReplyBuilderHelper::build(systelab::web_server::Reply::INTERNAL_SERVER_ERROR, exc.what());
+				return ReplyBuilderHelper::build(systelab::web_server::Reply::INTERNAL_SERVER_ERROR,
+												 "{ \"exception\": \""s + exc.what() + "\" }"s);
 			}
 		}
 

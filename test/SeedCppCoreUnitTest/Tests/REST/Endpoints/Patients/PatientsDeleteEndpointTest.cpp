@@ -26,6 +26,11 @@ namespace seed_cpp { namespace unit_test {
 			return false;
 		}
 
+		static bool getExpectedReplyContent()
+		{
+			return "{}";
+		}
+
 		static void tearDownWrapper()
 		{
 		}
@@ -95,7 +100,7 @@ namespace seed_cpp { namespace unit_test {
 
 		static systelab::web_server::Reply::StatusType getExpectedReplyStatus()
 		{
-			return systelab::web_server::Reply::OK;
+			return systelab::web_server::Reply::NO_CONTENT;
 		}
 
 		static bool getExpectedEntityDeletion()
@@ -122,7 +127,7 @@ namespace seed_cpp { namespace unit_test {
 		}
 	};
 
-	struct PatientsDeleteEndpointNotExistingEntityOfMgrWrapper : public PatientDeleteEndpointMultipleEntitiesMgrWrapper
+	struct PatientsDeleteEndpointExceptionOnDeletionWrapper : public PatientDeleteEndpointMultipleEntitiesMgrWrapper
 	{
 		static bool getExceptionOnDeletion()
 		{
@@ -132,6 +137,11 @@ namespace seed_cpp { namespace unit_test {
 		static systelab::web_server::Reply::StatusType getExpectedReplyStatus()
 		{
 			return systelab::web_server::Reply::INTERNAL_SERVER_ERROR;
+		}
+
+		static bool getExpectedReplyContent()
+		{
+			return "{}";
 		}
 
 		static bool getExpectedEntityDeletion()
@@ -146,7 +156,7 @@ namespace seed_cpp { namespace unit_test {
 		PatientsDeleteEndpointSingleEntityMgrWrapper,
 		PatientDeleteEndpointMultipleEntitiesMgrWrapper,
 		PatientsDeleteEndpointNotExistingEntityWrapper,
-		PatientsDeleteEndpointNotExistingEntityOfMgrWrapper
+		PatientsDeleteEndpointExceptionOnDeletionWrapper
 	> PatientsDeleteEndpointWrappers;
 
 	INSTANTIATE_TYPED_TEST_CASE_P(PatientsDeleteEndpointTest, EntityDeleteEndpointTest, PatientsDeleteEndpointWrappers);
