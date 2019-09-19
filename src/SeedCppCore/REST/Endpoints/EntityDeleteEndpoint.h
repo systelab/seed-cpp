@@ -1,6 +1,6 @@
 #pragma once
 
-#include "REST/Helpers/ReplyBuilderHelper.h"
+#include "SeedCppCore/REST/Helpers/ReplyBuilderHelper.h"
 
 #include "RESTAPICore/Endpoint/IEndpoint.h"
 #include "RESTAPICore/Endpoint/EndpointRequestData.h"
