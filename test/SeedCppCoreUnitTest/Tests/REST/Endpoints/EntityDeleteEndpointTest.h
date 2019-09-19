@@ -63,7 +63,7 @@ namespace seed_cpp { namespace unit_test {
 
 			if (_Wrapper::getExceptionOnDeletion())
 			{
-				ON_CALL(m_entityModelService, deleteEntity(_, _)).WillByDefault(Throw(std::exception("Internal error")));
+				ON_CALL(m_entityModelService, deleteEntity(_, _)).WillByDefault(Throw(std::runtime_error("Internal error")));
 			}
 		}
 
@@ -79,7 +79,7 @@ namespace seed_cpp { namespace unit_test {
 	TYPED_TEST_P(EntityDeleteEndpointTest, testExecute)
 	{
 		std::string workingEntityId = TypeParam::getIdentifierParameter();
-		EXPECT_CALL(m_entityModelService, deleteEntity(workingEntityId, _)).Times(TypeParam::getExpectedEntityDeletion() ? 1 : 0);
+		EXPECT_CALL(this->m_entityModelService, deleteEntity(workingEntityId, _)).Times(TypeParam::getExpectedEntityDeletion() ? 1 : 0);
 
 		systelab::rest_api_core::EndpointRequestParams requestParams;
 		requestParams.addStringParameter("id", workingEntityId);
