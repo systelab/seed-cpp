@@ -2,9 +2,10 @@
 
 #include "RESTAPICore/Endpoint/IEndpoint.h"
 #include "RESTAPICore/Endpoint/EndpointRequestData.h"
+
+#include "SeedCppCore/Model/LockableEntityMgrSubject.h"
 #include "RapidJSONAdapter/JSONAdapter.h"
 #include "WebServerAdapterInterface/Model/Reply.h"
-
 #include "JSONAdapterTestUtilities/JSONAdapterUtilities.h"
 
 
