@@ -1,11 +1,11 @@
 #include "stdafx.h"
 #include "SeedCppCoreUnitTest/Tests/REST/Endpoints/EntityGetEndpointTest.h"
 
-#include "SeedCppCore/Model/user.h"
-#include "SeedCppCore/Model/userMgr.h"
-#include "SeedCppCore/REST/Endpoints/users/usersGetEndpoint.h"
+#include "SeedCppCore/Model/User.h"
+#include "SeedCppCore/Model/UserMgr.h"
+#include "SeedCppCore/REST/Endpoints/Users/UsersGetEndpoint.h"
 
-#include "SeedCppCoreTestUtilities/Builders/userBuilder.h"
+#include "SeedCppCoreTestUtilities/Builders/UserBuilder.h"
 #include "SeedCppCoreTestUtilities/Mocks/DAL/Translators/JSON/MockJSONSaveTranslator.h"
 
 
