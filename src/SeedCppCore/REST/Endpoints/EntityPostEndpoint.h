@@ -1,9 +1,9 @@
 #pragma once
 
-#include "DAL/Translators/JSON/IJSONLoadTranslator.h"
-#include "DAL/Translators/JSON/IJSONSaveTranslator.h"
-#include "REST/Helpers/ReplyBuilderHelper.h"
-#include "Services/Validator/IJSONValidatorService.h"
+#include "SeedCppCore/DAL/Translators/JSON/IJSONLoadTranslator.h"
+#include "SeedCppCore/DAL/Translators/JSON/IJSONSaveTranslator.h"
+#include "SeedCppCore/REST/Helpers/ReplyBuilderHelper.h"
+#include "SeedCppCore/Services/Validator/IJSONValidatorService.h"
 
 #include "JSONAdapterInterface/IJSONAdapter.h"
 #include "JSONAdapterInterface/IJSONDocument.h"
@@ -46,7 +46,7 @@ namespace seed_cpp { namespace rest {
 			auto jsonRequest = m_jsonAdapter.buildDocumentFromString(content);
 			if (!jsonRequest)
 			{
-				return ReplyBuilderHelper::build(systelab::web_server::Reply::BAD_REQUEST);
+				return ReplyBuilderHelper::build(systelab::web_server::Reply::BAD_REQUEST, "{}");
 			}
 
 			try
@@ -72,14 +72,20 @@ namespace seed_cpp { namespace rest {
 				const _Entity& addedEntity = m_entityModelService.addEntity(std::move(entityToAdd), *lock);
 
 				auto jsonResponse = m_jsonAdapter.buildEmptyDocument();
+				auto& jsonRootValue = jsonResponse->getRootValue();
+				jsonRootValue.setType(systelab::json::OBJECT_TYPE);
 				auto saveTranslator = m_saveFactoryMethod(addedEntity);
-				saveTranslator->saveEntityToJSON(jsonResponse->getRootValue());
+				saveTranslator->saveEntityToJSON(jsonRootValue);
 
 				return ReplyBuilderHelper::build(systelab::web_server::Reply::CREATED, jsonResponse->serialize());
 			}
 			catch (std::exception& exc)
 			{
-				return ReplyBuilderHelper::build(systelab::web_server::Reply::INTERNAL_SERVER_ERROR, exc.what());
+				auto jsonResponse = m_jsonAdapter.buildEmptyDocument();
+				auto& jsonRootValue = jsonResponse->getRootValue();
+				jsonRootValue.setType(systelab::json::OBJECT_TYPE);
+				jsonRootValue.addMember("exception", exc.what());
+				return ReplyBuilderHelper::build(systelab::web_server::Reply::INTERNAL_SERVER_ERROR, jsonResponse->serialize());
 			}
 		}
 
