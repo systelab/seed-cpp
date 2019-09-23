@@ -1,8 +1,8 @@
 #pragma once
 
-#include "REST/Endpoints/EntityPutEndpoint.h"
-#include "Model/Allergy.h"
-#include "Services/Model/IAllergyModelService.h"
+#include "SeedCppCore/REST/Endpoints/EntityPutEndpoint.h"
+#include "SeedCppCore/Model/Allergy.h"
+#include "SeedCppCore/Services/Model/IAllergyModelService.h"
 
 
 namespace systelab { namespace json {
