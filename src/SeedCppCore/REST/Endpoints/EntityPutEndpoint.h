@@ -46,7 +46,7 @@ namespace seed_cpp { namespace rest {
 			auto jsonRequest = m_jsonAdapter.buildDocumentFromString(requestContent);
 			if (!jsonRequest)
 			{
-				return ReplyBuilderHelper::build(systelab::web_server::Reply::BAD_REQUEST);
+				return ReplyBuilderHelper::build(systelab::web_server::Reply::BAD_REQUEST, "{}");
 			}
 
 			try
@@ -64,9 +64,12 @@ namespace seed_cpp { namespace rest {
 
 			try
 			{
-				std::string entityId = requestData.getParameters().getStringParameter("id");
 				auto jsonResponse = m_jsonAdapter.buildEmptyDocument();
+				auto& jsonResponseRootValue = jsonResponse->getRootValue();
+				jsonResponseRootValue.setType(systelab::json::OBJECT_TYPE);
+
 				auto lock = m_entityModelService.createWriteLock();
+				std::string entityId = requestData.getParameters().getStringParameter("id");
 				const _Entity* existingEntity = m_entityModelService.getEntityById(entityId, *lock);
 				if (existingEntity)
 				{
@@ -78,7 +81,7 @@ namespace seed_cpp { namespace rest {
 					const _Entity& updatedEntity = m_entityModelService.editEntity(std::move(entityToUpdate), *lock);
 
 					auto saveTranslator = m_saveFactoryMethod(updatedEntity);
-					saveTranslator->saveEntityToJSON(jsonResponse->getRootValue());
+					saveTranslator->saveEntityToJSON(jsonResponseRootValue);
 
 					return ReplyBuilderHelper::build(systelab::web_server::Reply::OK, jsonResponse->serialize());
 				}
@@ -92,14 +95,18 @@ namespace seed_cpp { namespace rest {
 					const _Entity& addedEntity = m_entityModelService.addEntity(std::move(entityToAdd), *lock);
 
 					auto saveTranslator = m_saveFactoryMethod(addedEntity);
-					saveTranslator->saveEntityToJSON(jsonResponse->getRootValue());
+					saveTranslator->saveEntityToJSON(jsonResponseRootValue);
 
 					return ReplyBuilderHelper::build(systelab::web_server::Reply::CREATED, jsonResponse->serialize());
 				}
 			}
 			catch (std::exception& exc)
 			{
-				return ReplyBuilderHelper::build(systelab::web_server::Reply::INTERNAL_SERVER_ERROR, exc.what());
+				auto jsonResponse = m_jsonAdapter.buildEmptyDocument();
+				auto& jsonRootValue = jsonResponse->getRootValue();
+				jsonRootValue.setType(systelab::json::OBJECT_TYPE);
+				jsonRootValue.addMember("exception", exc.what());
+				return ReplyBuilderHelper::build(systelab::web_server::Reply::INTERNAL_SERVER_ERROR, jsonResponse->serialize());
 			}
 		}
 
