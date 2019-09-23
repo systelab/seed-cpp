@@ -1,8 +1,8 @@
 #pragma once
 
-#include "REST/Endpoints/EntityPutEndpoint.h"
-#include "Model/User.h"
-#include "Services/Model/IUserModelService.h"
+#include "SeedCppCore/REST/Endpoints/EntityPutEndpoint.h"
+#include "SeedCppCore/Model/User.h"
+#include "SeedCppCore/Services/Model/IUserModelService.h"
 
 
 namespace systelab { namespace json {
