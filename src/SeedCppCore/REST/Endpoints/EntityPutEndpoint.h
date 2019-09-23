@@ -1,9 +1,9 @@
 #pragma once
 
-#include "DAL/Translators/JSON/IJSONLoadTranslator.h"
-#include "DAL/Translators/JSON/IJSONSaveTranslator.h"
-#include "REST/Helpers/ReplyBuilderHelper.h"
-#include "Services/Validator/IJSONValidatorService.h"
+#include "SeedCppCore/DAL/Translators/JSON/IJSONLoadTranslator.h"
+#include "SeedCppCore/DAL/Translators/JSON/IJSONSaveTranslator.h"
+#include "SeedCppCore/REST/Helpers/ReplyBuilderHelper.h"
+#include "SeedCppCore/Services/Validator/IJSONValidatorService.h"
 
 #include "JSONAdapterInterface/IJSONAdapter.h"
 #include "JSONAdapterInterface/IJSONDocument.h"
