@@ -134,7 +134,7 @@ namespace seed_cpp { namespace unit_test {
 	// Happy path not existing
 	TYPED_TEST_P(EntityPutEndpointTest, testExecuteForHappyPathNotExistingReturnsCreatedStatus)
 	{
-		auto requestData = getHappyPathNotExistingEndpointRequestData();
+		auto requestData = this->getHappyPathNotExistingEndpointRequestData();
 		std::unique_ptr<systelab::web_server::Reply> reply = this->m_endpoint->execute(requestData);
 
 		ASSERT_TRUE(reply != NULL);
@@ -143,7 +143,7 @@ namespace seed_cpp { namespace unit_test {
 
 	TYPED_TEST_P(EntityPutEndpointTest, testExecuteForHappyPathNotExistingReturnsExpectedReplyContent)
 	{
-		auto requestData = getHappyPathNotExistingEndpointRequestData();
+		auto requestData = this->getHappyPathNotExistingEndpointRequestData();
 		std::unique_ptr<systelab::web_server::Reply> reply = this->m_endpoint->execute(requestData);
 		ASSERT_TRUE(reply != NULL);
 
@@ -157,7 +157,7 @@ namespace seed_cpp { namespace unit_test {
 	TYPED_TEST_P(EntityPutEndpointTest, testExecuteForHappyPathNotExistingValidatesRequestContentUsingExpectedJSONSchema)
 	{
 		std::string jsonSchema = TypeParam::getJSONSchema();
-		EXPECT_CALL(m_jsonValidatorService, validate(_, Eq(jsonSchema)));
+		EXPECT_CALL(this->m_jsonValidatorService, validate(_, Eq(jsonSchema)));
 
 		systelab::rest_api_core::EndpointRequestData requestData;
 		requestData.setContent(TypeParam::getHappyPathRequestContent());
@@ -177,7 +177,7 @@ namespace seed_cpp { namespace unit_test {
 	// Happy path already existing
 	TYPED_TEST_P(EntityPutEndpointTest, testExecuteForHappyPathAlreadyExistingReturnsOKStatus)
 	{
-		auto requestData = getHappyPathAlreadyExistingEndpointRequestData();
+		auto requestData = this->getHappyPathAlreadyExistingEndpointRequestData();
 		std::unique_ptr<systelab::web_server::Reply> reply = this->m_endpoint->execute(requestData);
 
 		ASSERT_TRUE(reply != NULL);
@@ -186,7 +186,7 @@ namespace seed_cpp { namespace unit_test {
 
 	TYPED_TEST_P(EntityPutEndpointTest, testExecuteForHappyPathAlreadyExistingReturnsExpectedReplyContent)
 	{
-		auto requestData = getHappyPathAlreadyExistingEndpointRequestData();
+		auto requestData = this->getHappyPathAlreadyExistingEndpointRequestData();
 		std::unique_ptr<systelab::web_server::Reply> reply = this->m_endpoint->execute(requestData);
 		ASSERT_TRUE(reply != NULL);
 
@@ -202,7 +202,7 @@ namespace seed_cpp { namespace unit_test {
 		std::string jsonSchema = TypeParam::getJSONSchema();
 		EXPECT_CALL(this->m_jsonValidatorService, validate(_, Eq(jsonSchema)));
 
-		auto requestData = getHappyPathAlreadyExistingEndpointRequestData();
+		auto requestData = this->getHappyPathAlreadyExistingEndpointRequestData();
 		this->m_endpoint->execute(requestData);
 	}
 
@@ -211,7 +211,7 @@ namespace seed_cpp { namespace unit_test {
 		auto expectedEntityToEdit = TypeParam::getExpectedEntityToEditWhenAlreadyExisting();
 		EXPECT_CALL(this->m_entityModelService, editEntityProxy(Pointee(isEqualTo(expectedEntityToEdit)), _));
 
-		auto requestData = getHappyPathAlreadyExistingEndpointRequestData();
+		auto requestData = this->getHappyPathAlreadyExistingEndpointRequestData();
 		this->m_endpoint->execute(requestData);
 	}
 
@@ -257,7 +257,7 @@ namespace seed_cpp { namespace unit_test {
 		ON_CALL(this->m_entityModelService, addEntityProxy(_, _))
 			.WillByDefault(Throw(std::runtime_error(exceptionMessage)));
 
-		auto requestData = getHappyPathNotExistingEndpointRequestData();
+		auto requestData = this->getHappyPathNotExistingEndpointRequestData();
 		std::unique_ptr<systelab::web_server::Reply> reply = this->m_endpoint->execute(requestData);
 
 		ASSERT_TRUE(reply != NULL);
