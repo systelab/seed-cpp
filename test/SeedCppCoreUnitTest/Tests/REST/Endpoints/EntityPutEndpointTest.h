@@ -169,7 +169,7 @@ namespace seed_cpp { namespace unit_test {
 		auto expectedEntityToAdd = TypeParam::getExpectedEntityToAddWhenNotFound();
 		EXPECT_CALL(this->m_entityModelService, addEntityProxy(Pointee(isEqualTo(expectedEntityToAdd)), _));
 
-		auto requestData = getHappyPathNotExistingEndpointRequestData();
+		auto requestData = this->getHappyPathNotExistingEndpointRequestData();
 		this->m_endpoint->execute(requestData);
 	}
 
