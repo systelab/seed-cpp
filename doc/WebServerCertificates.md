@@ -4,7 +4,7 @@ The web server used by `seed-cpp` provides HTTPS support. That implies that some
 
 ## Certificates generation
 
-Certificates are generated using `X` tool.
+Certificates are generated using `OpenSSL command line tool`:
 
 1> Add OpenSSL installation folder (`%OPENSSLDIR%`) in your `PATH` environment variable.
 
