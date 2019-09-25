@@ -200,7 +200,7 @@ namespace seed_cpp { namespace unit_test {
 	TYPED_TEST_P(EntityPutEndpointTest, testExecuteForHappyPathAlreadyExistingValidatesRequestContentUsingExpectedJSONSchema)
 	{
 		std::string jsonSchema = TypeParam::getJSONSchema();
-		EXPECT_CALL(m_jsonValidatorService, validate(_, Eq(jsonSchema)));
+		EXPECT_CALL(this->m_jsonValidatorService, validate(_, Eq(jsonSchema)));
 
 		auto requestData = getHappyPathAlreadyExistingEndpointRequestData();
 		this->m_endpoint->execute(requestData);
@@ -254,7 +254,7 @@ namespace seed_cpp { namespace unit_test {
 	TYPED_TEST_P(EntityPutEndpointTest, testExecuteThatThrowsExceptionWhileAddingEntityReturnsInternalServerErrorStatus)
 	{
 		std::string exceptionMessage = "Internal error while adding entity";
-		ON_CALL(m_entityModelService, addEntityProxy(_, _))
+		ON_CALL(this->m_entityModelService, addEntityProxy(_, _))
 			.WillByDefault(Throw(std::runtime_error(exceptionMessage)));
 
 		auto requestData = getHappyPathNotExistingEndpointRequestData();
