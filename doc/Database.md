@@ -81,3 +81,22 @@ The **Address** table contains the details of the addresses of each one of the p
 * **Primary key** is defined over `id` column
 * **Foreign key** defined over `patientId` column referencing column `id` of `Patient` table
 
+### Allergy table
+
+The **Allergy** table contains the data about all the allergies registered on the application.
+
+#### Columns
+
+| Name         | Data Type| Not NULL | Description                                                  |
+|--------------|:--------:|:--------:|:-------------------------------------------------------------|
+| id           | Integer  | &#x2713; | Allergy record unique internal identifier.                   |
+| name         | Text     | &#x2713; | Name of the allergy.                                         |
+| signs        | Text     | &#x2713; | Signs observed on patients that have the allergy.            |
+| symptoms     | Text     | &#x2713; | Symptoms observed on patients that have the allergy.         |
+| creationTime | Datetime | &#x2713; | Timestamp of the moment when the allergy was created.        |
+| updateTime   | Datetime | &#x2713; | Timestamp of the moment when the allergy was last updated.   |
+
+#### Integrity constraints
+
+* **Primary key** is defined over `id` column
+

@@ -3,6 +3,8 @@
 
 #include "DatabaseIntegrationTest/Tests/LoadDatabase/LoadUserScenariosBuilder.h"
 #include "DatabaseIntegrationTest/Tests/LoadDatabase/LoadPatientScenariosBuilder.h"
+#include "DatabaseIntegrationTest/Tests/LoadDatabase/LoadAllergyScenariosBuilder.h"
+
 #include "DatabaseIntegrationTest/Tools/Core.h"
 #include "DatabaseIntegrationTest/Tools/SQLExecutor.h"
 
@@ -47,6 +49,7 @@ namespace seed_cpp { namespace db_test {
 
 	INSTANTIATE_TEST_CASE_P(LoadUsers, LoadDatabaseTest, ValuesIn(LoadUserScenariosBuilder::build()));
 	INSTANTIATE_TEST_CASE_P(LoadPatient, LoadDatabaseTest, ValuesIn(LoadPatientScenariosBuilder::build()));
+	INSTANTIATE_TEST_CASE_P(LoadAllergy, LoadDatabaseTest, ValuesIn(LoadAllergyScenariosBuilder::build()));
 
 }}
 
