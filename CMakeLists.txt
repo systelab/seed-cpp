@@ -24,8 +24,8 @@ git_clone_repository(URL https://github.com/systelab/cpp-json-adapter.git       
 git_clone_repository(URL https://github.com/systelab/cpp-rapidjson-json-adapter.git        DIR extern/RapidJSONAdapter            BRANCH v1.0.1)
 git_clone_repository(URL https://github.com/systelab/cpp-webserver-adapter.git             DIR extern/WebServerAdapter            BRANCH v1.0.1)
 git_clone_repository(URL https://github.com/systelab/cpp-boostasio-webserver-adapter.git   DIR extern/BoostAsioWebServerAdapter   BRANCH v1.0.1)
-git_clone_repository(URL https://github.com/systelab/cpp-jwt-utils.git                     DIR extern/JWTUtils                    BRANCH v1.0.1)
-git_clone_repository(URL https://github.com/systelab/cpp-rest-api-core.git                 DIR extern/RESTAPICore                 BRANCH v1.0.0)
+git_clone_repository(URL https://github.com/systelab/cpp-jwt-utils.git                     DIR extern/JWTUtils                    BRANCH v1.0.2)
+git_clone_repository(URL https://github.com/systelab/cpp-rest-api-core.git                 DIR extern/RESTAPICore                 BRANCH v1.0.1)
 
 
 # Configure include directories
@@ -47,6 +47,7 @@ add_subdirectory(${CMAKE_SOURCE_DIR}/extern/JSONAdapter/JSONAdapterTestUtilities
 add_subdirectory(${CMAKE_SOURCE_DIR}/extern/RapidJSONAdapter/src/RapidJSONAdapter)
 add_subdirectory(${CMAKE_SOURCE_DIR}/extern/BoostAsioWebServerAdapter/src/BoostAsioWebServerAdapter)
 add_subdirectory(${CMAKE_SOURCE_DIR}/extern/JWTUtils/src/JWTUtils)
+add_subdirectory(${CMAKE_SOURCE_DIR}/extern/JWTUtils/test/JWTUtilsTestUtilities)
 add_subdirectory(${CMAKE_SOURCE_DIR}/extern/RESTAPICore/src/RESTAPICore)
 
 set_target_properties (gmock_main PROPERTIES FOLDER Extern)
@@ -58,6 +59,7 @@ set_target_properties (JSONAdapterTestUtilities PROPERTIES FOLDER Extern)
 set_target_properties (RapidJSONAdapter PROPERTIES FOLDER Extern)
 set_target_properties (BoostAsioWebServerAdapter PROPERTIES FOLDER Extern)
 set_target_properties (JWTUtils PROPERTIES FOLDER Extern)
+set_target_properties (JWTUtilsTestUtilities PROPERTIES FOLDER Extern)
 set_target_properties (RESTAPICore PROPERTIES FOLDER Extern)
 
 

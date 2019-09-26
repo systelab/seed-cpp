@@ -15,8 +15,8 @@ class SeedCppConan(ConanFile):
         self.requires("DbSQLiteAdapter/1.1.1@systelab/stable")
         self.requires("RapidJSONAdapter/1.0.1@systelab/stable")
         self.requires("BoostAsioWebServerAdapter/1.0.1@systelab/stable")
-        self.requires("JWTUtils/1.0.1@systelab/stable")
-        self.requires("RESTAPICore/1.0.0@systelab/stable")
+        self.requires("JWTUtils/1.0.2@systelab/stable")
+        self.requires("RESTAPICore/1.0.1@systelab/stable")
 
     def imports(self):
         self.copy("*.dll", dst=("lib/extern"), src="bin")
