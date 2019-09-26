@@ -36,6 +36,7 @@ include_directories(${CMAKE_SOURCE_DIR}/extern/DbSQLiteAdapter/src/sqleet-v0.27.
 include_directories(${CMAKE_SOURCE_DIR}/extern/RapidJSONAdapter/src)
 include_directories(${CMAKE_SOURCE_DIR}/extern/BoostAsioWebServerAdapter/src)
 include_directories(${CMAKE_SOURCE_DIR}/extern/JWTUtils/src)
+include_directories(${CMAKE_SOURCE_DIR}/extern/JWTUtils/test)
 include_directories(${CMAKE_SOURCE_DIR}/extern/RESTAPICore/src)
 
 
