@@ -25,7 +25,7 @@ namespace seed_cpp { namespace service {
 		{
 			schemaContent = m_resourceService.loadResourceAsString(uri, "JSON_SCHEMA");
 		}
-		catch (std::runtime_error&)
+		catch (std::exception&)
 		{
 			return std::unique_ptr<systelab::json::IJSONDocument>();
 		}
