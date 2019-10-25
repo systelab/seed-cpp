@@ -19,6 +19,9 @@ class SeedCppConan(ConanFile):
         self.options["BoostAsioWebServerAdapter"].OpenSSL = self.options.OpenSSL
         self.options["JWTUtils"].OpenSSL = self.options.OpenSSL
         self.options["RESTAPICore"].OpenSSL = self.options.OpenSSL
+        self.options["DbAdapterTestUtilities"].gtest = self.options.gtest
+        self.options["JSONAdapterTestUtilities"].gtest = self.options.gtest
+        self.options["JWTUtilsTestUtilities"].gtest = self.options.gtest
 
     def requirements(self):
         self.requires("DbSQLiteAdapter/1.1.5@systelab/stable")
@@ -29,6 +32,10 @@ class SeedCppConan(ConanFile):
 
     def build_requirements(self):
         self.build_requires("TestUtilitiesInterface/1.0.3@systelab/stable")
+        self.build_requires("DbAdapterTestUtilities/1.1.5@systelab/stable")
+        self.build_requires("JSONAdapterTestUtilities/1.0.3@systelab/stable")
+        self.build_requires("JWTUtilsTestUtilities/1.0.3@systelab/stable")		
+
         if self.options.gtest == "1.7.0":
             self.build_requires("gtest/1.7.0@systelab/stable")
         else:
