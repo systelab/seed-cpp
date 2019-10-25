@@ -10,18 +10,20 @@ class SeedCppConan(ConanFile):
     license = "MIT"
     generators = "cmake_find_package"
     settings = "os", "compiler", "build_type", "arch"
+    options = {"boost": ["1.67.0"], "OpenSSL": ["1.0.2n"], "gtest": ["1.8.1"]}
+    default_options = {"boost": "1.67.0", "OpenSSL":"1.0.2n", "gtest":"1.8.1"}
 
     def requirements(self):
-        self.requires("DbSQLiteAdapter/1.1.1@systelab/stable")
-        self.requires("RapidJSONAdapter/1.0.1@systelab/stable")
-        self.requires("BoostAsioWebServerAdapter/1.0.1@systelab/stable")
-        self.requires("JWTUtils/1.0.2@systelab/stable")
-        self.requires("RESTAPICore/1.0.1@systelab/stable")
+        self.requires("DbSQLiteAdapter/1.1.5@systelab/stable")
+        self.requires("RapidJSONAdapter/1.0.3@systelab/stable")
+        self.requires("BoostAsioWebServerAdapter/1.0.2@systelab/stable")
+        self.requires("JWTUtils/1.0.3@systelab/stable")
+        self.requires("RESTAPICore/1.0.2@systelab/stable")
 
     def imports(self):
-        self.copy("*.dll", dst=("lib/extern"), src="bin")
-        self.copy("*.dylib*", dst=("lib/extern"), src="lib")
-        self.copy("*.so*", dst=("lib/extern"), src="lib")
+        self.copy("*.dll", dst=("bin/%s" % self.settings.build_type), src="bin")
+        self.copy("*.dylib*", dst=("bin/%s" % self.settings.build_type), src="lib")
+        self.copy("*.so*", dst=("bin/%s" % self.settings.build_type), src="lib")
 
     def package(self):
         self.copy("*.exe", dst="bin", src="bin/SeedCpp")
