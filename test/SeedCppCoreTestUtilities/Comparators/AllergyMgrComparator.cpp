@@ -3,6 +3,7 @@
 #include "SeedCppCore/Model/AllergyMgr.h"
 
 #include "TestUtilitiesInterface/EntityComparator.h"
+#include "TestUtilitiesInterface/EntityComparatorMacros.h"
 
 
 using namespace testing;
