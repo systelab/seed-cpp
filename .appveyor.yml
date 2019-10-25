@@ -1,13 +1,25 @@
-version: '1.0.{build}'
+version: '0.0.{build}'
 
 image: Visual Studio 2017
 
-platform:
-  - x64
+init:
+  - ps: >-
+      if($env:appveyor_repo_tag -eq 'True') {
+        Update-AppveyorBuild -Version "$($env:APPVEYOR_REPO_TAG_NAME.TrimStart("v"))"
+      }
 
 configuration:
   - Debug
   - Release
+
+environment:
+  matrix:
+  - arch: x86_64
+    platform: x64
+    visual_studio: Visual Studio 15 2017 Win64
+    boost: 1.67.0
+    OpenSSL: 1.0.2n
+    gtest: 1.8.1
 
 install:
   - set PATH=%PATH%;%PYTHON%/Scripts/
@@ -19,8 +31,8 @@ install:
 before_build:
   - md build
   - cd build
-  - conan install .. -s build_type=%CONFIGURATION%
-  - cmake .. -G "Visual Studio 15 2017 Win64"
+  - conan install .. -s build_type=%CONFIGURATION% -s compiler.toolset=v141 -s arch=%ARCH% -o boost=%BOOST% -o OpenSSL=%OPENSSL% -o gtest=%GTEST%
+  - cmake .. -G "%VISUAL_STUDIO%"
 
 build:
   project: $(APPVEYOR_BUILD_FOLDER)\build\SeedCpp.sln
