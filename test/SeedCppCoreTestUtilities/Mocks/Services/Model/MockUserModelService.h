@@ -19,13 +19,13 @@ namespace seed_cpp { namespace test_utility {
 		MOCK_CONST_METHOD2(getUserByLogin, const model::User*(const std::string&, const model::LockableEntityMgrSubject::IReadLock&));
 
 		MOCK_METHOD2(addEntityProxy, const model::User&(model::User*, const model::LockableEntityMgrSubject::IWriteLock&));
-		const model::User& addEntity(std::unique_ptr<model::User> patient, const model::LockableEntityMgrSubject::IWriteLock& lock)
+		const model::User& addEntity(std::unique_ptr<model::User> patient, const model::LockableEntityMgrSubject::IWriteLock& lock) override
 		{
 			return addEntityProxy(patient.release(), lock);
 		}
 	
 		MOCK_METHOD2(editEntityProxy, const model::User&(model::User*, const model::LockableEntityMgrSubject::IWriteLock&));
-		const model::User& editEntity(std::unique_ptr<model::User> patient, const model::LockableEntityMgrSubject::IWriteLock& lock)
+		const model::User& editEntity(std::unique_ptr<model::User> patient, const model::LockableEntityMgrSubject::IWriteLock& lock) override
 		{
 			return editEntityProxy(patient.release(), lock);
 		}
