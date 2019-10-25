@@ -119,7 +119,7 @@ namespace seed_cpp { namespace unit_test {
 	TYPED_TEST_P(EntityPostEndpointTest, testExecuteForHappyPathAddsGivenEntityThroughModelService)
 	{
 		auto expectedEntityToAdd = TypeParam::getExpectedEntityToAdd();
-		EXPECT_CALL(this->m_entityModelService, addEntityProxy(Pointee(isEqualTo(expectedEntityToAdd)), _));
+		EXPECT_CALL(this->m_entityModelService, addEntityProxy(Pointee(isEqTo(expectedEntityToAdd)), _));
 
 		systelab::rest_api_core::EndpointRequestData requestData;
 		requestData.setContent(TypeParam::getHappyPathRequestContent());

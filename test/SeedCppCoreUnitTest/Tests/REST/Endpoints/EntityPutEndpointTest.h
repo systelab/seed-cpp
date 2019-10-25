@@ -167,7 +167,7 @@ namespace seed_cpp { namespace unit_test {
 	TYPED_TEST_P(EntityPutEndpointTest, testExecuteForHappyPathNotExistingAddsGivenEntityThroughModelService)
 	{
 		auto expectedEntityToAdd = TypeParam::getExpectedEntityToAddWhenNotFound();
-		EXPECT_CALL(this->m_entityModelService, addEntityProxy(Pointee(isEqualTo(expectedEntityToAdd)), _));
+		EXPECT_CALL(this->m_entityModelService, addEntityProxy(Pointee(isEqTo(expectedEntityToAdd)), _));
 
 		auto requestData = this->getHappyPathNotExistingEndpointRequestData();
 		this->m_endpoint->execute(requestData);
@@ -209,7 +209,7 @@ namespace seed_cpp { namespace unit_test {
 	TYPED_TEST_P(EntityPutEndpointTest, testExecuteForHappyPathAlreadyExistingEditsGivenEntityThroughModelService)
 	{
 		auto expectedEntityToEdit = TypeParam::getExpectedEntityToEditWhenAlreadyExisting();
-		EXPECT_CALL(this->m_entityModelService, editEntityProxy(Pointee(isEqualTo(expectedEntityToEdit)), _));
+		EXPECT_CALL(this->m_entityModelService, editEntityProxy(Pointee(isEqTo(expectedEntityToEdit)), _));
 
 		auto requestData = this->getHappyPathAlreadyExistingEndpointRequestData();
 		this->m_endpoint->execute(requestData);
