@@ -80,7 +80,7 @@ namespace seed_cpp { namespace dal {
 
 			transaction->commit();
 		}
-		catch (std::exception& exc)
+		catch (std::exception&)
 		{
 			transaction->rollback();
 			throw;
@@ -107,7 +107,7 @@ namespace seed_cpp { namespace dal {
 
 			transaction->commit();
 		}
-		catch (std::exception& exc)
+		catch (std::exception&)
 		{
 			transaction->rollback();
 			throw;
