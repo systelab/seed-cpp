@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.2)
 
-# Find 3rd party dependencides
+# Find external dependencides
 find_package(DbSQLiteAdapter)
 find_package(RapidJSONAdapter)
 find_package(BoostAsioWebServerAdapter)
