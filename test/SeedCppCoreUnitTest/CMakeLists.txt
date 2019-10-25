@@ -45,7 +45,3 @@ endforeach()
 # Register tests
 add_test(NAME SeedCppCoreUnitTest COMMAND ${SEED_CPP_CORE_UNIT_TEST_PROJECT})
 
-# Copy extern dynamic libraries to build dir
-add_custom_command(TARGET ${SEED_CPP_CORE_UNIT_TEST_PROJECT} POST_BUILD
-                   COMMAND ${CMAKE_COMMAND} -E copy_directory
-                   ${CMAKE_BINARY_DIR}/lib/extern $<TARGET_FILE_DIR:${SEED_CPP_CORE_UNIT_TEST_PROJECT}>)
