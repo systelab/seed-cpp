@@ -35,11 +35,7 @@ class SeedCppConan(ConanFile):
         self.build_requires("DbAdapterTestUtilities/1.1.5@systelab/stable")
         self.build_requires("JSONAdapterTestUtilities/1.0.3@systelab/stable")
         self.build_requires("JWTUtilsTestUtilities/1.0.3@systelab/stable")		
-
-        if self.options.gtest == "1.7.0":
-            self.build_requires("gtest/1.7.0@systelab/stable")
-        else:
-            self.build_requires("gtest/1.8.1@bincrafters/stable")
+        self.build_requires("gtest/1.8.1@bincrafters/stable")
 
     def imports(self):
         self.copy("*.dll", dst=("bin/%s" % self.settings.build_type), src="bin")
