@@ -57,7 +57,7 @@ git clone https://github.com/systelab/seed-cpp
 cd seed-cpp
 md build && cd build
 conan remote add systelab-bintray https://api.bintray.com/conan/systelab/conan
-conan install .. -s build_type=Release
+conan install .. -s build_type=Release -s compiler.toolset=v141 -s arch=x86_64
 cmake .. -G "Visual Studio 15 2017 Win64"
 "$VSINSTALLPATH/devenv.com" SeedCpp.sln /build "Release" /PROJECT "SeedCpp"
 ```
@@ -69,7 +69,7 @@ git clone https://github.com/systelab/seed-cpp
 cd seed-cpp
 md build && cd build
 conan remote add systelab-bintray https://api.bintray.com/conan/systelab/conan
-conan install .. -s build_type=Debug
+conan install .. -s build_type=Debug -s compiler.toolset=v141 -s arch=x86_64
 cmake .. -G "Visual Studio 15 2017 Win64"
 "$VSINSTALLPATH/devenv.com" SeedCpp.sln /build "Debug" /PROJECT "SeedCpp"
 ```
