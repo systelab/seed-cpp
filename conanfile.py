@@ -34,7 +34,7 @@ class SeedCppConan(ConanFile):
         self.build_requires("TestUtilitiesInterface/1.0.3@systelab/stable")
         self.build_requires("DbAdapterTestUtilities/1.1.5@systelab/stable")
         self.build_requires("JSONAdapterTestUtilities/1.0.3@systelab/stable")
-        self.build_requires("JWTUtilsTestUtilities/1.0.3@systelab/stable")		
+        self.build_requires("JWTUtilsTestUtilities/1.0.3@systelab/stable")
         self.build_requires("gtest/1.8.1@bincrafters/stable")
 
     def imports(self):
