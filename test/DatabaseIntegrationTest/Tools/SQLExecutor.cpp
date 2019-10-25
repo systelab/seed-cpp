@@ -1,8 +1,10 @@
 #include "stdafx.h"
 #include "SQLExecutor.h"
 
+#include "DbSQLiteAdapter/Connection.h"
+#include "DbSQLiteAdapter/ConnectionConfiguration.h"
+
 #include <fstream>
-#include <sqlite3.h>
 #include <stdio.h>
 #include <boost/filesystem.hpp>
 
@@ -50,27 +52,19 @@ namespace seed_cpp { namespace db_test {
 
 	bool SQLExecutor::executeStatements(const std::string& sqlStatements)
 	{
-		sqlite3* db = NULL;
-		int openResult = sqlite3_open(m_dbFilepath.c_str(), &db);
-		if (openResult != SQLITE_OK)
+		systelab::db::sqlite::Connection connection;
+		systelab::db::sqlite::ConnectionConfiguration configuration(m_dbFilepath);
+		auto database = connection.loadDatabase(configuration);
+
+		try
+		{
+			database->executeMultipleStatements(sqlStatements);
+			return true;
+		}
+		catch (std::exception&)
 		{
 			return false;
 		}
-
-		int execResult = sqlite3_exec(db, sqlStatements.c_str(), NULL, NULL, NULL);
-		if (execResult != SQLITE_OK)
-		{
-			sqlite3_close(db);
-			return false;
-		}
-
-		int closeResult = sqlite3_close(db);
-		if (closeResult != SQLITE_OK)
-		{
-			return false;
-		}
-
-		return true;
 	}
 
 	bool SQLExecutor::removeDatabaseFile()
