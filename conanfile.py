@@ -38,9 +38,15 @@ class SeedCppConan(ConanFile):
         self.build_requires("gtest/1.8.1@bincrafters/stable")
 
     def imports(self):
-        self.copy("*.dll", dst=("bin/%s" % self.settings.build_type), src="bin")
-        self.copy("*.dylib*", dst=("bin/%s" % self.settings.build_type), src="lib")
-        self.copy("*.so*", dst=("bin/%s" % self.settings.build_type), src="lib")
+        self.copy("*.dll", dst=("bin/SeedCpp/%s" % self.settings.build_type), src="bin")
+        self.copy("*.dylib*", dst=("bin/SeedCpp/%s" % self.settings.build_type), src="lib")
+        self.copy("*.so*", dst=("bin/SeedCpp/%s" % self.settings.build_type), src="lib")
+        self.copy("*.dll", dst=("bin/SeedCppCoreUnitTest/%s" % self.settings.build_type), src="bin")
+        self.copy("*.dylib*", dst=("bin/SeedCppCoreUnitTest/%s" % self.settings.build_type), src="lib")
+        self.copy("*.so*", dst=("bin/SeedCppCoreUnitTest/%s" % self.settings.build_type), src="lib")
+        self.copy("*.dll", dst=("bin/DatabaseIntegrationTest/%s" % self.settings.build_type), src="bin")
+        self.copy("*.dylib*", dst=("bin/DatabaseIntegrationTest/%s" % self.settings.build_type), src="lib")
+        self.copy("*.so*", dst=("bin/DatabaseIntegrationTest/%s" % self.settings.build_type), src="lib")
 
     def package(self):
         self.copy("*.exe", dst="bin", src="bin/SeedCpp")
