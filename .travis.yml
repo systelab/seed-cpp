@@ -71,7 +71,7 @@ script:
   - conan install .. -s build_type=${CONAN_BUILD_TYPE} -s compiler.libcxx=${COMPILER_LIBCXX}
   - cmake -DCMAKE_BUILD_TYPE=${BUILD_TYPE} .. 
   - make
-  - if [ $TRAVIS_OS_NAME == osx ]; then cp -f lib/extern/*.dylib /usr/local/lib; fi
+  - if [ $TRAVIS_OS_NAME == osx ]; then cp -f bin/SeedCpp/Debug/*.dylib /usr/local/lib; fi
   - cd bin
   - cd SeedCppCoreUnitTest
   - ./SeedCppCoreUnitTest
