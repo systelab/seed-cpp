@@ -39,14 +39,14 @@ class SeedCppConan(ConanFile):
 
     def imports(self):
         self.copy("*.dll", dst=("bin/SeedCpp/%s" % self.settings.build_type), src="bin")
-        self.copy("*.dylib*", dst=("bin/SeedCpp/%s" % self.settings.build_type), src="lib")
-        self.copy("*.so*", dst=("bin/SeedCpp/%s" % self.settings.build_type), src="lib")
         self.copy("*.dll", dst=("bin/SeedCppCoreUnitTest/%s" % self.settings.build_type), src="bin")
-        self.copy("*.dylib*", dst=("bin/SeedCppCoreUnitTest/%s" % self.settings.build_type), src="lib")
-        self.copy("*.so*", dst=("bin/SeedCppCoreUnitTest/%s" % self.settings.build_type), src="lib")
         self.copy("*.dll", dst=("bin/DatabaseIntegrationTest/%s" % self.settings.build_type), src="bin")
-        self.copy("*.dylib*", dst=("bin/DatabaseIntegrationTest/%s" % self.settings.build_type), src="lib")
-        self.copy("*.so*", dst=("bin/DatabaseIntegrationTest/%s" % self.settings.build_type), src="lib")
+        self.copy("*.dylib*", dst="bin/SeedCpp", src="lib")
+        self.copy("*.dylib*", dst="bin/SeedCppCoreUnitTest", src="lib")
+        self.copy("*.dylib*", dst="bin/DatabaseIntegrationTest", src="lib")
+        self.copy("*.so*", dst="bin/SeedCpp", src="lib")
+        self.copy("*.so*", dst="bin/SeedCppCoreUnitTest", src="lib")
+        self.copy("*.so*", dst="bin/DatabaseIntegrationTest", src="lib")
 
     def package(self):
         self.copy("*.exe", dst="bin", src="bin/SeedCpp")
