@@ -2,6 +2,9 @@ version: '1.0.{build}'
 
 image: Visual Studio 2017
 
+environment:
+  nodejs_version: "6"
+
 platform:
   - x64
 
@@ -14,6 +17,9 @@ install:
   - pip.exe install conan
   - conan user
   - conan --version
+  - ps: Install-Product node $env:nodejs_version
+  - node --version
+  - npm --version
 
 before_build:
   - md build
@@ -35,7 +41,7 @@ test_script:
   - ps: cd ..
   - ps: cd test
   - ps: cd RESTAPITest
-  - ps: npm install
+  - ps: npm install --no-audit
   - ps: npm run test
   - ps: cd ..
   - ps: cd ..
