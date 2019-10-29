@@ -1,36 +1,75 @@
-import 'mocha';
-import { expect } from 'chai';
-import { Utils } from '../libraries/lib-utils';
-import { RestAPI } from '../libraries/lib-restAPI';
-import { SeedCppApplication} from '../tested-apps/seed-cpp-app';
+import { SeedCppApp, SeedCppRestApi } from '@apps';
+import { RESTAPI, Request, RequestMethod, HttpHeader, Response, StatusCode } from '@restapi';
 
-describe('Login: ', async () =>{
-  var token: string = '';
-  beforeEach(async() =>
-  {
-    SeedCppApplication.startApplication();
-  });
 
-  afterEach(async() =>
-  {
-    SeedCppApplication.closeApplication();
-  });
+describe('Login endpoint', async () =>
+{
+    let app: SeedCppApp;
+    let api: SeedCppRestApi;
 
-  it('should login successfully', async() => {
-      
-      let requestUrl = RestAPI.REST_LOGIN;
-      let requestBodyToSend = "login=Systelab&password=Systelab";
-      let expectedStatus = RestAPI.REST_STATUS_OK;
-      
-      await RestAPI.verifyPostEndpointRequest(requestUrl, token, requestBodyToSend, expectedStatus, '');
-  });
+    beforeEach(async() =>
+    {
+        app = new SeedCppApp();
+        api = app.getRESTAPI();
+    });
 
-  it('should not login because wrong credentials', async() => {
-    
-    let requestUrl = RestAPI.REST_LOGIN;
-    let requestBodyToSend = "login=Systelab&password=Unexisting";
-    let expectedStatus = RestAPI.REST_STATUS_UNAUTHORIZED;
-    
-    await RestAPI.verifyPostEndpointRequest(requestUrl, token, requestBodyToSend, expectedStatus, '');
-  }); 
+    afterEach(async() =>
+    {
+        app.close();
+    });
+
+    it('should login successfully', async() =>
+    {
+        const username: string = "Systelab";
+        const password: string = "Systelab";
+        const request: Request = {
+            appURI: api.getApplicationURI(),
+            resourceURI: SeedCppRestApi.USERS_LOGIN,
+            method: RequestMethod.POST,
+            headers: [ {name: HttpHeader.ContentType, value: "application/x-www-form-urlencoded"} ],
+            body: `login=${username}&password=${password}`
+        }
+
+        const response: Response = await RESTAPI.sendRequest(request);
+        RESTAPI.expectStatus(response, StatusCode.OK);
+        RESTAPI.expectHeaderPresent(response, HttpHeader.Authorization);
+        RESTAPI.expectBody(response, {});
+    });
+
+    it('should not login when given user does not exist', async() =>
+    {
+        const username: string = "WrongUser";
+        const password: string = "Systelab";
+        const request: Request = {
+            appURI: api.getApplicationURI(),
+            resourceURI: SeedCppRestApi.USERS_LOGIN,
+            method: RequestMethod.POST,
+            headers: [ {name: HttpHeader.ContentType, value: "application/x-www-form-urlencoded"} ],
+            body: `login=${username}&password=${password}`
+        }
+
+        const response: Response = await RESTAPI.sendRequest(request);
+        RESTAPI.expectStatus(response, StatusCode.UNAUTHORIZED);
+        RESTAPI.expectHeaderNotPresent(response, HttpHeader.Authorization);
+        RESTAPI.expectBody(response, {});
+    });
+
+    it('should not login when given password is invalid', async() =>
+    {
+        const username: string = "Systelab";
+        const password: string = "WrongPassword";
+        const request: Request = {
+            appURI: api.getApplicationURI(),
+            resourceURI: SeedCppRestApi.USERS_LOGIN,
+            method: RequestMethod.POST,
+            headers: [ {name: HttpHeader.ContentType, value: "application/x-www-form-urlencoded"} ],
+            body: `login=${username}&password=${password}`
+        }
+
+        const response: Response = await RESTAPI.sendRequest(request);
+        RESTAPI.expectStatus(response, StatusCode.UNAUTHORIZED);
+        RESTAPI.expectHeaderNotPresent(response, HttpHeader.Authorization);
+        RESTAPI.expectBody(response, {});
+    });
+
 });
