@@ -31,10 +31,18 @@ test_script:
   - ps: cd bin
   - SeedCppCoreUnitTest.exe --gtest_output=xml:SeedCppCoreUnitTest.xml
   - DatabaseIntegrationTest.exe --gtest_output=xml:DatabaseIntegrationTest.xml
+  - ps: cd ..
+  - ps: cd ..
+  - ps: cd test
+  - ps: cd RESTAPITest
+  - ps: npm install
+  - ps: npm run test
+  - ps: cd ..
+  - ps: cd ..
 
 after_test:
-  - ps: (new-object net.webclient).UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\SeedCppCoreUnitTest.xml))
-  - ps: (new-object net.webclient).UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\DatabaseIntegrationTest.xml))
+  - ps: (new-object net.webclient).UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\build\bin\SeedCppCoreUnitTest.xml))
+  - ps: (new-object net.webclient).UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\build\bin\DatabaseIntegrationTest.xml))
 
 artifacts:
   - path: 'build\bin'
