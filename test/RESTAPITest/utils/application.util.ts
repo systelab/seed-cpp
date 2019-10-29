@@ -1,5 +1,6 @@
 var child_process = require('child_process');
-
+const { platform } = require('os'),
+osType = platform();
 
 export class Application
 {
@@ -7,7 +8,13 @@ export class Application
 
     public constructor(name: string, args: string[], workingDir: string)
     {
-        this.applicationProcess = child_process.spawn(name, args, { cwd: workingDir });
+        let command: string;
+        if (osType == 'win32')
+            command = name + ".exe";
+        else
+            command = "./" + name;
+
+        this.applicationProcess = child_process.spawn(command, args, { cwd: workingDir });
 
         this.applicationProcess.on("error", function(err)
         {
