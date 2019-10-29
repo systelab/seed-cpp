@@ -4,23 +4,24 @@
   "description": "REST API test project for C++ seed",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/.bin/mocha -r ts-node/register --reporter spec"
+    "test": "./node_modules/.bin/mocha -r ts-node/register -r tsconfig-paths/register --reporter spec"
   },
   "author": "",
   "license": "MIT",
   "dependencies": {
     "@types/chai": "^4.1.7",
+    "@types/mocha": "^5.2.7",
     "@types/node": "^12.6.2",
     "chai": "^4.2.0",
+    "chai-exclude": "^2.0.2",
     "chai-http": "^4.3.0",
     "esm": "^3.2.25",
     "form-data": "^2.5.0",
+    "mocha": "^6.1.4",
     "request": "^2.88.0",
     "ts-node": "^8.3.0",
+    "tsconfig-paths": "^3.9.0",
     "typings": "^2.1.1"
   },
-  "devDependencies": {
-    "@types/mocha": "^5.2.7",
-    "mocha": "^6.1.4"
-  }
+  "devDependencies": {}
 }
