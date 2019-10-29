@@ -64,6 +64,8 @@ install:
   - conan user
   - conan remote add systelab-bintray https://api.bintray.com/conan/systelab/conan
   - conan --version
+  - node --version
+  - npm --version
 
 script:
   - mkdir -p build
