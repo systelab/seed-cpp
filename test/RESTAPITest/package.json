@@ -1,6 +1,7 @@
 {
   "name": "restapitest",
   "version": "1.0.0",
+  "private": true,
   "description": "REST API test project for C++ seed",
   "main": "index.js",
   "scripts": {
