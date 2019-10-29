@@ -29,7 +29,7 @@ export class SeedCppApp
     public getRESTAPI(): SeedCppRestApi
     {
         const port: number = this.getPort();
-        return new SeedCppRestApi(`http://localhost:${port}/seed`);
+        return new SeedCppRestApi(`http://127.0.0.1:${port}/seed`);
     }
 
     private getPort(): number
