@@ -16,7 +16,6 @@ install:
   - conan --version
   - node --version
   - npm --version
-  - cmd: netsh advfirewall firewall add rule name="Open Port 7171" dir=in action=allow protocol=TCP localport=7171
 
 before_build:
   - md build
