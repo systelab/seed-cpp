@@ -21,7 +21,7 @@ install:
 before_build:
   - md build
   - cd build
-  - conan install ..
+  - conan install .. -s build_type=%CONFIGURATION% -s compiler.toolset=v141 -s arch=x86_64
   - cmake .. -G "Visual Studio 15 2017 Win64"
 
 build:
