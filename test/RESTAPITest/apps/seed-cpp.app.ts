@@ -12,7 +12,7 @@ export class SeedCppApp
         {
             const args: string[] = ["--port", this.getPort().toString()];
             const workingDir: string = this.getWorkingDir();
-            this.application = new Application("SeedCpp.exe", args, workingDir);
+            this.application = new Application("SeedCpp", args, workingDir);
             await Thread.sleep(200);
         }
     }
