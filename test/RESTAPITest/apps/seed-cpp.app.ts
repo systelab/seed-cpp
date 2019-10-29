@@ -1,5 +1,4 @@
 import { Application, Thread } from '@utils';
-import { RESTAPI } from '@restapi';
 import { SeedCppRestApi } from './seed-cpp-rest-api.app'
 
 export class SeedCppApp
