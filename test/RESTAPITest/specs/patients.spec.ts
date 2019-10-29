@@ -9,14 +9,15 @@ describe('Patients', async () =>
     let app: SeedCppApp;
     let api: SeedCppRestApi;
 
-    beforeEach(async() =>
+    before(async() =>
     {
         app = new SeedCppApp();
+        await app.start();
         api = app.getRESTAPI();
         await api.login();
     });
 
-    afterEach(async() =>
+    after(async() =>
     {
         app.close();
     });

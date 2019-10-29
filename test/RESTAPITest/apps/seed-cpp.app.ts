@@ -1,4 +1,4 @@
-import { Application } from '@utils';
+import { Application, Thread } from '@utils';
 import { RESTAPI } from '@restapi';
 import { SeedCppRestApi } from './seed-cpp-rest-api.app'
 
@@ -6,17 +6,24 @@ export class SeedCppApp
 {
     private application: Application;
 
-    constructor()
+    public async start(): Promise<void>
     {
-        const args: string[] = ["--port", this.getPort().toString()];
-        const workingDir: string = this.getWorkingDir();
-        this.application = new Application("SeedCpp.exe", args, workingDir);
+        if (!this.application)
+        {
+            const args: string[] = ["--port", this.getPort().toString()];
+            const workingDir: string = this.getWorkingDir();
+            this.application = new Application("SeedCpp.exe", args, workingDir);
+            await Thread.sleep(200);
+        }
     }
 
     public close()
     {
-        this.application.close();
-        this.application = null;
+        if (this.application)
+        {
+            this.application.close();
+            this.application = null;
+        }
     }
 
     public getRESTAPI(): SeedCppRestApi
@@ -33,6 +40,7 @@ export class SeedCppApp
     private getWorkingDir(): string
     {
         const configuration: string = (process.env.CONFIGURATION !== undefined) ? process.env.CONFIGURATION : "Debug";
-        return `../../build/bin/SeedCpp/${configuration}`;
+        //return `../../build/bin/SeedCpp/${configuration}`;
+        return "../../build/bin";
     }
 }

@@ -7,13 +7,14 @@ describe('Login endpoint', async () =>
     let app: SeedCppApp;
     let api: SeedCppRestApi;
 
-    beforeEach(async() =>
+    before(async() =>
     {
         app = new SeedCppApp();
+        await app.start();
         api = app.getRESTAPI();
     });
 
-    afterEach(async() =>
+    after(async() =>
     {
         app.close();
     });
