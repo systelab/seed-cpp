@@ -14,11 +14,13 @@ install:
   - pip.exe install conan
   - conan user
   - conan --version
+  - node --version
+  - npm --version
 
 before_build:
   - md build
   - cd build
-  - conan install ..
+  - conan install .. -s build_type=%CONFIGURATION% -s compiler.toolset=v141 -s arch=x86_64
   - cmake .. -G "Visual Studio 15 2017 Win64"
 
 build:
@@ -28,13 +30,21 @@ after_build:
   - ps: 7z a .\Dist\$env:deploy_name_installer".zip" $env:build_path_installer
 
 test_script:
-  - ps: cd bin
+  - cd bin
   - SeedCppCoreUnitTest.exe --gtest_output=xml:SeedCppCoreUnitTest.xml
   - DatabaseIntegrationTest.exe --gtest_output=xml:DatabaseIntegrationTest.xml
+  - cd ..
+  - cd ..
+  - cd test
+  - cd RESTAPITest
+  - npm install --no-audit
+  - npm run test
+  - cd ..
+  - cd ..
 
 after_test:
-  - ps: (new-object net.webclient).UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\SeedCppCoreUnitTest.xml))
-  - ps: (new-object net.webclient).UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\DatabaseIntegrationTest.xml))
+  - ps: (new-object net.webclient).UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\build\bin\SeedCppCoreUnitTest.xml))
+  - ps: (new-object net.webclient).UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\build\bin\DatabaseIntegrationTest.xml))
 
 artifacts:
   - path: 'build\bin'

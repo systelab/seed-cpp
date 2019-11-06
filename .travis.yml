@@ -16,6 +16,7 @@ matrix:
       - BUILD_TYPE=Release
       - CONAN_BUILD_TYPE=Release
       - COMPILER_LIBCXX=libstdc++11
+      - CONFIGURATION=Release
 
   - os: linux
     dist: xenial
@@ -31,6 +32,7 @@ matrix:
       - BUILD_TYPE=Debug
       - CONAN_BUILD_TYPE=Debug
       - COMPILER_LIBCXX=libstdc++11
+      - CONFIGURATION=Debug
 
   - os: linux
     dist: xenial
@@ -46,6 +48,7 @@ matrix:
       - BUILD_TYPE=Coverage
       - CONAN_BUILD_TYPE=Debug
       - COMPILER_LIBCXX=libstdc++11
+      - CONFIGURATION=Debug
 
   - os: osx
     osx_image: xcode10.1
@@ -54,6 +57,7 @@ matrix:
       - BUILD_TYPE=Release
       - CONAN_BUILD_TYPE=Release
       - COMPILER_LIBCXX=libc++
+      - CONFIGURATION=Release
 
 install:
   - if [ $TRAVIS_OS_NAME == linux ]; then sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 90; fi
@@ -64,6 +68,8 @@ install:
   - conan user
   - conan remote add systelab-bintray https://api.bintray.com/conan/systelab/conan
   - conan --version
+  - node --version
+  - npm --version
 
 script:
   - mkdir -p build
@@ -77,6 +83,13 @@ script:
   - ./DatabaseIntegrationTest
   - cd ..
   - if [[ $TRAVIS_OS_NAME == linux && $BUILD_TYPE == Coverage ]]; then make AutomatedTestCoverage; fi
+  - cd ..
+  - cd test
+  - cd RESTAPITest
+  - npm install --no-audit
+  - npm run test
+  - cd ..
+  - cd ..
 
 after_success:
   - if [[ $TRAVIS_OS_NAME == linux && $BUILD_TYPE == Coverage ]]; then bash <(curl -s https://codecov.io/bash); fi

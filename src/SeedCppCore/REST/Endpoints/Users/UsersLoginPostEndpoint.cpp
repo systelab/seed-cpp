@@ -43,11 +43,11 @@ namespace seed_cpp { namespace rest {
 
 		if (!authenticate(*loginData))
 		{
-			return ReplyBuilderHelper::build(systelab::web_server::Reply::UNAUTHORIZED);
+			return ReplyBuilderHelper::build(systelab::web_server::Reply::UNAUTHORIZED, "{}");
 		}
 
 		std::string jwt = buildJWT(loginData->m_login);
-		auto reply = ReplyBuilderHelper::build(systelab::web_server::Reply::OK);
+		auto reply = ReplyBuilderHelper::build(systelab::web_server::Reply::OK, "{}");
 		reply->addHeader("Authorization", "Bearer " + jwt);
 
 		return reply;
