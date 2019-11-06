@@ -27,6 +27,8 @@ install:
   - conan user
   - conan remote add systelab-bintray https://api.bintray.com/conan/systelab/conan
   - conan --version
+  - node --version
+  - npm --version
 
 before_build:
   - md build
@@ -50,15 +52,22 @@ test_script:
   - ps: cd DatabaseIntegrationTest
   - ps: cd $env:CONFIGURATION
   - DatabaseIntegrationTest.exe --gtest_output=xml:DatabaseIntegrationTest.xml
+  - cd ..
+  - cd ..
+  - cd ..
+  - cd ..
+  - cd test
+  - cd RESTAPITest
+  - npm install --no-audit
+  - npm run test
+  - cd ..
+  - cd ..
 
 after_test:
-  - ps: (new-object net.webclient).UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\DatabaseIntegrationTest.xml))
-  - ps: cd ..
-  - ps: cd ..
-  - ps: cd SeedCppCoreUnitTest
-  - ps: cd $env:CONFIGURATION
-  - ps: (new-object net.webclient).UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\SeedCppCoreUnitTest.xml))
+  - cd 
+  - ps: (new-object net.webclient).UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\build\bin\$env:CONFIGURATION\SeedCppCoreUnitTest.xml))
+  - ps: (new-object net.webclient).UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\build\bin\$env:CONFIGURATION\DatabaseIntegrationTest.xml))
 
 artifacts:
-  - path: 'build\bin'
+  - path: 'build\bin\SeedCpp'
     name: SeedCpp
