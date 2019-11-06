@@ -4,12 +4,7 @@
 
 namespace seed_cpp { namespace test_utility {
 
-	MockAllergyModelService::MockAllergyModelService()
-	{
-	}
-
-	MockAllergyModelService::~MockAllergyModelService()
-	{
-	}
+	MockAllergyModelService::MockAllergyModelService() = default;
+	MockAllergyModelService::~MockAllergyModelService() = default;
 
 }}
