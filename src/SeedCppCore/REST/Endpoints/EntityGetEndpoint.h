@@ -40,7 +40,7 @@ namespace seed_cpp { namespace rest {
 			const _Entity* entity = m_entityMgr.getEntityById(entityId, lock);
 			if (!entity)
 			{
-				return ReplyBuilderHelper::build(systelab::web_server::Reply::NOT_FOUND, "{}");
+				return ReplyBuilderHelper::buildEmpty(systelab::web_server::Reply::NOT_FOUND);
 			}
 
 			auto jsonResponse = m_jsonAdapter.buildEmptyDocument();

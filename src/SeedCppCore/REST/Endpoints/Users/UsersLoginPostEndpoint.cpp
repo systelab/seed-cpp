@@ -35,16 +35,16 @@ namespace seed_cpp { namespace rest {
 		std::unique_ptr<LoginData> loginData = getLoginDataFromRequestContent(requestContent);
 		if (!loginData)
 		{
-			return ReplyBuilderHelper::build(systelab::web_server::Reply::BAD_REQUEST, "{}");
+			return ReplyBuilderHelper::buildEmpty(systelab::web_server::Reply::BAD_REQUEST);
 		}
 
 		if (!authenticate(*loginData))
 		{
-			return ReplyBuilderHelper::build(systelab::web_server::Reply::UNAUTHORIZED, "{}");
+			return ReplyBuilderHelper::buildEmpty(systelab::web_server::Reply::UNAUTHORIZED);
 		}
 
 		std::string jwt = buildJWT(loginData->m_login);
-		auto reply = ReplyBuilderHelper::build(systelab::web_server::Reply::OK, "{}");
+		auto reply = ReplyBuilderHelper::buildEmpty(systelab::web_server::Reply::OK);
 		reply->addHeader("Authorization", "Bearer " + jwt);
 
 		return reply;

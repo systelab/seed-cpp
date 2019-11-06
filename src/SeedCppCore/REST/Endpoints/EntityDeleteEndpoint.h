@@ -30,13 +30,13 @@ namespace seed_cpp { namespace rest {
 			const auto entity = m_entityModelService.getEntityById(entityId, *lock);
 			if (!entity)
 			{
-				return ReplyBuilderHelper::build(systelab::web_server::Reply::NOT_FOUND, "{}");
+				return ReplyBuilderHelper::buildEmpty(systelab::web_server::Reply::NOT_FOUND);
 			}
 
 			try
 			{
 				m_entityModelService.deleteEntity(entityId, *lock);
-				return ReplyBuilderHelper::build(systelab::web_server::Reply::NO_CONTENT, "{}");
+				return ReplyBuilderHelper::buildEmpty(systelab::web_server::Reply::NO_CONTENT);
 			}
 			catch (std::exception& exc)
 			{

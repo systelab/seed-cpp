@@ -46,7 +46,7 @@ namespace seed_cpp { namespace rest {
 			auto jsonRequest = m_jsonAdapter.buildDocumentFromString(requestContent);
 			if (!jsonRequest)
 			{
-				return ReplyBuilderHelper::build(systelab::web_server::Reply::BAD_REQUEST, "{}");
+				return ReplyBuilderHelper::buildEmpty(systelab::web_server::Reply::BAD_REQUEST);
 			}
 
 			try
