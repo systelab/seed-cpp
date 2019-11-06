@@ -39,7 +39,6 @@ export class SeedCppApp
     private getWorkingDir(): string
     {
         const configuration: string = (process.env.CONFIGURATION !== undefined) ? process.env.CONFIGURATION : "Debug";
-        //return `../../build/bin/SeedCpp/${configuration}`;
-        return "../../build/bin";
+        return `../../build/bin/SeedCpp/${configuration}`;
     }
 }
