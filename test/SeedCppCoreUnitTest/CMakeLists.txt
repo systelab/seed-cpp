@@ -27,6 +27,11 @@ target_link_libraries(${SEED_CPP_CORE_UNIT_TEST_PROJECT} SeedCppCore SeedCppCore
 					  JWTUtilsTestUtilities::JWTUtilsTestUtilities)
 set_target_properties(${SEED_CPP_CORE_UNIT_TEST_PROJECT} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin/${SEED_CPP_CORE_UNIT_TEST_PROJECT})
 
+# Ignored missing PDBs link warning on Visual Studio
+if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+	set_target_properties(${PROJECT_NAME} PROPERTIES LINK_FLAGS "/ignore:4099")
+endif()
+
 #Configure source groups
 foreach(FILE ${SEED_CPP_CORE_UNIT_TEST_PROJECT_SRC} ${SEED_CPP_CORE_UNIT_TEST_PROJECT_HDR}) 
     get_filename_component(PARENT_DIR "${FILE}" DIRECTORY)
