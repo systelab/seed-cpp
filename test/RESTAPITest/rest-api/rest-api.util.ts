@@ -74,11 +74,12 @@ export class RESTAPI
 
     public static expectBody(response: Response, expectedBody: any): void
     {
-        expect(JSON.stringify(response.body)).to.be.equal(JSON.stringify(expectedBody))
+        expect(response.body).to.deep.equal(expectedBody);
     }
 
     public static expectBodyExcludingMembers(response: Response, expectedBody: any, excludeMembers: string[]): void
     {
         expect(response.body).excludingEvery(excludeMembers).to.deep.equal(expectedBody);
     }
+
 }
