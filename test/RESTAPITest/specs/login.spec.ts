@@ -16,7 +16,8 @@ describe('Login endpoint', async () =>
 
     after(async() =>
     {
-        app.close();
+        await app.close();
+        app.removeDb();
     });
 
     it('should login successfully', async() =>

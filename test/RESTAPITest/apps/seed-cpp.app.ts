@@ -1,4 +1,4 @@
-import { Application, Thread } from '@utils';
+import { Application, File, Thread } from '@utils';
 import { SeedCppRestApi } from './seed-cpp-rest-api.app'
 
 export class SeedCppApp
@@ -16,12 +16,13 @@ export class SeedCppApp
         }
     }
 
-    public close()
+    public async close(): Promise<void>
     {
         if (this.application)
         {
             this.application.close();
             this.application = null;
+            await Thread.sleep(200);
         }
     }
 
@@ -29,6 +30,12 @@ export class SeedCppApp
     {
         const port: number = this.getPort();
         return new SeedCppRestApi(`http://127.0.0.1:${port}/seed`);
+    }
+
+    public removeDb(): void
+    {
+        let dbPath: string = this.getWorkingDir() + "/seed_cpp.db";   
+        File.deleteFile(dbPath);    
     }
 
     private getPort(): number
@@ -42,4 +49,5 @@ export class SeedCppApp
         //return `../../build/bin/SeedCpp/${configuration}`;
         return "../../build/bin";
     }
+
 }

@@ -81,5 +81,4 @@ export class RESTAPI
     {
         expect(response.body).excludingEvery(excludeMembers).to.deep.equal(expectedBody);
     }
-
 }

@@ -50,8 +50,27 @@ export class SeedCppRestApi
         }
         else
         {
+            this.authorizationToken = undefined;
             return false;
         }
+    }
+
+    public async sendGETRequest(resourceURI: string, body: string = ""): Promise<Response>
+    {
+        const request: Request = {
+            appURI: this.applicationURI,
+            resourceURI: resourceURI,
+            method: RequestMethod.GET,
+            headers: [ {name: HttpHeader.ContentType, value: "application/json"} ],
+            body: body
+        }
+
+        if (!!this.authorizationToken)
+        {
+            request.headers.push({name: HttpHeader.Authorization, value: this.authorizationToken});
+        }
+
+        return await RESTAPI.sendRequest(request);
     }
 
     public async sendPOSTRequest(resourceURI: string, body: any): Promise<Response>
