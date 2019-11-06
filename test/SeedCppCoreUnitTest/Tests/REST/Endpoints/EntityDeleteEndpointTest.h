@@ -39,7 +39,7 @@ namespace seed_cpp { namespace unit_test {
 		{
 			typename _Wrapper::ModelManager::UniqueLock writeLock(m_entityMgr);
 			std::vector<typename _Wrapper::ModelEntity> entities = _Wrapper::getEntities();
-			for (auto entity : entities)
+			for (const auto& entity : entities)
 			{
 				m_entityMgr.addEntity(std::make_unique<typename _Wrapper::ModelEntity>(entity), writeLock);
 			}
