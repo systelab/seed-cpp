@@ -64,10 +64,9 @@ test_script:
   - cd ..
 
 after_test:
-  - cd 
-  - ps: (new-object net.webclient).UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\build\bin\$env:CONFIGURATION\SeedCppCoreUnitTest.xml))
-  - ps: (new-object net.webclient).UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\build\bin\$env:CONFIGURATION\DatabaseIntegrationTest.xml))
+  - ps: (new-object net.webclient).UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\build\bin\$env:CONFIGURATION\SeedCppCoreUnitTest\SeedCppCoreUnitTest.xml))
+  - ps: (new-object net.webclient).UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\build\bin\$env:CONFIGURATION\DatabaseIntegrationTest\DatabaseIntegrationTest.xml"))
 
 artifacts:
-  - path: 'build\bin\SeedCpp'
+  - path: 'build\bin\$env:CONFIGURATION\SeedCpp'
     name: SeedCpp
