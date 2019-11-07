@@ -8,7 +8,8 @@ set(SEED_CPP_PROJECT SeedCpp)
 file(GLOB_RECURSE SEED_CPP_PROJECT_SRC "*.cpp")
 file(GLOB_RECURSE SEED_CPP_PROJECT_HDR "*.h")
 add_executable(${SEED_CPP_PROJECT} ${SEED_CPP_PROJECT_SRC} ${SEED_CPP_PROJECT_HDR})
-target_link_libraries(${SEED_CPP_PROJECT} ${CONAN_LIBS} SeedCppCore JWTUtils RapidJSONAdapter DbSQLiteAdapter BoostAsioWebServerAdapter)
+target_link_libraries(${SEED_CPP_PROJECT} SeedCppCore)
+set_target_properties(${SEED_CPP_PROJECT} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin/${SEED_CPP_PROJECT})
 
 #Configure source groups
 foreach(FILE ${SEED_CPP_PROJECT_SRC} ${SEED_CPP_PROJECT_HDR}) 
@@ -29,6 +30,4 @@ endforeach()
 add_custom_command(TARGET ${SEED_CPP_PROJECT} POST_BUILD
                    COMMAND ${CMAKE_COMMAND} -E copy_directory
                    ${CMAKE_SOURCE_DIR}/src/SeedCppCore/Resources $<TARGET_FILE_DIR:${SEED_CPP_PROJECT}>)
-
-#file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/../SeedCppCore/Resources DESTINATION ${CMAKE_BINARY_DIR})
 

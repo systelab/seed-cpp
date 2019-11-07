@@ -2,6 +2,7 @@
 #include "LoadPatientScenariosBuilder.h"
 
 #include "SeedCppCoreTestUtilities/Builders/ModelBuilder.h"
+#include "SeedCppCoreTestUtilities/Builders/AddressBuilder.h"
 #include "SeedCppCoreTestUtilities/Builders/PatientBuilder.h"
 
 
@@ -11,10 +12,10 @@ namespace seed_cpp { namespace db_test {
 
 	std::vector<LoadDatabaseTestData> LoadPatientScenariosBuilder::build()
 	{
-		// Single patient
-		LoadDatabaseTestData scenarioSinglePatient;
-		scenarioSinglePatient.m_sqlScripts = { "Database/Patients/BasicPatients.sql" };
-		scenarioSinglePatient.m_expectedModel =
+		// Single patient without address
+		LoadDatabaseTestData scenarioPatientWithoutAddress;
+		scenarioPatientWithoutAddress.m_sqlScripts = { "Database/Patients/PatientWithoutAddress.sql" };
+		scenarioPatientWithoutAddress.m_expectedModel =
 			ModelBuilder()
 				.setPatients({
 					PatientBuilder()
@@ -28,9 +29,34 @@ namespace seed_cpp { namespace db_test {
 				})
 				.getEntity();
 
+		// Single patient with address
+		LoadDatabaseTestData scenarioPatientWithAddress;
+		scenarioPatientWithAddress.m_sqlScripts = { "Database/Patients/PatientWithAddress.sql" };
+		scenarioPatientWithAddress.m_expectedModel =
+			ModelBuilder()
+				.setPatients({
+					PatientBuilder()
+						.setId(std::string("1E751CF0-9C20-485E-B0A5-0BE754E74AD9"))
+						.setName("Marc").setSurname("Robinson")
+						.setDob(boost::posix_time::from_iso_string("19861004T102030"))
+						.setEmail("marc@robinson.com")
+						.setAddress(
+							AddressBuilder()
+								.setId(123456)
+								.setCoordinates("12.344 N, 78.2323 W")
+								.setStreet("C/Muntaner, 123 4t 1a")
+								.setCity("Barcelona")
+								.setZip("08080")
+							.getEntity()
+						)
+						.setCreationTime(boost::posix_time::from_iso_string("20200927T091011"))
+						.setUpdateTime(boost::posix_time::from_iso_string("20200927T121314"))
+					.getEntity()
+				})
+				.getEntity();
+
 		// Massive patients
 		LoadDatabaseTestData scenarioMassivePatients;
-		
 		scenarioMassivePatients.m_sqlScripts = { "Database/Patients/MassivePatients.sql" };
 
 		std::vector<model::Patient> massivePatients;
@@ -58,8 +84,8 @@ namespace seed_cpp { namespace db_test {
 			.setPatients(massivePatients)
 			.getEntity();
 
-
-		return { scenarioSinglePatient, scenarioMassivePatients };
+		return { scenarioPatientWithoutAddress, scenarioPatientWithoutAddress,
+				 scenarioMassivePatients };
 	}
 
 }}

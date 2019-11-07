@@ -134,7 +134,8 @@ namespace seed_cpp {
 	{
 		auto& webServer = m_context->getWebServer();
 		auto& endpointsFactory = *m_context->getEndpointsFactory();
-		auto restWebService = std::make_unique<rest::RESTAPIWebService>(endpointsFactory);
+		auto& routeAccessValidatorsFactory = *m_context->getRouteAccessValidatorsFactory();
+		auto restWebService = std::make_unique<rest::RESTAPIWebService>(endpointsFactory, routeAccessValidatorsFactory);
 		
 		webServer.registerWebService(std::move(restWebService));
 		webServer.start();

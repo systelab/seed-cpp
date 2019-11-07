@@ -1,4 +1,13 @@
+cmake_minimum_required(VERSION 3.2)
+
+# Enable testing module
 enable_testing()
+
+# Find external dependencides
+find_package(gtest)
+find_package(DbAdapterTestUtilities)
+find_package(JSONAdapterTestUtilities)
+find_package(JWTUtilsTestUtilities)
 
 # Configure preprocessor definitions
 add_compile_options(-DBOOST_ALL_DYN_LINK -DSQLITE_HAS_CODEC)
@@ -11,7 +20,17 @@ set(SEED_CPP_CORE_UNIT_TEST_PROJECT SeedCppCoreUnitTest)
 file(GLOB_RECURSE SEED_CPP_CORE_UNIT_TEST_PROJECT_SRC "*.cpp")
 file(GLOB_RECURSE SEED_CPP_CORE_UNIT_TEST_PROJECT_HDR "*.h")
 add_executable(${SEED_CPP_CORE_UNIT_TEST_PROJECT} ${SEED_CPP_CORE_UNIT_TEST_PROJECT_SRC} ${SEED_CPP_CORE_UNIT_TEST_PROJECT_HDR})
-target_link_libraries(${SEED_CPP_CORE_UNIT_TEST_PROJECT} gmock_main SeedCppCore RapidJSONAdapter SeedCppCoreTestUtilities DbAdapterTestUtilities JSONAdapterTestUtilities ${CONAN_LIBS})
+target_link_libraries(${SEED_CPP_CORE_UNIT_TEST_PROJECT} SeedCppCore SeedCppCoreTestUtilities
+					  gtest::gtest
+					  DbAdapterTestUtilities::DbAdapterTestUtilities
+					  JSONAdapterTestUtilities::JSONAdapterTestUtilities
+					  JWTUtilsTestUtilities::JWTUtilsTestUtilities)
+set_target_properties(${SEED_CPP_CORE_UNIT_TEST_PROJECT} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin/${SEED_CPP_CORE_UNIT_TEST_PROJECT})
+
+# Ignored missing PDBs link warning on Visual Studio
+if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+	set_target_properties(${PROJECT_NAME} PROPERTIES LINK_FLAGS "/ignore:4099")
+endif()
 
 #Configure source groups
 foreach(FILE ${SEED_CPP_CORE_UNIT_TEST_PROJECT_SRC} ${SEED_CPP_CORE_UNIT_TEST_PROJECT_HDR}) 
@@ -30,3 +49,4 @@ endforeach()
 
 # Register tests
 add_test(NAME SeedCppCoreUnitTest COMMAND ${SEED_CPP_CORE_UNIT_TEST_PROJECT})
+

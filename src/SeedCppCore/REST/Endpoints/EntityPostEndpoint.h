@@ -1,16 +1,15 @@
 #pragma once
 
-#include "IEndpoint.h"
-
-#include "DAL/Translators/JSON/IJSONLoadTranslator.h"
-#include "DAL/Translators/JSON/IJSONSaveTranslator.h"
-#include "DAL/Translators/JSON/IJSONTranslatorsFactory.h"
-#include "REST/Helpers/ReplyBuilderHelper.h"
-#include "Services/Security/IAuthorizationValidatorService.h"
-#include "Services/Validator/IJSONValidatorService.h"
+#include "SeedCppCore/DAL/Translators/JSON/IJSONLoadTranslator.h"
+#include "SeedCppCore/DAL/Translators/JSON/IJSONSaveTranslator.h"
+#include "SeedCppCore/REST/Helpers/ReplyBuilderHelper.h"
+#include "SeedCppCore/Services/Validator/IJSONValidatorService.h"
 
 #include "JSONAdapterInterface/IJSONAdapter.h"
 #include "JSONAdapterInterface/IJSONDocument.h"
+
+#include "RESTAPICore/Endpoint/IEndpoint.h"
+#include "RESTAPICore/Endpoint/EndpointRequestData.h"
 
 #include "WebServerAdapterInterface/Model/Reply.h"
 
@@ -18,46 +17,36 @@
 namespace seed_cpp { namespace rest {
 
 	template <typename _Entity, typename _EntityModelService>
-	class EntityPostEndpoint : public IEndpoint
+	class EntityPostEndpoint : public systelab::rest_api_core::IEndpoint
 	{
-	private:
+	public:
 		typedef std::function<std::unique_ptr<dal::IJSONLoadTranslator>(_Entity&)> LoadTranslatorFactoryMethod;
 		typedef std::function<std::unique_ptr<dal::IJSONSaveTranslator>(const _Entity&)> SaveTranslatorFactoryMethod;
-	public:
-		EntityPostEndpoint(const systelab::web_server::RequestHeaders& headers,
-						   const std::string& requestContent,
-						   const std::string& schema,
+
+		EntityPostEndpoint(const std::string& schema,
 						   _EntityModelService& entityModelService,
 						   const LoadTranslatorFactoryMethod& loadFactoryMethod,
 						   const SaveTranslatorFactoryMethod& saveFactoryMethod,
-						   const systelab::json::IJSONAdapter& jsonAdapter,
-						   const service::IAuthorizationValidatorService& authorizationValidatorService,
-						   const service::IJSONValidatorService& jsonValidatorService)
-			:m_headers(headers)
-			,m_requestContent(requestContent)
-			,m_schema(schema)
+						   const service::IJSONValidatorService& jsonValidatorService,
+						   const systelab::json::IJSONAdapter& jsonAdapter)
+			:m_schema(schema)
 			,m_entityModelService(entityModelService)
 			,m_loadFactoryMethod(loadFactoryMethod)
 			,m_saveFactoryMethod(saveFactoryMethod)
-			,m_jsonAdapter(jsonAdapter)
-			,m_authorizationValidatorService(authorizationValidatorService)
 			,m_jsonValidatorService(jsonValidatorService)
+			,m_jsonAdapter(jsonAdapter)
 		{
 		}
 
-		~EntityPostEndpoint() = default;
+		virtual ~EntityPostEndpoint() = default;
 
-		bool hasAccess() const override
+		std::unique_ptr<systelab::web_server::Reply> execute(const systelab::rest_api_core::EndpointRequestData& requestData) override
 		{
-			return m_authorizationValidatorService.validate(m_headers);
-		}
-
-		std::unique_ptr<systelab::web_server::Reply> execute() override
-		{
-			auto jsonRequest = m_jsonAdapter.buildDocumentFromString(m_requestContent);
+			std::string content = requestData.getContent();
+			auto jsonRequest = m_jsonAdapter.buildDocumentFromString(content);
 			if (!jsonRequest)
 			{
-				return ReplyBuilderHelper::build(systelab::web_server::Reply::BAD_REQUEST);
+				return ReplyBuilderHelper::buildEmpty(systelab::web_server::Reply::BAD_REQUEST);
 			}
 
 			try
@@ -83,27 +72,30 @@ namespace seed_cpp { namespace rest {
 				const _Entity& addedEntity = m_entityModelService.addEntity(std::move(entityToAdd), *lock);
 
 				auto jsonResponse = m_jsonAdapter.buildEmptyDocument();
+				auto& jsonRootValue = jsonResponse->getRootValue();
+				jsonRootValue.setType(systelab::json::OBJECT_TYPE);
 				auto saveTranslator = m_saveFactoryMethod(addedEntity);
-				saveTranslator->saveEntityToJSON(jsonResponse->getRootValue());
+				saveTranslator->saveEntityToJSON(jsonRootValue);
 
 				return ReplyBuilderHelper::build(systelab::web_server::Reply::CREATED, jsonResponse->serialize());
 			}
 			catch (std::exception& exc)
 			{
-				return ReplyBuilderHelper::build(systelab::web_server::Reply::INTERNAL_SERVER_ERROR, exc.what());
+				auto jsonResponse = m_jsonAdapter.buildEmptyDocument();
+				auto& jsonRootValue = jsonResponse->getRootValue();
+				jsonRootValue.setType(systelab::json::OBJECT_TYPE);
+				jsonRootValue.addMember("exception", exc.what());
+				return ReplyBuilderHelper::build(systelab::web_server::Reply::INTERNAL_SERVER_ERROR, jsonResponse->serialize());
 			}
 		}
 
 	private:
-		const systelab::web_server::RequestHeaders m_headers;
-		const std::string m_requestContent;
 		const std::string m_schema;
 		_EntityModelService& m_entityModelService;
 		const LoadTranslatorFactoryMethod m_loadFactoryMethod;
 		const SaveTranslatorFactoryMethod m_saveFactoryMethod;
-		const systelab::json::IJSONAdapter& m_jsonAdapter;
-		const service::IAuthorizationValidatorService& m_authorizationValidatorService;
 		const service::IJSONValidatorService& m_jsonValidatorService;
+		const systelab::json::IJSONAdapter& m_jsonAdapter;
 	};
 
 }}

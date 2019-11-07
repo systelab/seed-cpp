@@ -15,7 +15,6 @@ namespace seed_cpp { namespace service {
 		SecurityServicesFactory(Context&);
 		virtual ~SecurityServicesFactory();
 
-		std::unique_ptr<IAuthorizationValidatorService> buildAuthorizationValidatorService() const;
 		std::unique_ptr<systelab::jwt::ITokenBuilderService> buildJWTTokenBuilderService() const;
 		std::unique_ptr<systelab::jwt::ITokenParserService> buildJWTTokenParserService() const;
 

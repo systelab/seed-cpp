@@ -1,18 +1,31 @@
-version: '1.0.{build}'
+version: '0.0.{build}'
 
 image: Visual Studio 2017
 
-platform:
-  - x64
+init:
+  - ps: >-
+      if($env:appveyor_repo_tag -eq 'True') {
+        Update-AppveyorBuild -Version "$($env:APPVEYOR_REPO_TAG_NAME.TrimStart("v"))"
+      }
 
 configuration:
   - Debug
   - Release
 
+environment:
+  matrix:
+  - arch: x86_64
+    platform: x64
+    visual_studio: Visual Studio 15 2017 Win64
+    boost: 1.67.0
+    OpenSSL: 1.0.2n
+    gtest: 1.8.1
+
 install:
   - set PATH=%PATH%;%PYTHON%/Scripts/
   - pip.exe install conan
   - conan user
+  - conan remote add systelab-bintray https://api.bintray.com/conan/systelab/conan
   - conan --version
   - node --version
   - npm --version
@@ -20,8 +33,8 @@ install:
 before_build:
   - md build
   - cd build
-  - conan install .. -s build_type=%CONFIGURATION% -s compiler.toolset=v141 -s arch=x86_64
-  - cmake .. -G "Visual Studio 15 2017 Win64"
+  - conan install .. -s build_type=%CONFIGURATION% -s compiler.toolset=v141 -s arch=%ARCH% -o boost=%BOOST% -o OpenSSL=%OPENSSL% -o gtest=%GTEST%
+  - cmake .. -G "%VISUAL_STUDIO%"
 
 build:
   project: $(APPVEYOR_BUILD_FOLDER)\build\SeedCpp.sln
@@ -30,9 +43,17 @@ after_build:
   - ps: 7z a .\Dist\$env:deploy_name_installer".zip" $env:build_path_installer
 
 test_script:
-  - cd bin
+  - ps: cd bin
+  - ps: cd SeedCppCoreUnitTest
+  - ps: cd $env:CONFIGURATION
   - SeedCppCoreUnitTest.exe --gtest_output=xml:SeedCppCoreUnitTest.xml
+  - ps: cd ..
+  - ps: cd ..
+  - ps: cd DatabaseIntegrationTest
+  - ps: cd $env:CONFIGURATION
   - DatabaseIntegrationTest.exe --gtest_output=xml:DatabaseIntegrationTest.xml
+  - cd ..
+  - cd ..
   - cd ..
   - cd ..
   - cd test
@@ -43,9 +64,9 @@ test_script:
   - cd ..
 
 after_test:
-  - ps: (new-object net.webclient).UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\build\bin\SeedCppCoreUnitTest.xml))
-  - ps: (new-object net.webclient).UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\build\bin\DatabaseIntegrationTest.xml))
+  - ps: (new-object net.webclient).UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\build\bin\SeedCppCoreUnitTest\$env:CONFIGURATION\SeedCppCoreUnitTest.xml))
+  - ps: (new-object net.webclient).UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\build\bin\DatabaseIntegrationTest\$env:CONFIGURATION\DatabaseIntegrationTest.xml))
 
 artifacts:
-  - path: 'build\bin'
+  - path: 'build\bin\SeedCpp\%CONFIGURATION%'
     name: SeedCpp

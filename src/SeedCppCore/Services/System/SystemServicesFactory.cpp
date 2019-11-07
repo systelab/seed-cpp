@@ -6,6 +6,8 @@
 #include "Services/System/TimeService.h"
 #include "Services/System/UUIDGeneratorService.h"
 
+#include "RESTAPICore/RouteAccess/EpochTimeService.h"
+
 
 namespace seed_cpp { namespace service {
 
@@ -24,6 +26,11 @@ namespace seed_cpp { namespace service {
 	std::unique_ptr<ITimeService> SystemServicesFactory::buildTimeService() const
 	{
 		return std::make_unique<TimeService>();
+	}
+
+	std::unique_ptr<systelab::rest_api_core::IEpochTimeService> SystemServicesFactory::buildEpochTimeService() const
+	{
+		return std::make_unique<systelab::rest_api_core::EpochTimeService>();
 	}
 
 	std::unique_ptr<IUUIDGeneratorService> SystemServicesFactory::buildUUIDGeneratorService() const

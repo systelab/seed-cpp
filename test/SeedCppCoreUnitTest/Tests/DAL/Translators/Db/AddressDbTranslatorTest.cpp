@@ -54,7 +54,7 @@ namespace seed_cpp { namespace unit_test {
 			address.setId(456);
 			address.setCoordinates("S 432.324, W 6529.721");
 			address.setStreet("Avda. Can Moncau, 7");
-			address.setCity("Lliça d'Amunt");
+			address.setCity("Llica d'Amunt");
 			address.setZip("08080");
 
 			return address;
@@ -66,7 +66,7 @@ namespace seed_cpp { namespace unit_test {
 					  StubFieldValue("patientId", "DD4DDA02-9652-48DF-93F6-3461950770F1"s),
 					  StubFieldValue("coordinates", "S 432.324, W 6529.721"s),
 					  StubFieldValue("street", "Avda. Can Moncau, 7"s),
-					  StubFieldValue("city", "Lliça d'Amunt"s),
+					  StubFieldValue("city", "Llica d'Amunt"s),
 					  StubFieldValue("zip", "08080"s),
 			};
 		}

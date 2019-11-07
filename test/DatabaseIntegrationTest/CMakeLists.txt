@@ -1,4 +1,9 @@
+cmake_minimum_required(VERSION 3.2)
+
 enable_testing()
+
+# Find external dependencides
+find_package(gtest)
 
 # Configure preprocessor definitions
 add_compile_options(-DBOOST_ALL_DYN_LINK -DSQLITE_HAS_CODEC)
@@ -12,7 +17,8 @@ file(GLOB_RECURSE DATABASE_INTEGRATION_TEST_PROJECT_SRC "*.cpp")
 file(GLOB_RECURSE DATABASE_INTEGRATION_TEST_PROJECT_HDR "*.h")
 file(GLOB_RECURSE DATABASE_INTEGRATION_TEST_PROJECT_SQL "*.sql")
 add_executable(${DATABASE_INTEGRATION_TEST_PROJECT} ${DATABASE_INTEGRATION_TEST_PROJECT_SRC} ${DATABASE_INTEGRATION_TEST_PROJECT_HDR} ${DATABASE_INTEGRATION_TEST_PROJECT_SQL})
-target_link_libraries(${DATABASE_INTEGRATION_TEST_PROJECT} gmock_main SeedCppCore SeedCppCoreTestUtilities DbSQLiteAdapter sqleet sqlite3 ${CONAN_LIBS})
+target_link_libraries(${DATABASE_INTEGRATION_TEST_PROJECT} SeedCppCore SeedCppCoreTestUtilities gtest::gtest)
+set_target_properties(${DATABASE_INTEGRATION_TEST_PROJECT} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin/${DATABASE_INTEGRATION_TEST_PROJECT})
 
 #Configure source groups
 foreach(FILE ${DATABASE_INTEGRATION_TEST_PROJECT_SRC} ${DATABASE_INTEGRATION_TEST_PROJECT_HDR} ${DATABASE_INTEGRATION_TEST_PROJECT_SQL}) 
@@ -33,6 +39,7 @@ endforeach()
 
 # Register tests
 add_test(NAME DatabaseIntegrationTest COMMAND ${DATABASE_INTEGRATION_TEST_PROJECT})
+
 
 # Copy needed database resources to target dir
 add_custom_command(TARGET ${DATABASE_INTEGRATION_TEST_PROJECT} POST_BUILD
