@@ -123,7 +123,7 @@ describe('Patients', async () =>
         }
 
         const response: Response = await api.sendPOSTRequest(SeedCppRestApi.PATIENTS_PATIENT, requestBody);
-        await RESTAPI.expectStatus(response, StatusCode.UNAUTHORIZED);
+        await RESTAPI.expectStatus(response, StatusCode.FORBIDDEN);
 
         const expectedBody: string = "";
         await RESTAPI.expectBody(response, expectedBody);
