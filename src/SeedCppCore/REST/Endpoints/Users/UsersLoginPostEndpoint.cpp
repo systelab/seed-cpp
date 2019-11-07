@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "UsersLoginPostEndpoint.h"
 
+#include "Model/Settings.h"
 #include "Model/User.h"
 #include "Model/UserMgr.h"
 #include "REST/Helpers/ReplyBuilderHelper.h"
@@ -8,19 +9,19 @@
 #include "Services/Model/IUserModelService.h"
 #include "Services/System/ITimeService.h"
 
-#include "WebServerAdapterInterface/Model/Reply.h"
-
 #include "JWTUtils/Services/ITokenBuilderService.h"
+
+#include "RESTAPICore/Endpoint/EndpointRequestData.h"
+
+#include "WebServerAdapterInterface/Model/Reply.h"
 
 
 namespace seed_cpp { namespace rest {
 
-	UsersLoginPostEndpoint::UsersLoginPostEndpoint(const std::string& requestContent,
-												   const service::IUserModelService& userModelService,
+	UsersLoginPostEndpoint::UsersLoginPostEndpoint(const service::IUserModelService& userModelService,
 												   const service::ITimeService& timeService,
 												   const systelab::jwt::ITokenBuilderService& jwtBuilderService)
-		:m_requestContent(requestContent)
-		,m_userModelService(userModelService)
+		:m_userModelService(userModelService)
 		,m_timeService(timeService)
 		,m_jwtBuilderService(jwtBuilderService)
 	{
@@ -28,34 +29,31 @@ namespace seed_cpp { namespace rest {
 	
 	UsersLoginPostEndpoint::~UsersLoginPostEndpoint() = default;
 
-	bool UsersLoginPostEndpoint::hasAccess() const
+	std::unique_ptr<systelab::web_server::Reply> UsersLoginPostEndpoint::execute(const systelab::rest_api_core::EndpointRequestData& requestData)
 	{
-		return true;
-	}
-
-	std::unique_ptr<systelab::web_server::Reply> UsersLoginPostEndpoint::execute()
-	{
-		std::unique_ptr<LoginData> loginData = getLoginDataFromRequestContent();
+		std::string requestContent = requestData.getContent();
+		std::unique_ptr<LoginData> loginData = getLoginDataFromRequestContent(requestContent);
 		if (!loginData)
 		{
-			return ReplyBuilderHelper::build(systelab::web_server::Reply::BAD_REQUEST);
+			return ReplyBuilderHelper::buildEmpty(systelab::web_server::Reply::BAD_REQUEST);
 		}
 
 		if (!authenticate(*loginData))
 		{
-			return ReplyBuilderHelper::build(systelab::web_server::Reply::UNAUTHORIZED, "{}");
+			return ReplyBuilderHelper::buildEmpty(systelab::web_server::Reply::UNAUTHORIZED);
 		}
 
 		std::string jwt = buildJWT(loginData->m_login);
-		auto reply = ReplyBuilderHelper::build(systelab::web_server::Reply::OK, "{}");
+		auto reply = ReplyBuilderHelper::buildEmpty(systelab::web_server::Reply::OK);
 		reply->addHeader("Authorization", "Bearer " + jwt);
 
 		return reply;
 	}
 
-	std::unique_ptr<UsersLoginPostEndpoint::LoginData> UsersLoginPostEndpoint::getLoginDataFromRequestContent() const
+	std::unique_ptr<UsersLoginPostEndpoint::LoginData>
+	UsersLoginPostEndpoint::getLoginDataFromRequestContent(const std::string& requestContent) const
 	{
-		std::map<std::string, std::string> requestParams = RequestURLEncodedParserHelper::parse(m_requestContent);
+		std::map<std::string, std::string> requestParams = RequestURLEncodedParserHelper::parse(requestContent);
 
 		auto loginIt = requestParams.find("login");
 		if (loginIt == requestParams.end())
@@ -101,8 +99,8 @@ namespace seed_cpp { namespace rest {
 		claims.push_back({"iat", iat});
 		claims.push_back({"sub", login});
 
-		std::string jwtSecurityKey = "SeedCppRocks!";
-		return m_jwtBuilderService.buildJWT(jwtSecurityKey, claims);
+		std::string jwtSecretKey = model::setting::JWT_SECRET_KEY;
+		return m_jwtBuilderService.buildJWT(jwtSecretKey, claims);
 	}
 
 }}

@@ -4,6 +4,16 @@
 
 namespace seed_cpp { namespace service {
 
+	PatientModelService::PatientModelService(model::PatientMgr& patientMgr,
+											 dal::IDbDAOFactory& dbDAOFactory,
+											 service::IUUIDGeneratorService& uuidGeneratorService,
+											 service::ITimeService& timeService)
+		:EntityModelService(patientMgr, dbDAOFactory,
+							std::bind(&dal::IDbDAOFactory::buildPatientSaveDAO, &dbDAOFactory, std::placeholders::_1),
+							uuidGeneratorService, timeService)
+	{
+	}
+
 	model::PatientMgr& PatientModelService::getEntityMgr() const
 	{
 		return EntityModelService::getEntityMgr();

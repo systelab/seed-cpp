@@ -3,6 +3,7 @@
 #include "SeedCppCore/Model/PatientMgr.h"
 
 #include "TestUtilitiesInterface/EntityComparator.h"
+#include "TestUtilitiesInterface/EntityComparatorMacros.h"
 
 
 using namespace testing;

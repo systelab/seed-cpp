@@ -10,14 +10,11 @@ namespace systelab { namespace jwt {
 
 namespace seed_cpp { namespace service {
 
-	class IAuthorizationValidatorService;
-
 	class ISecurityServicesFactory
 	{
 	public:
 		virtual ~ISecurityServicesFactory() = default;
 
-		virtual std::unique_ptr<IAuthorizationValidatorService> buildAuthorizationValidatorService() const = 0;
 		virtual std::unique_ptr<systelab::jwt::ITokenBuilderService> buildJWTTokenBuilderService() const = 0;
 		virtual std::unique_ptr<systelab::jwt::ITokenParserService> buildJWTTokenParserService() const = 0;
 	};

@@ -1,5 +1,7 @@
 import { Application, File, Thread } from '@utils';
 import { SeedCppRestApi } from './seed-cpp-rest-api.app'
+const { platform } = require('os');
+
 
 export class SeedCppApp
 {
@@ -45,9 +47,15 @@ export class SeedCppApp
 
     private getWorkingDir(): string
     {
-        const configuration: string = (process.env.CONFIGURATION !== undefined) ? process.env.CONFIGURATION : "Debug";
-        //return `../../build/bin/SeedCpp/${configuration}`;
-        return "../../build/bin";
+        if (platform() == 'win32')
+        {
+            const configuration: string = (process.env.CONFIGURATION !== undefined) ? process.env.CONFIGURATION : "Debug";
+            return `../../build/bin/SeedCpp/${configuration}`;
+        }
+        else
+        {
+            return `../../build/bin/SeedCpp`;
+        }
     }
 
 }

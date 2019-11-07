@@ -29,7 +29,7 @@ namespace seed_cpp { namespace dal {
 		// Transactions
 		std::unique_ptr<ITransactionDAO> startTransaction() override;
 
-		void releaseTransactionInProgress();
+		void releaseTransactionInProgress() override;
 
 	protected:
 		Context& m_context;

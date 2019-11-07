@@ -2,6 +2,11 @@
 
 #include <memory>
 
+
+namespace systelab { namespace rest_api_core {
+	class IEpochTimeService;
+}}
+
 namespace seed_cpp { namespace service {
 
 	class IResourceService;
@@ -15,6 +20,7 @@ namespace seed_cpp { namespace service {
 
 		virtual std::unique_ptr<IResourceService> buildResourceService() const = 0;
 		virtual std::unique_ptr<ITimeService> buildTimeService() const = 0;
+		virtual std::unique_ptr<systelab::rest_api_core::IEpochTimeService> buildEpochTimeService() const = 0;
 		virtual std::unique_ptr<IUUIDGeneratorService> buildUUIDGeneratorService() const = 0;
 	};
 

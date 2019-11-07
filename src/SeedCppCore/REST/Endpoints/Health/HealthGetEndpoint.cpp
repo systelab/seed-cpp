@@ -4,6 +4,8 @@
 #include "REST/Helpers/ReplyBuilderHelper.h"
 
 
+using namespace systelab::rest_api_core;
+
 namespace seed_cpp { namespace rest {
 
 	HealthGetEndpoint::HealthGetEndpoint()
@@ -12,14 +14,9 @@ namespace seed_cpp { namespace rest {
 	
 	HealthGetEndpoint::~HealthGetEndpoint() = default;
 
-	bool HealthGetEndpoint::hasAccess() const
+	std::unique_ptr<systelab::web_server::Reply> HealthGetEndpoint::execute(const EndpointRequestData&)
 	{
-		return true;
-	}
-
-	std::unique_ptr<systelab::web_server::Reply> HealthGetEndpoint::execute()
-	{
-		return ReplyBuilderHelper::build(systelab::web_server::Reply::OK, "{}");
+		return ReplyBuilderHelper::buildEmpty(systelab::web_server::Reply::OK);
 	}
 
 }}

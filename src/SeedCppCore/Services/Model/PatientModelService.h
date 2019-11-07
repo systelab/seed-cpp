@@ -12,7 +12,10 @@ namespace seed_cpp { namespace service {
 								public EntityModelService<model::Patient, model::PatientMgr>
 	{
 	public:
-		using EntityModelService::EntityModelService;
+		PatientModelService(model::PatientMgr&,
+							dal::IDbDAOFactory&,
+							service::IUUIDGeneratorService&,
+							service::ITimeService&);
 
 		model::PatientMgr& getEntityMgr() const override;
 		const model::Patient* getEntityById(const std::string& id, const model::LockableEntityMgrSubject::IReadLock&) const override;

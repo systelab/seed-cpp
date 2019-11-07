@@ -1,62 +1,52 @@
 #pragma once
 
-#include "IEndpoint.h"
+#include "SeedCppCore/REST/Helpers/ReplyBuilderHelper.h"
 
-#include "REST/Helpers/ReplyBuilderHelper.h"
-#include "Services/Security/IAuthorizationValidatorService.h"
+#include "RESTAPICore/Endpoint/IEndpoint.h"
+#include "RESTAPICore/Endpoint/EndpointRequestData.h"
 
 #include "WebServerAdapterInterface/Model/Reply.h"
-#include "WebServerAdapterInterface/Model/RequestHeaders.h"
+
+
+using namespace std::string_literals;
 
 namespace seed_cpp { namespace rest {
 	
 	template <typename _EntityModelService>
-	class EntityDeleteEndpoint : public IEndpoint
+	class EntityDeleteEndpoint : public systelab::rest_api_core::IEndpoint
 	{
 	public:
-		EntityDeleteEndpoint(const systelab::web_server::RequestHeaders& headers,
-							 const std::string& entityId,
-							 _EntityModelService& entityModelService,
-							 const service::IAuthorizationValidatorService& authorizationValidatorService)
-			:m_headers(headers)
-			,m_entityId(entityId)
-			,m_entityModelService(entityModelService)
-			,m_authorizationValidatorService(authorizationValidatorService)
+		EntityDeleteEndpoint(_EntityModelService& entityModelService)
+			:m_entityModelService(entityModelService)
 		{
 		}
 
 		virtual ~EntityDeleteEndpoint() = default;
 
-		bool hasAccess() const override
+		std::unique_ptr<systelab::web_server::Reply> execute(const systelab::rest_api_core::EndpointRequestData& requestData) override
 		{
-			return m_authorizationValidatorService.validate(m_headers);
-		}
-
-		std::unique_ptr<systelab::web_server::Reply> execute() override
-		{
+			std::string entityId = requestData.getParameters().getStringParameter("id");
 			auto lock = m_entityModelService.createWriteLock();
-			const auto entity = m_entityModelService.getEntityById(m_entityId, *lock);
+			const auto entity = m_entityModelService.getEntityById(entityId, *lock);
 			if (!entity)
 			{
-				return ReplyBuilderHelper::build(systelab::web_server::Reply::NOT_FOUND);
+				return ReplyBuilderHelper::buildEmpty(systelab::web_server::Reply::NOT_FOUND);
 			}
 
 			try
 			{
-				m_entityModelService.deleteEntity(m_entityId, *lock);
-				return ReplyBuilderHelper::build(systelab::web_server::Reply::NO_CONTENT);
+				m_entityModelService.deleteEntity(entityId, *lock);
+				return ReplyBuilderHelper::buildEmpty(systelab::web_server::Reply::NO_CONTENT);
 			}
 			catch (std::exception& exc)
 			{
-				return ReplyBuilderHelper::build(systelab::web_server::Reply::INTERNAL_SERVER_ERROR, exc.what());
+				return ReplyBuilderHelper::build(systelab::web_server::Reply::INTERNAL_SERVER_ERROR,
+												 "{ \"exception\": \""s + exc.what() + "\" }"s);
 			}
 		}
 
 	private:
-		const systelab::web_server::RequestHeaders m_headers;
-		const std::string m_entityId;
 		_EntityModelService& m_entityModelService;
-		const service::IAuthorizationValidatorService& m_authorizationValidatorService;
 	};
 
 }}

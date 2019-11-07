@@ -12,7 +12,6 @@
 
 #include "DbSQLiteAdapter/Connection.h"
 #include "DbSQLiteAdapter/ConnectionConfiguration.h"
-#include "DbSQLiteAdapter/Database.h"
 
 #include "DbAdapterInterface/IDatabase.h"
 #include "JSONAdapterInterface/IJSONAdapter.h"
