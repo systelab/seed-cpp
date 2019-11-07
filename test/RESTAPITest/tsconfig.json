@@ -1,0 +1,16 @@
+{
+    "compilerOptions": 
+    {
+        "baseUrl": ".",
+        "module": "commonjs",
+        "lib": [ "es2015", "dom" ],
+        "types": ["node", "module", "mocha"],
+        "paths": {
+          "@apps": ["apps/index.ts"],
+		  "@model": ["model/index.ts"],
+          "@utils": ["utils/index.ts"],
+          "@restapi": ["rest-api/index.ts"]
+        }
+    }
+}
+

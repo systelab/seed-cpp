@@ -3,22 +3,47 @@
 #include "WebServerAdapterInterface/IWebService.h"
 
 
+namespace systelab { namespace rest_api_core {
+	class IEndpoint;
+	class IRouteAccessValidator;
+	class Router;
+	class RoutesFactory;
+}}
+
 namespace seed_cpp { namespace rest {
 
 	class IEndpointsFactory;
-	class Router;
+	class IRouteAccessValidatorsFactory;
 
 	class RESTAPIWebService : public systelab::web_server::IWebService
 	{
 	public:
-		RESTAPIWebService(IEndpointsFactory&);
+		typedef std::function< std::unique_ptr<systelab::rest_api_core::IRouteAccessValidator>() > RouteAccessValidatorFactoryMethod;
+		typedef std::function< std::unique_ptr<systelab::rest_api_core::IEndpoint>() > EndpointFactoryMethod;
+
+	public:
+		RESTAPIWebService(IEndpointsFactory&,
+						  IRouteAccessValidatorsFactory&);
 		virtual ~RESTAPIWebService();
 
-		std::unique_ptr<systelab::web_server::Reply> process(const systelab::web_server::Request& request) const;
+		std::unique_ptr<systelab::web_server::Reply> process(const systelab::web_server::Request&) const;
+
+	private:
+		enum class RouteAccess
+		{
+			ANONYMOUS = 0,
+			BASIC = 1,
+			ADMIN = 2
+		};
+
+		void addRoute(const std::string& method, const std::string& uri, const EndpointFactoryMethod, RouteAccess) const;
+		std::vector<RouteAccessValidatorFactoryMethod> getRouteAccessValidators(RouteAccess) const;
 
 	private:
 		IEndpointsFactory& m_endpointsFactory;
-		std::unique_ptr<Router> m_router;
+		IRouteAccessValidatorsFactory& m_routeAccessValidatorsFactory;
+		std::unique_ptr<systelab::rest_api_core::Router> m_router;
+		std::unique_ptr<systelab::rest_api_core::RoutesFactory> m_routesFactory;
 	};
 
 }}

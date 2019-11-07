@@ -5,6 +5,12 @@
 namespace seed_cpp { namespace rest {
 
 	std::unique_ptr<systelab::web_server::Reply>
+	ReplyBuilderHelper::buildEmpty(systelab::web_server::Reply::StatusType status)
+	{
+		return build(status, "{}");
+	}
+
+	std::unique_ptr<systelab::web_server::Reply>
 	ReplyBuilderHelper::build(systelab::web_server::Reply::StatusType status, const std::string& content)
 	{
 		auto reply = std::make_unique<systelab::web_server::Reply>();

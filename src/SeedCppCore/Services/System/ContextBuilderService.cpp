@@ -7,6 +7,7 @@
 #include "DAL/Translators/JSON/JSONTranslatorsFactory.h"
 #include "Model/Model.h"
 #include "REST/Endpoints/EndpointsFactory.h"
+#include "REST/RouteAccess/RouteAccessValidatorsFactory.h"
 #include "Services/ServicesMgr.h"
 #include "Services/Model/ModelServicesFactory.h"
 #include "Services/Security/SecurityServicesFactory.h"
@@ -39,6 +40,7 @@ namespace seed_cpp { namespace service {
 		auto systemServicesFactory = std::make_unique<service::SystemServicesFactory>(m_context);
 		auto validatorServicesFactory = std::make_unique<service::ValidatorServicesFactory>(m_context);
 		auto endpointsFactory = std::make_unique<rest::EndpointsFactory>(m_context);
+		auto routeAccessValidatorsFactory = std::make_unique<rest::RouteAccessValidatorsFactory>(m_context);
 
 		m_context.setDbTranslatorsFactory(std::move(dbTranslatorsFactory));
 		m_context.setDbDAOFactory(std::move(dbDAOFactory));
@@ -48,6 +50,7 @@ namespace seed_cpp { namespace service {
 		m_context.setSystemServicesFactory(std::move(systemServicesFactory));
 		m_context.setValidatorServicesFactory(std::move(validatorServicesFactory));
 		m_context.setEndpointsFactory(std::move(endpointsFactory));
+		m_context.setRouteAccessValidatorsFactory(std::move(routeAccessValidatorsFactory));
 	}
 
 	void ContextBuilderService::buildServices()

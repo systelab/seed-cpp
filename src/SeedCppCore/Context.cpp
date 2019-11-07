@@ -6,6 +6,7 @@
 #include "DAL/Translators/JSON/IJSONTranslatorsFactory.h"
 #include "Model/Model.h"
 #include "REST/Endpoints/IEndpointsFactory.h"
+#include "REST/RouteAccess/IRouteAccessValidatorsFactory.h"
 #include "Services/ServicesMgr.h"
 #include "Services/Model/IModelServicesFactory.h"
 #include "Services/Security/ISecurityServicesFactory.h"
@@ -23,8 +24,8 @@ namespace seed_cpp {
 					 std::unique_ptr<systelab::web_server::IServer> webServer,
 					 std::unique_ptr<systelab::json::IJSONAdapter> jsonAdapter)
 		:m_database(std::move(database))
-		, m_webServer(std::move(webServer))
-		, m_jsonAdapter(std::move(jsonAdapter))
+		,m_webServer(std::move(webServer))
+		,m_jsonAdapter(std::move(jsonAdapter))
 	{
 	}
 
@@ -100,6 +101,11 @@ namespace seed_cpp {
 		return m_endpointsFactory.get();
 	}
 
+	rest::IRouteAccessValidatorsFactory* Context::getRouteAccessValidatorsFactory() const
+	{
+		return m_routeAccessValidatorsFactory.get();
+	}
+
 	void Context::setDbTranslatorsFactory(std::unique_ptr<dal::IDbTranslatorsFactory> dbTranslatorsFactory)
 	{
 		m_dbTranslatorsFactory = std::move(dbTranslatorsFactory);
@@ -138,6 +144,11 @@ namespace seed_cpp {
 	void Context::setEndpointsFactory(std::unique_ptr<rest::IEndpointsFactory> endpointsFactory)
 	{
 		m_endpointsFactory = std::move(endpointsFactory);
+	}
+
+	void Context::setRouteAccessValidatorsFactory(std::unique_ptr<rest::IRouteAccessValidatorsFactory> routeAccessValidatorsFactory)
+	{
+		m_routeAccessValidatorsFactory = std::move(routeAccessValidatorsFactory);
 	}
 
 

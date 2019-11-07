@@ -2,6 +2,7 @@
 #include "UserJSONTranslator.h"
 
 #include "Model/User.h"
+#include "Model/UserRoleNames.h"
 
 
 namespace seed_cpp { namespace dal {
@@ -28,11 +29,11 @@ namespace seed_cpp { namespace dal {
 	{
 		if (role == model::User::ADMIN_ROLE)
 		{
-			return "admin";
+			return model::user_role::ADMIN_ROLE_NAME;
 		}
 		else if (role == model::User::USER_ROLE)
 		{
-			return "user";
+			return model::user_role::BASIC_ROLE_NAME;
 		}
 		else
 		{
@@ -83,11 +84,11 @@ namespace seed_cpp { namespace dal {
 
 	model::User::Role UserJSONLoadTranslator::translateStringToRole(const std::string &role) const
 	{
-		if (role == "admin")
+		if (role == model::user_role::ADMIN_ROLE_NAME)
 		{
 			return model::User::ADMIN_ROLE;
 		}
-		else if (role == "user")
+		else if (role == model::user_role::BASIC_ROLE_NAME)
 		{
 			return model::User::USER_ROLE;
 		}

@@ -1,18 +1,17 @@
 #pragma once
 
-#include "REST/Endpoints/IEndpoint.h"
+#include "RESTAPICore/Endpoint/IEndpoint.h"
 
 
 namespace seed_cpp { namespace rest {
 
-	class HealthGetEndpoint : public IEndpoint
+	class HealthGetEndpoint : public systelab::rest_api_core::IEndpoint
 	{
 	public:
 		HealthGetEndpoint();
 		virtual ~HealthGetEndpoint();
 
-		bool hasAccess() const;
-		std::unique_ptr<systelab::web_server::Reply> execute();
+		std::unique_ptr<systelab::web_server::Reply> execute(const systelab::rest_api_core::EndpointRequestData&) override;
 	};
 
 }}

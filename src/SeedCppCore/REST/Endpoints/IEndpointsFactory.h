@@ -2,41 +2,42 @@
 
 #include <memory>
 
+#include "RESTAPICore/Endpoint/IEndpoint.h"
+
 
 namespace seed_cpp { namespace rest {
 
-	class EndpointRequestData;
-	class IEndpoint;
+	using namespace systelab::rest_api_core;
 
 	class IEndpointsFactory
 	{
 	public:
 		virtual ~IEndpointsFactory() = default;
 
-		// Allergies
-		virtual std::unique_ptr<IEndpoint> buildAllergiesGetAllEndpoint(const EndpointRequestData&) = 0;
-		virtual std::unique_ptr<IEndpoint> buildAllergiesGetEndpoint(const EndpointRequestData&) = 0;
-		virtual std::unique_ptr<IEndpoint> buildAllergiesPostEndpoint(const EndpointRequestData&) = 0;
-		virtual std::unique_ptr<IEndpoint> buildAllergiesPutEndpoint(const EndpointRequestData&) = 0;
-		virtual std::unique_ptr<IEndpoint> buildAllergiesDeleteEndpoint(const EndpointRequestData&) = 0;
-
 		// Health
-		virtual std::unique_ptr<IEndpoint> buildHealthGetEndpoint(const EndpointRequestData&) = 0;
+		virtual std::unique_ptr<IEndpoint> buildHealthGetEndpoint() const = 0;
+
+		// Allergies
+		virtual std::unique_ptr<IEndpoint> buildAllergiesGetAllEndpoint() const = 0;
+		virtual std::unique_ptr<IEndpoint> buildAllergiesGetEndpoint() const = 0;
+		virtual std::unique_ptr<IEndpoint> buildAllergiesPostEndpoint() const = 0;
+		virtual std::unique_ptr<IEndpoint> buildAllergiesPutEndpoint() const = 0;
+		virtual std::unique_ptr<IEndpoint> buildAllergiesDeleteEndpoint() const = 0;
 
 		// Patients
-		virtual std::unique_ptr<IEndpoint> buildPatientsGetAllEndpoint(const EndpointRequestData&) = 0;
-		virtual std::unique_ptr<IEndpoint> buildPatientsGetEndpoint(const EndpointRequestData&) = 0;
-		virtual std::unique_ptr<IEndpoint> buildPatientsPostEndpoint(const EndpointRequestData&) = 0;
-		virtual std::unique_ptr<IEndpoint> buildPatientsPutEndpoint(const EndpointRequestData&) = 0;
-		virtual std::unique_ptr<IEndpoint> buildPatientsDeleteEndpoint(const EndpointRequestData&) = 0;
+		virtual std::unique_ptr<IEndpoint> buildPatientsGetAllEndpoint() const = 0;
+		virtual std::unique_ptr<IEndpoint> buildPatientsGetEndpoint() const = 0;
+		virtual std::unique_ptr<IEndpoint> buildPatientsPostEndpoint() const = 0;
+		virtual std::unique_ptr<IEndpoint> buildPatientsPutEndpoint() const = 0;
+		virtual std::unique_ptr<IEndpoint> buildPatientsDeleteEndpoint() const = 0;
 
 		// Users
-		virtual std::unique_ptr<IEndpoint> buildUsersGetAllEndpoint(const EndpointRequestData&) = 0;
-		virtual std::unique_ptr<IEndpoint> buildUsersGetEndpoint(const EndpointRequestData&) = 0;
-		virtual std::unique_ptr<IEndpoint> buildUsersPostEndpoint(const EndpointRequestData&) = 0;
-		virtual std::unique_ptr<IEndpoint> buildUsersPutEndpoint(const EndpointRequestData&) = 0;
-		virtual std::unique_ptr<IEndpoint> buildUsersDeleteEndpoint(const EndpointRequestData&) = 0;
-		virtual std::unique_ptr<IEndpoint> buildUsersLoginPostEndpoint(const EndpointRequestData&) = 0;
+		virtual std::unique_ptr<IEndpoint> buildUsersGetAllEndpoint() const = 0;
+		virtual std::unique_ptr<IEndpoint> buildUsersGetEndpoint() const = 0;
+		virtual std::unique_ptr<IEndpoint> buildUsersPostEndpoint() const = 0;
+		virtual std::unique_ptr<IEndpoint> buildUsersPutEndpoint() const = 0;
+		virtual std::unique_ptr<IEndpoint> buildUsersDeleteEndpoint() const = 0;
+		virtual std::unique_ptr<IEndpoint> buildUsersLoginPostEndpoint() const = 0;
 	};
 
 }}
