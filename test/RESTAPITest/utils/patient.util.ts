@@ -8,7 +8,6 @@ export class PatientUtility
     {
         const requestBody: Patient =
         {
-            id: 0, // Excluded member
             name: name,
             surname: surname,
             email: email,

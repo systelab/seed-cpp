@@ -9,7 +9,6 @@ export class File
             fs.unlink(path, (err) =>
             {
                 if (err) throw err;
-                console.log(path + ' was deleted');
             });
         }
         else

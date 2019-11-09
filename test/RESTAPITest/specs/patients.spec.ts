@@ -1,5 +1,5 @@
 import 'mocha';
-import { Address, Patient } from '@model';
+import { Address, Patient, Page } from '@model';
 import { RESTAPI, Response, StatusCode } from '@restapi';
 import { SeedCppApp, SeedCppRestApi } from '@apps';
 import { PatientUtility } from '@utils';
@@ -77,7 +77,7 @@ describe('Patients', async () =>
             zip: "08402"
         }
 
-        let expectedJSON = 
+        let expectedJSON: Page<Patient> = 
         {
             "content":
             [
@@ -86,13 +86,13 @@ describe('Patients', async () =>
                 await PatientUtility.createUser(api, "Robert", "Williams", "robert.williams@email.com", address),
                 await PatientUtility.createUser(api, "Mary", "Brown", "mary.brown@email.com", address)
             ],
-            "totalElements":4,
-            "first":true,
-            "last":true,
-            "number":0,
-            "numberOfElements":4,
-            "size":20,
-            "totalPages":1
+            "totalElements": 4,
+            "first": true,
+            "last": true,
+            "number": 0,
+            "numberOfElements": 4,
+            "size": 20,
+            "totalPages": 1
         }
        
         response = await api.sendGETRequest(SeedCppRestApi.PATIENTS);
@@ -105,27 +105,20 @@ describe('Patients', async () =>
     {
         await api.login("WrongUser", "WrongPassword");
 
-        const address: Address =
-        {
-            coordinates: "41°36'36.1''N 2°17'24.9''E",
-            street: "C/Enginyer, 14 2n 3a",
-            city: "Granollers",
-            zip: "08402"
-        }
-
         const requestBody: Patient =
         {
-            id: 0, // Excluded member
             name: "User",
             surname: "Surname",
             email: "user@werfen.com",
-            address: address
+            address: {
+                coordinates: "41°36'36.1''N 2°17'24.9''E",
+                street: "C/Enginyer, 14 2n 3a",
+                city: "Granollers",
+                zip: "08402"
+            }
         }
-
         const response: Response = await api.sendPOSTRequest(SeedCppRestApi.PATIENTS_PATIENT, requestBody);
         await RESTAPI.expectStatus(response, StatusCode.FORBIDDEN);
-
-        const expectedBody: string = "";
-        await RESTAPI.expectBody(response, expectedBody);
+        await RESTAPI.expectBody(response, {});
     });
 });
