@@ -19,7 +19,7 @@ class SeedCppConan(ConanFile):
         self.options["BoostAsioWebServerAdapter"].OpenSSL = self.options.OpenSSL
         self.options["JWTUtils"].OpenSSL = self.options.OpenSSL
         self.options["RESTAPICore"].OpenSSL = self.options.OpenSSL
-		self.options["JSONSettings"].boost = self.options.boost
+        self.options["JSONSettings"].boost = self.options.boost
 
         self.options["DbAdapterTestUtilities"].gtest = self.options.gtest
         self.options["JSONAdapterTestUtilities"].gtest = self.options.gtest
