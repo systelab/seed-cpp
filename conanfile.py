@@ -19,28 +19,22 @@ class SeedCppConan(ConanFile):
         self.options["BoostAsioWebServerAdapter"].OpenSSL = self.options.OpenSSL
         self.options["JWTUtils"].OpenSSL = self.options.OpenSSL
         self.options["RESTAPICore"].OpenSSL = self.options.OpenSSL
-		self.options["JSONSettings"].boost = self.options.boost
-
         self.options["DbAdapterTestUtilities"].gtest = self.options.gtest
         self.options["JSONAdapterTestUtilities"].gtest = self.options.gtest
         self.options["JWTUtilsTestUtilities"].gtest = self.options.gtest
-        self.options["JSONSettingsTestUtilities"].boost = self.options.boost
-        self.options["JSONSettingsTestUtilities"].gtest = self.options.gtest
 
     def requirements(self):
         self.requires("DbSQLiteAdapter/1.1.5@systelab/stable")
-        self.requires("RapidJSONAdapter/1.0.4@systelab/stable")
+        self.requires("RapidJSONAdapter/1.0.3@systelab/stable")
         self.requires("BoostAsioWebServerAdapter/1.0.2@systelab/stable")
-        self.requires("JWTUtils/1.0.4@systelab/stable")
+        self.requires("JWTUtils/1.0.3@systelab/stable")
         self.requires("RESTAPICore/1.0.2@systelab/stable")
-        self.requires("JSONSettings/1.0.0@systelab/stable")
 
     def build_requirements(self):
         self.build_requires("TestUtilitiesInterface/1.0.3@systelab/stable")
         self.build_requires("DbAdapterTestUtilities/1.1.5@systelab/stable")
         self.build_requires("JSONAdapterTestUtilities/1.0.3@systelab/stable")
         self.build_requires("JWTUtilsTestUtilities/1.0.3@systelab/stable")
-        self.build_requires("JSONSettingsTestUtilities/1.0.0@systelab/stable")
         self.build_requires("gtest/1.8.1@bincrafters/stable")
 
     def imports(self):
