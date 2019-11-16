@@ -1,5 +1,9 @@
 #include "stdafx.h"
 #include "SeedCppCore/Core.h"
+#include "SeedCppCore/Model/Settings.h"
+
+#include "JSONSettings/SettingsService.h"
+#include "JSONSettings/SettingsMacros.h"
 
 #include <boost/filesystem.hpp>
 #include <boost/program_options.hpp>
@@ -11,10 +15,6 @@ int main(int ac, char* av[])
 {
 	try
 	{
-		int port = 8080;
-		bool enableCors = false;
-		bool enableHttps = false;
-
 		po::options_description desc("Allowed options");
 		desc.add_options()
 			("help", "produce help message")
@@ -32,26 +32,30 @@ int main(int ac, char* av[])
 			return 0;
 		}
 
+		systelab::setting::SettingsService settingsService;
+		int port = GET_JSON_SETTING_INT(settingsService, seed_cpp::model::setting::ApplicationSettingsFile, WebServerPort);
 		if (vm.count("port"))
 		{
 			port = vm["port"].as<int>();
 			std::cout << "Port set to " << port << ".\n";
 		}
 
+		bool enableCORS = GET_JSON_SETTING_BOOL(settingsService, seed_cpp::model::setting::ApplicationSettingsFile, WebServerCORSEnabled);
 		if (vm.count("cors"))
 		{
-			enableCors = true;
+			enableCORS = true;
 			std::cout << "CORS is enabled.\n";
 		}
 
+		bool enableHTTPS = GET_JSON_SETTING_BOOL(settingsService, seed_cpp::model::setting::ApplicationSettingsFile, WebServerHTTPSEnabled);
 		if (vm.count("https"))
 		{
-			enableHttps = true;
+			enableHTTPS = true;
 			std::cout << "HTTPS is enabled.\n";
 		}
 
 		seed_cpp::Core core;
-		core.execute(port, enableCors, enableHttps);
+		core.execute(port, enableCORS, enableHTTPS);
 	}
 	catch (std::exception &e)
 	{
