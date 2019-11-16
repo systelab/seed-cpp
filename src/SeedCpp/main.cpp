@@ -32,29 +32,29 @@ int main(int ac, char* av[])
 			return 0;
 		}
 
-		systelab::setting::SettingsService settingsService;
-		int port = GET_JSON_SETTING_INT(settingsService, seed_cpp::model::setting::ApplicationSettingsFile, WebServerPort);
+		auto settingsService = std::make_unique<systelab::setting::SettingsService>();
+		int port = GET_JSON_SETTING_INT((*settingsService), seed_cpp::model::setting::ApplicationSettingsFile, WebServerPort);
 		if (vm.count("port"))
 		{
 			port = vm["port"].as<int>();
 			std::cout << "Port set to " << port << ".\n";
 		}
 
-		bool enableCORS = GET_JSON_SETTING_BOOL(settingsService, seed_cpp::model::setting::ApplicationSettingsFile, WebServerCORSEnabled);
+		bool enableCORS = GET_JSON_SETTING_BOOL((*settingsService), seed_cpp::model::setting::ApplicationSettingsFile, WebServerCORSEnabled);
 		if (vm.count("cors"))
 		{
 			enableCORS = true;
 			std::cout << "CORS is enabled.\n";
 		}
 
-		bool enableHTTPS = GET_JSON_SETTING_BOOL(settingsService, seed_cpp::model::setting::ApplicationSettingsFile, WebServerHTTPSEnabled);
+		bool enableHTTPS = GET_JSON_SETTING_BOOL((*settingsService), seed_cpp::model::setting::ApplicationSettingsFile, WebServerHTTPSEnabled);
 		if (vm.count("https"))
 		{
 			enableHTTPS = true;
 			std::cout << "HTTPS is enabled.\n";
 		}
 
-		seed_cpp::Core core;
+		seed_cpp::Core core(std::move(settingsService));
 		core.execute(port, enableCORS, enableHTTPS);
 	}
 	catch (std::exception &e)

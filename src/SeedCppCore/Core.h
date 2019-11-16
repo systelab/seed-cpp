@@ -7,6 +7,9 @@ namespace systelab {
 	namespace json {
 		class IJSONAdapter;
 	}
+	namespace setting {
+		class ISettingsService;
+	}
 	namespace web_server {
 		class IServer;
 	}
@@ -19,7 +22,7 @@ namespace seed_cpp {
 	class Core
 	{
 	public:
-		Core();
+		Core(std::unique_ptr<systelab::setting::ISettingsService>);
 		virtual ~Core();
 
 		void execute(unsigned int port, bool enableCORS, bool enableHTTPS);
@@ -37,6 +40,7 @@ namespace seed_cpp {
 		std::string getFileContents(const std::string& filename);
 
 	private:
+		std::unique_ptr<systelab::setting::ISettingsService> m_settingsService;
 		std::unique_ptr<Context> m_context;
 	};
 

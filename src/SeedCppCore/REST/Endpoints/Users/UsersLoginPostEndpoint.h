@@ -5,9 +5,14 @@
 #include <string>
 
 
-namespace systelab { namespace jwt {
-	class ITokenBuilderService;
-}}
+namespace systelab {
+	namespace jwt {
+		class ITokenBuilderService;
+	}
+	namespace setting {
+		class ISettingsService;
+	}
+}
 
 namespace seed_cpp {
 	namespace model {
@@ -26,7 +31,8 @@ namespace seed_cpp { namespace rest {
 	public:
 		UsersLoginPostEndpoint(const service::IUserModelService&,
 							   const service::ITimeService&,
-							   const systelab::jwt::ITokenBuilderService&);
+							   const systelab::jwt::ITokenBuilderService&,
+							   const systelab::setting::ISettingsService&);
 		virtual ~UsersLoginPostEndpoint();
 
 		std::unique_ptr<systelab::web_server::Reply> execute(const systelab::rest_api_core::EndpointRequestData& requestData) override;
@@ -46,6 +52,7 @@ namespace seed_cpp { namespace rest {
 		const service::IUserModelService& m_userModelService;
 		const service::ITimeService& m_timeService;
 		const systelab::jwt::ITokenBuilderService& m_jwtBuilderService;
+		const systelab::setting::ISettingsService& m_settingsService;
 	};
 
 }}

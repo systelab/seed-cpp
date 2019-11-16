@@ -2,6 +2,7 @@
 #include "Core.h"
 
 #include "Context.h"
+#include "Model/Settings.h"
 #include "REST/RESTAPIWebService.h"
 #include "Services/Model/ModelInitializationService.h"
 #include "Services/System/ContextBuilderService.h"
@@ -17,13 +18,17 @@
 
 #include "RapidJSONAdapter/JSONAdapter.h"
 
+#include "JSONSettings/ISettingsService.h"
+#include "JSONSettings/SettingsMacros.h"
+
 #include <thread>
 
 
 namespace seed_cpp {
 
-	Core::Core()
-		:m_context()
+	Core::Core(std::unique_ptr<systelab::setting::ISettingsService> settingsService)
+		:m_settingsService(std::move(settingsService))
+		,m_context()
 	{
 	}
 
@@ -50,9 +55,10 @@ namespace seed_cpp {
 
 	std::unique_ptr<systelab::db::IDatabase> Core::loadDatabase()
 	{
-		bool existsDB = fileExists("./seed_cpp.db");
+		std::string dbFilepath = GET_JSON_SETTING_STR((*m_settingsService), model::setting::ApplicationSettingsFile, DBFilepath);
+		bool existsDB = fileExists(dbFilepath);
 
-		systelab::db::sqlite::ConnectionConfiguration databaseConfiguration("./seed_cpp.db");
+		systelab::db::sqlite::ConnectionConfiguration databaseConfiguration(dbFilepath);
 		systelab::db::sqlite::Connection databaseConnection;
 		std::unique_ptr<systelab::db::IDatabase> database = databaseConnection.loadDatabase(databaseConfiguration);
 
@@ -67,22 +73,30 @@ namespace seed_cpp {
 
 	std::unique_ptr<systelab::web_server::IServer> Core::loadWebServer(int port, bool enableHttps, bool enableCors)
 	{
+		std::string hostAddress = GET_JSON_SETTING_STR((*m_settingsService), model::setting::ApplicationSettingsFile, WebServerHostAddress);
+		size_t threadPoolSize = GET_JSON_SETTING_INT((*m_settingsService), model::setting::ApplicationSettingsFile, WebServerThreadPoolSize);
+
 		systelab::web_server::Configuration configuration;
-		configuration.setHostAddress("127.0.0.1");
+		configuration.setHostAddress(hostAddress);
 		configuration.setPort(port);
-		configuration.setThreadPoolSize(5);
+		configuration.setThreadPoolSize(threadPoolSize);
 
 		systelab::web_server::SecurityConfiguration& securityConfiguration = configuration.getSecurityConfiguration();
 		securityConfiguration.setHTTPSEnabled(enableHttps);
 		if (enableHttps)
 		{
-			securityConfiguration.setServerCertificate(getFileContents("Certificates/server-cert.crt"));
-			securityConfiguration.setServerPrivateKey(getFileContents("Certificates/server-key.pem"));
-			securityConfiguration.setServerDHParam(getFileContents("Certificates/server-dhparam.pem"));
+			std::string serverCertificateFilepath = GET_JSON_SETTING_STR((*m_settingsService), model::setting::ApplicationSettingsFile, WebServerHTTPSCertificateFilepath);
+			std::string serverPrivateKeyFilepath = GET_JSON_SETTING_STR((*m_settingsService), model::setting::ApplicationSettingsFile, WebServerHTTPSPrivateKeyFilepath);
+			std::string serverDHParamFilepath = GET_JSON_SETTING_STR((*m_settingsService), model::setting::ApplicationSettingsFile, WebServerHTTPSDHParamFilepath);
+
+			securityConfiguration.setServerCertificate(getFileContents(serverCertificateFilepath));
+			securityConfiguration.setServerPrivateKey(getFileContents(serverPrivateKeyFilepath));
+			securityConfiguration.setServerDHParam(getFileContents(serverDHParamFilepath));
 		}
 
-		systelab::web_server::CORSConfiguration &corsConfiguration = configuration.getCORSConfiguration();
-		if (enableCors) {
+		systelab::web_server::CORSConfiguration& corsConfiguration = configuration.getCORSConfiguration();
+		if (enableCors)
+		{
 			corsConfiguration.setEnabled(true);
 			corsConfiguration.addAllowedOrigin("*");
 			corsConfiguration.addAllowedHeader("origin");
@@ -139,7 +153,7 @@ namespace seed_cpp {
 		auto& webServer = m_context->getWebServer();
 		auto& endpointsFactory = *m_context->getEndpointsFactory();
 		auto& routeAccessValidatorsFactory = *m_context->getRouteAccessValidatorsFactory();
-		auto restWebService = std::make_unique<rest::RESTAPIWebService>(endpointsFactory, routeAccessValidatorsFactory);
+		auto restWebService = std::make_unique<rest::RESTAPIWebService>(endpointsFactory, routeAccessValidatorsFactory, *m_settingsService);
 		
 		webServer.registerWebService(std::move(restWebService));
 		webServer.start();
