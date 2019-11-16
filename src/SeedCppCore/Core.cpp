@@ -10,11 +10,14 @@
 #include "DbSQLiteAdapter/ConnectionConfiguration.h"
 
 #include "BoostAsioWebServerAdapter/ServerFactory.h"
+
 #include "WebServerAdapterInterface/IServer.h"
 #include "WebServerAdapterInterface/Model/CORSConfiguration.h"
 #include "WebServerAdapterInterface/Model/Configuration.h"
 
 #include "RapidJSONAdapter/JSONAdapter.h"
+
+#include <thread>
 
 
 namespace seed_cpp {
@@ -41,6 +44,7 @@ namespace seed_cpp {
 		std::cout << "Seed core is now running at " << port << " ..." << std::endl;
 		while (true)
 		{
+			std::this_thread::sleep_for(std::chrono::seconds(1));
 		}
 	}
 
