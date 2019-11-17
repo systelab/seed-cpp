@@ -15,17 +15,19 @@ int main(int ac, char* av[])
 {
 	try
 	{
+		SET_JSON_SETTINGS_FOLDER("./Settings");
+
 		po::options_description desc("Allowed options");
 		desc.add_options()
 			("help", "produce help message")
 			("cors", "enable cors")
 			("https", "enable https")
 			("port", po::value<int>(), "set port");
-		
+
 		po::variables_map vm;
 		po::store(po::parse_command_line(ac, av, desc), vm);
 		po::notify(vm);
-		
+
 		if (vm.count("help"))
 		{
 			std::cout << desc << "\n";
