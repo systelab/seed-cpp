@@ -31,7 +31,7 @@ set_target_properties(${SEED_CPP_CORE_UNIT_TEST_PROJECT} PROPERTIES RUNTIME_OUTP
 
 # Ignored missing PDBs link warning on Visual Studio
 if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
-	set_target_properties(${PROJECT_NAME} PROPERTIES LINK_FLAGS "/ignore:4099")
+	set_target_properties(${SEED_CPP_CORE_UNIT_TEST_PROJECT} PROPERTIES LINK_FLAGS "/ignore:4099")
 endif()
 
 #Configure source groups
