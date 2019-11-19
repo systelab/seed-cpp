@@ -18,7 +18,7 @@ namespace seed_cpp { namespace model { namespace setting {
 		JSON_SETTING_STR (WebServerHostAddress,					"webServer.address",					"127.0.0.1",						CACHE_DISABLED)
 		JSON_SETTING_INT (WebServerPort,						"webServer.port",						8080,								CACHE_DISABLED)
 		JSON_SETTING_INT (WebServerThreadPoolSize,				"webServer.threadPoolSize",				5,									CACHE_DISABLED)
-		JSON_SETTING_BOOL(WebServerHTTPSEnabled,				"webServer.https.enabled",				true,								CACHE_DISABLED)
+		JSON_SETTING_BOOL(WebServerHTTPSEnabled,				"webServer.https.enabled",				false,								CACHE_DISABLED)
 		JSON_SETTING_STR (WebServerHTTPSCertificateFilepath,	"webServer.https.certificateFilepath",	"Certificates/server-cert.crt",		CACHE_DISABLED)
 		JSON_SETTING_STR (WebServerHTTPSPrivateKeyFilepath,		"webServer.https.privateKeyFilepath",	"Certificates/server-key.pem",		CACHE_DISABLED)
 		JSON_SETTING_STR (WebServerHTTPSDHParamFilepath,		"webServer.https.dhParamFilepath",		"Certificates/server-dhparam.pem",	CACHE_DISABLED)
