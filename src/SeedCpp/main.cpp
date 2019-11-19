@@ -58,7 +58,7 @@ int main(int ac, char* av[])
 		std::cout << "CORS is " << (enableCORS ? "enabled" : "disabled") << "." << std::endl;
 
 		seed_cpp::Core core(std::move(settingsService));
-		core.execute(port, enableCORS, enableHTTPS);
+		core.execute(port, enableHTTPS, enableCORS);
 	}
 	catch (std::exception &e)
 	{

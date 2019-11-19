@@ -25,11 +25,11 @@ namespace seed_cpp {
 		Core(std::unique_ptr<systelab::setting::ISettingsService>);
 		virtual ~Core();
 
-		void execute(unsigned int port, bool enableCORS, bool enableHTTPS);
+		void execute(unsigned int port, bool enableHTTPS, bool enableCORS);
 
 	protected:
 		std::unique_ptr<systelab::db::IDatabase> loadDatabase();
-		std::unique_ptr<systelab::web_server::IServer> loadWebServer(int port, bool enableHttps, bool enableCors);
+		std::unique_ptr<systelab::web_server::IServer> loadWebServer(int port, bool enableHTTPS, bool enableCORS);
 		std::unique_ptr<systelab::json::IJSONAdapter> loadJSONAdapter();
 
 		void initializeContext();

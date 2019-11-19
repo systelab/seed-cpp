@@ -34,10 +34,10 @@ namespace seed_cpp {
 
 	Core::~Core() = default;
 
-	void Core::execute(unsigned int port, bool enableHttps, bool enableCors)
+	void Core::execute(unsigned int port, bool enableHTTPS, bool enableCORS)
 	{
 		std::unique_ptr<systelab::db::IDatabase> database = loadDatabase();
-		std::unique_ptr<systelab::web_server::IServer> webServer = loadWebServer(port, enableHttps, enableCors);
+		std::unique_ptr<systelab::web_server::IServer> webServer = loadWebServer(port, enableHTTPS, enableCORS);
 		std::unique_ptr<systelab::json::IJSONAdapter> jsonAdapter = loadJSONAdapter();
 
 		m_context = std::make_unique<Context>(std::move(database), std::move(webServer), std::move(jsonAdapter));
@@ -71,7 +71,7 @@ namespace seed_cpp {
 		return database;
 	}
 
-	std::unique_ptr<systelab::web_server::IServer> Core::loadWebServer(int port, bool enableHttps, bool enableCors)
+	std::unique_ptr<systelab::web_server::IServer> Core::loadWebServer(int port, bool enableHTTPS, bool enableCORS)
 	{
 		std::string hostAddress = GET_JSON_SETTING_STR((*m_settingsService), model::setting::ApplicationSettingsFile, WebServerHostAddress);
 		size_t threadPoolSize = GET_JSON_SETTING_INT((*m_settingsService), model::setting::ApplicationSettingsFile, WebServerThreadPoolSize);
@@ -82,8 +82,8 @@ namespace seed_cpp {
 		configuration.setThreadPoolSize(threadPoolSize);
 
 		systelab::web_server::SecurityConfiguration& securityConfiguration = configuration.getSecurityConfiguration();
-		securityConfiguration.setHTTPSEnabled(enableHttps);
-		if (enableHttps)
+		securityConfiguration.setHTTPSEnabled(enableHTTPS);
+		if (enableHTTPS)
 		{
 			std::string serverCertificateFilepath = GET_JSON_SETTING_STR((*m_settingsService), model::setting::ApplicationSettingsFile, WebServerHTTPSCertificateFilepath);
 			std::string serverPrivateKeyFilepath = GET_JSON_SETTING_STR((*m_settingsService), model::setting::ApplicationSettingsFile, WebServerHTTPSPrivateKeyFilepath);
@@ -95,7 +95,7 @@ namespace seed_cpp {
 		}
 
 		systelab::web_server::CORSConfiguration& corsConfiguration = configuration.getCORSConfiguration();
-		if (enableCors)
+		if (enableCORS)
 		{
 			corsConfiguration.setEnabled(true);
 			corsConfiguration.addAllowedOrigin("*");
