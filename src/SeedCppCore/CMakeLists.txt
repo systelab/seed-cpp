@@ -7,6 +7,7 @@ find_package(BoostAsioWebServerAdapter)
 find_package(JWTUtils)
 find_package(RESTAPICore)
 find_package(JSONSettings)
+find_package(TraceAPI)
 
 # Add project folder into includes
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
@@ -22,7 +23,8 @@ target_link_libraries(${SEED_CPP_CORE}
                       BoostAsioWebServerAdapter::BoostAsioWebServerAdapter
                       JWTUtils::JWTUtils
                       RESTAPICore::RESTAPICore
-                      JSONSettings::JSONSettings)
+                      JSONSettings::JSONSettings
+					  TraceAPI::TraceAPI)
 
 #Configure source groups
 foreach(FILE ${SEED_CPP_CORE_SRC} ${SEED_CPP_CORE_HDR}) 
