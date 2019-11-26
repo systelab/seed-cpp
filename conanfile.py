@@ -1,4 +1,4 @@
-from conans import ConanFile, tools
+from conans import ConanFile, tools, CMake
 
 class SeedCppConan(ConanFile):
     name = "SeedCpp"
@@ -12,6 +12,7 @@ class SeedCppConan(ConanFile):
     settings = "os", "compiler", "build_type", "arch"
     options = {"boost": ["1.67.0"], "OpenSSL": ["1.0.2n"], "gtest": ["1.8.1"]}
     default_options = {"boost": "1.67.0", "OpenSSL":"1.0.2n", "gtest":"1.8.1"}
+    exports_sources = "*"
 
     def configure(self):
         self.options["DbSQLiteAdapter"].boost = self.options.boost
@@ -42,6 +43,11 @@ class SeedCppConan(ConanFile):
         self.build_requires("JWTUtilsTestUtilities/1.0.4@systelab/stable")
         self.build_requires("JSONSettingsTestUtilities/1.0.2@systelab/stable")
         self.build_requires("gtest/1.8.1@bincrafters/stable")
+
+    def build(self):
+        cmake = CMake(self)
+        cmake.configure(source_folder=".")
+        cmake.build()
 
     def imports(self):
         self.copy("*.dll", dst=("bin/SeedCpp/%s" % self.settings.build_type), src="bin")
