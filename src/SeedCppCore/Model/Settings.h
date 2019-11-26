@@ -27,6 +27,10 @@ namespace seed_cpp { namespace model { namespace setting {
 		// JWT settings
 		JSON_SETTING_STR(JWTSecretKey,							"jwt.secretKey",						"SeedCppRocks!",					CACHE_DISABLED)
 		JSON_SETTING_INT(JWTExpirationSeconds,					"jwt.expirationSeconds",				/*30 minutes*/ 1800,				CACHE_DISABLED)
+
+		// Trace settings
+		JSON_SETTING_STR(TraceFolderPath,						"trace.folderPath",						"./Traces",							CACHE_DISABLED)
+		JSON_SETTING_INT(TraceMaxArchiveDays,					"trace.maxArchiveDays",					10,									CACHE_DISABLED)
 	);
 
 }}}
