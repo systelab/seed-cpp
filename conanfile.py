@@ -36,7 +36,7 @@ class SeedCppConan(ConanFile):
         self.requires("JWTUtils/1.0.4@systelab/stable")
         self.requires("RESTAPICore/1.0.3@systelab/stable")
         self.requires("JSONSettings/1.0.2@systelab/stable")
-        self.requires("TraceAPI/1.0.0@systelab/stable")
+        self.requires("TraceAPI/1.0.1@systelab/stable")
 
     def build_requirements(self):
         self.build_requires("TestUtilitiesInterface/1.0.3@systelab/stable")
