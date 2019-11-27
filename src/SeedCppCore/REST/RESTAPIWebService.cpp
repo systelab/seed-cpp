@@ -4,6 +4,7 @@
 #include "Model/Settings.h"
 #include "REST/Endpoints/IEndpointsFactory.h"
 #include "REST/RouteAccess/IRouteAccessValidatorsFactory.h"
+#include "Services/System/TraceMacros.h"
 
 #include "RESTAPICore/Endpoint/IEndpoint.h"
 #include "RESTAPICore/RouteAccess/IRouteAccessValidator.h"
@@ -69,11 +70,16 @@ namespace seed_cpp { namespace rest {
 			preflightReply->setStatus(systelab::web_server::Reply::OK);
 			preflightReply->setContent("");
 
+			traceRequest(request, *preflightReply);
+
 			return preflightReply;
 		}
 		else
 		{
-			return m_router->process(request);
+			auto reply = m_router->process(request);
+			traceRequest(request, *reply);
+
+			return reply;
 		}
 	}
 
@@ -104,6 +110,22 @@ namespace seed_cpp { namespace rest {
 			default:
 				return {};
 		}
+	}
+
+	void RESTAPIWebService::traceRequest(const systelab::web_server::Request& request,
+										 const systelab::web_server::Reply& reply) const
+	{
+		bool sensitiveData = containsSensitiveData(request);
+		TRACE_REST_API() << reply.getStatus() << " "
+						 << request.getMethod() << " " << request.getURI() << " "
+						 << "Request: " << (!sensitiveData ? request.getContent() : "***") << " "
+						 << "Reply: " << (!sensitiveData ? reply.getContent() : "***");
+	}
+
+	bool RESTAPIWebService::containsSensitiveData(const systelab::web_server::Request& request) const
+	{
+		std::string uri = request.getURI();
+		return (uri == "/seed/v1/users/login");
 	}
 
 }}

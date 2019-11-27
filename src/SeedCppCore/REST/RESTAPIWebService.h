@@ -45,6 +45,9 @@ namespace seed_cpp { namespace rest {
 		void addRoute(const std::string& method, const std::string& uri, const EndpointFactoryMethod, RouteAccess) const;
 		std::vector<RouteAccessValidatorFactoryMethod> getRouteAccessValidators(RouteAccess) const;
 
+		void traceRequest(const systelab::web_server::Request&, const systelab::web_server::Reply&) const;
+		bool containsSensitiveData(const systelab::web_server::Request&) const;
+
 	private:
 		IEndpointsFactory& m_endpointsFactory;
 		IRouteAccessValidatorsFactory& m_routeAccessValidatorsFactory;
