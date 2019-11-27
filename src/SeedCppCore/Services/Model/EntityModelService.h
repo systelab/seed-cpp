@@ -9,6 +9,7 @@
 #include "Model/LockableEntityMgrSubject.h"
 #include "Services/System/ITimeService.h"
 #include "Services/System/IUUIDGeneratorService.h"
+#include "Services/System/TraceMacros.h"
 
 
 namespace seed_cpp { namespace service {
@@ -68,8 +69,9 @@ namespace seed_cpp { namespace service {
 
 				return addedEntity;
 			}
-			catch (std::exception&)
+			catch (std::exception& exc)
 			{
+				TRACE_ERROR() << "Exception on EntityModelService::addEntity(): " << exc.what();
 				transaction->rollback();
 				throw;
 			}
@@ -94,8 +96,9 @@ namespace seed_cpp { namespace service {
 
 				return editedEntity;
 			}
-			catch (std::exception&)
+			catch (std::exception& exc)
 			{
+				TRACE_ERROR() << "Exception on EntityModelService::editEntity(): " << exc.what();
 				transaction->rollback();
 				throw;
 			}
@@ -122,8 +125,9 @@ namespace seed_cpp { namespace service {
 
 				transaction->commit();
 			}
-			catch (std::exception&)
+			catch (std::exception& exc)
 			{
+				TRACE_ERROR() << "Exception on EntityModelService::deleteEntity(): " << exc.what();
 				transaction->rollback();
 				throw;
 			}
