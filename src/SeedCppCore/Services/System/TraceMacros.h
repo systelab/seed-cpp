@@ -4,3 +4,7 @@
 
 #define TRACE_REST_API() \
 	TRACE_CHANNEL("RESTAPI")
+
+#define TRACE_ERROR() \
+	TRACE_CHANNEL("Error")
+

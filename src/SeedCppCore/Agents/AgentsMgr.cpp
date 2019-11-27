@@ -21,6 +21,7 @@ namespace seed_cpp { namespace agent {
 	{
 		auto& agentsFactory = *m_context.getAgentsFactory();
 		m_traceAgents.emplace("RESTAPI", agentsFactory.buildTraceAgent("RESTAPI"));
+		m_traceAgents.emplace("Error", agentsFactory.buildTraceAgent("Error"));
 	}
 
 }}
