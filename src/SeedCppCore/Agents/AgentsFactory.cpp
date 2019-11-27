@@ -29,6 +29,7 @@ namespace seed_cpp { namespace agent {
 
 		auto traceAgent = std::make_unique<systelab::trace::FileAgent>(channelName, filename, folderPath, nArchivedTraceFiles);
 		traceAgent->enable(true);
+		traceAgent->backup();
 
 		return traceAgent;
 	}
