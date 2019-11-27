@@ -27,7 +27,10 @@ namespace seed_cpp { namespace agent {
 		std::string folderPath = GET_JSON_SETTING_STR(settingsService, model::setting::ApplicationSettingsFile, TraceFolderPath);
 		unsigned int nArchivedTraceFiles = GET_JSON_SETTING_INT(settingsService, model::setting::ApplicationSettingsFile, TraceMaxArchiveDays);
 
-		return std::make_unique<systelab::trace::FileAgent>(channelName, filename, folderPath, nArchivedTraceFiles);
+		auto traceAgent = std::make_unique<systelab::trace::FileAgent>(channelName, filename, folderPath, nArchivedTraceFiles);
+		traceAgent->enable(true);
+
+		return traceAgent;
 	}
 
 }}
