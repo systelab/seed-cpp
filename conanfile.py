@@ -32,7 +32,7 @@ class SeedCppConan(ConanFile):
     def requirements(self):
         self.requires("DbSQLiteAdapter/1.1.5@systelab/stable")
         self.requires("RapidJSONAdapter/1.0.4@systelab/stable")
-        self.requires("BoostAsioWebServerAdapter/1.0.2@systelab/stable")
+        self.requires("BoostAsioWebServerAdapter/1.0.3@systelab/stable")
         self.requires("JWTUtils/1.0.4@systelab/stable")
         self.requires("RESTAPICore/1.0.3@systelab/stable")
         self.requires("JSONSettings/1.0.2@systelab/stable")
