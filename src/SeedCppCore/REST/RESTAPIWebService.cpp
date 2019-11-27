@@ -116,16 +116,28 @@ namespace seed_cpp { namespace rest {
 										 const systelab::web_server::Reply& reply) const
 	{
 		bool sensitiveData = containsSensitiveData(request);
+		std::string requestContent = formatContent(request.getContent());
+		std::string replyContent = formatContent(reply.getContent());
+
 		TRACE_REST_API() << reply.getStatus() << " "
 						 << request.getMethod() << " " << request.getURI() << " "
-						 << "Request: " << (!sensitiveData ? request.getContent() : "***") << " "
-						 << "Reply: " << (!sensitiveData ? reply.getContent() : "***");
+						 << "Request: " << (!sensitiveData ? requestContent : "***") << " "
+						 << "Reply: " << (!sensitiveData ? replyContent : "***");
 	}
 
 	bool RESTAPIWebService::containsSensitiveData(const systelab::web_server::Request& request) const
 	{
 		std::string uri = request.getURI();
 		return (uri == "/seed/v1/users/login");
+	}
+
+	std::string RESTAPIWebService::formatContent(const std::string& content) const
+	{
+		std::string formattedContent = content;
+		formattedContent.erase(std::remove(formattedContent.begin(), formattedContent.end(), '\r'), formattedContent.end());
+		formattedContent.erase(std::remove(formattedContent.begin(), formattedContent.end(), '\n'), formattedContent.end());
+
+		return formattedContent;
 	}
 
 }}

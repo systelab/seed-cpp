@@ -47,6 +47,7 @@ namespace seed_cpp { namespace rest {
 
 		void traceRequest(const systelab::web_server::Request&, const systelab::web_server::Reply&) const;
 		bool containsSensitiveData(const systelab::web_server::Request&) const;
+		std::string formatContent(const std::string&) const;
 
 	private:
 		IEndpointsFactory& m_endpointsFactory;
