@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "Context.h"
 
+#include "Agents/AgentsMgr.h"
+#include "Agents/IAgentsFactory.h"
 #include "DAL/DAO/Db/IDbDAOFactory.h"
 #include "DAL/Translators/Db/IDbTranslatorsFactory.h"
 #include "DAL/Translators/JSON/IJSONTranslatorsFactory.h"
@@ -96,6 +98,11 @@ namespace seed_cpp {
 		return m_validatorServicesFactory.get();
 	}
 
+	agent::IAgentsFactory* Context::getAgentsFactory() const
+	{
+		return m_agentsFactory.get();
+	}
+
 	rest::IEndpointsFactory* Context::getEndpointsFactory() const
 	{
 		return m_endpointsFactory.get();
@@ -141,6 +148,11 @@ namespace seed_cpp {
 		m_validatorServicesFactory = std::move(validatorServicesFactory);
 	}
 
+	void Context::setAgentsFactory(std::unique_ptr<agent::IAgentsFactory> agentsFactory)
+	{
+		m_agentsFactory = std::move(agentsFactory);
+	}
+
 	void Context::setEndpointsFactory(std::unique_ptr<rest::IEndpointsFactory> endpointsFactory)
 	{
 		m_endpointsFactory = std::move(endpointsFactory);
@@ -161,6 +173,18 @@ namespace seed_cpp {
 	void Context::setServicesMgr(std::unique_ptr<service::ServicesMgr> servicesMgr)
 	{
 		m_servicesMgr = std::move(servicesMgr);
+	}
+
+
+	// Agents
+	agent::AgentsMgr* Context::getAgentsMgr() const
+	{
+		return m_agentsMgr.get();
+	}
+
+	void Context::setAgentsMgr(std::unique_ptr<agent::AgentsMgr> agentsMgr)
+	{
+		m_agentsMgr = std::move(agentsMgr);
 	}
 
 }

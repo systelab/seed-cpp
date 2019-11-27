@@ -13,6 +13,10 @@ namespace systelab {
 }
 
 namespace seed_cpp {
+	namespace agent {
+		class IAgentsFactory;
+		class AgentsMgr;
+	}
 	namespace dal {
 		class IDbTranslatorsFactory;
 		class IDbDAOFactory;
@@ -61,6 +65,7 @@ namespace seed_cpp {
 		service::ISecurityServicesFactory* getSecurityServicesFactory() const;
 		service::ISystemServicesFactory* getSystemServicesFactory() const;
 		service::IValidatorServicesFactory* getValidatorServicesFactory() const;
+		agent::IAgentsFactory* getAgentsFactory() const;
 		rest::IEndpointsFactory* getEndpointsFactory() const;
 		rest::IRouteAccessValidatorsFactory* getRouteAccessValidatorsFactory() const;
 
@@ -71,12 +76,17 @@ namespace seed_cpp {
 		void setSecurityServicesFactory(std::unique_ptr<service::ISecurityServicesFactory>);
 		void setSystemServicesFactory(std::unique_ptr<service::ISystemServicesFactory>);
 		void setValidatorServicesFactory(std::unique_ptr<service::IValidatorServicesFactory>);
+		void setAgentsFactory(std::unique_ptr<agent::IAgentsFactory>);
 		void setEndpointsFactory(std::unique_ptr<rest::IEndpointsFactory>);
 		void setRouteAccessValidatorsFactory(std::unique_ptr<rest::IRouteAccessValidatorsFactory>);
 
 		// Services
 		service::ServicesMgr* getServicesMgr() const;
 		void setServicesMgr(std::unique_ptr<service::ServicesMgr>);
+
+		// Agents
+		agent::AgentsMgr* getAgentsMgr() const;
+		void setAgentsMgr(std::unique_ptr<agent::AgentsMgr>);
 
 	protected:
 		std::unique_ptr<systelab::db::IDatabase> m_database;
@@ -92,10 +102,12 @@ namespace seed_cpp {
 		std::unique_ptr<service::ISecurityServicesFactory> m_securityServicesFactory;
 		std::unique_ptr<service::ISystemServicesFactory> m_systemServicesFactory;
 		std::unique_ptr<service::IValidatorServicesFactory> m_validatorServicesFactory;
+		std::unique_ptr<agent::IAgentsFactory> m_agentsFactory;
 		std::unique_ptr<rest::IEndpointsFactory> m_endpointsFactory;
 		std::unique_ptr<rest::IRouteAccessValidatorsFactory> m_routeAccessValidatorsFactory;
 
 		std::unique_ptr<service::ServicesMgr> m_servicesMgr;
+		std::unique_ptr<agent::AgentsMgr> m_agentsMgr;
 	};
 
 }
