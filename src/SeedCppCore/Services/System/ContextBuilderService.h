@@ -14,6 +14,7 @@ namespace seed_cpp { namespace service {
 		void buildFactories() override;
 		void buildModel() override;
 		void buildServices() override;
+		void buildAgents() override;
 
 	private:
 		Context& m_context;

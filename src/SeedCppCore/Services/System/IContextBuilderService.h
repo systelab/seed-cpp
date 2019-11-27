@@ -12,6 +12,7 @@ namespace seed_cpp { namespace service {
 		virtual void buildFactories() = 0;
 		virtual void buildModel() = 0;
 		virtual void buildServices() = 0;
+		virtual void buildAgents() = 0;
 	};
 
 }}

@@ -140,6 +140,7 @@ namespace seed_cpp {
 		contextBuilderService.buildFactories();
 		contextBuilderService.buildModel();
 		contextBuilderService.buildServices();
+		contextBuilderService.buildAgents();
 	}
 
 	void Core::initializeModel()

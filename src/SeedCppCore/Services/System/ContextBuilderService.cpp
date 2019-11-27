@@ -2,6 +2,8 @@
 #include "ContextBuilderService.h"
 
 #include "Context.h"
+#include "Agents/AgentsMgr.h"
+#include "Agents/AgentsFactory.h"
 #include "DAL/DAO/Db/DbDAOFactory.h"
 #include "DAL/Translators/Db/DbTranslatorsFactory.h"
 #include "DAL/Translators/JSON/JSONTranslatorsFactory.h"
@@ -39,6 +41,7 @@ namespace seed_cpp { namespace service {
 		auto securityServicesFactory = std::make_unique<service::SecurityServicesFactory>(m_context);
 		auto systemServicesFactory = std::make_unique<service::SystemServicesFactory>(m_context);
 		auto validatorServicesFactory = std::make_unique<service::ValidatorServicesFactory>(m_context);
+		auto agentsFactory = std::make_unique<agent::AgentsFactory>(m_context);
 		auto endpointsFactory = std::make_unique<rest::EndpointsFactory>(m_context);
 		auto routeAccessValidatorsFactory = std::make_unique<rest::RouteAccessValidatorsFactory>(m_context);
 
@@ -49,6 +52,7 @@ namespace seed_cpp { namespace service {
 		m_context.setSecurityServicesFactory(std::move(securityServicesFactory));
 		m_context.setSystemServicesFactory(std::move(systemServicesFactory));
 		m_context.setValidatorServicesFactory(std::move(validatorServicesFactory));
+		m_context.setAgentsFactory(std::move(agentsFactory));
 		m_context.setEndpointsFactory(std::move(endpointsFactory));
 		m_context.setRouteAccessValidatorsFactory(std::move(routeAccessValidatorsFactory));
 	}
@@ -57,6 +61,12 @@ namespace seed_cpp { namespace service {
 	{
 		auto servicesMgr = std::make_unique<service::ServicesMgr>(m_context);
 		m_context.setServicesMgr(std::move(servicesMgr));
+	}
+
+	void ContextBuilderService::buildAgents()
+	{
+		auto agentsMgr = std::make_unique<agent::AgentsMgr>(m_context);
+		m_context.setAgentsMgr(std::move(agentsMgr));
 	}
 
 }}
