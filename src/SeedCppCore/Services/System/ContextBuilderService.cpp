@@ -67,6 +67,7 @@ namespace seed_cpp { namespace service {
 	{
 		auto agentsMgr = std::make_unique<agent::AgentsMgr>(m_context);
 		m_context.setAgentsMgr(std::move(agentsMgr));
+		m_context.getAgentsMgr()->initialize();
 	}
 
 }}
