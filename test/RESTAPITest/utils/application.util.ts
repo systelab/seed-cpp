@@ -30,17 +30,17 @@ export class Application
 
         this.applicationProcess.on('close', (code, signal) =>
         {
-            console.log(`Child process closed with code ${code} and signal ${signal}`);
+            // console.log(`Child process closed with code ${code} and signal ${signal}`);
         });
 
         this.applicationProcess.on("exit", function (code, signal)
         {
-            console.log(`Child process exited with code ${code} and signal ${signal}`);
+            // console.log(`Child process exited with code ${code} and signal ${signal}`);
         });
 
         this.applicationProcess.stdout.on('data', (data) =>
         {
-            console.log(`Child stdout: ${data}`);
+            // console.log(`Child stdout: ${data}`);
         });
 
         this.applicationProcess.stderr.on('data', (data) =>
