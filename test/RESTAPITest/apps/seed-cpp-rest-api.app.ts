@@ -12,6 +12,8 @@ export class SeedCppRestApi
     // Patients
     public static PATIENTS: string          = '/v1/patients';
     public static PATIENTS_PATIENT: string  = SeedCppRestApi.PATIENTS + '/patient';
+    public static PATIENTS_PATIENT_UID: string  = SeedCppRestApi.PATIENTS + "/$param0";
+
 
     // Allergies
     public static ALLERGIES: string         = '/v1/allergies';
@@ -69,7 +71,7 @@ export class SeedCppRestApi
         {
             request.headers.push({name: HttpHeader.Authorization, value: this.authorizationToken});
         }
-
+        
         return await RESTAPI.sendRequest(request);
     }
 
@@ -89,5 +91,52 @@ export class SeedCppRestApi
         }
 
         return await RESTAPI.sendRequest(request);
+    }
+
+    public async sendPUTTRequest(resourceURI: string, body: any): Promise<Response>
+    {
+        const request: Request = {
+            appURI: this.applicationURI,
+            resourceURI: resourceURI,
+            method: RequestMethod.PUT,
+            headers: [ {name: HttpHeader.ContentType, value: "application/json"} ],
+            body: body
+        }
+
+        if (!!this.authorizationToken)
+        {
+            request.headers.push({name: HttpHeader.Authorization, value: this.authorizationToken});
+        }
+
+        return await RESTAPI.sendRequest(request);
+    }
+
+    public async sendDELETERequest(resourceURI: string, body: string = ""): Promise<Response>
+    {
+        const request: Request = {
+            appURI: this.applicationURI,
+            resourceURI: resourceURI,
+            method: RequestMethod.DELETE,
+            headers: [ {name: HttpHeader.ContentType, value: "application/json"} ],
+            body: body
+        }
+
+        if (!!this.authorizationToken)
+        {
+            request.headers.push({name: HttpHeader.Authorization, value: this.authorizationToken});
+        }
+
+        return await RESTAPI.sendRequest(request);
+    }
+
+    public translateEndpointWithParams(endPoint: string, arrayParams: string[])
+    {
+        //EndPoints are expected to have params like '$param0', '$param1' and so on.
+        for(let i = 0; i < arrayParams.length; ++i)
+        {
+            endPoint = endPoint.replace(`$param${i}`, arrayParams[i]);
+        }
+        
+        return endPoint;
     }
 }

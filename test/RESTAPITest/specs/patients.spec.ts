@@ -22,7 +22,8 @@ describe('Patients', async () =>
     {
         app.close();
         app.removeDb();
-    });
+    });   
+   
 
     it('should create a patient', async() =>
     {
@@ -36,7 +37,6 @@ describe('Patients', async () =>
 
         const requestBody: Patient =
         {
-            id: 0, // Excluded member
             name: "User",
             surname: "Surname",
             email: "user@werfen.com",
@@ -59,6 +59,14 @@ describe('Patients', async () =>
             }
         };
         await RESTAPI.expectBodyExcludingMembers(response, expectedBody, ["id"]);
+    });
+
+    it('should not get an unexisting patient', async() =>
+    {
+        let unexistingUid: string = "aa6a6aa6-66a6-6666-6aa6-a6aa666a666a";      
+        let response: Response = await api.sendGETRequest(api.translateEndpointWithParams(SeedCppRestApi.PATIENTS_PATIENT_UID, [unexistingUid]));
+        RESTAPI.expectStatus(response, StatusCode.NOT_FOUND);
+        RESTAPI.expectBody(response, "");
     });
 
     it('should get all created patient', async() =>
@@ -99,7 +107,98 @@ describe('Patients', async () =>
         RESTAPI.expectStatus(response, StatusCode.OK);
         RESTAPI.expectBody(response, expectedJSON);
     });
-    
+
+    it('should get a particular patient by UID', async() =>
+    {
+        let responseGETAllPatients: Response = await api.sendGETRequest(SeedCppRestApi.PATIENTS);
+        RESTAPI.expectStatus(responseGETAllPatients, StatusCode.OK);
+        let firstPatient = responseGETAllPatients.body.content[0];
+        let uid: string = firstPatient.id;
+       
+        let responseGETPatient: Response = await api.sendGETRequest(api.translateEndpointWithParams(SeedCppRestApi.PATIENTS_PATIENT_UID, [uid]));    
+         // Construct expectedJSON
+         const address: Address = 
+         {
+             coordinates: "41°36'36.1''N 2°17'24.9''E",
+             street: "C/Enginyer, 14 2n 3a",
+             city: "Granollers",
+             zip: "08402"
+         }
+ 
+         let expectedJSON: Patient = 
+         { 
+             "id": uid,
+            "surname": "Surname",
+            "name": "User",
+            "email": "user@werfen.com",
+            "address": address      
+         }         
+         RESTAPI.expectStatus(responseGETPatient, StatusCode.OK);
+         RESTAPI.expectBody(responseGETPatient, expectedJSON);
+    });
+
+    it('should update a patient by UID', async() =>
+    {
+        let responseGETAllPatients: Response = await api.sendGETRequest(SeedCppRestApi.PATIENTS);
+        await RESTAPI.expectStatus(responseGETAllPatients, StatusCode.OK);
+        let firstPatient = responseGETAllPatients.body.content[0];
+        let uid: string = firstPatient.id;
+
+        const newAddress: Address =
+        {
+            coordinates: "41°38'88.841''N 2°15'62.21''E",
+            street: "C/Muntaner, 108 1r 1a",
+            city: "Barcelona",
+            zip: "08006"
+        }
+
+        const requestBody: Patient =
+        {
+            name: "User",
+            surname: "Surname",
+            email: "user@werfen.com",
+            address: newAddress
+        }
+
+        let response: Response = await api.sendPUTTRequest(api.translateEndpointWithParams(SeedCppRestApi.PATIENTS_PATIENT_UID, [uid]), requestBody);
+        RESTAPI.expectStatus(response, StatusCode.OK);
+
+        const expectedBody: any =
+        {
+            surname: "Surname",
+            name: "User",
+            email: "user@werfen.com",
+            address: newAddress
+        };
+        await RESTAPI.expectBodyExcludingMembers(response, expectedBody, ["id"]);
+    });
+
+    it('should delete a patient by UID', async() =>
+    {
+        let responseGETAllPatients: Response = await api.sendGETRequest(SeedCppRestApi.PATIENTS);
+        await RESTAPI.expectStatus(responseGETAllPatients, StatusCode.OK);
+        let firstPatient = responseGETAllPatients.body.content[1];
+        let uid: string = firstPatient.id;
+        
+        // Check patients count before deletion
+        let patientsCountBeforeDeletion = responseGETAllPatients.body.numberOfElements;
+
+        let response: Response = await api.sendDELETERequest(api.translateEndpointWithParams(SeedCppRestApi.PATIENTS_PATIENT_UID, [uid]));
+        RESTAPI.expectStatus(response, StatusCode.NO_CONTENT);
+
+        // Check patients count after deletion
+        responseGETAllPatients = await api.sendGETRequest(SeedCppRestApi.PATIENTS);
+        let patientsCountAfterDeletion = responseGETAllPatients.body.numberOfElements;
+        RESTAPI.expectEqual(patientsCountAfterDeletion, patientsCountBeforeDeletion - 1);
+    });    
+
+    it('should not get all patients when unauthorized user', async() =>
+    {
+        await api.login("WrongUser", "WrongPassword");
+        const response: Response = await api.sendGETRequest(SeedCppRestApi.PATIENTS);
+        RESTAPI.expectStatus(response, StatusCode.UNAUTHORIZED);
+        RESTAPI.expectBody(response, "");
+    });
 
     it('should not create a patient when unauthorized user', async() =>
     {
@@ -118,7 +217,7 @@ describe('Patients', async () =>
             }
         }
         const response: Response = await api.sendPOSTRequest(SeedCppRestApi.PATIENTS_PATIENT, requestBody);
-        await RESTAPI.expectStatus(response, StatusCode.FORBIDDEN);
-        await RESTAPI.expectBody(response, {});
-    });
+        await RESTAPI.expectStatus(response, StatusCode.UNAUTHORIZED);
+        await RESTAPI.expectBody(response, "");
+    }); 
 });

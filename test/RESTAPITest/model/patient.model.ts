@@ -2,7 +2,7 @@ import { Address } from "./address.model";
 
 export interface Patient
 {
-    id?: number;
+    id?: string;
     name: string;
     surname: string;
     email: string;

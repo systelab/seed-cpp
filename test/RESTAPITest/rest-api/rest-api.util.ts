@@ -82,4 +82,9 @@ export class RESTAPI
         expect(response.body).excludingEvery(excludeMembers).to.deep.equal(expectedBody);
     }
 
+    public static expectEqual(actualValue: number, expectedValue: number)
+    {
+        expect(actualValue).to.equal(expectedValue);
+    }
+
 }
