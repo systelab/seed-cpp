@@ -66,7 +66,7 @@ describe('Patients', async () =>
         let unexistingUid: string = "aa6a6aa6-66a6-6666-6aa6-a6aa666a666a";      
         let response: Response = await api.sendGETRequest(api.translateEndpointWithParams(SeedCppRestApi.PATIENTS_PATIENT_UID, [unexistingUid]));
         RESTAPI.expectStatus(response, StatusCode.NOT_FOUND);
-        RESTAPI.expectBody(response, "");
+        RESTAPI.expectBody(response, {});
     });
 
     it('should get all created patient', async() =>
@@ -192,15 +192,15 @@ describe('Patients', async () =>
         RESTAPI.expectEqual(patientsCountAfterDeletion, patientsCountBeforeDeletion - 1);
     });    
 
-    it('should not get all patients when unauthorized user', async() =>
+    it('should not get all patients when forbidden user', async() =>
     {
         await api.login("WrongUser", "WrongPassword");
         const response: Response = await api.sendGETRequest(SeedCppRestApi.PATIENTS);
-        RESTAPI.expectStatus(response, StatusCode.UNAUTHORIZED);
-        RESTAPI.expectBody(response, "");
+        RESTAPI.expectStatus(response, StatusCode.FORBIDDEN);
+        RESTAPI.expectBody(response, {});
     });
 
-    it('should not create a patient when unauthorized user', async() =>
+    it('should not create a patient when forbidden user', async() =>
     {
         await api.login("WrongUser", "WrongPassword");
 
@@ -217,7 +217,7 @@ describe('Patients', async () =>
             }
         }
         const response: Response = await api.sendPOSTRequest(SeedCppRestApi.PATIENTS_PATIENT, requestBody);
-        await RESTAPI.expectStatus(response, StatusCode.UNAUTHORIZED);
-        await RESTAPI.expectBody(response, "");
+        await RESTAPI.expectStatus(response, StatusCode.FORBIDDEN);
+        await RESTAPI.expectBody(response, {});
     }); 
 });
