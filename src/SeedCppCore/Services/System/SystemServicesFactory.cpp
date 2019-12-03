@@ -6,6 +6,7 @@
 #include "Services/System/TimeService.h"
 #include "Services/System/UUIDGeneratorService.h"
 
+#include "JSONSettings/SettingsService.h"
 #include "RESTAPICore/RouteAccess/EpochTimeService.h"
 
 
@@ -36,6 +37,11 @@ namespace seed_cpp { namespace service {
 	std::unique_ptr<IUUIDGeneratorService> SystemServicesFactory::buildUUIDGeneratorService() const
 	{
 		return std::make_unique<UUIDGeneratorService>();
+	}
+
+	std::unique_ptr<systelab::setting::ISettingsService> SystemServicesFactory::buildSettingsService() const
+	{
+		return std::make_unique<systelab::setting::SettingsService>();
 	}
 
 }}

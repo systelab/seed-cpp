@@ -10,9 +10,9 @@
 #include "Services/System/ITimeService.h"
 
 #include "JWTUtils/Services/ITokenBuilderService.h"
-
 #include "RESTAPICore/Endpoint/EndpointRequestData.h"
-
+#include "JSONSettings/ISettingsService.h"
+#include "JSONSettings/SettingsMacros.h"
 #include "WebServerAdapterInterface/Model/Reply.h"
 
 
@@ -20,10 +20,12 @@ namespace seed_cpp { namespace rest {
 
 	UsersLoginPostEndpoint::UsersLoginPostEndpoint(const service::IUserModelService& userModelService,
 												   const service::ITimeService& timeService,
-												   const systelab::jwt::ITokenBuilderService& jwtBuilderService)
+												   const systelab::jwt::ITokenBuilderService& jwtBuilderService,
+												   const systelab::setting::ISettingsService& settingsService)
 		:m_userModelService(userModelService)
 		,m_timeService(timeService)
 		,m_jwtBuilderService(jwtBuilderService)
+		,m_settingsService(settingsService)
 	{
 	}
 	
@@ -99,7 +101,7 @@ namespace seed_cpp { namespace rest {
 		claims.push_back({"iat", iat});
 		claims.push_back({"sub", login});
 
-		std::string jwtSecretKey = model::setting::JWT_SECRET_KEY;
+		std::string jwtSecretKey = GET_JSON_SETTING_STR(m_settingsService, model::setting::ApplicationSettingsFile, JWTSecretKey);
 		return m_jwtBuilderService.buildJWT(jwtSecretKey, claims);
 	}
 

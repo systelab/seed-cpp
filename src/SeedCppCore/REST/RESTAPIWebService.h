@@ -3,12 +3,17 @@
 #include "WebServerAdapterInterface/IWebService.h"
 
 
-namespace systelab { namespace rest_api_core {
-	class IEndpoint;
-	class IRouteAccessValidator;
-	class Router;
-	class RoutesFactory;
-}}
+namespace systelab { 
+	namespace rest_api_core {
+		class IEndpoint;
+		class IRouteAccessValidator;
+		class Router;
+		class RoutesFactory;
+	}
+	namespace setting {
+		class ISettingsService;
+	}
+}
 
 namespace seed_cpp { namespace rest {
 
@@ -23,7 +28,8 @@ namespace seed_cpp { namespace rest {
 
 	public:
 		RESTAPIWebService(IEndpointsFactory&,
-						  IRouteAccessValidatorsFactory&);
+						  IRouteAccessValidatorsFactory&,
+						  systelab::setting::ISettingsService&);
 		virtual ~RESTAPIWebService();
 
 		std::unique_ptr<systelab::web_server::Reply> process(const systelab::web_server::Request&) const;
@@ -42,6 +48,8 @@ namespace seed_cpp { namespace rest {
 	private:
 		IEndpointsFactory& m_endpointsFactory;
 		IRouteAccessValidatorsFactory& m_routeAccessValidatorsFactory;
+		systelab::setting::ISettingsService& m_settingsService;
+
 		std::unique_ptr<systelab::rest_api_core::Router> m_router;
 		std::unique_ptr<systelab::rest_api_core::RoutesFactory> m_routesFactory;
 	};

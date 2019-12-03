@@ -1,11 +1,12 @@
 cmake_minimum_required(VERSION 3.2)
 
-# Find external dependencides
+# Find external dependencies
 find_package(DbSQLiteAdapter)
 find_package(RapidJSONAdapter)
 find_package(BoostAsioWebServerAdapter)
 find_package(JWTUtils)
 find_package(RESTAPICore)
+find_package(JSONSettings)
 
 # Add project folder into includes
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
@@ -20,7 +21,8 @@ target_link_libraries(${SEED_CPP_CORE}
                       RapidJSONAdapter::RapidJSONAdapter
                       BoostAsioWebServerAdapter::BoostAsioWebServerAdapter
                       JWTUtils::JWTUtils
-                      RESTAPICore::RESTAPICore)
+                      RESTAPICore::RESTAPICore
+                      JSONSettings::JSONSettings)
 
 #Configure source groups
 foreach(FILE ${SEED_CPP_CORE_SRC} ${SEED_CPP_CORE_HDR}) 
