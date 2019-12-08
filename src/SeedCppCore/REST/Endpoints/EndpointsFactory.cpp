@@ -196,8 +196,9 @@ namespace seed_cpp { namespace rest {
 		service::IUserModelService& userModelService = m_context.getServicesMgr()->getModelServicesMgr().getUserModelService();
 		service::ITimeService& timeService = m_context.getServicesMgr()->getSystemServicesMgr().getTimeService();
 		systelab::jwt::ITokenBuilderService& jwtBuilderService = m_context.getServicesMgr()->getSecurityServicesMgr().getJWTTokenBuilderService();
+		systelab::setting::ISettingsService& settingsService = m_context.getServicesMgr()->getSystemServicesMgr().getSettingsService();
 
-		return std::make_unique<UsersLoginPostEndpoint>(userModelService, timeService, jwtBuilderService);
+		return std::make_unique<UsersLoginPostEndpoint>(userModelService, timeService, jwtBuilderService, settingsService);
 	}
 
 }}

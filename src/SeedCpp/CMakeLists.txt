@@ -1,5 +1,8 @@
 cmake_minimum_required(VERSION 3.2)
 
+# Find external dependencies
+find_package(boost)
+
 # Add project folder into includes
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -8,7 +11,7 @@ set(SEED_CPP_PROJECT SeedCpp)
 file(GLOB_RECURSE SEED_CPP_PROJECT_SRC "*.cpp")
 file(GLOB_RECURSE SEED_CPP_PROJECT_HDR "*.h")
 add_executable(${SEED_CPP_PROJECT} ${SEED_CPP_PROJECT_SRC} ${SEED_CPP_PROJECT_HDR})
-target_link_libraries(${SEED_CPP_PROJECT} SeedCppCore)
+target_link_libraries(${SEED_CPP_PROJECT} SeedCppCore boost::boost)
 set_target_properties(${SEED_CPP_PROJECT} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin/${SEED_CPP_PROJECT})
 
 #Configure source groups

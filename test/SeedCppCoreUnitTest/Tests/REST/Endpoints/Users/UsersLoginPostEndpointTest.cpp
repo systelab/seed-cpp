@@ -2,6 +2,7 @@
 #include "SeedCppCore/REST/Endpoints/Users/UsersLoginPostEndpoint.h"
 
 #include "SeedCppCore/Model/Settings.h"
+
 #include "RapidJSONAdapter/JSONAdapter.h"
 #include "RESTAPICore/Endpoint/EndpointRequestData.h"
 #include "WebServerAdapterInterface/Model/Reply.h"
@@ -9,6 +10,7 @@
 #include "SeedCppCoreTestUtilities/Mocks/Services/Model/MockUserModelService.h"
 #include "SeedCppCoreTestUtilities/Stubs/Services/System/StubTimeService.h"
 #include "JSONAdapterTestUtilities/JSONAdapterUtilities.h"
+#include "JSONSettingsTestUtilities/Mocks/MockSettingsService.h"
 #include "JWTUtilsTestUtilities/Mocks/MockTokenBuilderService.h"
 
 
@@ -16,6 +18,7 @@ using namespace testing;
 using namespace seed_cpp::test_utility;
 using namespace systelab::json::test_utility;
 using namespace systelab::jwt::test_utility;
+using namespace systelab::setting::test_utility;
 
 namespace seed_cpp { namespace unit_test {
 
@@ -27,9 +30,10 @@ namespace seed_cpp { namespace unit_test {
 			setUpUserModelService();
 			setUpTimeService();
 			setUpTokenBuilderService();
+			setUpSettingsService();
 
 			m_endpoint = std::make_unique<rest::UsersLoginPostEndpoint>
-							(m_userModelService, m_timeService, m_tokenBuilderService);
+							(m_userModelService, m_timeService, m_tokenBuilderService, m_settingsService);
 		}
 
 		void setUpUserModelService()
@@ -54,6 +58,12 @@ namespace seed_cpp { namespace unit_test {
 		{
 			m_generatedToken = "GeneratedToken";
 			ON_CALL(m_tokenBuilderService, buildJWT(_, _)).WillByDefault(Return(m_generatedToken));
+		}
+
+		void setUpSettingsService()
+		{
+			m_jwtSecretKey = "MySecretKey";
+			ON_CALL_JSON_SETTING_STR(m_settingsService, model::setting::ApplicationSettingsFile, JWTSecretKey, m_jwtSecretKey)
 		}
 
 		systelab::rest_api_core::EndpointRequestData buildHappyPathEndpointRequestData()
@@ -82,11 +92,13 @@ namespace seed_cpp { namespace unit_test {
 		MockUserModelService m_userModelService;
 		StubTimeService m_timeService;
 		MockTokenBuilderService m_tokenBuilderService;
+		MockSettingsService m_settingsService;
 		systelab::json::rapidjson::JSONAdapter m_jsonAdapter;
 
 		model::UserMgr m_userMgr;
 		std::unique_ptr<model::User> m_existingUser;
 		boost::posix_time::ptime m_currentTime;
+		std::string m_jwtSecretKey;
 		std::string m_generatedToken;
 	};
 
@@ -121,9 +133,7 @@ namespace seed_cpp { namespace unit_test {
 
 	TEST_F(UsersLoginPostEndpointTest, testExecuteForHappyPathBuildsJWTUsingSecretKey)
 	{
-		std::string jwtSecretKey = model::setting::JWT_SECRET_KEY;
-		EXPECT_CALL(m_tokenBuilderService, buildJWT(Eq(jwtSecretKey), _));
-
+		EXPECT_CALL(m_tokenBuilderService, buildJWT(Eq(m_jwtSecretKey), _));
 		m_endpoint->execute(buildHappyPathEndpointRequestData());
 	}
 

@@ -6,6 +6,7 @@
 #include "Services/System/ITimeService.h"
 #include "Services/System/IUUIDGeneratorService.h"
 
+#include "JSONSettings/ISettingsService.h"
 #include "RESTAPICore/RouteAccess/IEpochTimeService.h"
 
 
@@ -56,6 +57,16 @@ namespace seed_cpp { namespace service {
 		}
 
 		return *m_uuidGeneratorService;
+	}
+
+	systelab::setting::ISettingsService& SystemServicesMgr::getSettingsService() const
+	{
+		if (!m_settingsService)
+		{
+			m_settingsService = m_factory.buildSettingsService();
+		}
+
+		return *m_settingsService;
 	}
 
 }}
