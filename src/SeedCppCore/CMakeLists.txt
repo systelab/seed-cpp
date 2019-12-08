@@ -24,7 +24,7 @@ target_link_libraries(${SEED_CPP_CORE}
                       JWTUtils::JWTUtils
                       RESTAPICore::RESTAPICore
                       JSONSettings::JSONSettings
-					  TraceAPI::TraceAPI)
+                      TraceAPI::TraceAPI)
 
 #Configure source groups
 foreach(FILE ${SEED_CPP_CORE_SRC} ${SEED_CPP_CORE_HDR}) 

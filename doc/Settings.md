@@ -73,6 +73,7 @@ The use of a JSON configuration file can be implemented using the [JSONSettings]
 When not specified on a command line option nor on a JSON settings file, a hard-coded value is used. The following table shows the default value for each existing setting:
 
 |*Setting*                          |*Description*                            |*Default Value*                  |
+|-----------------------------------|-----------------------------------------|---------------------------------|
 |db.filepath                        |Path where the database file is stored   |'./SeedCpp.db'                   |
 |webServer.address                  |IP address of the web server             |127.0.0.1                        |
 |webServer.port                     |Port of the web server                   |8080                             |
