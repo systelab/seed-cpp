@@ -10,6 +10,8 @@
 #include "RESTAPICore/RouteAccess/TokenExpirationAccessValidator.h"
 #include "RESTAPICore/RouteAccess/UserRoleRouteAccessValidator.h"
 
+#include "TimeAdapter/TimeAdapter.h"
+
 
 namespace seed_cpp { namespace rest {
 
@@ -23,9 +25,9 @@ namespace seed_cpp { namespace rest {
 	std::unique_ptr<IRouteAccessValidator> RouteAccessValidatorsFactory::buildTokenExpirationRouteAccessValidator() const
 	{
 		long expirationSeconds = 600; // 10 minutes
-		auto& epochTimeService = m_context.getServicesMgr()->getSystemServicesMgr().getEpochTimeService();
+		systelab::time::TimeAdapter timeAdapter;
 
-		return std::make_unique<TokenExpirationAccessValidator>(expirationSeconds, epochTimeService);
+		return std::make_unique<TokenExpirationAccessValidator>(timeAdapter, expirationSeconds);
 	};
 
 	std::unique_ptr<IRouteAccessValidator> RouteAccessValidatorsFactory::buildAdminRoleRouteAccessValidator() const

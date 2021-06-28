@@ -35,6 +35,7 @@ class SeedCppConan(ConanFile):
         self.requires("RESTAPICore/1.1.7@systelab/stable")
         self.requires("JSONSettings/1.3.8@systelab/stable")
         self.requires("rapidjson/1.1.0.1@systelab/stable")
+        self.requires("TimeAdapter/1.0.4@systelab/stable")
 
     def build_requirements(self):
         self.build_requires("TestUtilitiesInterface/1.0.7@systelab/stable")
