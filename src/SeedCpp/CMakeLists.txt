@@ -11,7 +11,7 @@ set(SEED_CPP_PROJECT SeedCpp)
 file(GLOB_RECURSE SEED_CPP_PROJECT_SRC "*.cpp")
 file(GLOB_RECURSE SEED_CPP_PROJECT_HDR "*.h")
 add_executable(${SEED_CPP_PROJECT} ${SEED_CPP_PROJECT_SRC} ${SEED_CPP_PROJECT_HDR})
-target_link_libraries(${SEED_CPP_PROJECT} SeedCppCore boost::boost)
+target_link_libraries(${SEED_CPP_PROJECT} SeedCppCore Boost::boost)
 set_target_properties(${SEED_CPP_PROJECT} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin/${SEED_CPP_PROJECT})
 
 #Configure source groups
