@@ -34,18 +34,13 @@ class SeedCppConan(ConanFile):
         self.requires("JWTUtils/1.1.7@systelab/stable")
         self.requires("RESTAPICore/1.1.7@systelab/stable")
         self.requires("JSONSettings/1.3.8@systelab/stable")
-        self.requires("rapidjson/1.1.0.1@systelab/stable")
-        self.requires("TimeAdapter/1.0.4@systelab/stable")
 
     def build_requirements(self):
         self.build_requires("TestUtilitiesInterface/1.0.7@systelab/stable")
-        self.build_requires("DbAdapterInterface/1.1.12@systelab/stable")
         self.build_requires("DbAdapterTestUtilities/1.1.12@systelab/stable")
-        self.build_requires("JSONAdapterInterface/1.1.3@systelab/stable")
         self.build_requires("JSONAdapterTestUtilities/1.1.3@systelab/stable")
         self.build_requires("JWTUtilsTestUtilities/1.1.7@systelab/stable")
         self.build_requires("JSONSettingsTestUtilities/1.3.8@systelab/stable")
-        self.build_requires("WebServerAdapterInterface/1.1.10@systelab/stable")
         self.build_requires("gtest/1.10.0")
         
     def imports(self):
