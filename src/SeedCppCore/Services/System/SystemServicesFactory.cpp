@@ -9,6 +9,8 @@
 #include "JSONSettings/SettingsService.h"
 #include "RESTAPICore/RouteAccess/EpochTimeService.h"
 
+#include "TimeAdapter/TimeAdapter.h"
+
 
 namespace seed_cpp { namespace service {
 
@@ -31,7 +33,9 @@ namespace seed_cpp { namespace service {
 
 	std::unique_ptr<systelab::rest_api_core::IEpochTimeService> SystemServicesFactory::buildEpochTimeService() const
 	{
-		return std::make_unique<systelab::rest_api_core::EpochTimeService>();
+		systelab::time::TimeAdapter TimeAdapter;
+
+		return std::make_unique<systelab::rest_api_core::EpochTimeService>(TimeAdapter);
 	}
 
 	std::unique_ptr<IUUIDGeneratorService> SystemServicesFactory::buildUUIDGeneratorService() const

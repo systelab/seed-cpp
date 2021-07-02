@@ -13,7 +13,7 @@ set(SEED_CPP_CORE_TEST_UTILITIES SeedCppCoreTestUtilities)
 file(GLOB_RECURSE SEED_CPP_CORE_TEST_UTILITIES_SRC "*.cpp")
 file(GLOB_RECURSE SEED_CPP_CORE_TEST_UTILITIES_HDR "*.h")
 add_library(${SEED_CPP_CORE_TEST_UTILITIES} STATIC ${SEED_CPP_CORE_TEST_UTILITIES_SRC} ${SEED_CPP_CORE_TEST_UTILITIES_HDR})
-target_link_libraries(${SEED_CPP_CORE_TEST_UTILITIES} SeedCppCore gtest::gtest TestUtilitiesInterface::TestUtilitiesInterface)
+target_link_libraries(${SEED_CPP_CORE_TEST_UTILITIES} SeedCppCore GTest::gtest TestUtilitiesInterface::TestUtilitiesInterface)
 
 #Configure source groups
 foreach(FILE ${SEED_CPP_CORE_TEST_UTILITIES_SRC} ${SEED_CPP_CORE_TEST_UTILITIES_HDR}) 
