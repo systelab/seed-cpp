@@ -22,7 +22,7 @@ file(GLOB_RECURSE SEED_CPP_CORE_UNIT_TEST_PROJECT_SRC "*.cpp")
 file(GLOB_RECURSE SEED_CPP_CORE_UNIT_TEST_PROJECT_HDR "*.h")
 add_executable(${SEED_CPP_CORE_UNIT_TEST_PROJECT} ${SEED_CPP_CORE_UNIT_TEST_PROJECT_SRC} ${SEED_CPP_CORE_UNIT_TEST_PROJECT_HDR})
 target_link_libraries(${SEED_CPP_CORE_UNIT_TEST_PROJECT} SeedCppCore SeedCppCoreTestUtilities
-                      gtest::gtest
+                      GTest::gtest
                       DbAdapterTestUtilities::DbAdapterTestUtilities
                       JSONAdapterTestUtilities::JSONAdapterTestUtilities
                       JWTUtilsTestUtilities::JWTUtilsTestUtilities
